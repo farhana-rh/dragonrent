@@ -148,6 +148,79 @@ export const fetchReviews = listingId => (dispatch, getState, sdk) => {
 // Fetch Time Slots //
 //////////////////////
 
+//////////////////////////////
+// Fetch similar listings   //
+//////////////////////////////
+const SIMILAR_LISTINGS_COUNT = 4;
+
+/**
+ * Query params for listings similar to the given one: same top-level category when the
+ * listing has one, otherwise the same listing type. The current listing is excluded later.
+ */
+export const getSimilarListingsQueryParams = (listing, config) => {
+  const { publicData } = listing?.attributes || {};
+  const categoryLevel1 = publicData?.categoryLevel1;
+  const listingType = publicData?.listingType;
+  if (!categoryLevel1 && !listingType) {
+    return null;
+  }
+
+  const {
+    aspectWidth = 1,
+    aspectHeight = 1,
+    variantPrefix = 'listing-card',
+  } = config.layout.listingImage;
+  const aspectRatio = aspectHeight / aspectWidth;
+
+  return {
+    ...(categoryLevel1 ? { pub_categoryLevel1: categoryLevel1 } : { pub_listingType: listingType }),
+    // One extra, since the current listing may be among the results
+    perPage: SIMILAR_LISTINGS_COUNT + 1,
+    page: 1,
+    include: ['author', 'images'],
+    'fields.listing': [
+      'title',
+      'price',
+      'deleted',
+      'state',
+      'publicData.listingType',
+      'publicData.transactionProcessAlias',
+      'publicData.unitType',
+      'publicData.cardStyle',
+      'publicData.priceVariationsEnabled',
+      'publicData.priceVariants',
+    ],
+    'fields.user': ['profile.displayName', 'profile.abbreviatedName'],
+    'fields.image': [`variants.${variantPrefix}`, `variants.${variantPrefix}-2x`],
+    ...createImageVariantConfig(`${variantPrefix}`, 400, aspectRatio),
+    ...createImageVariantConfig(`${variantPrefix}-2x`, 800, aspectRatio),
+    'limit.images': 1,
+  };
+};
+
+export const fetchSimilarListingsThunk = createAsyncThunk(
+  'ListingPage/fetchSimilarListings',
+  ({ listing, config }, { dispatch, rejectWithValue, extra: sdk }) => {
+    const queryParams = getSimilarListingsQueryParams(listing, config);
+    if (!queryParams) {
+      return [];
+    }
+    return sdk.listings
+      .query(queryParams)
+      .then(response => {
+        dispatch(addMarketplaceEntities(response));
+        return response.data.data
+          .map(l => l.id)
+          .filter(id => id.uuid !== listing.id.uuid)
+          .slice(0, SIMILAR_LISTINGS_COUNT);
+      })
+      .catch(e => {
+        log.error(e, 'similar-listings-fetch-failed', { listingId: listing.id.uuid });
+        return rejectWithValue(storableError(e));
+      });
+  }
+);
+
 const timeSlotsRequest = createAsyncThunk(
   'ListingPage/timeSlotsRequest',
   (params, { extra: sdk }) => {
@@ -399,6 +472,9 @@ const initialState = {
   sendInquiryInProgress: false,
   sendInquiryError: null,
   inquiryModalOpenForListingId: null,
+  similarListingIds: [],
+  fetchSimilarListingsInProgress: false,
+  fetchSimilarListingsError: null,
 };
 
 const listingPageSlice = createSlice({
@@ -430,6 +506,18 @@ const listingPageSlice = createSlice({
       })
       .addCase(fetchReviewsThunk.rejected, (state, action) => {
         state.fetchReviewsError = action.payload;
+      })
+      .addCase(fetchSimilarListingsThunk.pending, state => {
+        state.fetchSimilarListingsInProgress = true;
+        state.fetchSimilarListingsError = null;
+      })
+      .addCase(fetchSimilarListingsThunk.fulfilled, (state, action) => {
+        state.fetchSimilarListingsInProgress = false;
+        state.similarListingIds = action.payload;
+      })
+      .addCase(fetchSimilarListingsThunk.rejected, (state, action) => {
+        state.fetchSimilarListingsInProgress = false;
+        state.fetchSimilarListingsError = action.payload;
       })
       .addCase(fetchTimeSlotsThunk.pending, (state, action) => {
         const { options, start, timeZone } = action.meta.arg;
@@ -569,6 +657,11 @@ export const loadData = (params, search, config) => (dispatch, getState, sdk) =>
       // This can happen parallel to loadData.
       // We are not interested to return them from loadData call.
       fetchMonthlyTimeSlots(dispatch, listing);
+    }
+    if (typeof window !== 'undefined' && listing && !hasNoViewingRights) {
+      // "Similar rentals" are below the fold: fetch them on the client only (loadData also runs
+      // there after SSR) and don't block loadData on them.
+      dispatch(fetchSimilarListingsThunk({ listing, config }));
     }
     return response;
   });

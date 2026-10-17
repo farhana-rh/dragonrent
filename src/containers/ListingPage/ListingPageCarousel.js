@@ -6,7 +6,8 @@ import classNames from 'classnames';
 // Utils
 import { FormattedMessage } from '../../util/reactIntl';
 import { LISTING_STATE_CLOSED, propTypes } from '../../util/types';
-import { OFFER, REQUEST } from '../../transactions/transaction';
+import { displayPrice } from '../../util/configHelpers';
+import { OFFER, REQUEST, isBookingProcessAlias } from '../../transactions/transaction';
 
 // Global ducks (for Redux actions and thunks)
 import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
@@ -14,16 +15,7 @@ import { manageDisableScrolling, isScrollingDisabled } from '../../ducks/ui.duck
 import { initializeCardPaymentData } from '../../ducks/stripe.duck.js';
 
 // Shared components
-import {
-  H2,
-  H3,
-  H4,
-  Page,
-  NamedLink,
-  OrderPanel,
-  LayoutSingleColumn,
-  SectionText,
-} from '../../components';
+import { Page, NamedLink, OrderPanel, LayoutSingleColumn } from '../../components';
 
 // Related components and modules
 import TopbarContainer from '../TopbarContainer/TopbarContainer';
@@ -48,12 +40,20 @@ import {
   priceForSchemaMaybe,
   getDerivedRenderData,
 } from './ListingPage.shared';
+// Gallery modules first: keeps CSS order consistent with ListingPageCoverPhoto (SectionHero)
+import SectionGalleryMosaic from './SectionGalleryMosaic/SectionGalleryMosaic';
 import Notifications from './Notifications/Notifications';
 import SectionReviews from './SectionReviews';
 import SectionAuthorMaybe from './SectionAuthorMaybe';
 import SectionMapMaybe from './SectionMapMaybe';
 import SectionGallery from './SectionGallery';
 import CustomListingFields from './CustomListingFields';
+import ListingBreadcrumbs from './ListingBreadcrumbs/ListingBreadcrumbs';
+import SectionListingHeading from './SectionListingHeading/SectionListingHeading';
+import SectionAboutRental from './SectionAboutRental/SectionAboutRental';
+import SectionAvailability from './SectionAvailability/SectionAvailability';
+import SectionPolicies from './SectionPolicies/SectionPolicies';
+import SectionSimilarListings from './SectionSimilarListings/SectionSimilarListings';
 import ListingPageAccessWrapper from './ListingPageAccessWrapper';
 
 import css from './ListingPage.module.css';
@@ -163,6 +163,16 @@ export const ListingPageComponent = props => {
   }
   const unitType = publicData.unitType;
   const isNegotiation = processType === 'negotiation';
+  const isBookable = isBookingProcessAlias(publicData?.transactionProcessAlias);
+
+  // Top-level category for breadcrumbs (from the hosted listing-categories asset)
+  const topLevelCategory = (config.categoryConfiguration?.categories || []).find(
+    c => c.id === publicData?.categoryLevel1
+  );
+  const listingTypeConfig = config.listing.listingTypes.find(
+    lt => lt.listingType === publicData?.listingType
+  );
+  const showPriceInHeading = displayPrice(listingTypeConfig);
 
   const commonParams = { params, history, routes: routeConfiguration };
   const onContactUser = handleContactUser({
@@ -236,111 +246,133 @@ export const ListingPageComponent = props => {
       }}
     >
       <LayoutSingleColumn className={css.pageRoot} topbar={topbar} footer={<FooterContainer />}>
-        <div className={css.contentWrapperForProductLayout}>
-          <div className={css.mainColumnForProductLayout}>
-            <Notifications
-              mounted={mounted}
-              listing={currentListing}
-              isOwnListing={isOwnListing}
-              noPayoutDetailsSetWithOwnListing={noPayoutDetailsSetWithOwnListing}
-              currentUser={currentUser}
-              className={css.actionBarForProductLayout}
-              editParams={{
-                id: listingId.uuid,
-                slug: listingSlug,
-                type: listingPathParamType,
-                tab: listingTab,
-              }}
-            />
-            {showListingImage && (
+        <div className={css.listingPageContent}>
+          <Notifications
+            mounted={mounted}
+            listing={currentListing}
+            isOwnListing={isOwnListing}
+            noPayoutDetailsSetWithOwnListing={noPayoutDetailsSetWithOwnListing}
+            currentUser={currentUser}
+            className={css.actionBarForProductLayout}
+            editParams={{
+              id: listingId.uuid,
+              slug: listingSlug,
+              type: listingPathParamType,
+              tab: listingTab,
+            }}
+          />
+          <ListingBreadcrumbs title={title} category={topLevelCategory} />
+          {showListingImage ? (
+            <>
+              {/* Swipeable gallery on mobile and tablet, photo mosaic on desktop */}
               <SectionGallery
                 listing={currentListing}
                 variantPrefix={config.layout.listingImage.variantPrefix}
                 aspectWidth={config.layout.listingImage.aspectWidth}
                 aspectHeight={config.layout.listingImage.aspectHeight}
               />
-            )}
-            <div
-              className={showListingImage ? css.mobileHeading : css.noListingImageHeadingProduct}
-            >
-              {showListingImage ? (
-                <H2 as="h1" className={css.orderPanelTitle}>
-                  <FormattedMessage id="ListingPage.orderTitle" values={{ title: richTitle }} />
-                </H2>
-              ) : (
-                <H3 as="h1" className={css.orderPanelTitle}>
-                  <FormattedMessage id="ListingPage.orderTitle" values={{ title: richTitle }} />
-                </H3>
-              )}
+              <SectionGalleryMosaic
+                listing={currentListing}
+                onManageDisableScrolling={onManageDisableScrolling}
+              />
+            </>
+          ) : null}
+
+          <div className={css.contentWrapperForProductLayout}>
+            <div className={css.mainColumnForProductLayout}>
+              <SectionListingHeading
+                richTitle={richTitle}
+                listing={currentListing}
+                reviews={reviews}
+                authorDisplayName={authorDisplayName}
+                marketplaceCurrency={config.currency}
+                showPrice={showPriceInHeading}
+                reviewsLinkProps={{
+                  name: isVariant ? 'ListingPageVariant' : 'ListingPage',
+                  params,
+                  to: { hash: '#reviews' },
+                }}
+              />
+
+              {showDescription && <SectionAboutRental text={description} />}
+
+              <CustomListingFields
+                publicData={publicData}
+                metadata={metadata}
+                listingFieldConfigs={listingConfig.listingFields}
+                categoryConfiguration={config.categoryConfiguration}
+                intl={intl}
+              />
+
+              {isBookable ? (
+                <SectionAvailability
+                  listing={currentListing}
+                  monthlyTimeSlots={props.monthlyTimeSlots}
+                  firstDayOfWeek={config.localization.firstDayOfWeek}
+                />
+              ) : null}
+
+              <SectionMapMaybe
+                geolocation={geolocation}
+                publicData={publicData}
+                listingId={currentListing.id}
+                mapsConfig={config.maps}
+              />
+              <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
+              <SectionAuthorMaybe
+                title={title}
+                listing={currentListing}
+                authorDisplayName={authorDisplayName}
+                onContactUser={onContactUser}
+                isInquiryModalOpen={isAuthenticated && inquiryModalOpen}
+                onCloseInquiryModal={() => setInquiryModalOpen(false)}
+                sendInquiryError={sendInquiryError}
+                sendInquiryInProgress={sendInquiryInProgress}
+                onSubmitInquiry={onSubmitInquiry}
+                currentUser={currentUser}
+                onManageDisableScrolling={onManageDisableScrolling}
+              />
+              <SectionPolicies />
             </div>
-            {showDescription && <SectionText text={description} showAsIngress />}
-
-            <CustomListingFields
-              publicData={publicData}
-              metadata={metadata}
-              listingFieldConfigs={listingConfig.listingFields}
-              categoryConfiguration={config.categoryConfiguration}
-              intl={intl}
-            />
-
-            <SectionMapMaybe
-              geolocation={geolocation}
-              publicData={publicData}
-              listingId={currentListing.id}
-              mapsConfig={config.maps}
-            />
-            <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
-            <SectionAuthorMaybe
-              title={title}
-              listing={currentListing}
-              authorDisplayName={authorDisplayName}
-              onContactUser={onContactUser}
-              isInquiryModalOpen={isAuthenticated && inquiryModalOpen}
-              onCloseInquiryModal={() => setInquiryModalOpen(false)}
-              sendInquiryError={sendInquiryError}
-              sendInquiryInProgress={sendInquiryInProgress}
-              onSubmitInquiry={onSubmitInquiry}
-              currentUser={currentUser}
-              onManageDisableScrolling={onManageDisableScrolling}
-            />
-          </div>
-          <div className={css.orderColumnForProductLayout}>
-            <OrderPanel
-              className={classNames(css.productOrderPanel, {
-                [css.imagesEnabled]: showListingImage,
-              })}
-              listing={currentListing}
-              isOwnListing={isOwnListing}
-              onSubmit={handleOrderSubmit}
-              authorLink={
-                <NamedLink
-                  className={css.authorNameLink}
-                  name={isVariant ? 'ListingPageVariant' : 'ListingPage'}
-                  params={params}
-                  to={{ hash: '#author' }}
-                >
-                  {authorDisplayName}
-                </NamedLink>
-              }
-              title={<FormattedMessage id="ListingPage.orderTitle" values={{ title: richTitle }} />}
-              titleDesktop={
-                <H4 as="h1" className={css.orderPanelTitle}>
+            <div className={css.orderColumnForProductLayout}>
+              <OrderPanel
+                className={classNames(css.productOrderPanel, {
+                  [css.imagesEnabled]: showListingImage,
+                })}
+                listing={currentListing}
+                isOwnListing={isOwnListing}
+                onSubmit={handleOrderSubmit}
+                authorLink={
+                  <NamedLink
+                    className={css.authorNameLink}
+                    name={isVariant ? 'ListingPageVariant' : 'ListingPage'}
+                    params={params}
+                    to={{ hash: '#author' }}
+                  >
+                    {authorDisplayName}
+                  </NamedLink>
+                }
+                title={
                   <FormattedMessage id="ListingPage.orderTitle" values={{ title: richTitle }} />
-                </H4>
-              }
-              sectionHeadingAs="h2"
-              payoutDetailsWarning={payoutDetailsWarning}
-              author={ensuredAuthor}
-              onManageDisableScrolling={onManageDisableScrolling}
-              onContactUser={onContactUser}
-              {...restOfProps}
-              validListingTypes={config.listing.listingTypes}
-              marketplaceCurrency={config.currency}
-              dayCountAvailableForBooking={config.stripe.dayCountAvailableForBooking}
-              marketplaceName={config.marketplaceName}
-              showListingImage={showListingImage}
-            />
+                }
+                hideTitle
+                hideAuthorInfo
+                sectionHeadingAs="h2"
+                payoutDetailsWarning={payoutDetailsWarning}
+                author={ensuredAuthor}
+                onManageDisableScrolling={onManageDisableScrolling}
+                onContactUser={onContactUser}
+                {...restOfProps}
+                validListingTypes={config.listing.listingTypes}
+                marketplaceCurrency={config.currency}
+                dayCountAvailableForBooking={config.stripe.dayCountAvailableForBooking}
+                marketplaceName={config.marketplaceName}
+                showListingImage={showListingImage}
+              />
+            </div>
           </div>
+
+          <SectionSimilarListings />
         </div>
       </LayoutSingleColumn>
     </Page>

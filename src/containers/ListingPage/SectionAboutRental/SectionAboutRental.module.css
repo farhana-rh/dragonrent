@@ -1,0 +1,57 @@
+.root {
+  composes: listingSection from '../ListingPageSections.module.css';
+}
+
+.title {
+  composes: listingSectionTitle from '../ListingPageSections.module.css';
+}
+
+.text {
+  margin: 12px 0 0 0;
+  padding: 0;
+  font-size: 16px;
+  line-height: 26px;
+  color: var(--colorTextSecondary);
+
+  /* Preserve newlines, but collapse other whitespace */
+  white-space: pre-line;
+}
+
+.collapsed {
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.toggle {
+  margin: 12px 0 0 0;
+  padding: 0;
+
+  font-family: var(--fontFamily);
+  font-size: 15px;
+  line-height: 24px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--marketplaceColor);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--marketplaceColorDark);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--marketplaceColor);
+    outline-offset: 2px;
+    border-radius: var(--borderRadius);
+  }
+}
+
+.longWord {
+  word-break: break-word;
+  hyphens: auto;
+}

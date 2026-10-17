@@ -259,6 +259,7 @@ const hasValidPriceVariants = priceVariants => {
  * @param {Function} props.onSubmit - Handler for form submission
  * @param {ReactNode|string} props.title - Title of the panel
  * @param {ReactNode} [props.titleDesktop] - Alternative title for desktop view
+ * @param {boolean} [props.hideTitle] - Hide the title (when the page shows it elsewhere)
  * @param {ReactNode|string} [props.subTitle] - Subtitle text
  * @param {Function} props.onManageDisableScrolling - Handler for managing scroll behavior
  * @param {Function} props.onFetchTimeSlots - Handler for fetching available time slots
@@ -313,6 +314,7 @@ const OrderPanel = props => {
     showListingImage,
     hideAuthorInfo,
     hidePrice,
+    hideTitle = false,
     sectionHeadingAs = 'h3',
   } = props;
 
@@ -456,7 +458,7 @@ const OrderPanel = props => {
           <H1 className={css.heading}>{title}</H1>
         </div>
 
-        {showListingImage && (
+        {showListingImage && !hideTitle && (
           <div className={css.orderHeading}>
             {titleDesktop ? titleDesktop : <H2 className={titleClasses}>{title}</H2>}
             {subTitleText ? <div className={css.orderHelp}>{subTitleText}</div> : null}

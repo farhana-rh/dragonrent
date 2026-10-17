@@ -1,16 +1,29 @@
 @import '../../../styles/customMediaQueries.css';
 
 .root {
+  padding: 18px;
+  background-color: var(--colorSurface);
+  border: 1px solid var(--colorBorder);
+  border-radius: var(--borderRadiusLarge);
+
+  @media (--viewportMedium) {
+    padding: 24px;
+  }
 }
 
 .content {
   display: flex;
   flex-direction: row;
+  align-items: flex-start;
 }
 
 .avatar {
   flex-shrink: 0;
-  margin-right: 36px;
+  margin-right: 18px;
+
+  @media (--viewportMedium) {
+    margin-right: 24px;
+  }
 }
 
 .info {
@@ -35,6 +48,9 @@
   /* Preserve newlines, but collapse other whitespace */
   white-space: pre-line;
   margin: 18px 0 0 0;
+  font-size: 15px;
+  line-height: 24px;
+  color: var(--colorTextSecondary);
   transition: all 1s ease-in;
 
   @media (--viewportMedium) {
@@ -52,11 +68,8 @@
   display: none;
 
   @media (--viewportMedium) {
-    display: inline;
-
-    &::before {
-      content: ' ';
-    }
+    display: block;
+    margin-top: 8px;
   }
 }
 
@@ -97,11 +110,23 @@
 }
 
 .links {
-  margin-top: 13px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 16px;
+  margin: 12px 0 0 0;
+  font-size: 15px;
 
   @media (--viewportMedium) {
     margin: 16px 0 0 0;
   }
+}
+
+.link {
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--marketplaceColor);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .withBioMissingAbove {
@@ -111,14 +136,18 @@
   }
 }
 
+/* Links are laid out with a gap instead of a separator */
 .linkSeparator {
-  margin: 0 10px;
-  color: var(--marketplaceColor);
+  display: none;
 }
 
 .headingRow {
   display: flex;
   flex-direction: column;
+  font-size: 18px;
+  line-height: 26px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorText);
 
   @media (--viewportMedium) {
     flex-direction: row;
@@ -149,6 +178,6 @@
 }
 
 .contact {
-  composes: a from global;
-  font-weight: var(--fontWeightMedium);
+  composes: buttonSecondaryInline from global;
+  margin: 0;
 }

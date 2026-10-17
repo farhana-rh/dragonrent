@@ -3,6 +3,80 @@
 .root {
 }
 
+/* ================ DragonRent listing page sections ================ */
+
+/* Page content column (carousel layout). Sections pad themselves on mobile so that the
+   gallery can run edge to edge. */
+.listingPageContent {
+  width: 100%;
+  max-width: var(--contentMaxWidthPages);
+  margin: 0 auto;
+
+  @media (--viewportMedium) {
+    padding: 0 24px;
+  }
+
+  @media (--viewportLarge) {
+    padding: 0 32px;
+  }
+}
+
+/* Shared section styles (see ListingPageSections.module.css) */
+.listingSection {
+  composes: listingSection from './ListingPageSections.module.css';
+}
+
+.listingSectionTitle {
+  composes: listingSectionTitle from './ListingPageSections.module.css';
+}
+
+/* Reviews */
+.reviewsHeading {
+  composes: listingSectionTitle;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
+
+  @media (--viewportMedium) {
+    margin-bottom: 24px;
+  }
+}
+
+.reviewsHeadingStar {
+  width: 18px;
+  height: 18px;
+  fill: var(--colorText);
+}
+
+.noReviews {
+  margin: 0;
+  padding: 0;
+  font-size: 15px;
+  line-height: 24px;
+  color: var(--colorTextSecondary);
+}
+
+.reviewsList {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+
+  & > li {
+    margin: 0;
+  }
+
+  @media (--viewportMedium) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px;
+  }
+}
+
+.showAllReviewsButton {
+  composes: buttonSecondaryInline from global;
+  margin-top: 24px;
+}
+
 .pageRoot {
   padding-bottom: 90px;
 
@@ -291,45 +365,41 @@
 }
 
 .mainColumnForProductLayout {
-  @media (--viewportMedium) {
-  }
+  min-width: 0;
+
   @media (--viewportLarge) {
-    /* contentContainer's full width - (orderColumn + paddings + margin) */
-    max-width: calc(100% - 360px);
-    flex-basis: calc(100% - 360px);
+    /* Full width - (order column + gap) */
+    max-width: calc(100% - 408px);
+    flex-basis: calc(100% - 408px);
     flex-shrink: 0;
     flex-grow: 1;
   }
 }
 
 .orderColumnForProductLayout {
-  @media (--viewportMedium) {
-  }
   @media (--viewportLarge) {
     display: block;
-    margin-left: 48px;
-    flex-basis: 312px;
+    margin-left: 56px;
+    flex-basis: 352px;
     flex-shrink: 0;
   }
 }
 
 .contentWrapperForProductLayout {
-  margin: 0 0 56px 0;
+  margin: 0 0 24px 0;
+  padding-top: 24px;
 
   @media (--viewportMedium) {
     width: 100%;
-    max-width: var(--contentMaxWidth);
-    padding: 0 24px 0 24px;
-    margin: 0 auto 56px auto;
+    margin: 0 auto 32px auto;
+    padding-top: 32px;
   }
 
   @media (--viewportLarge) {
     display: flex;
     flex-direction: row;
-    max-width: unset;
-    width: min(calc(var(--contentMaxWidth) + 72px), 100vw);
-    padding: 64px 36px 0 36px;
-    margin: 0 auto 117px auto;
+    align-items: flex-start;
+    margin: 0 auto 40px auto;
   }
 }
 
@@ -381,14 +451,9 @@
     display: block;
   }
   /* Note: panel height might be too much on small viewport - hence min-height */
-  @media (--viewportLarge) and (min-height: 950px) {
+  @media (--viewportLarge) and (min-height: 800px) {
     position: sticky;
-    top: 108px;
-  }
-  &.imagesEnabled {
-    @media (--viewportLarge) {
-      margin-top: 24px;
-    }
+    top: calc(var(--topbarHeightDesktop) + 24px);
   }
 }
 
@@ -566,34 +631,20 @@
 }
 
 .sectionText {
-  padding: 0 24px;
-  margin-bottom: 36px;
-
-  @media (--viewportMedium) {
-    padding: 0;
-    margin-bottom: 40px;
-  }
+  composes: listingSection;
 }
 
 .sectionHeading,
 .sectionHeadingWithExtraMargin {
-  /* Font for sections titles */
-  composes: p from global;
-  padding: 0;
-  font-weight: var(--fontWeightBold);
-
-  margin-top: 0;
+  composes: listingSectionTitle;
   margin-bottom: 12px;
-
-  @media (--viewportMedium) {
-    margin-top: 0;
-    margin-bottom: 8px;
-  }
 }
 
 .sectionHeadingWithExtraMargin {
+  margin-bottom: 18px;
+
   @media (--viewportMedium) {
-    margin-bottom: 16px;
+    margin-bottom: 24px;
   }
 }
 
@@ -626,39 +677,16 @@
 .sectionDetails,
 .sectionMultiEnum,
 .sectionEmbeddedYoutubeVideo {
-  padding: 0 24px;
-  margin-bottom: 32px;
-
-  @media (--viewportMedium) {
-    padding: 0;
-    margin-bottom: 40px;
-  }
+  composes: listingSection;
 }
 
 .sectionMap {
-  padding: 0 24px;
-  margin-bottom: 35px;
-
-  @media (--viewportMedium) {
-    padding: 0;
-    margin-bottom: 0;
-  }
+  composes: listingSection;
 }
 
 .sectionReviews,
 .sectionAuthor {
-  padding: 0 24px;
-  margin-top: 42px;
-  scroll-margin-top: calc(var(--topbarHeight) + 24px);
-
-  @media (--viewportMedium) {
-    padding: 0;
-    margin-top: 40px;
-    scroll-margin-top: calc(var(--topbarHeightDesktop) + 24px);
-  }
-  @media (--viewportLarge) {
-    padding: 8px 0;
-  }
+  composes: listingSection;
 }
 
 .details {
@@ -752,14 +780,16 @@
 }
 
 .productGallery {
-  margin: 0 0 36px 0;
+  margin: 0;
 
   @media (--viewportMedium) {
-    margin: 24px 0 48px 0;
+    overflow: hidden;
+    border-radius: var(--borderRadiusLarge);
   }
+
+  /* Desktop uses the photo mosaic (SectionGalleryMosaic) */
   @media (--viewportLarge) {
-    margin: 0 0 40px 0;
-    padding-bottom: 4px;
+    display: none;
   }
 }
 

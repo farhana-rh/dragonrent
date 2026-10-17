@@ -1,0 +1,33 @@
+@import '../../styles/customMediaQueries.css';
+
+/* Shared styles for DragonRent listing page sections. Section modules compose these.
+   Kept separate from ListingPage.module.css so that section components don't pull the page's
+   stylesheet into other chunks (which causes CSS ordering conflicts). */
+
+/* A content block in the main column, separated by a hairline */
+.listingSection {
+  margin: 0;
+  padding: 24px 16px;
+  border-top: 1px solid var(--colorBorder);
+  scroll-margin-top: calc(var(--topbarHeight) + 24px);
+
+  @media (--viewportMedium) {
+    padding: 32px 0;
+    scroll-margin-top: calc(var(--topbarHeightDesktop) + 24px);
+  }
+}
+
+.listingSectionTitle {
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: var(--fontWeightSemiBold);
+  letter-spacing: -0.01em;
+  color: var(--colorText);
+
+  @media (--viewportMedium) {
+    font-size: 24px;
+    line-height: 32px;
+  }
+}

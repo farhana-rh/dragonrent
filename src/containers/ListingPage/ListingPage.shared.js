@@ -101,6 +101,24 @@ export const categoryLabel = (categories, value) => {
  * @param {String} variantName
  * @returns correct image variant specified by variantName parameter.
  */
+/**
+ * Average rating from the listing's reviews that the page has loaded.
+ * Returns null when there are no rated reviews, so no rating is shown.
+ *
+ * @param {Array<Object>} reviews review entities
+ * @returns {Object|null} { average: number (one decimal), count: number }
+ */
+export const getReviewsSummary = reviews => {
+  const ratings = (reviews || [])
+    .map(r => r?.attributes?.rating)
+    .filter(rating => typeof rating === 'number');
+  if (ratings.length === 0) {
+    return null;
+  }
+  const sum = ratings.reduce((acc, rating) => acc + rating, 0);
+  return { average: Math.round((sum / ratings.length) * 10) / 10, count: ratings.length };
+};
+
 export const listingImages = (listing, variantName) =>
   (listing.images || [])
     .map(image => {

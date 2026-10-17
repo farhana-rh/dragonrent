@@ -1,0 +1,54 @@
+@import '../../../styles/customMediaQueries.css';
+
+.root {
+  padding: 30px 0 36px 0;
+  border-top: 1px solid var(--colorBorder);
+
+  @media (--viewportMedium) {
+    padding: 40px 0 56px 0;
+  }
+}
+
+.title {
+  composes: listingSectionTitle from '../ListingPageSections.module.css';
+  margin-bottom: 18px;
+  padding: 0 16px;
+
+  @media (--viewportMedium) {
+    margin-bottom: 24px;
+    padding: 0;
+  }
+}
+
+/* Horizontal scroll on mobile, 4-column grid from tablet up */
+.list {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(200px, 64%);
+  gap: 12px;
+  margin: 0;
+  padding: 0 16px 6px 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0 16px;
+  list-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  & > li {
+    min-width: 0;
+    scroll-snap-align: start;
+  }
+
+  @media (--viewportMedium) {
+    grid-auto-flow: row;
+    grid-auto-columns: auto;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    padding: 0;
+    overflow: visible;
+  }
+}

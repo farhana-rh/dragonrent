@@ -1,36 +1,45 @@
 @import '../../styles/customMediaQueries.css';
 
+/* Sections for extended data (listing fields, user fields). They follow the listing page's
+   section style: a hairline above, 16px side padding on mobile. */
+.sectionBlock {
+  margin: 0;
+  padding: 24px 16px;
+  border-top: 1px solid var(--colorBorder);
+
+  @media (--viewportMedium) {
+    padding: 32px 0;
+  }
+}
+
 .sectionHeading,
 .sectionHeadingWithExtraMargin {
   /* Font for sections titles */
-  composes: p from global;
+  margin: 0 0 12px 0;
   padding: 0;
-  font-weight: var(--fontWeightBold);
-
-  margin-top: 0;
-  margin-bottom: 12px;
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: var(--fontWeightSemiBold);
+  letter-spacing: -0.01em;
+  color: var(--colorText);
 
   @media (--viewportMedium) {
-    margin-top: 0;
-    margin-bottom: 8px;
+    margin: 0 0 16px 0;
+    font-size: 24px;
+    line-height: 32px;
   }
 }
 
 .sectionDetails,
 .sectionMultiEnum,
 .sectionEmbeddedYoutubeVideo {
-  padding: 0px 24px;
-  margin-bottom: 24px;
-
-  @media (--viewportMedium) {
-    padding: 0;
-    margin-bottom: 24px;
-  }
+  composes: sectionBlock;
 }
+
 .video {
   position: relative;
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: var(--borderRadiusLarge);
 }
 .iframe {
   position: absolute;
@@ -43,29 +52,25 @@
 }
 
 .ingress {
-  composes: p from global;
   margin: 0;
+  font-size: 16px;
+  line-height: 26px;
+  color: var(--colorTextSecondary);
 
   /* Preserve newlines, but collapse other whitespace */
   white-space: pre-line;
-
-  @media (--viewportMedium) {
-    margin: 0;
-  }
 }
 
 .text {
   font-weight: var(--fontWeightRegular);
-  padding: 1px 0 5px 0;
   margin: 0;
+  padding: 0;
+  font-size: 16px;
+  line-height: 26px;
+  color: var(--colorTextSecondary);
 
   /* Preserve newlines, but collapse other whitespace */
   white-space: pre-line;
-
-  @media (--viewportMedium) {
-    padding: 3px 0 5px 0;
-    margin: 0;
-  }
 }
 
 .longWord {
@@ -74,40 +79,32 @@
 }
 
 .sectionText {
-  padding: 0px 24px;
-  margin-bottom: 24px;
-
-  @media (--viewportMedium) {
-    padding: 0;
-    margin-bottom: 24px;
-  }
+  composes: sectionBlock;
 }
 
 .details {
-  padding-bottom: 1px;
+  padding: 0;
   margin: 0;
 }
 
+/* Label / value rows for listing fields (e.g. "Brand: Sony") */
 .detailsRow {
-  display: inline-flex;
+  display: flex;
   justify-content: space-between;
   width: 100%;
   list-style: none;
+  font-size: 15px;
   font-weight: var(--fontWeightRegular);
   line-height: 24px;
-  padding: 7px 0px 10px;
-  gap: 8px;
+  color: var(--colorTextSecondary);
+  padding: 10px 0;
+  gap: 16px;
 
   &:not(:last-child) {
-    border-bottom: 1px solid var(--colorGrey100);
-  }
-
-  @media (--viewportMedium) {
-    padding: 5px 0 2px 0;
-    line-height: 32px;
+    border-bottom: 1px solid var(--colorBorder);
   }
 }
 .detailLabel {
   font-weight: var(--fontWeightSemiBold);
-  letter-spacing: -0.09px;
+  color: var(--colorText);
 }

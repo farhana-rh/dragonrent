@@ -1,0 +1,125 @@
+@import '../../../styles/customMediaQueries.css';
+
+/* Desktop only: mobile and tablet use the swipeable gallery */
+.root {
+  display: none;
+
+  @media (--viewportLarge) {
+    display: block;
+    position: relative;
+    margin-bottom: 8px;
+  }
+}
+
+.grid {
+  display: grid;
+  gap: 6px;
+  height: 420px;
+  overflow: hidden;
+  border-radius: var(--borderRadiusLarge);
+}
+
+/* Layouts by number of photos */
+.count1 {
+  grid-template-columns: 1fr;
+}
+.count2 {
+  grid-template-columns: 1fr 1fr;
+}
+.count3 {
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+.count4 {
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+
+  & .tile:nth-child(4) {
+    grid-column: 2 / span 2;
+  }
+}
+.count5 {
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.count3 .mainTile,
+.count4 .mainTile,
+.count5 .mainTile {
+  grid-row: 1 / span 2;
+}
+
+.tile {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+
+  background-color: var(--colorSurfaceSubtle);
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+
+  &:hover .image {
+    filter: brightness(0.94);
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--marketplaceColor);
+    outline-offset: -3px;
+  }
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: filter var(--transitionStyleButton);
+}
+
+/* Same as ListingPage.module.css carousel modal classes */
+.carouselModalScrollLayer {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(1, 1, 1, 0.92);
+}
+
+.carouselModalContainer {
+  width: 100%;
+  height: 100%;
+}
+
+.showAllButton {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 14px;
+
+  font-family: var(--fontFamily);
+  font-size: 14px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorText);
+
+  background-color: var(--colorSurface);
+  border: 1px solid var(--colorBorderStrong);
+  border-radius: var(--borderRadiusMedium);
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--colorText);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--focusRing);
+  }
+}

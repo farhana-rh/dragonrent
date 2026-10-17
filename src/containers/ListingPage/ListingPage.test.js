@@ -254,7 +254,7 @@ describe('ListingPage variants', () => {
       expect(getByRole('heading', { name: 'ListingPage.locationTitle' })).toBeInTheDocument();
 
       // Has details reviews title
-      const reviewsTitle = getByRole('heading', { name: 'ListingPage.reviewsTitle' });
+      const reviewsTitle = getByRole('heading', { name: 'ListingPage.reviewsSummary' });
       expect(reviewsTitle).toBeInTheDocument();
       const sectionReviews = within(reviewsTitle.parentNode.parentNode);
       expect(sectionReviews.getByText('It was awesome!')).toBeInTheDocument();
@@ -296,9 +296,10 @@ describe('ListingPage variants', () => {
       expect(screen.getByTestId('carousel')).toBeInTheDocument();
       expect(screen.queryByTestId('hero')).not.toBeInTheDocument();
 
-      // Has order title (rendered for )
+      // Listing title is the page's only h1 (main column); the order panel keeps its modal heading
+      expect(getByRole('heading', { level: 1, name: 'listing1 title' })).toBeInTheDocument();
       const orderTitle = queryAllByRole('heading', { name: 'ListingPage.orderTitle' });
-      expect(orderTitle).toHaveLength(3);
+      expect(orderTitle).toHaveLength(1);
 
       // Has details section title and selected category info
       expect(getByRole('heading', { name: 'ListingPage.detailsTitle' })).toBeInTheDocument();
@@ -309,7 +310,7 @@ describe('ListingPage variants', () => {
       expect(getByRole('heading', { name: 'ListingPage.locationTitle' })).toBeInTheDocument();
 
       // Has details reviews title
-      const reviewsTitle = getByRole('heading', { name: 'ListingPage.reviewsTitle' });
+      const reviewsTitle = getByRole('heading', { name: 'ListingPage.reviewsSummary' });
       expect(reviewsTitle).toBeInTheDocument();
       const sectionReviews = within(reviewsTitle.parentNode.parentNode);
       expect(sectionReviews.getByText('It was awesome!')).toBeInTheDocument();
@@ -359,6 +360,9 @@ describe('Duck', () => {
         sendInquiryInProgress: false,
         sendInquiryError: null,
         inquiryModalOpenForListingId: null,
+        similarListingIds: [],
+        fetchSimilarListingsInProgress: false,
+        fetchSimilarListingsError: null,
       });
     });
 

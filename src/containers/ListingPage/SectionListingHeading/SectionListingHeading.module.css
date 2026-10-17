@@ -1,0 +1,118 @@
+@import '../../../styles/customMediaQueries.css';
+
+.root {
+  padding: 0 16px 24px 16px;
+
+  @media (--viewportMedium) {
+    padding: 0 0 32px 0;
+  }
+}
+
+.title {
+  margin: 0;
+  padding: 0;
+  font-size: 28px;
+  line-height: 34px;
+  font-weight: var(--fontWeightBold);
+  letter-spacing: -0.02em;
+  color: var(--colorText);
+
+  @media (--viewportMedium) {
+    font-size: 36px;
+    line-height: 44px;
+  }
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 8px 0 0 0;
+  padding: 0;
+  font-size: 15px;
+  line-height: 24px;
+  color: var(--colorTextSecondary);
+}
+
+.star {
+  width: 14px;
+  height: 14px;
+  fill: var(--colorText);
+}
+
+.rating {
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorText);
+}
+
+.reviewsLink {
+  color: var(--colorText);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
+  &:hover {
+    color: var(--marketplaceColor);
+  }
+}
+
+/* The booking panel shows the price on desktop */
+.price {
+  margin: 12px 0 0 0;
+  padding: 0;
+  font-size: 15px;
+  line-height: 24px;
+  color: var(--colorTextMuted);
+
+  @media (--viewportLarge) {
+    display: none;
+  }
+}
+
+.priceValue {
+  font-size: 22px;
+  font-weight: var(--fontWeightBold);
+  color: var(--colorText);
+}
+
+.perUnit {
+  color: var(--colorTextMuted);
+}
+
+.host {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--colorBorder);
+
+  @media (--viewportMedium) {
+    margin-top: 24px;
+    padding-top: 24px;
+  }
+}
+
+.avatar {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+}
+
+.hostText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.hostName {
+  font-size: 15px;
+  line-height: 22px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorText);
+}
+
+.hostSince {
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--colorTextMuted);
+}
