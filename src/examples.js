@@ -118,10 +118,11 @@ import * as FilterForm from './containers/SearchPage/FilterForm/FilterForm.examp
 import * as FilterPlain from './containers/SearchPage/FilterPlain/FilterPlain.example';
 import * as FilterPopup from './containers/SearchPage/FilterPopup/FilterPopup.example';
 import * as EmailVerificationForm from './containers/EmailVerificationPage/EmailVerificationForm/EmailVerificationForm.example';
-import * as InquiryForm from './containers/ListingPage/InquiryForm/InquiryForm.example';
 import * as ImageCarousel from './containers/ListingPage/ImageCarousel/ImageCarousel.example';
 import * as ListingImageGallery from './containers/ListingPage/ListingImageGallery/ListingImageGallery.example';
 import * as UserCard from './containers/ListingPage/UserCard/UserCard.example';
+// After UserCard: keeps CSS order consistent with the listing page chunks
+import * as InquiryForm from './containers/ListingPage/InquiryForm/InquiryForm.example';
 import * as PasswordRecoveryForm from './containers/PasswordRecoveryPage/PasswordRecoveryForm/PasswordRecoveryForm.example';
 import * as PasswordResetForm from './containers/PasswordResetPage/PasswordResetForm/PasswordResetForm.example';
 import * as ManageListingCard from './containers/ManageListingsPage/ManageListingCard/ManageListingCard.example';
