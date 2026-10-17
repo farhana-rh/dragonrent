@@ -1,0 +1,133 @@
+@import '../../../styles/customMediaQueries.css';
+
+.root {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 100%;
+  padding: 6px;
+
+  background-color: var(--colorSurface);
+  border: 1px solid var(--colorBorder);
+  border-radius: var(--borderRadiusLarge);
+  box-shadow: var(--boxShadowCard);
+
+  @media (--viewportMedium) {
+    align-items: stretch;
+    padding: 6px;
+  }
+}
+
+/* One column per available field, plus the submit button */
+@media (--viewportMedium) {
+  .fields1 {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .fields2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) auto;
+  }
+  .fields3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+  }
+}
+
+.field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 6px 0 0 0;
+
+  /* Dividers between fields: horizontal on mobile, vertical from tablet up */
+  border-bottom: 1px solid var(--colorBorder);
+
+  @media (--viewportMedium) {
+    padding: 2px 0 0 0;
+    border-bottom: none;
+    border-right: 1px solid var(--colorBorder);
+
+    &:nth-last-child(2) {
+      border-right: none;
+    }
+  }
+}
+
+.fieldLabel {
+  padding: 0 12px;
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorText);
+
+  @media (--viewportMedium) {
+    padding: 0 16px;
+  }
+}
+
+/* Tighten the shared SearchCTA fields to fit under the label */
+.filter {
+  & > div {
+    height: auto;
+  }
+
+  & input {
+    height: 36px;
+    font-size: 15px;
+    background-color: transparent;
+  }
+
+  & input::placeholder {
+    color: var(--colorTextMuted);
+  }
+}
+
+.datesField {
+  /* The date toggle has its own left padding; align its text with the label */
+  & [role='button'] {
+    height: 36px;
+    padding: 0 12px;
+    color: var(--colorTextMuted);
+    font-size: 15px;
+
+    @media (--viewportMedium) {
+      padding: 0 16px;
+    }
+  }
+}
+
+.submitWrapper {
+  padding: 6px 0 0 0;
+
+  @media (--viewportMedium) {
+    display: flex;
+    align-items: center;
+    padding: 0 0 0 6px;
+  }
+}
+
+.submitButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 48px;
+  padding: 0 20px;
+  border-radius: var(--borderRadiusMedium);
+  font-size: 16px;
+
+  @media (--viewportMedium) {
+    width: auto;
+  }
+}
+
+.searchIcon {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: none;
+  flex-shrink: 0;
+
+  & g {
+    stroke: currentColor;
+  }
+}

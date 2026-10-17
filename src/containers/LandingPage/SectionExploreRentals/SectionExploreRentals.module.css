@@ -1,0 +1,13 @@
+.root {
+  composes: section from '../LandingPage.module.css';
+}
+
+.content {
+  composes: sectionContent from '../LandingPage.module.css';
+}
+
+.list {
+  composes: scrollRow from '../LandingPage.module.css';
+  margin-top: 0;
+  margin-bottom: 0;
+}

@@ -1,0 +1,64 @@
+@import '../../../styles/customMediaQueries.css';
+
+.root {
+  display: block;
+  color: var(--colorText);
+
+  &:hover {
+    text-decoration: none;
+
+    & .media {
+      filter: brightness(0.96);
+    }
+
+    & .title {
+      color: var(--marketplaceColor);
+    }
+  }
+
+  &:focus-visible {
+    outline: none;
+
+    & .media {
+      box-shadow: 0 0 0 2px var(--colorBackground), 0 0 0 4px var(--marketplaceColor);
+    }
+  }
+}
+
+.media {
+  transition: filter var(--transitionStyleButton), box-shadow var(--transitionStyleButton);
+}
+
+.title {
+  display: block;
+  margin-top: 12px;
+  font-size: 15px;
+  line-height: 24px;
+  font-weight: var(--fontWeightSemiBold);
+  transition: color var(--transitionStyleButton);
+
+  @media (--viewportMedium) {
+    margin-top: 16px;
+    font-size: 16px;
+  }
+}
+
+.titleLarge {
+  @media (--viewportMedium) {
+    font-size: 18px;
+    line-height: 24px;
+  }
+}
+
+.subtitle {
+  display: block;
+  margin-top: 2px;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--colorTextMuted);
+
+  @media (--viewportMedium) {
+    font-size: 14px;
+    line-height: 20px;
+  }
+}

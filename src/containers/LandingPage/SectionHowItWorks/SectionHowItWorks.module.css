@@ -1,0 +1,103 @@
+@import '../../../styles/customMediaQueries.css';
+
+.root {
+  composes: sectionBand from '../LandingPage.module.css';
+}
+
+.content {
+  composes: sectionContent from '../LandingPage.module.css';
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin: 6px 0 0 0;
+  padding: 0;
+  list-style: none;
+
+  @media (--viewportMedium) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px;
+    margin: 8px 0 0 0;
+  }
+}
+
+/* Mobile: number on the left, text on the right. Tablet and up: number above text. */
+.step {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  /* Don't stretch rows when a sibling step has a longer description */
+  align-content: start;
+  gap: 16px;
+  padding: 0;
+
+  @media (--viewportMedium) {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+.stepNumberRow {
+  display: flex;
+  align-self: start;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stepNumber {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+
+  font-size: 16px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--marketplaceColorDark);
+  background-color: var(--colorAccentSubtle);
+  border-radius: var(--borderRadiusMedium);
+}
+
+.arrow {
+  display: none;
+  color: var(--colorTextMuted);
+
+  @media (--viewportMedium) {
+    display: block;
+    /* Sit in the gap between columns */
+    margin-right: -24px;
+  }
+}
+
+.stepText {
+  min-width: 0;
+}
+
+.stepTitle {
+  margin: 4px 0 0 0;
+  padding: 0;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorText);
+
+  @media (--viewportMedium) {
+    margin: 0;
+    font-size: 20px;
+    line-height: 28px;
+  }
+}
+
+.stepDescription {
+  max-width: 340px;
+  margin: 6px 0 0 0;
+  padding: 0;
+  font-size: 15px;
+  line-height: 24px;
+  color: var(--colorTextSecondary);
+
+  @media (--viewportMedium) {
+    margin: 8px 0 0 0;
+  }
+}

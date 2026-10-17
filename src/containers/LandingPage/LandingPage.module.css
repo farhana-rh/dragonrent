@@ -1,0 +1,74 @@
+@import '../../styles/customMediaQueries.css';
+
+/* Shared layout classes for the landing page sections. Compose these in section styles. */
+
+/* Vertical rhythm: 6px baseline on mobile, 8px from tablet up */
+.section {
+  padding: 36px 0;
+
+  @media (--viewportMedium) {
+    padding: 56px 0;
+  }
+
+  @media (--viewportLarge) {
+    padding: 64px 0;
+  }
+}
+
+/* Full-width white band with hairlines, used to break up the cream page */
+.sectionBand {
+  composes: section;
+  background-color: var(--colorSurface);
+  border-top: 1px solid var(--colorBorder);
+  border-bottom: 1px solid var(--colorBorder);
+}
+
+/* Content column aligned with the topbar and footer */
+.sectionContent {
+  max-width: var(--contentMaxWidthPages);
+  margin: 0 auto;
+  padding: 0 16px;
+
+  @media (--viewportMedium) {
+    padding: 0 24px;
+  }
+
+  @media (--viewportLarge) {
+    padding: 0 32px;
+  }
+}
+
+/* Lists that scroll horizontally on mobile and become a grid from tablet up */
+.scrollRow {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(150px, 42%);
+  gap: 12px;
+  margin: 0 -16px;
+  padding: 0 16px 6px 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0 16px;
+  list-style: none;
+
+  /* Hide the scrollbar but keep scrolling */
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  & > li {
+    scroll-snap-align: start;
+    min-width: 0;
+  }
+
+  @media (--viewportMedium) {
+    grid-auto-flow: row;
+    grid-auto-columns: auto;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px 16px;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+  }
+}

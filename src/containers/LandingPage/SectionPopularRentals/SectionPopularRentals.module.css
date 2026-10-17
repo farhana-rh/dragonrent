@@ -1,0 +1,105 @@
+@import '../../../styles/customMediaQueries.css';
+
+.root {
+  composes: section from '../LandingPage.module.css';
+}
+
+.content {
+  composes: sectionContent from '../LandingPage.module.css';
+}
+
+.list {
+  composes: scrollRow from '../LandingPage.module.css';
+  grid-auto-columns: minmax(200px, 64%);
+  margin-top: 0;
+  margin-bottom: 0;
+
+  @media (--viewportMedium) {
+    grid-auto-columns: auto;
+  }
+}
+
+/* Loading skeletons */
+.skeleton {
+  min-width: 0;
+}
+
+.skeletonImage {
+  aspect-ratio: 4 / 3;
+  border-radius: var(--borderRadiusLarge);
+  background-color: var(--colorSurfaceSubtle);
+}
+
+.skeletonLine,
+.skeletonLineShort {
+  height: 14px;
+  margin-top: 14px;
+  border-radius: var(--borderRadius);
+  background-color: var(--colorSurfaceSubtle);
+}
+
+.skeletonLineShort {
+  width: 50%;
+  margin-top: 8px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .skeletonImage,
+  .skeletonLine,
+  .skeletonLineShort {
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+/* Empty and error states */
+.message {
+  padding: 30px 24px;
+  text-align: center;
+  background-color: var(--colorSurface);
+  border: 1px solid var(--colorBorder);
+  border-radius: var(--borderRadiusLarge);
+
+  @media (--viewportMedium) {
+    padding: 40px 32px;
+  }
+}
+
+.messageTitle {
+  margin: 0;
+  padding: 0;
+  font-size: 17px;
+  line-height: 24px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorText);
+}
+
+.messageText {
+  max-width: 420px;
+  margin: 6px auto 0 auto;
+  padding: 0;
+  font-size: 15px;
+  line-height: 24px;
+  color: var(--colorTextSecondary);
+}
+
+.errorDetails {
+  margin: 6px 0 0 0;
+  font-size: 14px;
+}
+
+.messageLink {
+  composes: buttonSecondaryInline from global;
+  display: inline-flex;
+  align-items: center;
+  margin-top: 18px;
+}

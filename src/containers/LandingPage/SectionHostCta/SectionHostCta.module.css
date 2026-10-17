@@ -1,0 +1,100 @@
+@import '../../../styles/customMediaQueries.css';
+
+.root {
+  composes: section from '../LandingPage.module.css';
+
+  @media (--viewportLarge) {
+    padding-bottom: 80px;
+  }
+}
+
+.content {
+  composes: sectionContent from '../LandingPage.module.css';
+}
+
+.card {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  padding: 24px;
+
+  background-color: var(--colorSurface);
+  border: 1px solid var(--colorBorder);
+  border-radius: 16px;
+
+  @media (--viewportMedium) {
+    gap: 32px;
+    padding: 40px;
+  }
+
+  /* Side by side only when there's room for both the copy and the image */
+  @media (--viewportLarge) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+    align-items: center;
+    gap: 48px;
+    padding: 40px 40px 40px 48px;
+  }
+}
+
+.text {
+  min-width: 0;
+}
+
+.title {
+  margin: 0;
+  padding: 0;
+  font-size: 28px;
+  line-height: 34px;
+  font-weight: var(--fontWeightBold);
+  letter-spacing: -0.02em;
+  color: var(--colorText);
+
+  @media (--viewportMedium) {
+    font-size: 32px;
+    line-height: 40px;
+  }
+}
+
+.description {
+  max-width: 420px;
+  margin: 12px 0 0 0;
+  padding: 0;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--colorTextSecondary);
+
+  @media (--viewportMedium) {
+    margin: 16px 0 0 0;
+    font-size: 17px;
+    line-height: 26px;
+  }
+}
+
+.button {
+  composes: buttonPrimary from global;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 24px;
+  padding: 0 24px;
+
+  @media (--viewportMedium) {
+    width: auto;
+    margin-top: 32px;
+  }
+}
+
+.media {
+  aspect-ratio: 3 / 2;
+  border-radius: var(--borderRadiusLarge);
+
+  /* Stacked under the copy on tablet: keep the image short */
+  @media (--viewportMedium) {
+    aspect-ratio: 21 / 9;
+  }
+
+  @media (--viewportLarge) {
+    aspect-ratio: 3 / 2;
+  }
+}

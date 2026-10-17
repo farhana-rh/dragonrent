@@ -1,0 +1,42 @@
+.root {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--borderRadiusLarge);
+  background-color: var(--colorPlaceholderSand);
+}
+
+/* Aspect ratios */
+.square {
+  aspect-ratio: 1 / 1;
+}
+.landscape {
+  aspect-ratio: 4 / 3;
+}
+.wide {
+  aspect-ratio: 3 / 2;
+}
+
+/* Placeholder tones */
+.sage {
+  background-color: var(--colorPlaceholderSage);
+}
+.sand {
+  background-color: var(--colorPlaceholderSand);
+}
+.blush {
+  background-color: var(--colorPlaceholderBlush);
+}
+.slate {
+  background-color: var(--colorPlaceholderSlate);
+}
+.stone {
+  background-color: var(--colorPlaceholderStone);
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
