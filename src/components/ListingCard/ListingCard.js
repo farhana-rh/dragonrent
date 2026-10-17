@@ -178,11 +178,6 @@ export const ListingCard = props => {
         />
       )}
       <div className={css.info}>
-        {showPrice ? (
-          <div className={css.price} title={priceTooltip}>
-            {priceMessage}
-          </div>
-        ) : null}
         <div className={css.mainInfo}>
           {showListingImage && (
             <div className={classNames(css.title, { [css.lightText]: darkMode })}>
@@ -195,6 +190,14 @@ export const ListingCard = props => {
             </div>
           ) : null}
         </div>
+        {showPrice ? (
+          <div
+            className={classNames(css.price, { [css.lightText]: darkMode })}
+            title={priceTooltip}
+          >
+            {priceMessage}
+          </div>
+        ) : null}
       </div>
     </NamedLink>
   );

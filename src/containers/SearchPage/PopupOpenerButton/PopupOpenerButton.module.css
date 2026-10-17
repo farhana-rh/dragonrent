@@ -27,8 +27,11 @@
   &:focus,
   &:hover {
     outline: none;
-    box-shadow: var(--boxShadowFilterButton);
     text-decoration: none;
+  }
+
+  &:focus-visible {
+    box-shadow: var(--focusRing);
   }
 
   &:disabled {
@@ -37,37 +40,31 @@
   }
 
   @media (--viewportMedium) {
-    height: auto;
+    height: 40px;
     min-height: 0;
-    padding: var(--marketplaceButtonSmallDesktopPadding);
+    padding: 0 16px;
     margin: 0;
 
     font-weight: var(--fontWeightMedium);
-    font-size: 13px;
+    font-size: 14px;
     line-height: 20px;
   }
 }
 
 .label {
   /* Button borders */
-  border: 1px solid var(--colorGrey100);
+  border: 1px solid var(--colorBorderStrong);
   border-radius: var(--borderRadiusMedium);
 
-  background-color: var(--colorWhite);
+  background-color: var(--colorSurface);
+  color: var(--colorText);
 
   &:hover,
   &:focus {
-    border-color: var(--colorGrey300);
+    border-color: var(--colorText);
   }
   &:disabled {
-    border-color: var(--colorGrey100);
-  }
-
-  @media (--viewportMedium) {
-    &:hover,
-    &:focus {
-      border-color: transparent;
-    }
+    border-color: var(--colorBorder);
   }
 }
 
@@ -76,17 +73,17 @@
   border-radius: var(--borderRadiusMedium);
   border: 1px solid var(--marketplaceColor);
 
-  /* Button colors: secondary */
-  background-color: var(--marketplaceColor);
-  color: var(--colorWhite);
+  /* Selected filters use a tinted accent, as in the design */
+  background-color: var(--colorAccentSubtle);
+  color: var(--marketplaceColorDark);
 
   &:hover,
   &:focus {
     border: 1px solid var(--marketplaceColorDark);
   }
   &:disabled {
-    background-color: var(--colorGrey100);
-    color: var(--colorWhite);
+    background-color: var(--colorBorder);
+    color: var(--colorTextMuted);
   }
 }
 

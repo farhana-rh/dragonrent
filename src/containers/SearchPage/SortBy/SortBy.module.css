@@ -34,17 +34,21 @@
   text-decoration: none;
 
   /* Button borders */
-  border: 1px solid var(--colorGrey100);
+  border: 1px solid var(--colorBorderStrong);
   border-radius: var(--borderRadiusMedium);
 
-  background-color: var(--colorWhite);
+  background-color: var(--colorSurface);
+  color: var(--colorText);
 
   &:focus,
   &:hover {
     outline: none;
-    box-shadow: var(--boxShadowFilterButton);
     text-decoration: none;
-    border-color: var(--colorGrey300);
+    border-color: var(--colorText);
+  }
+
+  &:focus-visible {
+    box-shadow: var(--focusRing);
   }
 
   &:disabled {
@@ -53,19 +57,14 @@
   }
 
   @media (--viewportMedium) {
-    gap: 36px;
-    height: auto;
+    gap: 24px;
+    height: 40px;
     min-height: 0;
-    padding: var(--marketplaceButtonSmallDesktopPadding);
+    padding: 0 16px;
     margin: 0;
 
     font-weight: var(--fontWeightMedium);
-    font-size: 13px;
+    font-size: 14px;
     line-height: 20px;
-
-    &:hover,
-    &:focus {
-      border-color: transparent;
-    }
   }
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
+import { FormattedMessage } from '../../../util/reactIntl';
 import { propTypes } from '../../../util/types';
 import { ListingCard, PaginationLinks } from '../../../components';
 
@@ -65,9 +66,9 @@ const SearchResultsPanel = props => {
       return [
         '(max-width: 549px) 100vw',
         '(max-width: 767px) 50vw',
-        `(max-width: 1439px) 26vw`,
-        `(max-width: 1920px) 18vw`,
-        `14vw`,
+        '(max-width: 1023px) 33vw',
+        '(max-width: 1120px) 25vw',
+        '264px',
       ].join(', ');
     }
   };
@@ -87,7 +88,23 @@ const SearchResultsPanel = props => {
         ))}
         {props.children}
       </ul>
-      {paginationLinks}
+      {pagination?.totalItems > 0 && listings.length > 0 ? (
+        <div className={css.paginationArea}>
+          <p className={css.resultsSummary}>
+            <FormattedMessage
+              id="SearchResultsPanel.showingResults"
+              values={{
+                start: (pagination.page - 1) * pagination.perPage + 1,
+                end: (pagination.page - 1) * pagination.perPage + listings.length,
+                total: pagination.totalItems,
+              }}
+            />
+          </p>
+          {paginationLinks}
+        </div>
+      ) : (
+        paginationLinks
+      )}
     </div>
   );
 };

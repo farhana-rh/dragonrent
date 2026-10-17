@@ -30,33 +30,36 @@
 }
 
 .listingCards {
-  padding: 0 0 72px 0;
+  padding: 0 0 36px 0;
+  margin: 0;
 
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  gap: 24px;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 30px 16px;
   width: 100%;
 
   @media (min-width: 550px) {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   @media (--viewportMedium) {
-    padding: 0 0 96px 0;
-    grid-template-columns: repeat(2, 1fr);
+    padding: 0 0 40px 0;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px 16px;
   }
 
   @media (--viewportLarge) {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
+}
 
-  @media (min-width: 1440px) {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  @media (--viewportXLarge) {
-    grid-template-columns: repeat(5, 1fr);
-  }
+.resultsSummary {
+  margin: 0 0 12px 0;
+  padding: 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--colorTextMuted);
+  text-align: center;
 }
 
 .listingCard {
@@ -64,7 +67,15 @@
 }
 
 .pagination {
+  background-color: transparent;
+}
+
+.paginationArea {
   /* margin-top: auto; pushes pagination to the end of the page. */
   margin-top: auto;
-  background-color: transparent;
+  padding-bottom: 36px;
+
+  @media (--viewportMedium) {
+    padding-bottom: 56px;
+  }
 }

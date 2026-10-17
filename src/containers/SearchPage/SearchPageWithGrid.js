@@ -16,12 +16,16 @@ import {
   validUrlQueryParamsFromProps,
   getDerivedRenderData,
   onResetAll,
+  onApplyFilters,
   createFilterValueChangeHandler,
   onSortBy,
 } from './SearchPage.shared';
 
 import FilterComponent from './FilterComponent';
 import MainPanelHeader from './MainPanelHeader/MainPanelHeader';
+import SearchFiltersSecondary from './SearchFiltersSecondary/SearchFiltersSecondary';
+import SearchFiltersPrimary from './SearchFiltersPrimary/SearchFiltersPrimary';
+import SearchFilterChips from './SearchFilterChips/SearchFilterChips';
 import SearchFiltersMobile from './SearchFiltersMobile/SearchFiltersMobile';
 import SortBy from './SortBy/SortBy';
 import SearchResultsPanel from './SearchResultsPanel/SearchResultsPanel';
@@ -43,6 +47,7 @@ export class SearchPageComponent extends Component {
 
     this.state = {
       isMobileModalOpen: false,
+      isSecondaryFiltersOpen: false,
       currentQueryParams: validUrlQueryParamsFromProps(props),
     };
 
@@ -50,6 +55,8 @@ export class SearchPageComponent extends Component {
     this.onCloseMobileModal = this.onCloseMobileModal.bind(this);
 
     // Filter functions
+    this.applyFilters = this.applyFilters.bind(this);
+    this.cancelFilters = this.cancelFilters.bind(this);
     this.resetAll = this.resetAll.bind(this);
     this.getHandleChangedValueFn = this.getHandleChangedValueFn.bind(this);
 
@@ -67,6 +74,25 @@ export class SearchPageComponent extends Component {
   // for example when a filter modal is opened in mobile view
   onCloseMobileModal() {
     this.setState({ isMobileModalOpen: false });
+  }
+
+  // Apply the secondary filters by redirecting to SearchPage with new filters.
+  applyFilters() {
+    const { history, routeConfiguration, config, params: currentPathParams, location } = this.props;
+    onApplyFilters({
+      history,
+      routeConfiguration,
+      config,
+      location,
+      currentPathParams,
+      urlQueryParams: validUrlQueryParamsFromProps(this.props),
+      currentQueryParams: this.state.currentQueryParams,
+    });
+  }
+
+  // Close the secondary filters by clicking cancel, revert to the initial params
+  cancelFilters() {
+    this.setState({ currentQueryParams: {} });
   }
 
   // Reset all filter query parameters
@@ -150,6 +176,10 @@ export class SearchPageComponent extends Component {
       sortConfig,
       validQueryParams,
       availableFilters,
+      availablePrimaryFilters,
+      customSecondaryFilters,
+      hasSecondaryFilters,
+      selectedSecondaryFiltersCount,
       selectedFilters,
       isValidDatesFilter,
       selectedFiltersCountForMobile,
@@ -174,6 +204,17 @@ export class SearchPageComponent extends Component {
       currentPathParams,
       currentUser,
     });
+
+    const isSecondaryFiltersOpen = !!hasSecondaryFilters && this.state.isSecondaryFiltersOpen;
+    const propsForSecondaryFiltersToggle = hasSecondaryFilters
+      ? {
+          isSecondaryFiltersOpen: this.state.isSecondaryFiltersOpen,
+          toggleSecondaryFiltersOpen: isOpen => {
+            this.setState({ isSecondaryFiltersOpen: isOpen, currentQueryParams: {} });
+          },
+          selectedSecondaryFiltersCount,
+        }
+      : {};
 
     const sortBy = mode => {
       return sortConfig.active ? (
@@ -216,21 +257,38 @@ export class SearchPageComponent extends Component {
         schema={schema}
       >
         <TopbarContainer rootClassName={topbarClasses} currentSearchParams={validQueryParams} />
-        <div className={css.layoutWrapperContainer}>
-          <aside className={css.layoutWrapperFilterColumn} data-testid="filterColumnAside">
-            <div className={css.filterColumnContent}>
+        <div className={css.gridPageContainer}>
+          <div id="main-content" className={css.gridPageContent} role="main">
+            <SearchFiltersMobile
+              className={css.searchFiltersMobileList}
+              urlQueryParams={validQueryParams}
+              sortByComponent={sortBy('mobile')}
+              listingsAreLoaded={listingsAreLoaded}
+              resultsCount={totalItems}
+              searchInProgress={searchInProgress}
+              searchListingsError={searchListingsError}
+              showAsModalMaxWidth={MODAL_BREAKPOINT}
+              onManageDisableScrolling={onManageDisableScrolling}
+              onOpenModal={this.onOpenMobileModal}
+              onCloseModal={this.onCloseMobileModal}
+              resetAll={this.resetAll}
+              selectedFiltersCount={selectedFiltersCountForMobile}
+              isMapVariant={false}
+              noResultsInfo={noResultsInfo}
+              location={location}
+            >
               {availableFilters.map(filterConfig => {
-                const key = `SearchFiltersDesktop.${filterConfig.scope || 'built-in'}.${
+                const key = `SearchFiltersMobile.${filterConfig.scope || 'built-in'}.${
                   filterConfig.key
                 }`;
-                const filterId = `SearchFiltersDesktop.${filterConfig.key.toLowerCase()}`;
+                const filterId = `SearchFiltersMobile.${filterConfig.key.toLowerCase()}`;
+
                 return (
                   <FilterComponent
                     key={key}
                     id={filterId}
-                    className={css.filter}
                     config={filterConfig}
-                    containerId="SearchPageWithGrid_DesktopFilters"
+                    containerId="SearchPage_MobileFilters"
                     listingCategories={listingCategories}
                     marketplaceCurrency={marketplaceCurrency}
                     urlQueryParams={validQueryParams}
@@ -239,70 +297,103 @@ export class SearchPageComponent extends Component {
                     intl={intl}
                     liveEdit
                     showAsPopup={false}
-                    isDesktop
                   />
                 );
               })}
-              <button className={css.resetAllButton} onClick={e => this.handleResetAll(e)}>
-                <FormattedMessage id={'SearchFiltersMobile.resetAll'} />
-              </button>
-            </div>
-          </aside>
+            </SearchFiltersMobile>
 
-          <div id="main-content" className={css.layoutWrapperMain} role="main">
-            <div className={css.searchResultContainer}>
-              <SearchFiltersMobile
-                className={css.searchFiltersMobileList}
-                urlQueryParams={validQueryParams}
-                sortByComponent={sortBy('mobile')}
-                listingsAreLoaded={listingsAreLoaded}
-                resultsCount={totalItems}
-                searchInProgress={searchInProgress}
-                searchListingsError={searchListingsError}
-                showAsModalMaxWidth={MODAL_BREAKPOINT}
-                onManageDisableScrolling={onManageDisableScrolling}
-                onOpenModal={this.onOpenMobileModal}
-                onCloseModal={this.onCloseMobileModal}
-                resetAll={this.resetAll}
-                selectedFiltersCount={selectedFiltersCountForMobile}
-                isMapVariant={false}
-                noResultsInfo={noResultsInfo}
-                location={location}
+            {/* Desktop: filters as dropdowns in a row above the results, sort on the right */}
+            <div className={css.filterBar} data-testid="filterBar">
+              <SearchFiltersPrimary
+                className={css.primaryFilters}
+                {...propsForSecondaryFiltersToggle}
               >
-                {availableFilters.map(filterConfig => {
-                  const key = `SearchFiltersMobile.${filterConfig.scope || 'built-in'}.${
+                {availablePrimaryFilters.map(filterConfig => {
+                  const key = `SearchFiltersPrimary.${filterConfig.scope || 'built-in'}.${
                     filterConfig.key
                   }`;
-                  const filterId = `SearchFiltersMobile.${filterConfig.key.toLowerCase()}`;
-
+                  const filterId = `SearchFiltersPrimary.${filterConfig.key.toLowerCase()}`;
                   return (
                     <FilterComponent
                       key={key}
                       id={filterId}
                       config={filterConfig}
-                      containerId="SearchPage_MobileFilters"
+                      containerId="SearchPageWithGrid_PrimaryFilters"
                       listingCategories={listingCategories}
                       marketplaceCurrency={marketplaceCurrency}
                       urlQueryParams={validQueryParams}
                       initialValues={initialValues(this.props, this.state.currentQueryParams)}
                       getHandleChangedValueFn={this.getHandleChangedValueFn}
                       intl={intl}
-                      liveEdit
-                      showAsPopup={false}
+                      showAsPopup
+                      contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
                     />
                   );
                 })}
-              </SearchFiltersMobile>
-              <MainPanelHeader
-                className={css.mainPanel}
-                sortByComponent={sortBy('desktop')}
-                isSortByActive={sortConfig.active}
-                listingsAreLoaded={listingsAreLoaded}
-                resultsCount={totalItems}
-                searchInProgress={searchInProgress}
-                searchListingsError={searchListingsError}
-                noResultsInfo={noResultsInfo}
+              </SearchFiltersPrimary>
+              {sortConfig.active ? (
+                <div className={css.sortWrapper}>
+                  <span className={css.sortLabel}>
+                    <FormattedMessage id="MainPanelHeader.sortBy" />
+                  </span>
+                  {sortBy('desktop')}
+                </div>
+              ) : null}
+            </div>
+
+            <MainPanelHeader
+              className={css.mainPanel}
+              isSortByActive={false}
+              listingsAreLoaded={listingsAreLoaded}
+              resultsCount={totalItems}
+              searchInProgress={searchInProgress}
+              searchListingsError={searchListingsError}
+              noResultsInfo={noResultsInfo}
+            >
+              <SearchFilterChips
+                className={css.filterChips}
+                urlQueryParams={validQueryParams}
+                config={config}
+                intl={intl}
+                onRemove={params => this.getHandleChangedValueFn(true)(params)}
+                onClearAll={e => this.handleResetAll(e)}
               />
+            </MainPanelHeader>
+
+            {isSecondaryFiltersOpen ? (
+              <div className={css.searchFiltersPanel}>
+                <SearchFiltersSecondary
+                  urlQueryParams={validQueryParams}
+                  listingsAreLoaded={listingsAreLoaded}
+                  applyFilters={this.applyFilters}
+                  cancelFilters={this.cancelFilters}
+                  resetAll={this.resetAll}
+                  onClosePanel={() => this.setState({ isSecondaryFiltersOpen: false })}
+                >
+                  {customSecondaryFilters.map(filterConfig => {
+                    const key = `SearchFiltersSecondary.${filterConfig.scope || 'built-in'}.${
+                      filterConfig.key
+                    }`;
+                    const filterId = `SearchFiltersSecondary.${filterConfig.key.toLowerCase()}`;
+                    return (
+                      <FilterComponent
+                        key={key}
+                        id={filterId}
+                        config={filterConfig}
+                        containerId="SearchPageWithGrid_SecondaryFilters"
+                        listingCategories={listingCategories}
+                        marketplaceCurrency={marketplaceCurrency}
+                        urlQueryParams={validQueryParams}
+                        initialValues={initialValues(this.props, this.state.currentQueryParams)}
+                        getHandleChangedValueFn={this.getHandleChangedValueFn}
+                        intl={intl}
+                        showAsPopup={false}
+                      />
+                    );
+                  })}
+                </SearchFiltersSecondary>
+              </div>
+            ) : (
               <div
                 className={classNames(css.listingsForGridVariant, {
                   [css.newSearchInProgress]: !(listingsAreLoaded || searchListingsError),
@@ -322,7 +413,7 @@ export class SearchPageComponent extends Component {
                   intl={intl}
                 />
               </div>
-            </div>
+            )}
           </div>
         </div>
         <FooterContainer />

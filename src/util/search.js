@@ -149,3 +149,14 @@ export const isStockInUse = config => {
   // Note: these are active processes!
   return hasStockProcessesInUse;
 };
+
+/**
+ * Create the "to" prop for a NamedLink to the SearchPage, filtered by a top-level category.
+ * The search schema for categories is fixed to pub_categoryLevel1/2/3.
+ *
+ * @param {string} categoryId id of a top-level category from the listing-categories asset
+ * @returns {Object} e.g. { search: '?pub_categoryLevel1=bikes' }
+ */
+export const categorySearchTo = categoryId => ({
+  search: `?pub_categoryLevel1=${encodeURIComponent(categoryId)}`,
+});

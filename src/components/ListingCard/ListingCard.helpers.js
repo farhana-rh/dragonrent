@@ -69,10 +69,14 @@ export const getListingCardTranslations = (listing, config, intl) => {
   const perUnitString = isBookable
     ? intl.formatMessage({ id: 'ListingCard.perUnit' }, { unitType: publicData?.unitType })
     : '';
+  // Compact unit for the visible price, e.g. "€28 / day". Screen readers get "per day".
+  const perUnitShortString = isBookable
+    ? intl.formatMessage({ id: 'ListingCard.perUnitShort' }, { unitType: publicData?.unitType })
+    : '';
 
   // Visible price block uses JSX spans for styling; aria-label needs a plain string.
   const priceValue = <span className={css.priceValue}>{formattedPrice}</span>;
-  const pricePerUnit = isBookable ? <span className={css.perUnit}>{perUnitString}</span> : '';
+  const pricePerUnit = isBookable ? <span className={css.perUnit}>{perUnitShortString}</span> : '';
   const priceMessage =
     showPrice && formattedPrice != null
       ? intl.formatMessage({ id: priceMessageId }, { priceValue, pricePerUnit })
