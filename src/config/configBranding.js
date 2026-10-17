@@ -1,8 +1,9 @@
-import logoImageDesktop from '../assets/biketribe-logo-desktop.png';
-import logoImageMobile from '../assets/biketribe-logo-mobile.png';
-import brandImage from '../assets/biketribe-brandImage-1500.jpg';
-import facebookImage from '../assets/biketribe-facebook-sharing-1200x630.jpg';
-import twitterImage from '../assets/biketribe-twitter-sharing-600x314.jpg';
+// NOTE: these are temporary DragonRent placeholders. Upload the final logo and
+// social sharing images in Console (Build > Branding), which overrides these.
+import logoImage from '../assets/dragonrent-logo.svg';
+import brandImage from '../assets/dragonrent-brandImage-1500.jpg';
+import facebookImage from '../assets/dragonrent-facebook-sharing-1200x630.jpg';
+import twitterImage from '../assets/dragonrent-twitter-sharing-600x314.jpg';
 
 /////////////////////////////////////////////////////////
 // This file contains configs that affect branding     //
@@ -18,7 +19,7 @@ import twitterImage from '../assets/biketribe-twitter-sharing-600x314.jpg';
 // This is saved as CSS Property: --marketplaceColor in src/app.js
 // Also --marketplaceColorDark and --marketplaceColorLight are generated from this one
 // by adding +/- 10% to lightness.
-export const marketplaceColor = '#7c3aed';
+export const marketplaceColor = '#c2410c';
 
 // Logo is used in Topbar on mobile and desktop, where height is the limiting factor.
 // Therefore, we strongly suggest that your image file for desktop logo is in landscape!
@@ -26,8 +27,8 @@ export const marketplaceColor = '#7c3aed';
 // If you need to fine-tune the logo, the component is defined in src/components/Logo/Logo.js
 // By default logo gets 24 pixels vertical space, but it could be wider (e.g. 180px)
 // The default images are meant for retina displays and are therefore twice as big in actual dimensions
-export const logoImageDesktopURL = logoImageDesktop;
-export const logoImageMobileURL = logoImageMobile;
+export const logoImageDesktopURL = logoImage;
+export const logoImageMobileURL = logoImage;
 
 // The _logoSettings_ settings for the logo. Due to constraints in current Topbar, we only support 3 height variants
 // at this point. There could be more height variants in the future and potentially other logo formats than 'image'.

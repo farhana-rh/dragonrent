@@ -34,21 +34,51 @@
   --colorBannedDark: var(--marketplaceColor);
 
   /* B&W and Grey palette */
+  /* DragonRent uses warm neutrals (hue 36) instead of the template's cool greys */
 
   --colorWhite: hsl(0 0% 100%);
-  --colorGrey50: hsl(240 3% 98%);
-  --colorGrey100: hsl(240 3% 90%);
-  --colorGrey200: hsl(240 3% 80%);
-  --colorGrey300: hsl(240 3% 70%);
-  --colorGrey400: hsl(240 3% 60%);
-  --colorGrey500: hsl(240 3% 50%);
-  --colorGrey600: hsl(240 3% 40%);
-  --colorGrey700: hsl(240 3% 30%);
-  --colorGrey800: hsl(240 3% 20%);
-  --colorGrey900: hsl(240 3% 10%);
+  --colorGrey50: hsl(36 33% 97%);
+  --colorGrey100: hsl(36 20% 89%);
+  --colorGrey200: hsl(36 12% 80%);
+  --colorGrey300: hsl(36 8% 68%);
+  --colorGrey400: hsl(36 6% 57%);
+  --colorGrey500: hsl(36 5% 47%);
+  --colorGrey600: hsl(36 5% 36%);
+  --colorGrey700: hsl(36 6% 26%);
+  --colorGrey800: hsl(36 7% 17%);
+  --colorGrey900: hsl(36 8% 11%);
   --colorBlack: hsl(0 0% 0%);
 
   --colorLightTransparent: rgba(255, 255, 255, 0.65);
+
+  /* ================ DragonRent design tokens ================ */
+
+  /* Surfaces */
+  --colorBackground: #f9f6f1; /* page background (cream) */
+  --colorSurface: var(--colorWhite); /* cards, panels, footer */
+  --colorSurfaceSubtle: #f4efe7; /* inset boxes inside cards */
+
+  /* Text */
+  --colorText: #1f1d1a; /* headings and primary text */
+  --colorTextSecondary: #5c5750; /* body copy, descriptions */
+  --colorTextMuted: #807a72; /* meta text, captions */
+
+  /* Borders */
+  --colorBorder: #ebe5dc; /* dividers, card outlines */
+  --colorBorderStrong: #b9b2a7; /* input and outline button borders */
+
+  /* Accent tints */
+  --colorAccentSubtle: #fcebe0; /* step numbers, selected states */
+
+  /* Image placeholder tints (used until real photography is available) */
+  --colorPlaceholderSage: #dce3da;
+  --colorPlaceholderSand: #e5ddd0;
+  --colorPlaceholderBlush: #e8dbd3;
+  --colorPlaceholderSlate: #dee0e5;
+  --colorPlaceholderStone: #e3dfd3;
+
+  /* Focus ring for keyboard navigation */
+  --focusRing: 0 0 0 3px rgb(194 65 12 / 25%);
 
   /**
   * Marketplace color comes by default from src/config/brandingConfig.js
@@ -56,17 +86,17 @@
   * In the future, we are planning to bring more --marketplace* CSS Properties
   * from hosted assets, which means that they could be managed through Console.
   */
-  --marketplaceColor: #6938ef; /* hsl(256, 85%, 58%) */
-  --marketplaceColorLight: #4a12e2; /* hsl(256, 85%, 48%) */
-  --marketplaceColorDark: #8d68f3; /* hsl(256, 85%, 68% */
+  --marketplaceColor: #c2410c; /* hsl(17, 88%, 40%) */
+  --marketplaceColorLight: #ef5a1b; /* hsl(17, 88%, 50%) */
+  --marketplaceColorDark: #923109; /* hsl(17, 88%, 30%) */
 
-  /** 
+  /**
    * The fill color used by <PrimaryButton>
    * These might be overwritten by values from hosted assets
    */
-  --colorPrimaryButton: #138041;
-  --colorPrimaryButtonDark: #0d542a;
-  --colorPrimaryButtonLight: #1aad57;
+  --colorPrimaryButton: #c2410c;
+  --colorPrimaryButtonDark: #923109;
+  --colorPrimaryButtonLight: #ef5a1b;
 
   /** 
    * The fill color used by <SecondaryButton>
@@ -83,7 +113,7 @@
   --colorStatusFinalState: var(--colorGrey600);
 
   /* ================ Font ================ */
-  --fontFamily: -apple-system, BlinkMacSystemFont, 'Inter', Helvetica, Arial, sans-serif,
+  --fontFamily: 'Inter', -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif,
     'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 
   --fontWeightRegular: 400;
@@ -121,6 +151,7 @@
   --boxShadowSectionLocationHover: 0 10px 30px 0 rgba(0, 0, 0, 0.1);
   --boxShadowBottomForm: 0 -2px 4px 0 rgba(0, 0, 0, 0.05);
   --boxShadowFilterButton: 0 4px 16px 0 rgba(0, 0, 0, 0.2);
+  --boxShadowCard: 0 1px 2px 0 rgba(31, 29, 26, 0.04), 0 4px 16px 0 rgba(31, 29, 26, 0.06);
 
   /* ================ Z-index base levels ================ */
 
@@ -135,8 +166,9 @@
 
   /* ================ Border radius ================ */
 
-  --borderRadius: 2px;
-  --borderRadiusMedium: 4px;
+  --borderRadius: 4px;
+  --borderRadiusMedium: 8px;
+  --borderRadiusLarge: 12px;
 
   /* ================ Transition styles ================ */
 
@@ -146,7 +178,7 @@
   /* ================ Topbar related ================ */
 
   --topbarHeight: 60px;
-  --topbarHeightDesktop: 72px;
+  --topbarHeightDesktop: 64px;
 
   --TopbarMobileMenu_topMargin: 96px;
 
@@ -176,7 +208,7 @@
   --datepickerDateOutline: white solid 1px;
   --datepickerButtonOutlineColor: var(--colorGrey50);
   --datepickerSelectedFgColor: var(--colorWhite);
-  --datepickerSelectedBgColor: var(--colorSuccess);
+  --datepickerSelectedBgColor: var(--marketplaceColorDark);
   --datepickerSelectedHoveredFgColor: inherit;
   --datepickerSelectedHoveredBgColor: rgba(255, 255, 255, 0.2);
 
@@ -221,7 +253,7 @@ body {
   text-rendering: optimizeSpeed;
   font-optical-sizing: auto;
 
-  background-color: var(--colorGrey50);
+  background-color: var(--colorBackground);
 }
 
 ::selection {
@@ -267,17 +299,19 @@ a:hover {
 }
 
 h1 {
-  font-size: 24px;
-  line-height: 24px;
-  font-weight: var(--fontWeightBlack);
-  padding: 3px 0 3px 0;
+  font-size: 32px;
+  line-height: 36px;
+  font-weight: var(--fontWeightBold);
+  letter-spacing: -0.02em;
+  color: var(--colorText);
+  padding: 0;
   /* margin-top + n * line-height + margin-bottom => x * 6px */
   margin-top: 18px;
   margin-bottom: 18px;
 
   @media (--viewportMedium) {
-    font-size: 64px;
-    line-height: 64px;
+    font-size: 48px;
+    line-height: 56px;
     padding: 0;
     /* margin-top + n * line-height + margin-bottom => x * 8px */
     margin-top: 24px;
@@ -286,19 +320,21 @@ h1 {
 }
 
 h2 {
-  font-size: 21px;
-  line-height: 24px;
+  font-size: 24px;
+  line-height: 30px;
+  letter-spacing: -0.01em;
+  color: var(--colorText);
   font-weight: var(--fontWeightBold);
 
-  padding: 4px 0 2px 0;
+  padding: 0;
   /* x * 6px */
   margin-top: 24px;
   margin-bottom: 18px;
 
   @media (--viewportMedium) {
-    font-size: 40px;
-    line-height: 56px;
-    padding: 5px 0 3px 0;
+    font-size: 32px;
+    line-height: 40px;
+    padding: 0;
     /* x * 8px */
     margin-top: 24px;
     margin-bottom: 16px;
@@ -309,14 +345,15 @@ h3 {
   font-weight: var(--fontWeightBold);
   font-size: 18px;
   line-height: 24px;
+  color: var(--colorText);
   /* x * 6px */
   margin-top: 18px;
   margin-bottom: 12px;
 
   @media (--viewportMedium) {
-    font-size: 30px;
-    line-height: 40px;
-    padding: 1px 0 7px 0;
+    font-size: 24px;
+    line-height: 32px;
+    padding: 0;
     /* x * 8px */
     margin-top: 16px;
     margin-bottom: 16px;
@@ -327,13 +364,14 @@ h4 {
   font-weight: var(--fontWeightBold);
   font-size: 16px;
   line-height: 30px;
+  color: var(--colorText);
   padding: 5px 0 1px 0;
   /* x * 6px */
   margin-top: 12px;
   margin-bottom: 6px;
 
   @media (--viewportMedium) {
-    font-size: 21px;
+    font-size: 20px;
     line-height: 32px;
     padding: 0;
     /* x * 8px */
@@ -384,7 +422,7 @@ li,
 p,
 pre {
   font-family: var(--fontFamily);
-  font-weight: var(--fontWeightMedium);
+  font-weight: var(--fontWeightRegular);
 
   /* No margins for default font */
   font-size: 14px;
@@ -415,7 +453,7 @@ pre {
 
 html {
   /* font is set earlier */
-  color: var(--colorGrey700);
+  color: var(--colorText);
   padding: 0;
   margin: 0;
 }
@@ -487,8 +525,9 @@ select {
   background-color: #fff;
 
   /* Borders */
-  border-radius: 6px;
-  border: 1px solid #d8dce6;
+  border-radius: var(--borderRadiusMedium);
+  border: 1px solid var(--colorBorderStrong);
+  color: var(--colorText);
   outline: none;
 
   /* Transition */
@@ -500,12 +539,12 @@ select {
   appearance: none;
 
   /* Background */
-  background-image: url("data:image/svg+xml,%3Csvg width='10' height='16' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%232D4053' stroke='%232D4053' stroke-width='.5' fill-rule='evenodd'%3E%3Cpath d='M4.687 15.315a.443.443 0 0 0 .626 0l3.557-3.556a.446.446 0 0 0-.629-.629L5 14.37l-3.241-3.24a.445.445 0 0 0-.629.63l3.557 3.553v.002ZM5.313 1.13a.443.443 0 0 0-.626 0L1.13 4.685a.446.446 0 0 0 .629.63L5 2.074l3.241 3.24a.445.445 0 0 0 .629-.629L5.313 1.131V1.13Z'/%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='16' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%231F1D1A' stroke='%231F1D1A' stroke-width='.5' fill-rule='evenodd'%3E%3Cpath d='M4.687 15.315a.443.443 0 0 0 .626 0l3.557-3.556a.446.446 0 0 0-.629-.629L5 14.37l-3.241-3.24a.445.445 0 0 0-.629.63l3.557 3.553v.002ZM5.313 1.13a.443.443 0 0 0-.626 0L1.13 4.685a.446.446 0 0 0 .629.63L5 2.074l3.241 3.24a.445.445 0 0 0 .629-.629L5.313 1.131V1.13Z'/%3E%3C/g%3E%3C/svg%3E");
   background-position: center right 12px;
   background-size: 8px 14px;
 
   &::placeholder {
-    color: var(--colorGrey300);
+    color: var(--colorTextMuted);
   }
 
   @media (--viewportMedium) {
@@ -517,13 +556,13 @@ select {
 }
 /* Effects */
 select:hover {
-  border: 1px solid #b8bfd1;
+  border: 1px solid var(--colorGrey500);
   transition: all ease-in-out 100ms;
 }
 select:focus {
   background-color: #fff;
-  border-color: #80bdff;
-  box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
+  border-color: var(--marketplaceColor);
+  box-shadow: var(--focusRing);
   transition: all ease-in-out 100ms;
 }
 select:disabled {
@@ -548,15 +587,16 @@ textarea {
   background-color: #fff;
 
   /* Borders */
-  border-radius: 6px;
-  border: 1px solid #d8dce6;
+  border-radius: var(--borderRadiusMedium);
+  border: 1px solid var(--colorBorderStrong);
+  color: var(--colorText);
   outline: none;
 
   /* Transition */
   transition: all ease-in-out 100ms;
 
   &::placeholder {
-    color: var(--colorGrey300);
+    color: var(--colorTextMuted);
   }
 
   @media (--viewportMedium) {
@@ -568,14 +608,14 @@ textarea {
 /* Effects */
 input:hover,
 textarea:hover {
-  border: 1px solid #b8bfd1;
+  border: 1px solid var(--colorGrey500);
   transition: all ease-in-out 100ms;
 }
 input:focus,
 textarea:focus {
   background-color: #fff;
-  border-color: #80bdff;
-  box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
+  border-color: var(--marketplaceColor);
+  box-shadow: var(--focusRing);
   transition: all ease-in-out 100ms;
 }
 input:disabled,
@@ -626,18 +666,20 @@ textarea {
 }
 
 .h1 {
-  font-weight: var(--fontWeightBlack);
-  font-size: 24px;
-  line-height: 24px;
+  font-weight: var(--fontWeightBold);
+  font-size: 32px;
+  line-height: 36px;
+  letter-spacing: -0.02em;
+  color: var(--colorText);
 
-  padding: 3px 0 3px 0;
+  padding: 0;
   /* margin-top + n * line-height + margin-bottom => x * 6px */
   margin-top: 18px;
   margin-bottom: 18px;
 
   @media (--viewportMedium) {
-    font-size: 64px;
-    line-height: 64px;
+    font-size: 48px;
+    line-height: 56px;
     padding: 0;
     /* margin-top + n * line-height + margin-bottom => x * 8px */
     margin-top: 24px;
@@ -647,18 +689,20 @@ textarea {
 
 .h2 {
   font-weight: var(--fontWeightBold);
-  font-size: 21px;
-  line-height: 24px;
+  font-size: 24px;
+  line-height: 30px;
+  letter-spacing: -0.01em;
+  color: var(--colorText);
 
-  padding: 4px 0 2px 0;
+  padding: 0;
   /* x * 6px */
   margin-top: 24px;
   margin-bottom: 18px;
 
   @media (--viewportMedium) {
-    font-size: 40px;
-    line-height: 56px;
-    padding: 5px 0 3px 0;
+    font-size: 32px;
+    line-height: 40px;
+    padding: 0;
     /* x * 8px */
     margin-top: 24px;
     margin-bottom: 16px;
@@ -669,14 +713,15 @@ textarea {
   font-weight: var(--fontWeightBold);
   font-size: 18px;
   line-height: 24px;
+  color: var(--colorText);
   /* x * 6px */
   margin-top: 18px;
   margin-bottom: 12px;
 
   @media (--viewportMedium) {
-    font-size: 30px;
-    line-height: 40px;
-    padding: 1px 0 7px 0;
+    font-size: 24px;
+    line-height: 32px;
+    padding: 0;
     /* x * 8px */
     margin-top: 16px;
     margin-bottom: 16px;
@@ -687,13 +732,14 @@ textarea {
   font-weight: var(--fontWeightBold);
   font-size: 16px;
   line-height: 30px;
+  color: var(--colorText);
   padding: 5px 0 1px 0;
   /* x * 6px */
   margin-top: 12px;
   margin-bottom: 6px;
 
   @media (--viewportMedium) {
-    font-size: 21px;
+    font-size: 20px;
     line-height: 32px;
     padding: 0;
     /* x * 8px */
@@ -899,15 +945,16 @@ textarea {
   background-color: #fff;
 
   /* Borders */
-  border-radius: 6px;
-  border: 1px solid #d8dce6;
+  border-radius: var(--borderRadiusMedium);
+  border: 1px solid var(--colorBorderStrong);
+  color: var(--colorText);
   outline: none;
 
   /* Transition */
   transition: all ease-in-out 100ms;
 
   &::placeholder {
-    color: var(--colorGrey300);
+    color: var(--colorTextMuted);
   }
 
   @media (--viewportMedium) {
@@ -918,13 +965,13 @@ textarea {
 }
 /* Effects */
 .marketplaceInputStyles:hover {
-  border: 1px solid #b8bfd1;
+  border: 1px solid var(--colorGrey500);
   transition: all ease-in-out 100ms;
 }
 .marketplaceInputStyles:focus {
   background-color: #fff;
-  border-color: #80bdff;
-  box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
+  border-color: var(--marketplaceColor);
+  box-shadow: var(--focusRing);
   transition: all ease-in-out 100ms;
 }
 .marketplaceInputStyles:disabled {
@@ -989,12 +1036,12 @@ textarea {
   /* button defaults */
   display: block;
   width: 100%;
-  min-height: 56px;
+  min-height: 48px;
   margin: 0;
 
   /* Padding is only for <a> elements where button styles are applied,
   buttons elements should have zero padding */
-  padding: 16px 0 16px 0;
+  padding: 12px 0 12px 0;
 
   transition: all var(--transitionStyleButton);
   cursor: pointer;
@@ -1022,8 +1069,10 @@ textarea {
 .buttonDefault:focus,
 .buttonDefault:hover {
   outline: none;
-  box-shadow: var(--boxShadowButton);
   background-color: var(--marketplaceColorDark);
+}
+.buttonDefault:focus-visible {
+  box-shadow: var(--focusRing);
 }
 .buttonDefault:disabled {
   box-shadow: none;
@@ -1040,12 +1089,12 @@ textarea {
   /* button defaults */
   display: block;
   width: 100%;
-  min-height: 56px;
+  min-height: 48px;
   margin: 0;
 
   /* Padding is only for <a> elements where button styles are applied,
   buttons elements should have zero padding */
-  padding: 16px 0 16px 0;
+  padding: 12px 0 12px 0;
 
   transition: all var(--transitionStyleButton);
   cursor: pointer;
@@ -1071,15 +1120,17 @@ textarea {
   color: var(--colorWhite);
 
   @media (--viewportMedium) {
-    padding: 20px 0 20px 0;
+    padding: 12px 0 12px 0;
   }
 }
 .buttonPrimary:focus,
 .buttonPrimary:hover {
   outline: none;
-  box-shadow: var(--boxShadowButton);
   background-color: var(--colorPrimaryButtonDark);
   color: var(--colorWhite);
+}
+.buttonPrimary:focus-visible {
+  box-shadow: var(--focusRing);
 }
 .buttonPrimary:hover {
   text-decoration: none;
@@ -1103,9 +1154,9 @@ textarea {
   cursor: pointer;
 
   /* Font */
-  font-size: 13px;
+  font-size: 14px;
   line-height: 18px;
-  font-weight: var(--fontWeightMedium);
+  font-weight: var(--fontWeightSemiBold);
 
   /* Button text styles */
   text-align: center;
@@ -1125,7 +1176,6 @@ textarea {
 .buttonPrimaryInline:focus,
 .buttonPrimaryInline:hover {
   outline: none;
-  box-shadow: var(--boxShadowButton);
   text-decoration: none;
   background-color: var(--colorPrimaryButtonDark);
   color: var(--colorWhite);
@@ -1144,12 +1194,12 @@ textarea {
   /* button defaults */
   display: block;
   width: 100%;
-  min-height: 56px;
+  min-height: 48px;
   margin: 0;
 
   /* Padding is only for <a> elements where button styles are applied,
   buttons elements should have zero padding */
-  padding: 16px 0 16px 0;
+  padding: 12px 0 12px 0;
 
   transition: all var(--transitionStyleButton);
   cursor: pointer;
@@ -1167,23 +1217,25 @@ textarea {
   /* Secondary button has clear borders */
   border-width: 1px;
   border-style: solid;
-  border-color: var(--colorGrey100);
+  border-color: var(--colorBorderStrong);
   border-radius: var(--borderRadiusMedium);
 
   /* Button colors: secondary */
   background-color: var(--colorSecondaryButton);
-  color: var(--colorGrey700);
+  color: var(--colorText);
 
   @media (--viewportMedium) {
-    padding: 20px 0 20px 0;
+    padding: 12px 0 12px 0;
   }
 }
 .buttonSecondary:focus,
 .buttonSecondary:hover {
   outline: none;
-  box-shadow: var(--boxShadowButton);
-  border-color: var(--colorGrey300);
+  border-color: var(--colorText);
   background-color: var(--colorSecondaryButton);
+}
+.buttonSecondary:focus-visible {
+  box-shadow: var(--focusRing);
 }
 .buttonSecondary:hover {
   text-decoration: none;
@@ -1217,7 +1269,7 @@ textarea {
   /*
    * Font
    */
-  font-weight: var(--fontWeightMedium);
+  font-weight: var(--fontWeightSemiBold);
   font-size: 14px;
   line-height: 18px;
   letter-spacing: 0;
@@ -1230,12 +1282,12 @@ textarea {
   /* Secondary button has clear borders */
   border-width: 1px;
   border-style: solid;
-  border-color: var(--colorGrey100);
+  border-color: var(--colorBorderStrong);
   border-radius: var(--borderRadiusMedium);
 
   /* Button colors: secondary */
   background-color: var(--colorSecondaryButton);
-  color: var(--colorGrey700);
+  color: var(--colorText);
 
   @media (--viewportMedium) {
     height: 40px;
@@ -1244,9 +1296,11 @@ textarea {
 .buttonSecondaryInline:focus,
 .buttonSecondaryInline:hover {
   outline: none;
-  box-shadow: var(--boxShadowButton);
-  border-color: var(--colorGrey300);
+  border-color: var(--colorText);
   background-color: var(--colorSecondaryButton);
+}
+.buttonSecondaryInline:focus-visible {
+  box-shadow: var(--focusRing);
 }
 .buttonSecondaryInline:hover {
   text-decoration: none;
@@ -1272,11 +1326,11 @@ textarea {
 
   /* Colors */
   background-color: var(--colorWhite);
-  color: var(--colorGrey700);
+  color: var(--colorText);
 
   /* Borders */
-  border-radius: var(--borderRadius);
-  border: 1px solid var(--colorGrey100);
+  border-radius: var(--borderRadiusMedium);
+  border: 1px solid var(--colorBorderStrong);
   background: var(--colorWhite);
 
   cursor: pointer;
@@ -1288,9 +1342,10 @@ textarea {
 }
 .buttonSmall:focus,
 .buttonSmall:hover {
-  background-color: var(--marketplaceColor);
-  border-color: var(--marketplaceColor);
-  color: var(--colorWhite);
+  border-color: var(--colorText);
+}
+.buttonSmall:focus-visible {
+  box-shadow: var(--focusRing);
 }
 
 /* ================ Modals ================ */
