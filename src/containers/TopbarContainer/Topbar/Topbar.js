@@ -255,6 +255,7 @@ const TopbarComponent = props => {
       notificationCount={notificationCount}
       currentPage={resolvedCurrentPage}
       customLinks={customLinks}
+      categories={config.categoryConfiguration?.categories || []}
       showCreateListingsLink={showCreateListingsLink}
       inboxTab={topbarInboxTab}
     />
@@ -308,9 +309,7 @@ const TopbarComponent = props => {
         ariaLabel={intl.formatMessage({ id: 'Topbar.searchIcon' })}
       />
     </Button>
-  ) : (
-    <div className={css.searchMenu} />
-  );
+  ) : null;
 
   const handleSkipToMainContent = e => {
     e.preventDefault();
@@ -346,25 +345,28 @@ const TopbarComponent = props => {
         currentPage={resolvedCurrentPage}
       />
       <nav className={classNames(mobileRootClassName || css.container, mobileClassName)}>
-        <Button
-          id={MOBILE_MENU_BUTTON_ID}
-          rootClassName={css.menu}
-          onClick={() => redirectToURLWithModalState(history, location, 'mobilemenu')}
-          title={intl.formatMessage({ id: 'Topbar.menuIcon' })}
-        >
-          <MenuIcon
-            className={css.menuIcon}
-            ariaLabel={intl.formatMessage({ id: 'Topbar.menuIcon' })}
-          />
-          {notificationDot}
-        </Button>
         <LinkedLogo
           id="logo-topbar-mobile"
+          rootClassName={css.mobileLogoLink}
           layout={'mobile'}
           alt={intl.formatMessage({ id: 'Topbar.logoIcon' })}
           linkToExternalSite={config?.topbar?.logoLink}
         />
-        {mobileSearchButtonMaybe}
+        <div className={css.mobileActions}>
+          {mobileSearchButtonMaybe}
+          <Button
+            id={MOBILE_MENU_BUTTON_ID}
+            rootClassName={css.menu}
+            onClick={() => redirectToURLWithModalState(history, location, 'mobilemenu')}
+            title={intl.formatMessage({ id: 'Topbar.menuIcon' })}
+          >
+            <MenuIcon
+              className={css.menuIcon}
+              ariaLabel={intl.formatMessage({ id: 'Topbar.menuIcon' })}
+            />
+            {notificationDot}
+          </Button>
+        </div>
       </nav>
       <div className={css.desktop}>
         <TopbarDesktop

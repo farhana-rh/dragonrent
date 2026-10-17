@@ -1,108 +1,62 @@
 @import '../../../../styles/customMediaQueries.css';
 
 .root {
-  border-top: 1px solid var(--colorGrey100);
+  background-color: var(--colorSurface);
+  border-top: 1px solid var(--colorBorder);
 }
 
 .footer {
   max-width: var(--contentMaxWidthPages);
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  gap: 32px;
-  margin: 0 auto;
-  padding: 24px 32px;
-}
+  /* Negative margins cancel SectionContainer's vertical padding (32px / 64px) so the footer
+     controls its own spacing */
+  margin: -32px auto;
+  padding: 12px 16px 36px 16px;
 
-.footer ul {
-  list-style-type: none;
-  padding-inline-start: 0px;
-  margin-top: 1px;
-}
-
-.linkList {
-  list-style-type: none;
-  padding-left: 12px;
-}
-
-.content {
-  display: grid;
-  justify-content: center;
-  align-content: end;
-  grid-auto-rows: auto;
-  grid-gap: 32px;
-  grid-row-gap: 16px;
-  grid-template-columns: 1fr;
-  grid-template-areas:
-    'logo'
-    'details'
-    'grid'
-    'links';
-}
-
-.grid {
-  grid-area: grid;
-  display: grid;
-  justify-content: center;
-  align-content: start;
-  grid-auto-rows: auto;
-  grid-gap: 32px;
-}
-
-.gridCol1,
-.gridCol2,
-.gridCol3,
-.gridCol4 {
-  grid-template-columns: 1fr;
-}
-
-.detailsInfo {
-  grid-area: links;
-}
-
-.slogan {
-  font-size: 16px;
-  line-height: 24px;
-}
-.sloganMobile {
-  grid-area: details;
-  padding-bottom: 24px;
+  @media (--viewportMedium) {
+    margin: -64px auto;
+    padding: 16px 24px 40px 24px;
+  }
 
   @media (--viewportLarge) {
-    display: none;
+    padding: 48px 32px 32px 32px;
   }
 }
-.sloganDesktop {
+
+/* ================ Top: brand + link columns ================ */
+
+.top {
+  display: flex;
+  flex-direction: column;
+
+  @media (--viewportLarge) {
+    display: grid;
+    gap: 32px;
+  }
+}
+
+/* Brand column takes 4/3 of the width of a link column */
+@media (--viewportLarge) {
+  .gridCol1 {
+    grid-template-columns: minmax(0, 4fr) minmax(0, 3fr);
+  }
+  .gridCol2 {
+    grid-template-columns: minmax(0, 4fr) repeat(2, minmax(0, 3fr));
+  }
+  .gridCol3 {
+    grid-template-columns: minmax(0, 4fr) repeat(3, minmax(0, 3fr));
+  }
+  .gridCol4 {
+    grid-template-columns: minmax(0, 4fr) repeat(4, minmax(0, 3fr));
+  }
+}
+
+.brand {
+  /* The mobile layout shows only the link groups, matching the design */
   display: none;
 
   @media (--viewportLarge) {
     display: block;
   }
-}
-
-.logo {
-  grid-area: logo;
-}
-
-.copyright {
-  display: inline-block;
-  font-size: 12px;
-  line-height: 16px;
-  color: var(--colorGrey600);
-  margin-top: 24px;
-}
-
-.icons {
-  margin-top: 24px;
-
-  @media (--viewportLarge) {
-    margin-top: 0px;
-  }
-}
-
-.icon {
-  font-size: 28px;
-  margin: 15px 15px 0px 0px;
-  padding: 10px 15px;
 }
 
 .logoLink {
@@ -115,6 +69,8 @@
 }
 .logoWrapper {
   max-width: 370px;
+  height: auto;
+  margin: 0;
 }
 .logoImage {
   height: auto;
@@ -128,82 +84,236 @@
   }
 }
 
-@media (min-width: 350px) {
-  .gridCol2,
-  .gridCol3,
-  .gridCol4 {
-    grid-template-columns: repeat(2, 1fr);
+.slogan {
+  display: block;
+  max-width: 240px;
+  margin: 16px 0 0 0;
+  padding: 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--colorTextSecondary);
+}
+
+.icons {
+  margin-top: 16px;
+}
+
+/* ================ Link columns ================ */
+
+.column {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--colorBorder);
+
+  @media (--viewportLarge) {
+    padding: 0;
+    border-bottom: none;
   }
 }
 
-@media (min-width: 600px) {
-  .gridCol3,
-  .gridCol4 {
-    grid-template-columns: repeat(3, 1fr);
+.collapsibleColumn {
+  padding: 0;
+}
+
+.toggleHeading {
+  margin: 0;
+  padding: 0;
+
+  @media (--viewportLarge) {
+    display: none;
   }
 }
 
-@media (--viewportMedium) {
-  .gridCol4 {
-    grid-template-columns: repeat(4, 1fr);
+.toggleButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 54px;
+  margin: 0;
+  padding: 0;
+
+  font-family: var(--fontFamily);
+  font-weight: var(--fontWeightSemiBold);
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--colorText);
+  text-align: left;
+
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid var(--marketplaceColor);
+    outline-offset: 2px;
+    border-radius: var(--borderRadius);
   }
 }
 
-@media (--viewportLarge) {
-  .detailsInfo {
-    grid-area: details;
+.toggleIcon {
+  stroke: var(--colorText);
+  fill: var(--colorText);
+}
+
+.columnBody {
+  display: none;
+  padding-bottom: 12px;
+
+  /* The toggle button shows the heading on mobile, so hide the duplicate from markdown */
+  & h1,
+  & h2,
+  & h3,
+  & h4,
+  & h5,
+  & h6 {
+    display: none;
   }
 
-  .contentCol1 {
-    /* 1/6 of space is for grid, and grid uses 1 column internally */
-    grid-template-columns: 2fr 3fr 1fr;
-    grid-template-areas:
-      'logo . .'
-      'details . grid'
-      'details . grid'
-      'details . grid';
+  @media (--viewportLarge) {
+    display: block;
+    padding-bottom: 0;
+
+    & h1,
+    & h2,
+    & h3,
+    & h4,
+    & h5,
+    & h6 {
+      display: block;
+    }
   }
-  .contentCol2 {
-    /* 2/6 of space is for grid, and grid splits it to 2 columns */
-    grid-template-columns: 2fr 2fr 2fr;
-    grid-template-areas:
-      'logo . .'
-      'details . grid'
-      'details . grid'
-      'details . grid';
-  }
-  .contentCol3 {
-    /* 3/6 of space is for grid, and grid splits it to 3 columns */
-    grid-template-columns: 2fr 1fr 1fr 2fr;
-    grid-template-areas:
-      'logo . . .'
-      'details . grid grid'
-      'details . grid grid'
-      'details . grid grid';
-  }
-  .contentCol4 {
-    /* 4/6 of space is for grid, and grid splits it to 4 columns */
-    grid-template-columns: 2fr 2fr 2fr;
-    grid-template-areas:
-      'logo . .'
-      'details grid grid'
-      'details grid grid'
-      'details grid grid';
+}
+
+.columnBodyOpen {
+  display: block;
+}
+
+/* Markdown content inside footer blocks. Element selectors are needed because the
+   markdown processor generates the elements. */
+.footer .column {
+  & h1,
+  & h2,
+  & h3,
+  & h4,
+  & h5,
+  & h6 {
+    margin: 0 0 16px 0;
+    padding: 0;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: var(--fontWeightSemiBold);
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--colorText);
   }
 
-  .gridCol1 {
-    grid-template-columns: 1fr;
+  & ul,
+  & ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
 
-  .gridCol2 {
-    grid-template-columns: repeat(2, 1fr);
+  & li {
+    margin: 0;
+    padding: 6px 0;
+    font-size: 14px;
+    line-height: 20px;
+    list-style: none;
+    color: var(--colorTextSecondary);
+
+    @media (--viewportLarge) {
+      padding: 0 0 12px 0;
+    }
   }
 
-  .gridCol3 {
-    grid-template-columns: repeat(3, 1fr);
+  & p {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    line-height: 20px;
   }
 
-  .gridCol4 {
-    grid-template-columns: repeat(4, 1fr);
+  & a {
+    color: var(--colorTextSecondary);
+
+    &:hover {
+      color: var(--marketplaceColor);
+      text-decoration: none;
+    }
+  }
+}
+
+/* The accordion toggle is an h2 too: keep it out of the markdown heading styles above */
+.footer .column .toggleHeading {
+  margin: 0;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+/* ================ Bottom: copyright + locale info ================ */
+
+.bottom {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 18px;
+  padding-top: 24px;
+
+  @media (--viewportLarge) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 40px;
+    border-top: 1px solid var(--colorBorder);
+  }
+}
+
+.copyright {
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--colorTextMuted);
+}
+
+.localeList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+}
+
+/* Higher specificity: inherited list styles otherwise add a top margin here */
+.bottom .localeList {
+  margin: 0;
+}
+
+.localeItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 14px;
+
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--colorText);
+
+  background-color: var(--colorSurface);
+  border: 1px solid var(--colorBorderStrong);
+  border-radius: var(--borderRadiusMedium);
+}
+
+.localeIcon {
+  flex-shrink: 0;
+  color: var(--colorText);
+}
+
+.capitalize {
+  display: inline-block;
+
+  &::first-letter {
+    text-transform: uppercase;
   }
 }

@@ -11,41 +11,49 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 0 12px 0 0;
+
+  /* Align the topbar content with the page content container */
+  padding: 0 24px;
 
   /* fill */
-  background-color: var(--colorWhite);
+  background-color: var(--colorBackground);
+  border-bottom: 1px solid var(--colorBorder);
 
-  /* shadows */
-  box-shadow: var(--boxShadowLight);
-
-  @media (--viewportLarge) {
-    padding: 0 24px 0 0;
+  @media (--viewportLargeWithPaddings) {
+    padding: 0 max(32px, calc((100% - var(--contentMaxWidth)) / 2));
   }
 }
 
 /* logo */
 .logoLink {
-  border-bottom: 0px solid;
-  transition: var(--transitionStyleButton);
-}
-.logoLink:hover {
-  border-bottom: 4px solid var(--marketplaceColor);
-  border-radius: 0;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  height: 100%;
+  padding: 0;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--marketplaceColor);
+    outline-offset: 4px;
+    border-radius: var(--borderRadius);
+  }
 }
 
 /* Search */
 .searchLink {
-  min-width: 320px;
+  flex: 1 1 auto;
+  min-width: 160px;
+  max-width: 400px;
   height: 100%;
-  border-left-style: solid;
-  border-left-width: 1px;
-  border-left-color: var(--colorGrey100);
   margin-right: auto;
 }
 
 .spacer {
-  min-width: 320px;
+  min-width: 0;
   height: 100%;
   margin-right: auto;
 }
@@ -74,12 +82,69 @@
 }
 
 .topbarSearchWithLeftPadding {
-  padding-left: 24px;
-  padding-right: 24px;
-  height: var(--topbarHeightDesktop);
+  padding-left: 16px;
+  padding-right: 16px;
+  height: calc(var(--topbarHeightDesktop) - 1px);
+}
 
-  @media (--viewportLarge) {
-    padding-left: 34px;
+/* Wrapper for button-like links. Padding (instead of margin) keeps offsetWidth accurate for
+   the CustomLinksMenu, which measures sibling widths to decide how many links fit. */
+.topbarAction {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  height: 100%;
+  padding: 0 0 0 12px;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &:focus-visible {
+    outline: none;
+
+    & .buttonFilled,
+    & .buttonOutline {
+      box-shadow: var(--focusRing);
+    }
+  }
+}
+
+.buttonBase {
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 16px;
+
+  font-weight: var(--fontWeightSemiBold);
+  font-size: 15px;
+  line-height: 24px;
+  white-space: nowrap;
+
+  border-radius: var(--borderRadiusMedium);
+  transition: all var(--transitionStyleButton);
+}
+
+.buttonFilled {
+  composes: buttonBase;
+  color: var(--colorWhite);
+  background-color: var(--colorPrimaryButton);
+  border: 1px solid var(--colorPrimaryButton);
+
+  &:hover {
+    background-color: var(--colorPrimaryButtonDark);
+    border-color: var(--colorPrimaryButtonDark);
+  }
+}
+
+.buttonOutline {
+  composes: buttonBase;
+  color: var(--colorText);
+  background-color: var(--colorSurface);
+  border: 1px solid var(--colorBorderStrong);
+
+  &:hover {
+    border-color: var(--colorText);
   }
 }
 
@@ -91,20 +156,28 @@
   transition: var(--transitionStyleButton);
 
   font-weight: var(--fontWeightMedium);
-  font-size: 14px;
-  line-height: 18px;
+  font-size: 15px;
+  line-height: 24px;
   letter-spacing: 0;
-  color: var(--colorGrey700);
+  color: var(--colorText);
 
   height: 100%;
-  padding: 0 12px 0 12px;
+  padding: 0 0 0 24px;
   margin: 0;
 
   &:hover {
-    color: var(--colorBlack);
-    border-bottom: 4px solid var(--marketplaceColor);
-    border-radius: 0;
+    color: var(--marketplaceColor);
     text-decoration: none;
+  }
+
+  &:focus-visible {
+    outline: none;
+
+    & .topbarLinkLabel {
+      outline: 2px solid var(--marketplaceColor);
+      outline-offset: 4px;
+      border-radius: var(--borderRadius);
+    }
   }
 
   @media (--viewportMedium) {
@@ -114,9 +187,11 @@
 }
 
 .topbarLinkLabel {
-  composes: textSmall from global;
   display: inline-block;
-  margin: 28px 0;
+  font-size: 15px;
+  line-height: 24px;
+  /* (64px topbar - 1px border - 24px line-height) / 2 */
+  margin: 20px 0 19px 0;
   text-decoration: inherit;
   position: relative;
 }
@@ -165,39 +240,52 @@
   font-size: 14px;
   line-height: 18px;
   letter-spacing: 0;
-  color: var(--colorGrey700);
+  color: var(--colorText);
 
   flex-shrink: 0;
   display: flex;
   align-items: center;
   height: 100%;
   margin: 0;
-  padding: 0 12px 0 12px;
+  padding: 0 0 0 20px;
 
   &:hover {
-    border-bottom: 4px solid var(--marketplaceColor);
-    border-radius: 0;
     text-decoration: none;
+
+    & .avatar {
+      box-shadow: 0 0 0 2px var(--colorBackground), 0 0 0 4px var(--colorBorderStrong);
+    }
   }
 
-  &:active {
-    border-bottom: 0;
+  &:focus-visible {
+    outline: none;
+
+    & .avatar {
+      box-shadow: 0 0 0 2px var(--colorBackground), 0 0 0 4px var(--marketplaceColor);
+    }
   }
 }
 
 .profileMenuIsOpen {
-  &:hover {
-    border-bottom: 0;
+  & .avatar {
+    box-shadow: 0 0 0 2px var(--colorBackground), 0 0 0 4px var(--colorBorderStrong);
   }
 }
 
 .avatar {
-  margin: 16px 0;
+  margin: 0;
+  transition: box-shadow var(--transitionStyleButton);
 }
 
 .profileMenuContent {
   min-width: 276px;
-  padding-top: 20px;
+  padding-top: 12px;
+  margin-top: -4px;
+  background-color: var(--colorSurface);
+  border: 1px solid var(--colorBorder);
+  border-radius: var(--borderRadiusLarge);
+  box-shadow: var(--boxShadowCard);
+  overflow: hidden;
 }
 
 /* left animated "border" like hover element */
@@ -219,15 +307,16 @@
   width: 100%;
   min-width: 276px;
   margin: 0;
-  padding: 4px 24px;
+  padding: 8px 24px;
 
   /* Layout details */
-  color: var(--colorGrey700);
+  color: var(--colorText);
   text-align: left;
   transition: var(--transitionStyleButton);
 
   &:hover {
-    color: var(--colorBlack);
+    color: var(--marketplaceColor);
+    background-color: var(--colorBackground);
     text-decoration: none;
 
     & .menuItemBorder {
@@ -261,7 +350,7 @@
   padding: 20px 24px;
 
   /* Layout details */
-  color: var(--colorGrey600);
+  color: var(--colorTextSecondary);
   text-align: left;
   white-space: nowrap;
   transition: var(--transitionStyleButton);
@@ -270,11 +359,12 @@
   border: none;
   border-top-width: 1px;
   border-top-style: solid;
-  border-top-color: var(--colorGrey100);
+  border-top-color: var(--colorBorder);
 
   &:hover {
     cursor: pointer;
-    color: var(--colorBlack);
+    color: var(--marketplaceColor);
+    background-color: var(--colorBackground);
     text-decoration: none;
 
     & .menuItemBorder {
@@ -287,23 +377,17 @@
 
   @media (--viewportMedium) {
     line-height: 16px;
-    margin-top: 20px;
+    margin-top: 12px;
     margin-bottom: 0;
   }
 }
 
 .currentPage {
-  color: var(--colorBlack);
+  color: var(--marketplaceColor);
   position: relative;
 
   & .menuItemBorder {
-    width: 6px;
-    background-color: var(--colorBlack);
-  }
-
-  &:hover {
-    & .menuItemBorder {
-      background-color: var(--colorBlack);
-    }
+    width: 4px;
+    background-color: var(--marketplaceColor);
   }
 }

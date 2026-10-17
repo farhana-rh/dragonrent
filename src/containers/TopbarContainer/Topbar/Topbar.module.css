@@ -48,15 +48,15 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  padding: 0 4px 0 16px;
 
   /* fill */
-  background-color: var(--colorWhite);
-
-  /* shadows */
-  box-shadow: var(--boxShadow);
+  background-color: var(--colorBackground);
+  border-bottom: 1px solid var(--colorBorder);
 
   @media (--viewportMedium) {
     height: var(--topbarHeightDesktop);
+    padding: 0 12px 0 24px;
   }
 
   @media (--viewportLarge) {
@@ -68,19 +68,47 @@
   margin: 0;
 }
 
+.mobileLogoLink {
+  display: flex;
+  align-items: center;
+  flex-shrink: 1;
+  min-width: 0;
+  height: 100%;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.mobileActions {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
 /* Child component's size (and positioning) should be given here */
 .menu,
 .searchMenu {
   /* Font */
   composes: h5 from global;
-  color: var(--colorGrey700);
+  color: var(--colorText);
 
   /* Layout */
   display: flex;
-  width: 66px;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
   margin: 0;
+  padding: 0;
   border-width: 0px;
+  border-radius: var(--borderRadiusMedium);
   background-color: transparent;
+
+  &:focus-visible {
+    outline: 2px solid var(--marketplaceColor);
+    outline-offset: -4px;
+  }
 
   /* Hovers */
   &:enabled {
@@ -98,24 +126,12 @@
 }
 
 .menu {
-  padding: 15px 24px;
   position: relative;
-
-  @media (--viewportMedium) {
-    padding: 21px 24px;
-  }
-}
-.searchMenu {
-  padding: 12px 24px;
-
-  @media (--viewportMedium) {
-    padding: 18px 24px;
-  }
 }
 
 .menuIcon,
 .searchMenuIcon {
-  margin: 9px 0;
+  margin: 0;
 }
 
 .notificationDot {
@@ -126,12 +142,12 @@
 
   /* Position */
   position: absolute;
-  top: 17px;
-  right: 17px;
+  top: 8px;
+  right: 8px;
 
-  /* Style: red dot with white border */
+  /* Style: red dot with a border matching the topbar background */
   background-color: var(--colorFail);
-  border: 2px solid var(--colorWhite);
+  border: 2px solid var(--colorBackground);
 
   animation-name: notificationPop;
   animation-duration: 0.1s;
@@ -141,10 +157,6 @@
   animation-timing-function: ease-in;
   opacity: 0;
   transform: scale(0);
-
-  @media (--viewportMedium) {
-    top: 23px;
-  }
 }
 
 @keyframes notificationPop {
@@ -168,10 +180,10 @@
 
 /* Icon component styles */
 .rootMenuIcon {
-  fill: var(--colorGrey700);
+  fill: var(--colorText);
 }
 .rootSearchIcon {
-  stroke: var(--colorGrey700);
+  stroke: var(--colorText);
 }
 
 .searchContainer {

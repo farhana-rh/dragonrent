@@ -1,0 +1,107 @@
+@import '../../../../../styles/customMediaQueries.css';
+
+.root {
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+  height: 100%;
+  margin: 0 0 0 16px;
+  padding: 0;
+}
+
+.navItem {
+  display: flex;
+  height: 100%;
+  padding: 0;
+}
+
+.menu {
+  height: 100%;
+}
+
+/* Shared by links and the categories menu button */
+.navLink {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 12px;
+  margin: 0;
+
+  font-family: var(--fontFamily);
+  font-weight: var(--fontWeightMedium);
+  font-size: 15px;
+  line-height: 24px;
+  color: var(--colorText);
+  white-space: nowrap;
+
+  transition: color var(--transitionStyleButton);
+
+  &:hover {
+    color: var(--marketplaceColor);
+    text-decoration: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--marketplaceColor);
+    outline-offset: -8px;
+    border-radius: var(--borderRadiusMedium);
+  }
+}
+
+.navLinkOpen {
+  color: var(--marketplaceColor);
+}
+
+.active {
+  color: var(--marketplaceColor);
+}
+
+.navLinkLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.arrowIcon {
+  stroke: currentColor;
+  fill: currentColor;
+  width: 10px;
+  height: 6px;
+}
+
+.menuContent {
+  min-width: 240px;
+  padding: 8px 0;
+  margin-top: -4px;
+
+  background-color: var(--colorSurface);
+  border: 1px solid var(--colorBorder);
+  border-radius: var(--borderRadiusLarge);
+  box-shadow: var(--boxShadowCard);
+}
+
+.menuLink {
+  display: block;
+  width: 100%;
+  padding: 8px 20px;
+
+  font-weight: var(--fontWeightRegular);
+  font-size: 15px;
+  line-height: 24px;
+  color: var(--colorText);
+
+  &:hover,
+  &:focus-visible {
+    background-color: var(--colorBackground);
+    color: var(--marketplaceColor);
+    text-decoration: none;
+    outline: none;
+  }
+}
+
+.menuLinkAll {
+  margin-top: 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--colorBorder);
+  font-weight: var(--fontWeightSemiBold);
+}

@@ -967,3 +967,60 @@ export const SectionHero = {
   },
   group: 'PageBuilder',
 };
+
+/////////////////////////////
+// SectionFooter example   //
+/////////////////////////////
+
+// Mirrors the footer content recommended for Console → Content → Footer.
+// Each block starts with a heading, which becomes the accordion toggle on mobile.
+export const SectionFooter = {
+  component: SectionBuilder,
+  props: {
+    sections: [
+      {
+        sectionType: 'footer',
+        sectionId: 'footer',
+        numberOfColumns: 3,
+        slogan: {
+          fieldType: 'text',
+          content: 'Rent more. Buy less. A rental marketplace that starts in Finland.',
+        },
+        copyright: {
+          fieldType: 'text',
+          content: '© 2026 DragonRent',
+        },
+        blocks: [
+          {
+            blockType: 'footerBlock',
+            blockId: 'marketplace',
+            text: {
+              fieldType: 'markdown',
+              content:
+                '##### Marketplace\n- [Browse](/s)\n- [Categories](/s)\n- [List an item](/l/new)',
+            },
+          },
+          {
+            blockType: 'footerBlock',
+            blockId: 'company',
+            text: {
+              fieldType: 'markdown',
+              content:
+                '##### Company\n- [About](/p/about)\n- [Contact](/p/contact)\n- [Help](/p/help)',
+            },
+          },
+          {
+            blockType: 'footerBlock',
+            blockId: 'trust-and-policies',
+            text: {
+              fieldType: 'markdown',
+              content:
+                '##### Trust and policies\n- [Trust and safety](/p/trust-and-safety)\n- [Fees](/p/fees)\n- [Cancellation](/p/cancellation)\n- [Deposit and damage](/p/deposit-and-damage)\n- [Terms](/terms-of-service)\n- [Privacy](/privacy-policy)',
+            },
+          },
+        ],
+      },
+    ],
+  },
+  group: 'PageBuilder',
+};

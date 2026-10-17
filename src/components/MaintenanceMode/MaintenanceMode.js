@@ -9,7 +9,7 @@ import css from './MaintenanceMode.module.css';
 // MaintenanceMode component is shown when mandatory app-wide configurations are not found from assets.
 // Note 1: this microcopy/translation does not come from translation file.
 //         It needs to be something that is not part of fetched assets but built-in text
-// Note 2: In the LandingPage directory, there's a similar content (FallbackPage.js).
+// Note 2: CMS-driven pages (e.g. PrivacyPolicyPage) have similar content in their FallbackPage.js.
 const MaintenanceMode = props => {
   const isDev = appSettings.dev;
   return (

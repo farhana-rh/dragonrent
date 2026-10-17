@@ -17,7 +17,54 @@ import {
   NotificationBadge,
 } from '../../../../components';
 
+import { categorySearchTo } from '../../../../util/search';
+import { HOW_IT_WORKS_PAGE_ID } from '../TopbarDesktop/PrimaryNav/PrimaryNav';
+
 import css from './TopbarMobileMenu.module.css';
+
+const SEARCH_PAGES = ['SearchPage', 'SearchPageWithListingType'];
+
+/**
+ * Marketplace-wide navigation: Browse, How it works and the top-level categories.
+ * These mirror the PrimaryNav on the desktop topbar.
+ */
+const PrimaryLinks = ({ currentPage, categories }) => {
+  const isSearchPage = SEARCH_PAGES.includes(currentPage);
+  const isHowItWorksPage = currentPage === `CMSPage:${HOW_IT_WORKS_PAGE_ID}`;
+
+  return (
+    <>
+      <ul className={css.primaryLinksWrapper}>
+        <li className={classNames(css.navigationLink, { [css.currentPage]: isSearchPage })}>
+          <NamedLink name="SearchPage">
+            <FormattedMessage id="TopbarMobileMenu.browseLink" />
+          </NamedLink>
+        </li>
+        <li className={classNames(css.navigationLink, { [css.currentPage]: isHowItWorksPage })}>
+          <NamedLink name="CMSPage" params={{ pageId: HOW_IT_WORKS_PAGE_ID }}>
+            <FormattedMessage id="TopbarMobileMenu.howItWorksLink" />
+          </NamedLink>
+        </li>
+      </ul>
+      {categories.length > 0 ? (
+        <div className={css.categoriesSection}>
+          <h2 className={css.sectionHeading}>
+            <FormattedMessage id="TopbarMobileMenu.categoriesHeading" />
+          </h2>
+          <ul className={css.categoryLinksWrapper}>
+            {categories.map(category => (
+              <li key={category.id} className={css.categoryLink}>
+                <NamedLink name="SearchPage" to={categorySearchTo(category.id)}>
+                  {category.name}
+                </NamedLink>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+    </>
+  );
+};
 
 const CustomLinkComponent = ({ linkConfig, currentPage }) => {
   const { group, text, type, href, route } = linkConfig;
@@ -79,6 +126,7 @@ const TopbarMobileMenu = props => {
     currentUser,
     notificationCount = 0,
     customLinks,
+    categories = [],
     onLogout,
     showCreateListingsLink,
   } = props;
@@ -97,7 +145,7 @@ const TopbarMobileMenu = props => {
 
   const createListingsLinkMaybe = showCreateListingsLink ? (
     <NamedLink className={css.createNewListingLink} name="NewListingPage">
-      <FormattedMessage id="TopbarMobileMenu.newListingLink" />
+      <FormattedMessage id="TopbarMobileMenu.listAnItemLink" />
     </NamedLink>
   ) : null;
 
@@ -132,6 +180,7 @@ const TopbarMobileMenu = props => {
             />
           </div>
 
+          <PrimaryLinks currentPage={currentPage} categories={categories} />
           <ul className={css.customLinksWrapper}>{extraLinks}</ul>
 
           <div className={css.spacer} />
@@ -192,6 +241,7 @@ const TopbarMobileMenu = props => {
             </NamedLink>
           </li>
         </ul>
+        <PrimaryLinks currentPage={currentPage} categories={categories} />
         <ul className={css.customLinksWrapper}>{extraLinks}</ul>
         <div className={css.spacer} />
       </div>

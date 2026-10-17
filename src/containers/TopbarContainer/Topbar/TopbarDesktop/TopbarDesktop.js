@@ -17,14 +17,25 @@ import {
 
 import TopbarSearchForm from '../TopbarSearchForm/TopbarSearchForm';
 import CustomLinksMenu from './CustomLinksMenu/CustomLinksMenu';
+import PrimaryNav from './PrimaryNav/PrimaryNav';
 
 import css from './TopbarDesktop.module.css';
 
 const SignupLink = () => {
   return (
-    <NamedLink id="signup-link" name="SignupPage" className={css.topbarLink}>
-      <span className={css.topbarLinkLabel}>
+    <NamedLink id="signup-link" name="SignupPage" className={css.topbarAction}>
+      <span className={css.buttonFilled}>
         <FormattedMessage id="TopbarDesktop.signup" />
+      </span>
+    </NamedLink>
+  );
+};
+
+const CreateListingLink = () => {
+  return (
+    <NamedLink id="create-listing-link" name="NewListingPage" className={css.topbarAction}>
+      <span className={css.buttonOutline}>
+        <FormattedMessage id="TopbarDesktop.listAnItem" />
       </span>
     </NamedLink>
   );
@@ -189,6 +200,9 @@ const TopbarDesktop = props => {
 
   const signupLinkMaybe = isAuthenticatedOrJustHydrated ? null : <SignupLink />;
   const loginLinkMaybe = isAuthenticatedOrJustHydrated ? null : <LoginLink />;
+  // "List an item" is rendered as a button here instead of being one of the CustomLinksMenu links
+  const createListingLinkMaybe = showCreateListingsLinkHydrationSafe ? <CreateListingLink /> : null;
+  const categories = config.categoryConfiguration?.categories || [];
 
   const searchFormMaybe = showSearchForm ? (
     <TopbarSearchForm
@@ -213,11 +227,12 @@ const TopbarDesktop = props => {
     >
       <LinkedLogo
         id="logo-topbar-desktop"
-        className={css.logoLink}
+        rootClassName={css.logoLink}
         layout="desktop"
         alt={intl.formatMessage({ id: 'TopbarDesktop.logo' }, { marketplaceName })}
         linkToExternalSite={config?.topbar?.logoLink}
       />
+      <PrimaryNav currentPage={currentPage} categories={categories} intl={intl} />
       {searchFormMaybe}
 
       <CustomLinksMenu
@@ -225,13 +240,14 @@ const TopbarDesktop = props => {
         customLinks={customLinks}
         intl={intl}
         hasClientSideContentReady={authenticatedOnClientSide || !isAuthenticatedOrJustHydrated}
-        showCreateListingsLink={showCreateListingsLinkHydrationSafe}
+        showCreateListingsLink={false}
       />
 
+      {createListingLinkMaybe}
       {inboxLinkMaybe}
       {profileMenuMaybe}
-      {signupLinkMaybe}
       {loginLinkMaybe}
+      {signupLinkMaybe}
     </nav>
   );
 };

@@ -72,7 +72,7 @@
   display: flex;
   width: 24px;
   align-self: stretch;
-  background-color: var(--colorWhite);
+  background-color: transparent;
 }
 
 .desktopInput {
@@ -82,6 +82,7 @@
   height: var(--topbarHeightDesktop);
   line-height: unset;
   border: none;
+  background-color: transparent;
   padding-top: 0;
   padding-bottom: 0;
 
@@ -99,6 +100,7 @@
     outline: none;
     border: 0;
     box-shadow: none;
+    background-color: transparent;
   }
 
   &:hover::placeholder,
@@ -202,7 +204,7 @@
   width: 24px;
   align-self: stretch;
   border-bottom: 2px solid var(--marketplaceColor);
-  background-color: var(--colorWhite);
+  background-color: transparent;
 }
 
 .iconSvg {

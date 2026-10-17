@@ -74,13 +74,18 @@ const calculateContainerWidth = (containerRefTarget, parentWidth) => {
     : [];
   const siblingWidthsCombined = siblingArray.reduce((acc, node) => acc + node.offsetWidth, 0);
 
-  // .root class of the TopbarDesktop has 24px padding on the right
-  // Firefox doesn't support computedStyleMap()
-  const parentStyleMap = containerRefTarget?.parentElement?.computedStyleMap
-    ? containerRefTarget.parentElement.computedStyleMap()
-    : null;
-  const topbarPaddingRight = parentStyleMap?.get('padding-right')?.value;
-  const padding = topbarPaddingRight != null ? topbarPaddingRight : 24;
+  // .root class of the TopbarDesktop has horizontal padding that aligns it with the page content.
+  // getComputedStyle works in all browsers (Firefox doesn't support computedStyleMap()).
+  const parentElement = containerRefTarget?.parentElement;
+  const parentStyle =
+    parentElement && typeof window !== 'undefined' ? window.getComputedStyle(parentElement) : null;
+  const toPixels = value => {
+    const parsed = parseFloat(value);
+    return Number.isNaN(parsed) ? 24 : parsed;
+  };
+  const padding = parentStyle
+    ? toPixels(parentStyle.paddingLeft) + toPixels(parentStyle.paddingRight)
+    : 48;
 
   // We figure out available width from parent (TopbarDesktop/<nav>) and siblings
   const availableContainerWidth = parentWidth - siblingWidthsCombined - padding;

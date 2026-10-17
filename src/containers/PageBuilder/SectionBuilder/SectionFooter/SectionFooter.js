@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames';
 
+import { useConfiguration } from '../../../../context/configurationContext';
+import { FormattedMessage, useIntl } from '../../../../util/reactIntl';
 import { pickFieldOptions } from '../../PageBuilder.helpers';
 
-import { LinkedLogo } from '../../../../components';
+import { IconArrowHead, LinkedLogo } from '../../../../components';
 
 import Field from '../../Field';
 import BlockBuilder from '../../BlockBuilder';
@@ -12,25 +14,134 @@ import SectionContainer from '../SectionContainer';
 import css from './SectionFooter.module.css';
 
 // The number of columns (numberOfColumns) affects styling
+const GRID_CSS = [css.gridCol1, css.gridCol2, css.gridCol3, css.gridCol4];
 
-const GRID_CONFIG = [
-  { contentCss: css.contentCol1, gridCss: css.gridCol1 },
-  { contentCss: css.contentCol2, gridCss: css.gridCol2 },
-  { contentCss: css.contentCol3, gridCss: css.gridCol3 },
-  { contentCss: css.contentCol4, gridCss: css.gridCol4 },
-];
-const MAX_MOBILE_SCREEN_WIDTH = 1024;
+const getGridCss = numberOfColumns => GRID_CSS[numberOfColumns - 1] || GRID_CSS[0];
 
-const getIndex = numberOfColumns => numberOfColumns - 1;
+// Matches the first markdown heading line, e.g. "##### Marketplace"
+const HEADING_REGEX = /^\s{0,3}#{1,6}\s+(.+?)\s*#*\s*$/m;
 
-const getContentCss = numberOfColumns => {
-  const contentConfig = GRID_CONFIG[getIndex(numberOfColumns)];
-  return contentConfig ? contentConfig.contentCss : GRID_CONFIG[0].contentCss;
+/**
+ * Pick the first heading from a footer block's markdown content.
+ * On mobile, the heading becomes the toggle button of a collapsible link group.
+ *
+ * @param {Object} block footer block config
+ * @returns {string|null} plain-text heading or null if the block has no heading
+ */
+export const getBlockHeading = block => {
+  const content = block?.text?.content;
+  if (typeof content !== 'string') {
+    return null;
+  }
+  const match = content.match(HEADING_REGEX);
+  // Strip basic inline markdown (links, emphasis) from the heading text
+  return match
+    ? match[1]
+        .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
+        .replace(/[*_`]/g, '')
+        .trim() || null
+    : null;
 };
 
-const getGridCss = numberOfColumns => {
-  const contentConfig = GRID_CONFIG[getIndex(numberOfColumns)];
-  return contentConfig ? contentConfig.gridCss : GRID_CONFIG[0].gridCss;
+/**
+ * Footer link group. On mobile and tablet, groups with a heading collapse into an accordion;
+ * on desktop all groups are always expanded.
+ */
+const FooterColumn = props => {
+  const { block, sectionId, options } = props;
+  const [isOpen, setIsOpen] = useState(false);
+  const heading = getBlockHeading(block);
+  const bodyId = `${sectionId}-${block.blockId || 'block'}-links`;
+
+  if (!heading) {
+    return (
+      <div className={css.column}>
+        <BlockBuilder blocks={[block]} sectionId={sectionId} options={options} />
+      </div>
+    );
+  }
+
+  return (
+    <div className={classNames(css.column, css.collapsibleColumn)}>
+      <h2 className={css.toggleHeading}>
+        <button
+          type="button"
+          className={css.toggleButton}
+          aria-expanded={isOpen}
+          aria-controls={bodyId}
+          onClick={() => setIsOpen(open => !open)}
+        >
+          <span>{heading}</span>
+          <IconArrowHead
+            direction={isOpen ? 'up' : 'down'}
+            size="small"
+            rootClassName={css.toggleIcon}
+          />
+        </button>
+      </h2>
+      <div id={bodyId} className={classNames(css.columnBody, { [css.columnBodyOpen]: isOpen })}>
+        <BlockBuilder blocks={[block]} sectionId={sectionId} options={options} />
+      </div>
+    </div>
+  );
+};
+
+/**
+ * Informational labels for the marketplace's language, currency and country.
+ * These are not switchers: the marketplace currently runs in one locale and one currency.
+ */
+const MarketplaceLocaleInfo = () => {
+  const config = useConfiguration();
+  const intl = useIntl();
+  const { locale } = config.localization || {};
+  const currency = config.currency;
+
+  const language = locale ? locale.split('-')[0] : null;
+  const languageName = language
+    ? intl.formatDisplayName(language, { type: 'language' }) || language
+    : null;
+
+  const currencySymbol = currency
+    ? intl
+        .formatNumberToParts(0, {
+          style: 'currency',
+          currency,
+          currencyDisplay: 'narrowSymbol',
+        })
+        .find(part => part.type === 'currency')?.value
+    : null;
+  const currencyLabel =
+    currencySymbol && currencySymbol !== currency ? `${currencySymbol} ${currency}` : currency;
+
+  return (
+    <ul
+      className={css.localeList}
+      aria-label={intl.formatMessage({ id: 'SectionFooter.localeInfoLabel' })}
+    >
+      {languageName ? (
+        <li className={css.localeItem}>
+          <svg
+            className={css.localeIcon}
+            width="14"
+            height="14"
+            viewBox="0 0 16 16"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <g fill="none" stroke="currentColor" strokeWidth="1.3">
+              <circle cx="8" cy="8" r="6.5" />
+              <path d="M1.5 8h13M8 1.5c1.8 1.8 2.7 4 2.7 6.5S9.8 12.7 8 14.5M8 1.5C6.2 3.3 5.3 5.5 5.3 8s.9 4.7 2.7 6.5" />
+            </g>
+          </svg>
+          <span className={css.capitalize}>{languageName}</span>
+        </li>
+      ) : null}
+      {currencyLabel ? <li className={css.localeItem}>{currencyLabel}</li> : null}
+      <li className={css.localeItem}>
+        <FormattedMessage id="SectionFooter.marketplaceCountry" />
+      </li>
+    </ul>
+  );
 };
 
 /**
@@ -54,7 +165,9 @@ const getGridCss = numberOfColumns => {
  */
 
 /**
- * Section component that's able to show blocks in multiple different columns (defined by "numberOfColumns" prop)
+ * Footer section. Content (link groups, slogan, copyright, social media links) comes from the
+ * hosted footer asset (Console → Content → Footer). Each footer block is rendered as a link
+ * column; a markdown heading at the start of a block becomes the column title.
  *
  * @component
  * @param {Object} props
@@ -98,13 +211,6 @@ const SectionFooter = props => {
   });
 
   const showSocialMediaLinks = socialMediaLinks?.length > 0;
-  const hasMatchMedia = typeof window !== 'undefined' && window?.matchMedia;
-  const isMobileLayout = hasMatchMedia
-    ? window.matchMedia(`(max-width: ${MAX_MOBILE_SCREEN_WIDTH}px)`)?.matches
-    : true;
-  const logoLayout = isMobileLayout ? 'mobile' : 'desktop';
-
-  // use block builder instead of mapping blocks manually
 
   return (
     <SectionContainer
@@ -116,33 +222,34 @@ const SectionFooter = props => {
       options={fieldOptions}
     >
       <div className={css.footer}>
-        <div className={classNames(css.content, getContentCss(numberOfColumns))}>
-          <div>
+        <div className={classNames(css.top, getGridCss(numberOfColumns))}>
+          <div className={css.brand}>
             <LinkedLogo
               rootClassName={css.logoLink}
               logoClassName={css.logoWrapper}
               logoImageClassName={css.logoImage}
               linkToExternalSite={linkLogoToExternalSite}
-              layout={logoLayout}
+              layout="desktop"
             />
-          </div>
-          <div className={css.sloganMobile}>
             <Field data={slogan} className={css.slogan} />
-          </div>
-          <div className={css.detailsInfo}>
-            <div className={css.sloganDesktop}>
-              <Field data={slogan} className={css.slogan} />
-            </div>
             {showSocialMediaLinks ? (
               <div className={css.icons}>
                 <BlockBuilder blocks={linksWithBlockId} sectionId={sectionId} options={options} />
               </div>
             ) : null}
-            <Field data={copyright} className={css.copyright} />
           </div>
-          <div className={classNames(css.grid, getGridCss(numberOfColumns))}>
-            <BlockBuilder blocks={blocks} sectionId={sectionId} options={options} />
-          </div>
+          {blocks.map((block, i) => (
+            <FooterColumn
+              key={block.blockId || `footer-block-${i}`}
+              block={block}
+              sectionId={sectionId}
+              options={options}
+            />
+          ))}
+        </div>
+        <div className={css.bottom}>
+          <Field data={copyright} className={css.copyright} />
+          <MarketplaceLocaleInfo />
         </div>
       </div>
     </SectionContainer>

@@ -49,6 +49,44 @@ const formatDateValue = (dateRange, queryParamName) => {
   return { [queryParamName]: value };
 };
 
+/**
+ * Convert SearchCTA form values to SearchPage query parameters.
+ * Shared with other search forms (e.g. the landing page hero) so they submit identically.
+ *
+ * @param {Object} values form values: keywords, location, dateRange, categories, etc.
+ * @param {Object} config app configuration
+ * @returns {Object} query parameters for the SearchPage route
+ */
+export const getSearchQueryParams = (values, config) => {
+  let queryParams = {};
+
+  Object.entries(values).forEach(([key, value]) => {
+    if (!isEmpty(value)) {
+      if (key == 'dateRange') {
+        const { dates } = formatDateValue(value, 'dates');
+        queryParams.dates = dates;
+      } else if (key == 'location') {
+        if (value.selectedPlace) {
+          const {
+            search,
+            selectedPlace: { origin, bounds },
+          } = value;
+          queryParams.bounds = bounds;
+          queryParams.address = search;
+
+          if (isOriginInUse(config) && origin) {
+            queryParams.origin = `${origin.lat},${origin.lng}`;
+          }
+        }
+      } else {
+        queryParams[key] = value;
+      }
+    }
+  });
+
+  return queryParams;
+};
+
 export const SearchCTA = React.forwardRef((props, ref) => {
   const history = useHistory();
   const routeConfiguration = useRouteConfiguration();
@@ -127,31 +165,7 @@ export const SearchCTA = React.forwardRef((props, ref) => {
 
   const onSubmit = values => {
     // Convert form values to query parameters
-    let queryParams = {};
-
-    Object.entries(values).forEach(([key, value]) => {
-      if (!isEmpty(value)) {
-        if (key == 'dateRange') {
-          const { dates } = formatDateValue(value, 'dates');
-          queryParams.dates = dates;
-        } else if (key == 'location') {
-          if (value.selectedPlace) {
-            const {
-              search,
-              selectedPlace: { origin, bounds },
-            } = value;
-            queryParams.bounds = bounds;
-            queryParams.address = search;
-
-            if (isOriginInUse(config) && origin) {
-              queryParams.origin = `${origin.lat},${origin.lng}`;
-            }
-          }
-        } else {
-          queryParams[key] = value;
-        }
-      }
-    });
+    const queryParams = getSearchQueryParams(values, config);
 
     const to = createResourceLocatorString('SearchPage', routeConfiguration, {}, queryParams);
     // Use history.push to navigate without page refresh
