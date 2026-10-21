@@ -2,7 +2,7 @@ import React from 'react';
 import { intlShape } from '../../util/reactIntl';
 import { formatMoney } from '../../util/currency';
 import { humanizeLineItemCode } from '../../util/data';
-import { LINE_ITEMS, propTypes } from '../../util/types';
+import { LINE_ITEMS, LINE_ITEM_DURATION_DISCOUNT, propTypes } from '../../util/types';
 
 import css from './OrderBreakdown.module.css';
 
@@ -39,8 +39,11 @@ const LineItemUnknownItemsMaybe = props => {
       {items.map((item, i) => {
         const quantity = item.quantity;
 
+        // Known custom line items get a translated label instead of the humanized code
         const label =
-          quantity && quantity > 1
+          item.code === LINE_ITEM_DURATION_DISCOUNT
+            ? intl.formatMessage({ id: 'OrderBreakdown.durationDiscount' })
+            : quantity && quantity > 1
             ? `${humanizeLineItemCode(item.code)} x ${quantity}`
             : humanizeLineItemCode(item.code);
 

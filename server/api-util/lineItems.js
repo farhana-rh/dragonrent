@@ -6,7 +6,105 @@ const {
   getCustomerCommissionMaybe,
 } = require('./lineItemHelpers');
 const { types } = require('sharetribe-flex-sdk');
+const Decimal = require('decimal.js');
 const { Money } = types;
+
+/**
+ * DragonRent duration pricing (docs/SCOPE.md → "Duration pricing rule").
+ *
+ * Owners of daily listings can set two optional prices next to the daily price, saved in the
+ * listing's public data in subunits (cents): price3DaysInSubunits and price7DaysInSubunits.
+ * They are read from the listing on the server, never from the request.
+ */
+exports.DURATION_DISCOUNT_CODE = 'line-item/duration-discount';
+
+const isTierPrice = value => Number.isInteger(value) && value > 0;
+
+/**
+ * Total price in subunits for a daily rental of the given length.
+ *
+ * - 1–2 days: daily price × days, capped at the 3-day price
+ * - 3–6 days: 3-day price ÷ 3 × days, capped at the 7-day price
+ * - 7+ days: 7-day price ÷ 7 × days
+ * - A missing tier falls back to the tier below it.
+ * - A rental never costs more than the next longer package, nor more than daily price × days.
+ * - The total is rounded to whole subunits once, at the end.
+ *
+ * @param {number} days number of booked days
+ * @param {number} dailyPriceInSubunits listing price for one day
+ * @param {number?} price3DaysInSubunits optional price for 3 days
+ * @param {number?} price7DaysInSubunits optional price for 7 days
+ * @returns {number} total price in subunits
+ */
+exports.calculateDurationPriceInSubunits = (
+  days,
+  dailyPriceInSubunits,
+  price3DaysInSubunits,
+  price7DaysInSubunits
+) => {
+  const has3Days = isTierPrice(price3DaysInSubunits);
+  const has7Days = isTierPrice(price7DaysInSubunits);
+  const fullPrice = new Decimal(dailyPriceInSubunits).times(days);
+
+  // Per-day rate for this length of rental; a missing tier falls back to the tier below
+  const dailyRate =
+    days >= 7 && has7Days
+      ? new Decimal(price7DaysInSubunits).dividedBy(7)
+      : days >= 3 && has3Days
+      ? new Decimal(price3DaysInSubunits).dividedBy(3)
+      : new Decimal(dailyPriceInSubunits);
+
+  let total = dailyRate.times(days);
+  // Never more than the next longer package
+  if (days < 3 && has3Days) {
+    total = Decimal.min(total, price3DaysInSubunits);
+  }
+  if (days < 7 && has7Days) {
+    total = Decimal.min(total, price7DaysInSubunits);
+  }
+  // Never more than the daily price (protects against tier prices above daily price × days)
+  total = Decimal.min(total, fullPrice);
+
+  return total.toDecimalPlaces(0, Decimal.ROUND_HALF_UP).toNumber();
+};
+
+/**
+ * Discount line item that brings a daily booking's total down to its duration price,
+ * or null when there is no discount. Uses a negative quantity, like the provider commission.
+ *
+ * @param {Object} order the base line item (daily price × days)
+ * @param {Object} publicData listing public data with optional tier prices
+ * @returns {Object|null} { discountLineItem, discountedTotal } or null
+ */
+const getDurationDiscountMaybe = (order, publicData) => {
+  const { price3DaysInSubunits, price7DaysInSubunits } = publicData || {};
+  const { unitPrice, quantity } = order;
+  if (!(unitPrice instanceof Money) || !Number.isInteger(quantity) || quantity < 1) {
+    return null;
+  }
+
+  const fullPrice = unitPrice.amount * quantity;
+  const durationPrice = exports.calculateDurationPriceInSubunits(
+    quantity,
+    unitPrice.amount,
+    price3DaysInSubunits,
+    price7DaysInSubunits
+  );
+  const discount = fullPrice - durationPrice;
+  if (discount <= 0) {
+    return null;
+  }
+
+  return {
+    discountLineItem: {
+      code: exports.DURATION_DISCOUNT_CODE,
+      unitPrice: new Money(discount, unitPrice.currency),
+      quantity: -1,
+      includeFor: ['customer', 'provider'],
+    },
+    discountedTotal: new Money(durationPrice, unitPrice.currency),
+  };
+};
 
 /**
  * Get quantity and add extra line-items that are related to delivery method
@@ -237,13 +335,34 @@ exports.transactionLineItems = (listing, orderData, providerCommission, customer
     includeFor: ['customer', 'provider'],
   };
 
+  // DragonRent duration pricing: daily listings (without seats or price variants) can have
+  // cheaper 3-day and 7-day prices. The difference is a discount line item.
+  const usesListingPrice = unitPrice === priceAttribute;
+  const durationDiscount =
+    unitType === 'day' && !seats && usesListingPrice
+      ? getDurationDiscountMaybe(order, publicData)
+      : null;
+  const discountLineItems = durationDiscount ? [durationDiscount.discountLineItem] : [];
+
+  // Commissions are calculated from the price the renter actually pays for the rental, i.e.
+  // after the duration discount.
+  const commissionBase = durationDiscount
+    ? {
+        code,
+        unitPrice: durationDiscount.discountedTotal,
+        quantity: 1,
+        includeFor: ['customer', 'provider'],
+      }
+    : order;
+
   // Let's keep the base price (order) as first line item and provider and customer commissions as last.
   // Note: the order matters only if OrderBreakdown component doesn't recognize line-item.
   const lineItems = [
     order,
+    ...discountLineItems,
     ...extraLineItems,
-    ...getProviderCommissionMaybe(providerCommission, order, currency),
-    ...getCustomerCommissionMaybe(customerCommission, order, currency),
+    ...getProviderCommissionMaybe(providerCommission, commissionBase, currency),
+    ...getCustomerCommissionMaybe(customerCommission, commissionBase, currency),
   ];
 
   return lineItems;

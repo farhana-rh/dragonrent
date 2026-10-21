@@ -38,3 +38,52 @@
     margin-top: 100px;
   }
 }
+
+/* DragonRent duration pricing (ListPrices mockup): 1-day, 3-day and 7-day prices */
+.durationPrices {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 24px;
+
+  @media (--viewportMedium) {
+    gap: 32px;
+    margin-bottom: 32px;
+  }
+}
+
+.intro {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--colorTextSecondary);
+}
+
+.priceField {
+  display: flex;
+  flex-direction: column;
+}
+
+/* The hint sits under the field (DESIGN.md: hint 13px Slate) */
+.hint {
+  margin: 6px 0 0 0;
+  padding: 0;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--colorTextSecondary);
+
+  @media (--viewportMedium) {
+    margin: 8px 0 0 0;
+  }
+}
+
+.optional {
+  font-weight: var(--fontWeightRegular);
+  color: var(--colorTextSecondary);
+}
+
+/* Inside a price field the hint follows the input directly; the list gap spaces the fields */
+.priceField .input {
+  margin-bottom: 0;
+}

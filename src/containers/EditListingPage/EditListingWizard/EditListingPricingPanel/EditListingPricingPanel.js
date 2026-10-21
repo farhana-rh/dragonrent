@@ -47,8 +47,46 @@ const getInitialValues = props => {
         ...getInitialValuesForPriceVariants(props, isPriceVariationsInUse),
         ...getInitialValuesForStartTimeInterval(props),
       }
-    : { price: listing?.attributes?.price };
+    : { price: listing?.attributes?.price, ...getInitialValuesForDurationPrices(listing) };
 };
+
+// DragonRent duration pricing: the optional 3-day and 7-day prices are stored in the listing's
+// public data in subunits, in the same currency as the daily price.
+const DURATION_PRICE_FIELDS = {
+  price3Days: 'price3DaysInSubunits',
+  price7Days: 'price7DaysInSubunits',
+};
+
+/**
+ * Form values (Money) for the optional duration prices of a daily listing.
+ *
+ * @param {Object} listing
+ * @returns {Object} { price3Days, price7Days } with Money values, or {} when not set
+ */
+export const getInitialValuesForDurationPrices = listing => {
+  const { price, publicData } = listing?.attributes || {};
+  if (publicData?.unitType !== 'day' || !(price instanceof Money)) {
+    return {};
+  }
+  return Object.entries(DURATION_PRICE_FIELDS).reduce((values, [field, key]) => {
+    const amount = publicData[key];
+    return Number.isInteger(amount) && amount > 0
+      ? { ...values, [field]: new Money(amount, price.currency) }
+      : values;
+  }, {});
+};
+
+/**
+ * Public data updates for the duration prices. An empty field removes the saved price (null).
+ *
+ * @param {Object} values form values
+ * @returns {Object} { price3DaysInSubunits, price7DaysInSubunits }
+ */
+export const getDurationPricesPublicData = values =>
+  Object.entries(DURATION_PRICE_FIELDS).reduce((publicData, [field, key]) => {
+    const money = values[field];
+    return { ...publicData, [key]: money instanceof Money ? money.amount : null };
+  }, {});
 
 // This is needed to show the listing's price consistently over XHR calls.
 // I.e. we don't change the API entity saved to Redux store.
@@ -197,10 +235,13 @@ const EditListingPricingPanel = props => {
                 },
               };
             } else {
+              const durationPricesMaybe =
+                unitType === 'day' ? getDurationPricesPublicData(values) : {};
               const priceVariationsEnabledMaybe = isBooking
                 ? {
                     publicData: {
                       priceVariationsEnabled: false,
+                      ...durationPricesMaybe,
                     },
                   }
                 : {};

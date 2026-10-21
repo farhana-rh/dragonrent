@@ -409,6 +409,11 @@ export const LINE_ITEM_PROVIDER_COMMISSION = 'line-item/provider-commission';
 export const LINE_ITEM_SHIPPING_FEE = 'line-item/shipping-fee';
 export const LINE_ITEM_PICKUP_FEE = 'line-item/pickup-fee';
 
+// DragonRent duration pricing: discount that brings a daily booking down to its 3-day or 7-day
+// price (server/api-util/lineItems.js). Not in LINE_ITEMS, so OrderBreakdown shows it with the
+// other extra line items.
+export const LINE_ITEM_DURATION_DISCOUNT = 'line-item/duration-discount';
+
 export const LINE_ITEMS = [
   LINE_ITEM_NIGHT,
   LINE_ITEM_DAY,
