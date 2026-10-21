@@ -2,8 +2,9 @@ import React from 'react';
 
 import { FormattedMessage } from '../../../util/reactIntl';
 
-import SectionHeader from '../SectionHeader/SectionHeader';
-import { trustItems } from '../landingPageConfig';
+import { NamedLink } from '../../../components';
+
+import { trustItems, trustPageId } from '../landingPageConfig';
 
 import css from './SectionRentWithConfidence.module.css';
 
@@ -20,7 +21,7 @@ const ICON_PATHS = {
 
 const TrustIcon = ({ name }) => (
   <span className={css.iconWrapper} aria-hidden="true">
-    <svg width="16" height="16" viewBox="0 0 16 16" focusable="false">
+    <svg className={css.icon} width="16" height="16" viewBox="0 0 16 16" focusable="false">
       <path
         d={ICON_PATHS[name]}
         fill={name === 'star' ? 'currentColor' : 'none'}
@@ -34,8 +35,9 @@ const TrustIcon = ({ name }) => (
 );
 
 /**
- * "Rent with confidence" grid. Only items enabled in landingPageConfig.js are shown, so the
- * section never promises a feature that is not live yet.
+ * Trust section: an introduction with an optional link to the trust page, and a grid of
+ * trust items. Only items enabled in landingPageConfig.js are shown, so the section never
+ * promises a feature that is not live yet.
  *
  * @component
  * @param {Object} props
@@ -55,10 +57,23 @@ const SectionRentWithConfidence = props => {
   return (
     <section id={sectionId} className={css.root} aria-labelledby={titleId}>
       <div className={css.content}>
-        <SectionHeader
-          titleId={titleId}
-          title={<FormattedMessage id="LandingPage.trust.title" />}
-        />
+        <div className={css.intro}>
+          <p className={css.eyebrow}>
+            <FormattedMessage id="LandingPage.trust.eyebrow" />
+          </p>
+          <h2 id={titleId} className={css.title}>
+            <FormattedMessage id="LandingPage.trust.titleNew" />
+          </h2>
+          <p className={css.description}>
+            <FormattedMessage id="LandingPage.trust.description" />
+          </p>
+          {trustPageId ? (
+            <NamedLink className={css.link} name="CMSPage" params={{ pageId: trustPageId }}>
+              <FormattedMessage id="LandingPage.trust.learnMore" />
+            </NamedLink>
+          ) : null}
+        </div>
+
         <ul className={css.list}>
           {items.map(item => (
             <li key={item.id} className={css.item}>

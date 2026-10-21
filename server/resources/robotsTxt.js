@@ -49,6 +49,7 @@ Disallow: /inbox
 Disallow: /order
 Disallow: /sale
 Disallow: /listings
+Disallow: /dashboard
 Disallow: /account
 Disallow: /reset-password
 Disallow: /verify-email

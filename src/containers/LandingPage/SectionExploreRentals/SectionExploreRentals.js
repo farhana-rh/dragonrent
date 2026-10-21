@@ -4,15 +4,17 @@ import { useConfiguration } from '../../../context/configurationContext';
 import { FormattedMessage } from '../../../util/reactIntl';
 import { categorySearchTo } from '../../../util/search';
 
-import HomeTile from '../HomeTile/HomeTile';
+import { NamedLink } from '../../../components';
+
+import CategoryIcon from '../CategoryIcon/CategoryIcon';
 import SectionHeader from '../SectionHeader/SectionHeader';
-import { categoryVisuals, MAX_CATEGORY_TILES, TONES } from '../landingPageConfig';
+import { categoryVisuals, MAX_CATEGORY_TILES } from '../landingPageConfig';
 
 import css from './SectionExploreRentals.module.css';
 
 /**
- * Category tiles. Categories come from Console (Listings → Categories); the section is
- * not rendered when the marketplace has no categories.
+ * "Browse by category" tiles. Categories come from Console (Listings → Categories); the
+ * section is not rendered when the marketplace has no categories.
  *
  * @component
  * @param {Object} props
@@ -38,18 +40,19 @@ const SectionExploreRentals = props => {
       <div className={css.content}>
         <SectionHeader
           titleId={titleId}
-          title={<FormattedMessage id="LandingPage.exploreRentals.title" />}
-          linkText={<FormattedMessage id="LandingPage.exploreRentals.viewAll" />}
+          title={<FormattedMessage id="LandingPage.categories.title" />}
+          linkText={<FormattedMessage id="LandingPage.categories.seeAll" />}
           linkProps={{ name: 'SearchPage' }}
         />
         <ul className={css.list}>
-          {categories.map((category, i) => (
-            <li key={category.id}>
-              <HomeTile
-                title={category.name}
-                linkProps={{ name: 'SearchPage', to: categorySearchTo(category.id) }}
-                visual={categoryVisuals[category.id] || { tone: TONES[i % TONES.length] }}
-              />
+          {categories.map(category => (
+            <li key={category.id} className={css.item}>
+              <NamedLink className={css.tile} name="SearchPage" to={categorySearchTo(category.id)}>
+                <span className={css.iconWrapper}>
+                  <CategoryIcon className={css.icon} name={categoryVisuals[category.id]?.icon} />
+                </span>
+                <span className={css.name}>{category.name}</span>
+              </NamedLink>
             </li>
           ))}
         </ul>

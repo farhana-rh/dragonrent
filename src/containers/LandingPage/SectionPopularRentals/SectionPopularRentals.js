@@ -9,7 +9,8 @@ import SectionHeader from '../SectionHeader/SectionHeader';
 
 import css from './SectionPopularRentals.module.css';
 
-const MAX_LISTINGS = 4;
+// The featuredListings duck fetches up to 10 listings; mobile shows only the first 4 (see css)
+const MAX_LISTINGS = 8;
 const SKELETON_KEYS = ['a', 'b', 'c', 'd'];
 
 // Title depends on how the listings were selected in Console, so the heading stays accurate:
@@ -17,6 +18,10 @@ const SKELETON_KEYS = ['a', 'b', 'c', 'd'];
 const TITLE_IDS = {
   newest: 'LandingPage.popularRentals.titleNewest',
   queryString: 'LandingPage.popularRentals.titleFeatured',
+};
+const SUBTITLE_IDS = {
+  newest: 'LandingPage.popularRentals.subtitleNewest',
+  queryString: 'LandingPage.popularRentals.subtitleFeatured',
 };
 
 const ListingSkeletons = () => (
@@ -78,7 +83,10 @@ const SectionPopularRentals = props => {
         <SectionHeader
           titleId={titleId}
           title={<FormattedMessage id={TITLE_IDS[listingSelection] || TITLE_IDS.queryString} />}
-          linkText={<FormattedMessage id="LandingPage.popularRentals.seeAll" />}
+          subtitle={
+            <FormattedMessage id={SUBTITLE_IDS[listingSelection] || SUBTITLE_IDS.queryString} />
+          }
+          linkText={<FormattedMessage id="LandingPage.popularRentals.viewAll" />}
           linkProps={{ name: 'SearchPage' }}
         />
 
@@ -113,7 +121,7 @@ const SectionPopularRentals = props => {
                 <ListingCard
                   listing={listing}
                   showAuthorInfo={false}
-                  renderSizes="(max-width: 767px) 60vw, (max-width: 1120px) 25vw, 260px"
+                  renderSizes="(max-width: 767px) 50vw, (max-width: 1023px) 33vw, 260px"
                 />
               </li>
             ))}

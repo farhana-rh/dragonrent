@@ -1,0 +1,72 @@
+@import '../../../styles/customMediaQueries.css';
+
+.root {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 18px;
+
+  color: var(--colorText);
+  background-color: var(--colorSurface);
+  border: 1px solid var(--colorBorder);
+  border-radius: 16px;
+
+  @media (--viewportMedium) {
+    padding: 24px;
+  }
+}
+
+.highlight {
+  color: var(--colorWhite);
+  background-color: var(--marketplaceColor);
+  border-color: var(--marketplaceColor);
+}
+
+.label {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--colorTextSecondary);
+}
+
+.value {
+  margin: 6px 0 0 0;
+  font-size: 30px;
+  line-height: 36px;
+  font-weight: var(--fontWeightBold);
+  letter-spacing: -0.02em;
+
+  @media (--viewportMedium) {
+    margin: 8px 0 0 0;
+    font-size: 36px;
+    line-height: 40px;
+  }
+}
+
+.detail {
+  margin: 12px 0 0 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--colorTextSecondary);
+
+  @media (--viewportMedium) {
+    margin: 16px 0 0 0;
+  }
+}
+
+.highlight .label,
+.highlight .detail {
+  color: var(--colorWhite);
+}
+
+/* For links passed in the detail line */
+.detailLink {
+  font-weight: var(--fontWeightSemiBold);
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
+  &:hover {
+    color: inherit;
+  }
+}

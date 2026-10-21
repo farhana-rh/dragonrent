@@ -1,0 +1,84 @@
+@import '../../../styles/customMediaQueries.css';
+
+.root {
+  padding: 18px;
+  background-color: var(--colorSurface);
+  border: 1px solid var(--colorBorder);
+  border-radius: 16px;
+
+  @media (--viewportMedium) {
+    padding: 24px 32px;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.title {
+  margin: 0;
+  padding: 0;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorText);
+
+  @media (--viewportMedium) {
+    font-size: 20px;
+    line-height: 28px;
+  }
+}
+
+.changeLink {
+  flex-shrink: 0;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--marketplaceColor);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
+  &:hover {
+    color: var(--marketplaceColorDark);
+  }
+}
+
+/* Two columns on mobile (duration wraps below), three from tablet up */
+.details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 24px;
+  margin: 18px 0 0 0;
+
+  @media (--viewportMedium) {
+    grid-template-columns: repeat(3, auto);
+    justify-content: start;
+    gap: 16px 40px;
+    margin: 24px 0 0 0;
+  }
+}
+
+.detail {
+  min-width: 0;
+}
+
+.label {
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--colorTextMuted);
+}
+
+.value {
+  margin: 2px 0 0 0;
+  font-size: 15px;
+  line-height: 24px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorText);
+
+  @media (--viewportMedium) {
+    font-size: 16px;
+  }
+}

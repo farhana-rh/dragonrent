@@ -17,10 +17,10 @@ import { getFeaturedListingsProps } from '../../util/data';
 import SectionHomeHero from './SectionHomeHero/SectionHomeHero';
 import SectionExploreRentals from './SectionExploreRentals/SectionExploreRentals';
 import SectionPopularRentals from './SectionPopularRentals/SectionPopularRentals';
-import SectionUseCases from './SectionUseCases/SectionUseCases';
 import SectionHowItWorks from './SectionHowItWorks/SectionHowItWorks';
 import SectionRentWithConfidence from './SectionRentWithConfidence/SectionRentWithConfidence';
 import SectionHostCta from './SectionHostCta/SectionHostCta';
+import { HOW_IT_WORKS_SECTION_ID } from './landingPageConfig';
 
 const PageBuilder = loadable(() =>
   import(/* webpackChunkName: "PageBuilder" */ '../PageBuilder/PageBuilder')
@@ -35,7 +35,6 @@ const sectionComponents = {
   // Keeps the 'listings' section type: the featuredListings duck identifies listing sections
   // by this type when it stores fetched listings.
   listings: { component: SectionPopularRentals },
-  homeUseCases: { component: SectionUseCases },
   homeHowItWorks: { component: SectionHowItWorks },
   homeRentWithConfidence: { component: SectionRentWithConfidence },
   homeHostCta: { component: SectionHostCta },
@@ -72,8 +71,9 @@ export const buildLandingPageData = (hostedPageData, formatMessage) => {
     { sectionType: 'homeHero', sectionId: 'hero' },
     { sectionType: 'homeExploreRentals', sectionId: 'explore-rentals' },
     ...popularRentalsMaybe,
-    { sectionType: 'homeUseCases', sectionId: 'use-cases' },
-    { sectionType: 'homeHowItWorks', sectionId: 'how-dragonrent-works' },
+    // "Browse by use case" (SectionUseCases) is not on the page at the moment. To bring it back,
+    // add it to sectionComponents and here: { sectionType: 'homeUseCases', sectionId: 'use-cases' }
+    { sectionType: 'homeHowItWorks', sectionId: HOW_IT_WORKS_SECTION_ID },
     { sectionType: 'homeRentWithConfidence', sectionId: 'rent-with-confidence' },
     { sectionType: 'homeHostCta', sectionId: 'list-an-item' },
   ];

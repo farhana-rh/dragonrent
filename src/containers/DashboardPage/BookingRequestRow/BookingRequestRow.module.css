@@ -1,0 +1,104 @@
+@import '../../../styles/customMediaQueries.css';
+
+/* Mobile: avatar and details on top, earnings and button below. Desktop: one row. */
+.root {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas:
+    'avatar details'
+    'payout link';
+  align-items: center;
+  gap: 12px;
+  padding: 18px;
+
+  @media (--viewportMedium) {
+    grid-template-columns: auto minmax(0, 1fr) auto auto;
+    grid-template-areas: 'avatar details payout link';
+    gap: 16px;
+    padding: 20px 24px;
+  }
+}
+
+.avatar {
+  grid-area: avatar;
+}
+
+.details {
+  grid-area: details;
+  min-width: 0;
+}
+
+.customer {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorText);
+}
+
+.booking {
+  margin: 2px 0 0 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--colorTextSecondary);
+}
+
+.listingTitle {
+  overflow-wrap: anywhere;
+}
+
+.timeRange {
+  display: inline;
+  white-space: nowrap;
+}
+
+.payout {
+  grid-area: payout;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+
+  @media (--viewportMedium) {
+    align-items: flex-end;
+  }
+}
+
+.payoutLabel {
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--colorTextMuted);
+}
+
+.payoutAmount {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorText);
+  white-space: nowrap;
+}
+
+.reviewLink {
+  grid-area: link;
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 18px;
+
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorWhite);
+  white-space: nowrap;
+  background-color: var(--marketplaceColor);
+  border-radius: 999px;
+
+  &:hover {
+    text-decoration: none;
+    color: var(--colorWhite);
+    background-color: var(--marketplaceColorDark);
+  }
+}

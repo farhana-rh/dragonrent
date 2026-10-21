@@ -2,8 +2,18 @@
 
 /* Shared layout classes for the landing page sections. Compose these in section styles. */
 
+/*
+ * Every section is a grid item of PageBuilder's <main>. min-width: 0 lets it shrink to the
+ * viewport; otherwise a horizontally scrolling row inside it (e.g. the category tiles)
+ * widens the whole page on mobile.
+ */
+.sectionRoot {
+  min-width: 0;
+}
+
 /* Vertical rhythm: 6px baseline on mobile, 8px from tablet up */
 .section {
+  composes: sectionRoot;
   padding: 36px 0;
 
   @media (--viewportMedium) {

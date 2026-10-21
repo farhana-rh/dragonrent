@@ -118,7 +118,10 @@ const HeroSearchForm = props => {
           <div className={css.submitWrapper}>
             <PrimaryButton className={css.submitButton} type="submit" disabled={submitDisabled}>
               <IconSearch rootClassName={css.searchIcon} />
-              <FormattedMessage id="LandingPage.hero.searchButton" />
+              {/* Visually hidden from tablet up, where the button shows only the icon */}
+              <span className={css.submitLabel}>
+                <FormattedMessage id="LandingPage.hero.searchButton" />
+              </span>
             </PrimaryButton>
           </div>
         </Form>

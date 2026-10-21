@@ -1,16 +1,17 @@
 import React from 'react';
 
-import { FormattedMessage, useIntl } from '../../../util/reactIntl';
+import { FormattedMessage } from '../../../util/reactIntl';
 
 import { NamedLink } from '../../../components';
 
-import HomeMedia from '../HomeMedia/HomeMedia';
-import { hostCtaImage } from '../landingPageConfig';
+import { getAudienceTabId } from '../SectionHowItWorks/SectionHowItWorks';
+import { HOW_IT_WORKS_SECTION_ID } from '../landingPageConfig';
 
 import css from './SectionHostCta.module.css';
 
 /**
- * Call to action for people who want to rent out their items.
+ * Call to action for people who want to rent out their items. The secondary link opens the
+ * lender's steps in the "How it works" section.
  *
  * @component
  * @param {Object} props
@@ -19,31 +20,31 @@ import css from './SectionHostCta.module.css';
  */
 const SectionHostCta = props => {
   const { sectionId } = props;
-  const intl = useIntl();
   const titleId = `${sectionId}-title`;
 
   return (
     <section id={sectionId} className={css.root} aria-labelledby={titleId}>
       <div className={css.content}>
-        <div className={css.card}>
+        <div className={css.banner}>
           <div className={css.text}>
             <h2 id={titleId} className={css.title}>
-              <FormattedMessage id="LandingPage.hostCta.title" />
+              <FormattedMessage id="LandingPage.hostCta.titleNew" />
             </h2>
             <p className={css.description}>
-              <FormattedMessage id="LandingPage.hostCta.text" />
+              <FormattedMessage id="LandingPage.hostCta.description" />
             </p>
-            <NamedLink name="NewListingPage" className={css.button}>
-              <FormattedMessage id="LandingPage.hostCta.button" />
-            </NamedLink>
           </div>
-          <HomeMedia
-            className={css.media}
-            image={hostCtaImage.image}
-            tone={hostCtaImage.tone}
-            aspectRatio={null}
-            alt={intl.formatMessage({ id: 'LandingPage.hostCta.imageAlt' })}
-          />
+          <div className={css.actions}>
+            <NamedLink name="NewListingPage" className={css.primaryButton}>
+              <FormattedMessage id="LandingPage.hostCta.primaryButton" />
+            </NamedLink>
+            <a
+              className={css.secondaryButton}
+              href={`#${getAudienceTabId(HOW_IT_WORKS_SECTION_ID, 'lend')}`}
+            >
+              <FormattedMessage id="LandingPage.hostCta.secondaryButton" />
+            </a>
+          </div>
         </div>
       </div>
     </section>

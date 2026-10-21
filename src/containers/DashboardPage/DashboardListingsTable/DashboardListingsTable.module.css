@@ -1,0 +1,182 @@
+@import '../../../styles/customMediaQueries.css';
+
+.root {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--colorSurface);
+  border: 1px solid var(--colorBorder);
+  border-radius: 16px;
+  /* Clip row backgrounds to the rounded corners */
+  overflow: hidden;
+  border-spacing: 0;
+
+  /* Mobile: rows stack into blocks */
+  display: block;
+
+  @media (--viewportMedium) {
+    display: table;
+  }
+}
+
+/* Column headers are only shown when the table has columns */
+.head {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+
+  @media (--viewportMedium) {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+    display: table-header-group;
+    background-color: var(--colorSurfaceSubtle);
+  }
+}
+
+.headCell {
+  padding: 12px 24px;
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: var(--fontWeightSemiBold);
+  text-align: left;
+  color: var(--colorTextSecondary);
+}
+
+.body {
+  display: block;
+
+  @media (--viewportMedium) {
+    display: table-row-group;
+  }
+}
+
+/* Mobile: image and title on the first line, price and status on the second */
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    'item item'
+    'price status';
+  align-items: center;
+  gap: 12px;
+  padding: 18px;
+  border-top: 1px solid var(--colorBorder);
+
+  &:first-child {
+    border-top: none;
+  }
+
+  @media (--viewportMedium) {
+    display: table-row;
+    padding: 0;
+
+    &:first-child {
+      border-top: 1px solid var(--colorBorder);
+    }
+  }
+}
+
+.itemCell,
+.priceCell,
+.statusCell {
+  padding: 0;
+  font-size: 15px;
+  line-height: 24px;
+  font-weight: var(--fontWeightRegular);
+  text-align: left;
+  color: var(--colorText);
+
+  @media (--viewportMedium) {
+    padding: 16px 24px;
+    vertical-align: middle;
+  }
+}
+
+.itemCell {
+  grid-area: item;
+}
+
+.priceCell {
+  grid-area: price;
+  white-space: nowrap;
+}
+
+.statusCell {
+  grid-area: status;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+
+  @media (--viewportMedium) {
+    gap: 16px;
+  }
+}
+
+.thumbnail {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  overflow: hidden;
+  background-color: var(--colorPlaceholderSand);
+  border-radius: var(--borderRadiusMedium);
+}
+
+.thumbnailImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.title {
+  min-width: 0;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorText);
+  overflow-wrap: anywhere;
+
+  &:hover {
+    color: var(--marketplaceColorDark);
+  }
+}
+
+.unit {
+  font-size: 13px;
+  color: var(--colorTextMuted);
+}
+
+.muted {
+  color: var(--colorTextMuted);
+}
+
+.status {
+  display: inline-block;
+  padding: 2px 10px;
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: var(--fontWeightMedium);
+  white-space: nowrap;
+  border-radius: 999px;
+}
+
+.statusPublished {
+  color: var(--colorSuccessDark);
+  background-color: var(--colorSuccessSubtle);
+}
+
+.statusPending {
+  color: var(--colorAttentionDark);
+  background-color: var(--colorAttentionSubtle);
+}
+
+.statusMuted {
+  color: var(--colorTextSecondary);
+  background-color: var(--colorSurfaceSubtle);
+}

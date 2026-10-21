@@ -1,6 +1,7 @@
 @import '../../../styles/customMediaQueries.css';
 
 .root {
+  composes: sectionRoot from '../LandingPage.module.css';
   padding: 30px 0 36px 0;
 
   @media (--viewportMedium) {
@@ -19,8 +20,8 @@
   gap: 30px;
 
   @media (--viewportLarge) {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
-    align-items: center;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
+    align-items: stretch;
     gap: 48px;
   }
 }
@@ -29,13 +30,32 @@
   min-width: 0;
 }
 
+.eyebrow {
+  display: inline-block;
+  margin: 0 0 18px 0;
+  padding: 3px 12px;
+
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--marketplaceColorDark);
+  background-color: var(--colorAccentSubtle);
+  border-radius: 999px;
+
+  @media (--viewportMedium) {
+    margin: 0 0 24px 0;
+    padding: 4px 12px;
+  }
+}
+
 .title {
+  max-width: 600px;
   margin: 0;
   padding: 0;
   font-size: 36px;
   line-height: 42px;
-  font-weight: var(--fontWeightBold);
-  letter-spacing: -0.03em;
+  font-weight: var(--fontWeightHeavy);
+  letter-spacing: -0.035em;
   color: var(--colorText);
 
   @media (--viewportMedium) {
@@ -75,7 +95,7 @@
 .popular {
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
+  align-items: center;
   gap: 6px 12px;
   margin-top: 18px;
 
@@ -93,33 +113,56 @@
 .popularList {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px 14px;
+  gap: 6px 8px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .popularLink {
-  font-size: 14px;
-  line-height: 20px;
+  display: inline-block;
+  padding: 5px 12px;
+  font-size: 13px;
+  line-height: 18px;
   color: var(--colorText);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  background-color: var(--colorSurface);
+  border: 1px solid var(--colorBorder);
+  border-radius: 999px;
 
   &:hover {
-    color: var(--marketplaceColor);
+    color: var(--marketplaceColorDark);
+    border-color: var(--colorBorderStrong);
+    text-decoration: none;
   }
 }
 
-.media {
-  /* Shorter, wider frame on mobile and tablet; near-square next to the text on desktop */
-  aspect-ratio: 16 / 10;
+.mosaic {
+  /* The headline and search carry the hero on mobile; the images start from tablet up */
+  display: none;
 
   @media (--viewportMedium) {
-    aspect-ratio: 21 / 9;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    height: 240px;
   }
 
+  /* Desktop: one tall tile on the left and two stacked tiles on the right */
   @media (--viewportLarge) {
-    aspect-ratio: 1 / 1.05;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    height: auto;
+    min-height: 456px;
+  }
+}
+
+.mosaicTile {
+  height: 100%;
+  border-radius: 16px;
+
+  @media (--viewportLarge) {
+    &:first-child {
+      grid-row: 1 / span 2;
+    }
   }
 }

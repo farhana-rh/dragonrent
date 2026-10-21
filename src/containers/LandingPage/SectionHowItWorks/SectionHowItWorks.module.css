@@ -6,95 +6,157 @@
 
 .content {
   composes: sectionContent from '../LandingPage.module.css';
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+.title {
+  margin: 0;
+  padding: 0;
+  font-size: 26px;
+  line-height: 36px;
+  font-weight: var(--fontWeightBold);
+  letter-spacing: -0.02em;
+  text-align: center;
+  color: var(--colorText);
+
+  @media (--viewportMedium) {
+    font-size: 32px;
+    line-height: 40px;
+  }
+}
+
+/* Segmented control */
+.tabs {
+  display: inline-flex;
+  gap: 4px;
+  margin-top: 18px;
+  padding: 4px;
+  background-color: var(--colorSurfaceSubtle);
+  border-radius: 999px;
+
+  @media (--viewportMedium) {
+    margin-top: 24px;
+  }
+}
+
+.tab {
+  min-height: 36px;
+  padding: 0 18px;
+
+  font-family: var(--fontFamily);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorTextSecondary);
+  background-color: transparent;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color var(--transitionStyleButton), color var(--transitionStyleButton);
+
+  &:hover {
+    color: var(--colorText);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--marketplaceColor);
+    outline-offset: 2px;
+  }
+
+  @media (--viewportMedium) {
+    min-height: 40px;
+    padding: 0 24px;
+  }
+}
+
+.tabSelected {
+  color: var(--colorWhite);
+  background-color: var(--colorText);
+
+  &:hover {
+    color: var(--colorWhite);
+  }
+}
+
+.panel {
+  width: 100%;
+  margin-top: 24px;
+
+  @media (--viewportMedium) {
+    margin-top: 40px;
+  }
+}
+
+/* 1 column on mobile, 2 on tablet, 4 on desktop */
 .steps {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 24px;
-  margin: 6px 0 0 0;
+  gap: 12px;
+  margin: 0;
   padding: 0;
   list-style: none;
 
   @media (--viewportMedium) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 32px;
-    margin: 8px 0 0 0;
-  }
-}
-
-/* Mobile: number on the left, text on the right. Tablet and up: number above text. */
-.step {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  /* Don't stretch rows when a sibling step has a longer description */
-  align-content: start;
-  gap: 16px;
-  padding: 0;
-
-  @media (--viewportMedium) {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 16px;
   }
+
+  @media (--viewportLarge) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 
-.stepNumberRow {
-  display: flex;
-  align-self: start;
-  align-items: center;
-  justify-content: space-between;
+.step {
+  padding: 18px;
+  background-color: var(--colorBackground);
+  border: 1px solid var(--colorBorder);
+  border-radius: var(--borderRadiusLarge);
+
+  @media (--viewportMedium) {
+    padding: 24px;
+  }
 }
 
 .stepNumber {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 30px;
+  height: 30px;
 
-  font-size: 16px;
+  font-size: 14px;
   font-weight: var(--fontWeightSemiBold);
-  color: var(--marketplaceColorDark);
-  background-color: var(--colorAccentSubtle);
-  border-radius: var(--borderRadiusMedium);
-}
-
-.arrow {
-  display: none;
-  color: var(--colorTextMuted);
+  color: var(--colorWhite);
+  background-color: var(--marketplaceColor);
+  border-radius: 50%;
 
   @media (--viewportMedium) {
-    display: block;
-    /* Sit in the gap between columns */
-    margin-right: -24px;
+    width: 32px;
+    height: 32px;
   }
 }
 
-.stepText {
-  min-width: 0;
-}
-
 .stepTitle {
-  margin: 4px 0 0 0;
+  margin: 12px 0 0 0;
   padding: 0;
-  font-size: 18px;
+  font-size: 17px;
   line-height: 24px;
   font-weight: var(--fontWeightSemiBold);
   color: var(--colorText);
 
   @media (--viewportMedium) {
-    margin: 0;
-    font-size: 20px;
-    line-height: 28px;
+    margin: 16px 0 0 0;
+    font-size: 18px;
   }
 }
 
 .stepDescription {
-  max-width: 340px;
   margin: 6px 0 0 0;
   padding: 0;
-  font-size: 15px;
-  line-height: 24px;
+  font-size: 14px;
+  line-height: 22px;
   color: var(--colorTextSecondary);
 
   @media (--viewportMedium) {

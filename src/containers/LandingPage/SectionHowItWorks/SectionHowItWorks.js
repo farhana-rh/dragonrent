@@ -1,34 +1,27 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import classNames from 'classnames';
 
-import { FormattedMessage } from '../../../util/reactIntl';
+import { FormattedMessage, useIntl } from '../../../util/reactIntl';
 
-import SectionHeader from '../SectionHeader/SectionHeader';
 import { howItWorksSteps } from '../landingPageConfig';
 
 import css from './SectionHowItWorks.module.css';
 
-const ArrowIcon = () => (
-  <svg
-    className={css.arrow}
-    width="16"
-    height="16"
-    viewBox="0 0 16 16"
-    aria-hidden="true"
-    focusable="false"
-  >
-    <path
-      d="M3 8h10M9 4l4 4-4 4"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
+const AUDIENCES = Object.keys(howItWorksSteps);
 
 /**
- * Three-step explanation of renting on DragonRent.
+ * Id of the tab for an audience. Linking to `#<tab id>` (e.g. from the host call to action)
+ * scrolls to the tabs and selects that audience.
+ *
+ * @param {string} sectionId
+ * @param {string} audience 'rent' or 'lend'
+ * @returns {string} element id
+ */
+export const getAudienceTabId = (sectionId, audience) => `${sectionId}-tab-${audience}`;
+
+/**
+ * Four-step explanation of renting and lending on DragonRent, with tabs to switch between
+ * the renter's and the lender's steps.
  *
  * @component
  * @param {Object} props
@@ -37,35 +30,98 @@ const ArrowIcon = () => (
  */
 const SectionHowItWorks = props => {
   const { sectionId } = props;
+  const intl = useIntl();
+  const [selected, setSelected] = useState(AUDIENCES[0]);
+  const tabRefs = useRef({});
   const titleId = `${sectionId}-title`;
+  const panelId = `${sectionId}-panel`;
+
+  // Select an audience when the page is opened or navigated to with its tab id as the hash
+  useEffect(() => {
+    const selectFromHash = () => {
+      const audience = AUDIENCES.find(
+        a => window.location.hash === `#${getAudienceTabId(sectionId, a)}`
+      );
+      if (audience) {
+        setSelected(audience);
+      }
+    };
+    selectFromHash();
+    window.addEventListener('hashchange', selectFromHash);
+    return () => window.removeEventListener('hashchange', selectFromHash);
+  }, [sectionId]);
+
+  // Arrow keys move between tabs, as recommended for the ARIA tabs pattern
+  const handleKeyDown = e => {
+    const offset = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+    if (!offset) {
+      return;
+    }
+    e.preventDefault();
+    const index = AUDIENCES.indexOf(selected);
+    const next = AUDIENCES[(index + offset + AUDIENCES.length) % AUDIENCES.length];
+    setSelected(next);
+    tabRefs.current[next]?.focus();
+  };
+
+  const steps = howItWorksSteps[selected];
 
   return (
     <section id={sectionId} className={css.root} aria-labelledby={titleId}>
       <div className={css.content}>
-        <SectionHeader
-          titleId={titleId}
-          title={<FormattedMessage id="LandingPage.howItWorks.title" />}
-        />
-        <ol className={css.steps}>
-          {howItWorksSteps.map((step, i) => (
-            <li key={step} className={css.step}>
-              <div className={css.stepNumberRow}>
+        <h2 id={titleId} className={css.title}>
+          <FormattedMessage id="LandingPage.howItWorks.title" />
+        </h2>
+
+        <div
+          className={css.tabs}
+          role="tablist"
+          aria-label={intl.formatMessage({ id: 'LandingPage.howItWorks.tabsLabel' })}
+          onKeyDown={handleKeyDown}
+        >
+          {AUDIENCES.map(audience => {
+            const isSelected = audience === selected;
+            return (
+              <button
+                key={audience}
+                ref={el => (tabRefs.current[audience] = el)}
+                id={getAudienceTabId(sectionId, audience)}
+                type="button"
+                role="tab"
+                aria-selected={isSelected}
+                aria-controls={panelId}
+                tabIndex={isSelected ? 0 : -1}
+                className={classNames(css.tab, { [css.tabSelected]: isSelected })}
+                onClick={() => setSelected(audience)}
+              >
+                <FormattedMessage id={`LandingPage.howItWorks.tab.${audience}`} />
+              </button>
+            );
+          })}
+        </div>
+
+        <div
+          id={panelId}
+          role="tabpanel"
+          aria-labelledby={getAudienceTabId(sectionId, selected)}
+          className={css.panel}
+        >
+          <ol className={css.steps}>
+            {steps.map((step, i) => (
+              <li key={step} className={css.step}>
                 <span className={css.stepNumber} aria-hidden="true">
                   {i + 1}
                 </span>
-                {i < howItWorksSteps.length - 1 ? <ArrowIcon /> : null}
-              </div>
-              <div className={css.stepText}>
                 <h3 className={css.stepTitle}>
-                  <FormattedMessage id={`LandingPage.howItWorks.${step}.title`} />
+                  <FormattedMessage id={`LandingPage.howItWorks.${selected}.${step}.title`} />
                 </h3>
                 <p className={css.stepDescription}>
-                  <FormattedMessage id={`LandingPage.howItWorks.${step}.text`} />
+                  <FormattedMessage id={`LandingPage.howItWorks.${selected}.${step}.text`} />
                 </p>
-              </div>
-            </li>
-          ))}
-        </ol>
+              </li>
+            ))}
+          </ol>
+        </div>
       </div>
     </section>
   );

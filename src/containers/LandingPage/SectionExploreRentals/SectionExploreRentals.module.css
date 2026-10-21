@@ -1,3 +1,5 @@
+@import '../../../styles/customMediaQueries.css';
+
 .root {
   composes: section from '../LandingPage.module.css';
 }
@@ -6,8 +8,90 @@
   composes: sectionContent from '../LandingPage.module.css';
 }
 
+/* Scrolls sideways on mobile, 4 per row on tablet and up to 8 in one row on desktop */
 .list {
   composes: scrollRow from '../LandingPage.module.css';
+  /* Narrow enough that part of the next tile shows on small phones, hinting at scrolling */
+  grid-auto-columns: 96px;
   margin-top: 0;
   margin-bottom: 0;
+
+  @media (--viewportMedium) {
+    grid-auto-columns: auto;
+    gap: 16px;
+  }
+
+  @media (--viewportLarge) {
+    /* One equal column per category, however many there are */
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+  }
+}
+
+.item {
+  display: flex;
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 96px;
+  padding: 18px 6px;
+
+  text-align: center;
+  color: var(--colorText);
+  background-color: var(--colorSurface);
+  border: 1px solid var(--colorBorder);
+  border-radius: var(--borderRadiusLarge);
+  transition: border-color var(--transitionStyleButton), box-shadow var(--transitionStyleButton);
+
+  &:hover {
+    text-decoration: none;
+    border-color: var(--colorBorderStrong);
+    box-shadow: var(--boxShadowCard);
+  }
+
+  @media (--viewportMedium) {
+    min-height: 120px;
+    padding: 24px 8px;
+  }
+}
+
+.iconWrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  color: var(--marketplaceColorDark);
+  background-color: var(--colorAccentSubtle);
+  border-radius: 50%;
+
+  @media (--viewportMedium) {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+
+  @media (--viewportMedium) {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+.name {
+  max-width: 100%;
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: var(--fontWeightMedium);
+  overflow-wrap: anywhere;
 }

@@ -609,7 +609,7 @@ class StripePaymentForm extends Component {
         />
 
         {billingDetailsNeeded && !loadingData ? (
-          <React.Fragment>
+          <section className={css.section}>
             {hasDefaultPaymentMethod ? (
               <PaymentMethodSelector
                 cardClasses={cardClasses}
@@ -674,7 +674,7 @@ class StripePaymentForm extends Component {
                 {billingAddress}
               </div>
             ) : null}
-          </React.Fragment>
+          </section>
         ) : loadingData ? (
           <p className={css.spinner}>
             <IconSpinner />
@@ -686,28 +686,43 @@ class StripePaymentForm extends Component {
         ) : null}
 
         {showAdditionalInfoHeading ? (
-          <Heading as="h3" rootClassName={css.heading}>
-            <FormattedMessage id="StripePaymentForm.messageHeading" />
-          </Heading>
-        ) : null}
-        {hasTransactionFieldConfigs && showTransactionFields ? (
-          <div className={css.transactionFieldsContainer}>
-            {transactionFieldsProps.map(({ key, ...fieldProps }) => (
-              <CustomExtendedDataField key={key} {...fieldProps} formId={formId} />
-            ))}
-          </div>
-        ) : null}
-        {showInitialMessageInput ? (
-          <div>
-            <FieldTextInput
-              type="textarea"
-              id={`${formId}-message`}
-              name="initialMessage"
-              label={initialMessageLabel}
-              placeholder={messagePlaceholder}
-              className={css.message}
-            />
-          </div>
+          <section className={css.section}>
+            <Heading as="h3" rootClassName={css.heading}>
+              {showInitialMessageInput && !(hasTransactionFieldConfigs && showTransactionFields) ? (
+                <FormattedMessage
+                  id="StripePaymentForm.messageToProvider"
+                  values={{ name: providerDisplayName }}
+                />
+              ) : (
+                <FormattedMessage id="StripePaymentForm.messageHeading" />
+              )}
+            </Heading>
+            {hasTransactionFieldConfigs && showTransactionFields ? (
+              <div className={css.transactionFieldsContainer}>
+                {transactionFieldsProps.map(({ key, ...fieldProps }) => (
+                  <CustomExtendedDataField key={key} {...fieldProps} formId={formId} />
+                ))}
+              </div>
+            ) : null}
+            {showInitialMessageInput ? (
+              <div>
+                <p className={css.messageHelper}>
+                  <FormattedMessage
+                    id="StripePaymentForm.messageHelper"
+                    values={{ name: providerDisplayName }}
+                  />
+                </p>
+                <FieldTextInput
+                  type="textarea"
+                  id={`${formId}-message`}
+                  name="initialMessage"
+                  label={initialMessageLabel}
+                  placeholder={messagePlaceholder}
+                  className={css.message}
+                />
+              </div>
+            ) : null}
+          </section>
         ) : null}
         <div className={css.submitContainer}>
           {hasPaymentErrors ? (
@@ -719,7 +734,12 @@ class StripePaymentForm extends Component {
             inProgress={submitInProgress}
             disabled={submitDisabled}
           >
-            {billingDetailsNeeded ? (
+            {billingDetailsNeeded && isBooking ? (
+              <FormattedMessage
+                id="StripePaymentForm.submitBookingRequest"
+                values={{ totalPrice: totalPriceMaybe, hasPrice: totalPriceMaybe ? 'yes' : 'no' }}
+              />
+            ) : billingDetailsNeeded ? (
               <FormattedMessage
                 id="StripePaymentForm.submitPaymentInfo"
                 values={{ totalPrice: totalPriceMaybe, isBooking: isBookingYesNo }}
@@ -731,14 +751,21 @@ class StripePaymentForm extends Component {
               />
             )}
           </PrimaryButton>
-          {!isDownload && (
+          {isBooking ? (
+            <p className={css.paymentInfo}>
+              <FormattedMessage
+                id="StripePaymentForm.bookingFinePrint"
+                values={{ name: providerDisplayName }}
+              />
+            </p>
+          ) : !isDownload ? (
             <p className={css.paymentInfo}>
               <FormattedMessage
                 id="StripePaymentForm.submitConfirmPaymentFinePrint"
                 values={{ isBooking: isBookingYesNo, name: providerDisplayName }}
               />
             </p>
-          )}
+          ) : null}
         </div>
       </Form>
     ) : (

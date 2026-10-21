@@ -2,8 +2,8 @@
  * Presentation config for the DragonRent landing page.
  *
  * Copy lives in translation files (LandingPage.* keys). This file only holds layout data:
- * which image placeholder tone to use, which category a tile links to, and which
- * "Rent with confidence" items are live.
+ * which image placeholder tone and icon to use, which category a tile links to, and which
+ * trust items are live.
  *
  * Images: every entry has an `image` property. While it's null, a tinted placeholder is shown.
  * To use real photography, import the image file and set it here, e.g.
@@ -14,26 +14,49 @@
 // Placeholder tones map to --colorPlaceholder* tokens in marketplaceDefaults.css
 export const TONES = ['sage', 'sand', 'blush', 'slate', 'stone'];
 
-export const heroImage = { tone: 'sage', image: null };
-export const hostCtaImage = { tone: 'blush', image: null };
+// Hero image mosaic: one tall tile and two short ones. Each tile has a short caption.
+export const heroMosaic = [
+  { id: 'outdoors', tone: 'sage', image: null },
+  { id: 'camping', tone: 'sand', image: null },
+  { id: 'events', tone: 'slate', image: null },
+];
+
+// Section ids that other sections link to
+export const HOW_IT_WORKS_SECTION_ID = 'how-dragonrent-works';
 
 /**
  * Visuals for top-level categories, keyed by category id (Console → Listings → Categories).
- * Categories without an entry here still render, with a tone picked by position.
+ * `icon` is used by the category tiles (see CategoryIcon.js for the available icons), and
+ * `tone`/`image` by the image tiles in "Browse by use case".
+ * Categories without an entry here still render, with a default icon and a tone picked by position.
  */
 export const categoryVisuals = {
-  bikes: { tone: 'sage', image: null },
-  cameras: { tone: 'sand', image: null },
-  tools: { tone: 'blush', image: null },
-  camping: { tone: 'sage', image: null },
-  vehicles: { tone: 'slate', image: null },
-  sports: { tone: 'stone', image: null },
-  electronics: { tone: 'slate', image: null },
-  events: { tone: 'blush', image: null },
+  // Categories currently in Console
+  'tools-and-equipment': { icon: 'tools', tone: 'blush', image: null },
+  'sports-and-outdoor': { icon: 'sports', tone: 'sage', image: null },
+  'cameras-and-photography': { icon: 'camera', tone: 'sand', image: null },
+  'home-and-appliances': { icon: 'home', tone: 'stone', image: null },
+  'furniture-and-events': { icon: 'event', tone: 'slate', image: null },
+  // Other common categories, in case they are added later
+  bikes: { icon: 'bike', tone: 'sage', image: null },
+  cameras: { icon: 'camera', tone: 'sand', image: null },
+  tools: { icon: 'tools', tone: 'blush', image: null },
+  camping: { icon: 'camping', tone: 'sage', image: null },
+  vehicles: { icon: 'vehicle', tone: 'slate', image: null },
+  sports: { icon: 'sports', tone: 'stone', image: null },
+  electronics: { icon: 'electronics', tone: 'slate', image: null },
+  events: { icon: 'event', tone: 'blush', image: null },
+  music: { icon: 'music', tone: 'sand', image: null },
+  party: { icon: 'party', tone: 'blush', image: null },
 };
 
 // Shown as quick links under the hero search, if these categories exist
-export const popularCategoryIds = ['bikes', 'cameras', 'tools', 'camping'];
+export const popularCategoryIds = [
+  'cameras-and-photography',
+  'tools-and-equipment',
+  'sports-and-outdoor',
+  'furniture-and-events',
+];
 
 // Maximum number of category tiles in "Explore rentals"
 export const MAX_CATEGORY_TILES = 8;
@@ -52,7 +75,11 @@ export const useCases = [
   { id: 'transport', categoryId: 'vehicles', tone: 'slate', image: null },
 ];
 
-export const howItWorksSteps = ['find', 'book', 'enjoy'];
+// "How it works" steps for each audience. The first audience is selected by default.
+export const howItWorksSteps = {
+  rent: ['find', 'request', 'pickUp', 'return'],
+  lend: ['list', 'accept', 'handOver', 'getPaid'],
+};
 
 /**
  * "Rent with confidence" items. Only items marked `enabled` are shown: an item should be
@@ -70,3 +97,9 @@ export const trustItems = [
   { id: 'securePayments', icon: 'lock', enabled: false },
   { id: 'support', icon: 'message', enabled: false },
 ];
+
+/**
+ * Console page (Content → Pages) linked from the trust section as "Read how we protect you".
+ * Keep this null until the page exists, so the link is never broken. Example: 'trust-and-safety'.
+ */
+export const trustPageId = null;

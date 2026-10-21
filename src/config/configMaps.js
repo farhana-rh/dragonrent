@@ -46,8 +46,8 @@ export const search = {
 
   // Limit location autocomplete to a one or more countries
   // using ISO 3166 alpha 2 country codes separated by commas.
-  // If you want to limit the autocomplete, uncomment this value:
-  // countryLimit: ['AU'],
+  // DragonRent operates in Finland only, so suggestions outside Finland are hidden.
+  countryLimit: ['FI'],
 };
 
 // When fuzzy locations are enabled, coordinates on maps are

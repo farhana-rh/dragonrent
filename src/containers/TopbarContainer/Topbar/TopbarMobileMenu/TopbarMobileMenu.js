@@ -223,6 +223,11 @@ const TopbarMobileMenu = props => {
         </InlineTextButton>
 
         <ul className={css.accountLinksWrapper}>
+          <li className={classNames(css.navigationLink, currentPageClass('DashboardPage'))}>
+            <NamedLink name="DashboardPage">
+              <FormattedMessage id="TopbarMobileMenu.dashboardLink" />
+            </NamedLink>
+          </li>
           <li className={classNames(css.inbox, currentPageClass(`InboxPage:${inboxTab}`))}>
             <NamedLink name="InboxPage" params={{ tab: inboxTab }}>
               <FormattedMessage id="TopbarMobileMenu.inboxLink" />

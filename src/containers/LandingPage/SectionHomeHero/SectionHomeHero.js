@@ -8,7 +8,7 @@ import { NamedLink } from '../../../components';
 
 import HeroSearchForm from '../HeroSearchForm/HeroSearchForm';
 import HomeMedia from '../HomeMedia/HomeMedia';
-import { heroImage, popularCategoryIds } from '../landingPageConfig';
+import { heroMosaic, popularCategoryIds } from '../landingPageConfig';
 
 import css from './SectionHomeHero.module.css';
 
@@ -22,7 +22,7 @@ export const getPopularCategories = categories =>
   popularCategoryIds.map(id => categories.find(c => c.id === id)).filter(Boolean);
 
 /**
- * Landing page hero: headline, search and quick links to popular categories.
+ * Landing page hero: headline, search, quick links to popular categories and an image mosaic.
  *
  * @component
  * @param {Object} props
@@ -43,11 +43,14 @@ const SectionHomeHero = props => {
     <section id={sectionId} className={css.root} aria-labelledby={titleId}>
       <div className={css.content}>
         <div className={css.text}>
+          <p className={css.eyebrow}>
+            <FormattedMessage id="LandingPage.hero.eyebrow" />
+          </p>
           <h1 id={titleId} className={css.title}>
-            <FormattedMessage id="LandingPage.hero.title" />
+            <FormattedMessage id="LandingPage.hero.titleNew" />
           </h1>
           <p className={css.description}>
-            <FormattedMessage id="LandingPage.hero.description" />
+            <FormattedMessage id="LandingPage.hero.descriptionNew" />
           </p>
 
           <HeroSearchForm className={css.search} />
@@ -77,14 +80,22 @@ const SectionHomeHero = props => {
           ) : null}
         </div>
 
-        <HomeMedia
-          className={css.media}
-          image={heroImage.image}
-          tone={heroImage.tone}
-          aspectRatio={null}
-          loading="eager"
-          alt={intl.formatMessage({ id: 'LandingPage.hero.imageAlt' })}
-        />
+        <div className={css.mosaic}>
+          {heroMosaic.map((tile, i) => (
+            <HomeMedia
+              key={tile.id}
+              className={css.mosaicTile}
+              image={tile.image}
+              tone={tile.tone}
+              aspectRatio={null}
+              // The first, largest tile is visible on first paint on desktop
+              loading={i === 0 ? 'eager' : 'lazy'}
+              sizes="(max-width: 1023px) 33vw, 260px"
+              alt={intl.formatMessage({ id: `LandingPage.hero.tile.${tile.id}.imageAlt` })}
+              label={<FormattedMessage id={`LandingPage.hero.tile.${tile.id}`} />}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );

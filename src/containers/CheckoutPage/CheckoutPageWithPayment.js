@@ -43,6 +43,8 @@ import {
 import { getErrorMessages } from './ErrorMessages';
 
 import StripePaymentForm from './StripePaymentForm/StripePaymentForm';
+import CheckoutSteps from './CheckoutSteps/CheckoutSteps';
+import RentalSummary from './RentalSummary/RentalSummary';
 import DetailsSideCard from './DetailsSideCard';
 import MobileListingImage from './MobileListingImage';
 import MobileOrderBreakdown from './MobileOrderBreakdown';
@@ -536,11 +538,12 @@ export const CheckoutPageWithPayment = props => {
 
   const firstImage = listing?.images?.length > 0 ? listing.images[0] : null;
 
+  const listingLinkProps = {
+    name: 'ListingPage',
+    params: { id: listing?.id?.uuid, slug: createSlug(listingTitle) },
+  };
   const listingLink = (
-    <NamedLink
-      name="ListingPage"
-      params={{ id: listing?.id?.uuid, slug: createSlug(listingTitle) }}
-    >
+    <NamedLink {...listingLinkProps}>
       <FormattedMessage id="CheckoutPage.errorlistingLinkText" />
     </NamedLink>
   );
@@ -629,10 +632,15 @@ export const CheckoutPageWithPayment = props => {
           showListingImage={showListingImage}
         />
         <main className={css.orderFormContainer}>
+          <NamedLink className={css.backLink} {...listingLinkProps}>
+            <span aria-hidden="true">‹ </span>
+            <FormattedMessage id="CheckoutPage.backToListing" />
+          </NamedLink>
           <div className={css.headingContainer}>
             <H3 as="h1" className={css.heading}>
-              {title}
+              {isBooking ? <FormattedMessage id="CheckoutPage.default-booking.heading" /> : title}
             </H3>
+            {isBooking ? <CheckoutSteps className={css.steps} currentStep="payment" /> : null}
             <H4 as="h2" className={css.detailsHeadingMobile}>
               <FormattedMessage id="CheckoutPage.listingTitle" values={{ listingTitle }} />
             </H4>
@@ -643,6 +651,14 @@ export const CheckoutPageWithPayment = props => {
             priceVariantName={priceVariantName}
           />
           <section className={css.paymentContainer}>
+            {isBooking ? (
+              <RentalSummary
+                className={css.rentalSummary}
+                transaction={tx}
+                timeZone={timeZone}
+                listingLinkProps={listingLinkProps}
+              />
+            ) : null}
             {errorMessages.initiateOrderErrorMessage}
             {errorMessages.listingNotFoundErrorMessage}
             {errorMessages.speculateErrorMessage}

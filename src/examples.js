@@ -135,6 +135,7 @@ import * as CMSSections from './containers/PageBuilder/SectionBuilder/SectionBui
 import * as Markdown from './containers/PageBuilder/Markdown.example';
 import * as PageBuilder from './containers/PageBuilder/PageBuilder.example';
 import * as LandingPage from './containers/LandingPage/LandingPage.example';
+import * as DashboardPage from './containers/DashboardPage/DashboardPage.example';
 
 export {
   ActivityFeed,
@@ -143,6 +144,7 @@ export {
   BookingDatesForm,
   BookingTimeForm,
   BookingFixedDurationForm,
+  DashboardPage,
   ProductOrderForm,
   Button,
   Colors,

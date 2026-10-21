@@ -141,7 +141,7 @@ describe('CheckoutPage', () => {
 
     const purchaseTitle = 'CheckoutPage.default-purchase.title';
     expect(screen.getByRole('heading', { name: purchaseTitle })).toBeInTheDocument();
-    const orderBreakdownTitle = 'CheckoutPage.default-purchase.orderBreakdown';
+    const orderBreakdownTitle = 'CheckoutPage.priceDetails';
     expect(screen.getByRole('heading', { name: orderBreakdownTitle })).toBeInTheDocument();
     // These are rendered twice (mobile & desktop)
     expect(screen.getAllByText('OrderBreakdown.baseUnitQuantity')).toHaveLength(2);
@@ -202,9 +202,10 @@ describe('CheckoutPage', () => {
     };
     render(<CheckoutPageWithPayment {...props} />);
 
-    const bookingTitle = 'CheckoutPage.default-booking.title';
+    const bookingTitle = 'CheckoutPage.default-booking.heading';
     expect(screen.getByRole('heading', { name: bookingTitle })).toBeInTheDocument();
-    const orderBreakdownTitle = 'CheckoutPage.default-booking.orderBreakdown';
+    expect(screen.getByRole('list', { name: 'CheckoutPage.steps.label' })).toBeInTheDocument();
+    const orderBreakdownTitle = 'CheckoutPage.priceDetails';
     expect(screen.getByRole('heading', { name: orderBreakdownTitle })).toBeInTheDocument();
 
     // These are rendered twice (mobile & desktop)
@@ -228,7 +229,7 @@ describe('CheckoutPage', () => {
     expect(getTextbox('StripePaymentForm.messageLabel')).toBeInTheDocument();
 
     expect(
-      screen.getByRole('button', { name: 'StripePaymentForm.submitPaymentInfo' })
+      screen.getByRole('button', { name: 'StripePaymentForm.submitBookingRequest' })
     ).toBeInTheDocument();
   });
 
@@ -291,7 +292,7 @@ describe('CheckoutPage', () => {
     expect(screen.getByRole('button', { name: submitBtnText })).toBeInTheDocument();
 
     // THESE SHOULD NOT BE PRESENT
-    const orderBreakdownTitle = 'CheckoutPage.default-inquiry.orderBreakdown';
+    const orderBreakdownTitle = 'CheckoutPage.priceDetails';
     expect(screen.queryByRole('heading', { name: orderBreakdownTitle })).not.toBeInTheDocument();
 
     // These are rendered twice (mobile & desktop)

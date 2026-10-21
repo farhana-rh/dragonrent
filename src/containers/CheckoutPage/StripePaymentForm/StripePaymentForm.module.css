@@ -3,17 +3,55 @@
 .root {
   display: flex;
   flex-direction: column;
+  gap: 16px;
+}
+
+/* Each part of the form is a card, like the "Your rental" card above it.
+   Card styles are repeated here, not composed from CheckoutPage.module.css, to keep the CSS
+   load order unambiguous between the CheckoutPage and styleguide bundles. */
+.section {
+  padding: 18px;
+  background-color: var(--colorSurface);
+  border: 1px solid var(--colorBorder);
+  border-radius: 16px;
+
+  @media (--viewportMedium) {
+    padding: 24px 32px;
+  }
 }
 
 .locationWrapper {
-  margin-bottom: 40px;
+  padding: 18px;
+  background-color: var(--colorSurface);
+  border: 1px solid var(--colorBorder);
+  border-radius: 16px;
+
+  @media (--viewportMedium) {
+    padding: 24px 32px;
+  }
 }
 
 .heading {
-  composes: p from global;
-  font-weight: var(--fontWeightBold);
+  margin: 0 0 12px 0;
   padding: 0;
-  margin-bottom: 16px;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorText);
+
+  @media (--viewportMedium) {
+    margin: 0 0 16px 0;
+    font-size: 20px;
+    line-height: 28px;
+  }
+}
+
+.messageHelper {
+  margin: 0 0 16px 0;
+  padding: 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--colorTextSecondary);
 }
 
 .locationDetails {
@@ -97,7 +135,7 @@
 }
 
 .billingDetails {
-  margin-bottom: 48px;
+  margin-top: 24px;
 }
 
 .sameAddressCheckbox {
@@ -122,38 +160,32 @@
 }
 
 .submitContainer {
-  margin-top: auto;
-
-  @media (--viewportLarge) {
-    margin-top: 72px;
-  }
+  margin-top: 8px;
 }
 
 .paymentInfo {
-  composes: h5 from global;
-
-  color: var(--colorGrey600);
+  max-width: 520px;
+  margin: 16px auto 0 auto;
+  padding: 0;
+  font-size: 14px;
+  line-height: 20px;
   text-align: center;
-  margin: 28px 0 0 0;
-
-  @media (--viewportLarge) {
-    font-size: 14px;
-    padding: 2px 0 6px 0;
-    margin: 24px 0 0 0;
-  }
+  color: var(--colorTextSecondary);
 }
 
 .submitButton {
-  margin-top: 22px;
-
-  @media (--viewportMedium) {
-    margin-top: 26px;
-  }
-  @media (--viewportLarge) {
-    margin-top: 16px;
-  }
+  min-height: 56px;
+  border-radius: var(--borderRadiusLarge);
 }
 
 .missingStripeKey {
+  padding: 18px;
+  background-color: var(--colorSurface);
+  border: 1px solid var(--colorBorder);
+  border-radius: 16px;
+
+  @media (--viewportMedium) {
+    padding: 24px 32px;
+  }
   color: var(--colorFail);
 }

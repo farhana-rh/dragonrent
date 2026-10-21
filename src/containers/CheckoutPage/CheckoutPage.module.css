@@ -35,12 +35,18 @@
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  background-color: var(--colorBackground);
 
+  /* Form on the left, listing and price details on the right */
   @media (--viewportLarge) {
-    flex-direction: row;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 0 48px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 380px;
+    align-items: start;
+    gap: 48px;
+    max-width: var(--contentMaxWidthPages);
+    margin: 0 auto;
+    padding: 40px 32px 80px 32px;
   }
 }
 
@@ -48,13 +54,62 @@
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  min-width: 0;
+}
+
+/* Card styles (RentalSummary and StripePaymentForm repeat them in their own files) */
+.checkoutCard {
+  padding: 18px;
+  background-color: var(--colorSurface);
+  border: 1px solid var(--colorBorder);
+  border-radius: 16px;
+
+  @media (--viewportMedium) {
+    padding: 24px 32px;
+  }
+}
+
+.checkoutCardTitle {
+  margin: 0;
+  padding: 0;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorText);
+
+  @media (--viewportMedium) {
+    font-size: 20px;
+    line-height: 28px;
+  }
+}
+
+.backLink {
+  align-self: flex-start;
+  margin: 18px 24px 0 24px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--marketplaceColor);
+
+  &:hover {
+    color: var(--marketplaceColorDark);
+  }
 
   @media (--viewportLarge) {
-    flex-grow: 0;
-    flex-basis: 519px;
-    margin-top: 73px;
-    margin-right: 132px;
+    margin: 0;
   }
+}
+
+.steps {
+  margin-top: 12px;
+
+  @media (--viewportLarge) {
+    margin-top: 0;
+  }
+}
+
+.rentalSummary {
+  margin-bottom: 16px;
 }
 
 .listingImageMobile {
@@ -112,31 +167,44 @@
 }
 
 .headingContainer {
-  margin-top: 29px;
-  margin-bottom: 34px;
+  margin-top: 12px;
+  margin-bottom: 18px;
   padding: 0 24px;
 
   @media (--viewportMedium) {
-    margin-top: 27px;
-    margin-bottom: 30px;
+    margin-top: 16px;
+    margin-bottom: 24px;
   }
 
+  /* Heading and step indicator side by side */
   @media (--viewportLarge) {
-    margin-top: 0px;
-    margin-bottom: 0px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 24px;
+    margin-top: 16px;
+    margin-bottom: 32px;
     padding: 0;
   }
 }
 
 .heading {
-  /* Layout */
-  width: 100%;
-  margin-top: 0;
-  margin-bottom: 7px;
+  margin: 0;
+  font-size: 28px;
+  line-height: 34px;
+  font-weight: var(--fontWeightBold);
+  letter-spacing: -0.02em;
+  color: var(--colorText);
 
   @media (--viewportMedium) {
-    margin-top: 0;
-    margin-bottom: 8px;
+    margin: 0;
+    font-size: 36px;
+    line-height: 44px;
+  }
+
+  @media (--viewportLarge) {
+    width: auto;
   }
 }
 
@@ -145,6 +213,8 @@
 }
 
 .detailsHeadingMobile {
+  margin: 12px 0 0 0;
+
   @media (--viewportLarge) {
     display: none;
   }
@@ -184,12 +254,9 @@
 }
 
 .priceBreakdownContainer {
-  padding: 0 24px;
-  margin-bottom: 37px;
+  composes: checkoutCard;
+  margin: 0 24px 16px 24px;
 
-  @media (--viewportMedium) {
-    margin-bottom: 38px;
-  }
   @media (--viewportLarge) {
     /* we don't show price breakdown since it will be visible within 2nd column (detailsContainerDesktop) */
     display: none;
@@ -218,15 +285,14 @@
   display: flex;
   flex-direction: column;
   padding: 0 24px;
-  margin-bottom: 35px;
+  margin-bottom: 36px;
 
   @media (--viewportMedium) {
-    margin-top: 2px;
-    margin-bottom: 120px;
+    margin-bottom: 64px;
   }
 
   @media (--viewportLarge) {
-    margin-top: 0;
+    margin-bottom: 0;
     padding: 0;
   }
 }
@@ -264,20 +330,74 @@
   display: none;
 
   @media (--viewportLarge) {
-    flex-shrink: 0;
+    position: sticky;
+    top: 112px;
     display: block;
-    /* Dimensions */
-    width: 409px;
-    padding-bottom: 36px;
+    padding: 24px;
 
-    /* Position */
-    margin: 56px 0 24px 0;
-
-    /* Coloring */
-    background-color: var(--colorWhite);
-    border: 1px solid var(--colorGrey100);
-    border-radius: 2px;
+    background-color: var(--colorSurface);
+    border: 1px solid var(--colorBorder);
+    border-radius: 16px;
   }
+}
+
+/* Listing thumbnail, title and host */
+.listingSummary {
+  display: flex;
+  gap: 16px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--colorBorder);
+}
+
+.summaryImage {
+  position: relative;
+  flex-shrink: 0;
+  width: 96px;
+  height: 96px;
+  overflow: hidden;
+  background-color: var(--colorPlaceholderSage);
+  border-radius: var(--borderRadiusLarge);
+}
+
+.summaryImageImg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.summaryText {
+  min-width: 0;
+}
+
+.summaryTitle {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: var(--fontWeightSemiBold);
+  overflow-wrap: anywhere;
+
+  @media (--viewportMedium) {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.summaryTitleLink {
+  color: var(--colorText);
+
+  &:hover {
+    color: var(--marketplaceColorDark);
+  }
+}
+
+.summaryAuthor {
+  margin: 4px 0 0 0;
+  padding: 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--colorTextSecondary);
 }
 
 .detailsAspectWrapper {
@@ -312,21 +432,22 @@
 }
 
 .orderBreakdownHeader {
-  @media (--viewportLarge) {
-    margin: 0 48px;
-  }
+  margin-top: 20px;
 }
+
 .orderBreakdownTitle {
-  /* Font */
-  letter-spacing: 1px;
-  font-weight: var(--fontWeightMedium);
+  margin: 0 0 8px 0;
+  padding: 0;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: var(--fontWeightSemiBold);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--colorText);
 
-  /* Layout spacing */
-  margin: 5px 24px 25px 24px;
-
-  @media (--viewportLarge) {
-    padding: 6px 0 2px 0;
-    margin: 16px 0 8px 0;
+  @media (--viewportMedium) {
+    margin: 0 0 8px 0;
+    padding: 0;
   }
 }
 
@@ -345,10 +466,7 @@
 }
 
 .orderBreakdown {
-  @media (--viewportLarge) {
-    padding-bottom: 20px;
-    margin: 0 48px;
-  }
+  margin: 0;
 }
 
 /* ChekcoutPageWithInquiryProcess */
