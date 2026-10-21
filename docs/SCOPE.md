@@ -34,8 +34,14 @@ gets paid. It runs on production hosting.
 | Design system | "Arctic Blue + Geist" from `dragonrent-design/docs/DESIGN.md` replaces the orange/Inter design: cobalt #2457C5, Geist via `@fontsource/geist`, plain wording ("Send request", "Owner/Renter", "Messages") | 21 Oct |
 | Text keys | New keys stay in `en.json`/`fi.json` (two languages); existing template wording is changed in Console's marketplace texts | 21 Oct |
 | Listing card | Distance only after a place search; no rating on cards | 21 Oct |
-| Verified badge | Console metadata field (Yes/No) set by the operator after an ID check; the check itself still to be defined | 21 Oct |
 | Homepage | Stays code-built, restyled to the Main/HomeDesktop mockups; "Popular near you" hidden until 8+ listings | 21 Oct |
+| Ratings | Owner/renter averages only on profile and booking pages | 21 Oct |
+| Verified badge | "Verified by Stripe": identity checked by Stripe for payouts (true for every owner with a published listing) | 21 Oct |
+| Search sorting | Newest first with keywords; no distance sort | 21 Oct |
+| Distance | Not on the item page; only on search results after a place search | 21 Oct |
+| Approximate location | Fuzzy location on, with the item page work | 21 Oct |
+| Fees shown in the UI | **Open**: mockups say renter fee + owner 10%; Console is owner 15% / renter 0% | 21 Oct |
+| Cancellation rule | **Open**: placeholder in the mockup; must match the default booking process | 21 Oct |
 
 ## In scope
 
@@ -46,7 +52,7 @@ Status: ✅ done · 🟡 partly done · ⬜ not started
 | Search by location and dates | Console search settings, restyled homepage search | 2, 5 | 🟡 code done; Console search settings exist |
 | Browse categories | Console categories (5 top-level, 3 subcategories each) + homepage category row | 2, 5 | ✅ |
 | Popular/newest listings on home | Console "Featured listings" section + restyled section | 2, 5 | 🟡 needs the Console section and listings |
-| Duration pricing (1, 3, 7 days) | Two optional price fields, server-side line items, price table on listing page, price range on cards | 6 | ⬜ |
+| Duration pricing (1, 3, 7 days) | Two optional price fields, server-side line items (discount line, commission on the discounted total), price table on listing page, price range on cards | 6 | 🟡 server rule + pricing form done; price tiles and card range come with the item and search pages |
 | Booking request, owner accepts | Console listing type, default booking process | 2 | 🟡 listing type exists; no test booking yet |
 | Card payment, payouts, commission | Stripe Connect (test mode now), Console commission | 2 | 🟡 Stripe test keys set; commission not set |
 | Messaging | Built-in inbox, restyled | 8 | ⬜ restyle |
@@ -116,8 +122,7 @@ browser can't change it. The booking process itself is not changed.
 ## Phase 2 (cut on purpose)
 
 Bank ID login · damage insurance partner · owner response rate and time · mobile apps · security
-deposits · paid delivery fee · favourites · business accounts · verified-user badge (until we define
-what "verified" means and who checks it) · ratings on listing cards.
+deposits · paid delivery fee · favourites · business accounts · ratings on listing cards.
 
 ## Cut list if behind (cut from the top)
 

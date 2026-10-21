@@ -68,7 +68,34 @@ phase, stop and report build and test results.
   review.
 - Cookie consent: analytics load only after consent.
 
-## Hosted Console assets override local code
+## Design decisions on the mockups (21 Oct)
+
+Where the mockups promise data or behaviour DragonRent doesn't have:
+
+- **Ratings:** show an owner's or renter's average rating only on the profile and booking
+  (transaction) pages, where their reviews are loaded anyway. Not on listing cards or the item
+  page's owner card.
+- **"Verified" badge:** means the owner's identity was checked by Stripe for payouts. Publishing
+  requires a verified Stripe account, so every published listing's owner qualifies; label it
+  accordingly (e.g. "Verified by Stripe"), never as a manual or ID check DragonRent does itself.
+- **Search sorting:** newest first, with keyword search. No "Closest first": Sharetribe can't sort
+  by distance and search by keyword at the same time.
+- **Distance ("1.2 km away"):** not on the item page; only on search results after a place search.
+- **Approximate location:** turn on fuzzy location (`src/config/configMaps.js`) with the item page
+  work, so the exact address is only shared after the owner accepts.
+
+### Open (revisit before launch; don't build a final version yet)
+
+- **Fees.** The mockups show a renter service fee (€30 → €33) and "after our 10% fee" for owners
+  (€30 → you get €27). Console is currently owner 15% (min €1), renter 0%. Until decided, never
+  hard-code a fee percentage or a service-fee line in the UI: show what the line items actually
+  contain, and keep fee wording in translation keys so it can change in one place.
+- **Cancellation rule.** The item page mockup has a placeholder ("free until 2 days before
+  pick-up"). The default booking process only lets the operator cancel, and transaction processes
+  must not change, so the final text must describe what really happens. Keep the placeholder out
+  of the live UI until the user decides.
+
+
 
 - Hosted `translations.json` contains every template key, so **editing an existing key in
   `src/translations/*.json` has no runtime effect**. Use NEW keys for changed copy, e.g.
