@@ -23,8 +23,8 @@ const MenuIcon = props => {
       height="12"
       viewBox="0 0 18 12"
       xmlns="http://www.w3.org/2000/svg"
-      role="img"
-      aria-label={ariaLabel}
+      // Decorative when the button already has a visible label
+      {...(ariaLabel ? { role: 'img', 'aria-label': ariaLabel } : { 'aria-hidden': true })}
     >
       <g fillRule="evenodd">
         <rect width="18" height="2" rx="1" />

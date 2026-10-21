@@ -229,6 +229,8 @@ describe('ListingPage variants', () => {
         initialState,
         config,
         routeConfiguration,
+        // The top bar shows its search field on every page except the homepage
+        initialEntries: ['/l/listing1-title/listing1'],
       }
     );
 
@@ -285,6 +287,8 @@ describe('ListingPage variants', () => {
         initialState,
         config,
         routeConfiguration,
+        // The top bar shows its search field on every page except the homepage
+        initialEntries: ['/l/listing1-title/listing1'],
       }
     );
     await waitFor(() => {

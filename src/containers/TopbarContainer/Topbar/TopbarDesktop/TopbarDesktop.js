@@ -21,21 +21,32 @@ import PrimaryNav from './PrimaryNav/PrimaryNav';
 
 import css from './TopbarDesktop.module.css';
 
-const SignupLink = () => {
-  return (
-    <NamedLink id="signup-link" name="SignupPage" className={css.topbarAction}>
-      <span className={css.buttonFilled}>
-        <FormattedMessage id="TopbarDesktop.signup" />
-      </span>
-    </NamedLink>
-  );
-};
+const PlusIcon = () => (
+  <svg
+    className={css.plusIcon}
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <path
+      d="M10 4v12M4 10h12"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
+  </svg>
+);
 
+// "+ Lend an item": a secondary (outline) button, as in the HomeDesktop mockup
 const CreateListingLink = () => {
   return (
     <NamedLink id="create-listing-link" name="NewListingPage" className={css.topbarAction}>
       <span className={css.buttonOutline}>
-        <FormattedMessage id="TopbarDesktop.listAnItem" />
+        <PlusIcon />
+        <FormattedMessage id="TopbarDesktop.lendAnItem" />
       </span>
     </NamedLink>
   );
@@ -61,7 +72,7 @@ const InboxLink = ({ notificationCount, inboxTab }) => {
       params={{ tab: inboxTab }}
     >
       <span className={css.topbarLinkLabel}>
-        <FormattedMessage id="TopbarDesktop.inbox" />
+        <FormattedMessage id="TopbarDesktop.messages" />
         {notificationDot}
       </span>
     </NamedLink>
@@ -207,27 +218,30 @@ const TopbarDesktop = props => {
     />
   ) : null;
 
-  const signupLinkMaybe = isAuthenticatedOrJustHydrated ? null : <SignupLink />;
   const loginLinkMaybe = isAuthenticatedOrJustHydrated ? null : <LoginLink />;
   // "List an item" is rendered as a button here instead of being one of the CustomLinksMenu links
   const createListingLinkMaybe = showCreateListingsLinkHydrationSafe ? <CreateListingLink /> : null;
-  const categories = config.categoryConfiguration?.categories || [];
+  // The homepage has its own search card, so the top bar shows "How it works" and "Help" there
+  // instead of the search field (HomeDesktop vs. ListingDesktop mockups).
+  const isLandingPage = currentPage === 'LandingPage';
+  const primaryNavMaybe = isLandingPage ? <PrimaryNav currentPage={currentPage} /> : null;
 
-  const searchFormMaybe = showSearchForm ? (
-    <TopbarSearchForm
-      className={classNames(css.searchLink, { [css.takeAvailableSpace]: giveSpaceForSearch })}
-      desktopInputRoot={css.topbarSearchWithLeftPadding}
-      onSubmit={onSearchSubmit}
-      initialValues={initialSearchFormValues}
-      appConfig={config}
-    />
-  ) : (
-    <div
-      className={classNames(css.spacer, css.topbarSearchWithLeftPadding, {
-        [css.takeAvailableSpace]: giveSpaceForSearch,
-      })}
-    />
-  );
+  const searchFormMaybe =
+    showSearchForm && !isLandingPage ? (
+      <TopbarSearchForm
+        className={classNames(css.searchLink, { [css.takeAvailableSpace]: giveSpaceForSearch })}
+        desktopInputRoot={css.topbarSearchWithLeftPadding}
+        onSubmit={onSearchSubmit}
+        initialValues={initialSearchFormValues}
+        appConfig={config}
+      />
+    ) : (
+      <div
+        className={classNames(css.spacer, css.topbarSearchWithLeftPadding, {
+          [css.takeAvailableSpace]: giveSpaceForSearch,
+        })}
+      />
+    );
 
   return (
     <nav
@@ -241,7 +255,7 @@ const TopbarDesktop = props => {
         alt={intl.formatMessage({ id: 'TopbarDesktop.logo' }, { marketplaceName })}
         linkToExternalSite={config?.topbar?.logoLink}
       />
-      <PrimaryNav currentPage={currentPage} categories={categories} intl={intl} />
+      {primaryNavMaybe}
       {searchFormMaybe}
 
       <CustomLinksMenu
@@ -256,7 +270,6 @@ const TopbarDesktop = props => {
       {inboxLinkMaybe}
       {profileMenuMaybe}
       {loginLinkMaybe}
-      {signupLinkMaybe}
     </nav>
   );
 };

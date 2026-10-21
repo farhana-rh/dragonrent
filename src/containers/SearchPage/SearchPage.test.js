@@ -336,6 +336,8 @@ describe('SearchPage', () => {
       initialState,
       config,
       routeConfiguration,
+      // The top bar shows its search field on every page except the homepage
+      initialEntries: ['/s'],
       messages: {
         'SearchPage.screenreader.openFilterButton': 'Filter: {label}',
         'FieldSelectTree.screenreader.option': 'Choose {optionName}.',
@@ -423,6 +425,8 @@ describe('SearchPage', () => {
       initialState,
       config,
       routeConfiguration,
+      // The top bar shows its search field on every page except the homepage
+      initialEntries: ['/s'],
       messages: {
         'SearchPage.screenreader.openFilterButton': 'Filter: {label}',
         'FieldSelectTree.screenreader.option': 'Choose {optionName}.',

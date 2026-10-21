@@ -3,34 +3,14 @@ import '@testing-library/jest-dom';
 
 import { renderWithProviders as render, testingLibrary } from '../../../../util/testHelpers';
 
-import SectionFooter, { getBlockHeading } from './SectionFooter';
+import SectionFooter from './SectionFooter';
 
-const { screen, userEvent, waitFor } = testingLibrary;
+const { screen, waitFor } = testingLibrary;
 
 const markdownBlock = (blockId, content) => ({
-  blockType: 'footerBlock',
   blockId,
+  blockType: 'footerBlock',
   text: { fieldType: 'markdown', content },
-});
-
-describe('getBlockHeading', () => {
-  it('returns the first markdown heading as plain text', () => {
-    const block = markdownBlock('company', '##### Company\n- [About](/p/about)');
-    expect(getBlockHeading(block)).toEqual('Company');
-  });
-
-  it('strips inline markdown from the heading', () => {
-    const block = markdownBlock(
-      'trust',
-      '### **Trust** and [policies](/p/policies)\n- [Fees](/p/fees)'
-    );
-    expect(getBlockHeading(block)).toEqual('Trust and policies');
-  });
-
-  it('returns null when there is no heading', () => {
-    expect(getBlockHeading(markdownBlock('links', '- [Terms](/terms-of-service)'))).toEqual(null);
-    expect(getBlockHeading({ blockType: 'footerBlock' })).toEqual(null);
-  });
 });
 
 describe('SectionFooter', () => {
@@ -38,35 +18,36 @@ describe('SectionFooter', () => {
     sectionId: 'footer',
     sectionType: 'footer',
     numberOfColumns: 2,
+    slogan: { fieldType: 'text', content: "Rent from people nearby. Lend what you don't use." },
     copyright: { fieldType: 'text', content: '© 2026 DragonRent' },
     blocks: [
-      markdownBlock('company', '##### Company\n- [About](/p/about)'),
+      markdownBlock('company', '- [How it works](/p/how-it-works)\n- [Help and FAQ](/p/faq)'),
       markdownBlock('legal', '- [Terms](/terms-of-service)'),
     ],
   };
 
-  it('renders link groups, copyright and marketplace locale info', async () => {
+  it('renders the marketplace name, slogan, links from every block and copyright', async () => {
     render(<SectionFooter {...props} />);
 
     await waitFor(() => {
       expect(screen.getByText('© 2026 DragonRent')).toBeInTheDocument();
     });
-    expect(screen.getByText('About')).toBeInTheDocument();
-    expect(screen.getByText('Terms')).toBeInTheDocument();
-    expect(screen.getByText('SectionFooter.marketplaceCountry')).toBeInTheDocument();
+    expect(
+      screen.getByText("Rent from people nearby. Lend what you don't use.")
+    ).toBeInTheDocument();
+
+    const nav = screen.getByRole('navigation', { name: 'SectionFooter.linksLabel' });
+    expect(nav).toHaveTextContent('How it works');
+    expect(nav).toHaveTextContent('Help and FAQ');
+    expect(nav).toHaveTextContent('Terms');
+    expect(screen.getByText('Terms').closest('a')).toHaveAttribute('href', '/terms-of-service');
   });
 
-  it('toggles a link group that has a heading', async () => {
-    const user = userEvent.setup();
+  it('has no collapsible groups or locale labels', async () => {
     render(<SectionFooter {...props} />);
 
-    const toggle = await screen.findByRole('button', { name: 'Company' });
-    expect(toggle).toHaveAttribute('aria-expanded', 'false');
-
-    await user.click(toggle);
-    expect(toggle).toHaveAttribute('aria-expanded', 'true');
-
-    // Groups without a heading are rendered without a toggle
-    expect(screen.getAllByRole('button')).toHaveLength(1);
+    await screen.findByText('Terms');
+    expect(screen.queryAllByRole('button')).toHaveLength(0);
+    expect(screen.queryByText('SectionFooter.marketplaceCountry')).not.toBeInTheDocument();
   });
 });

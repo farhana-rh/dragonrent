@@ -48,15 +48,16 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0 4px 0 16px;
+  gap: 12px;
+  padding: 0 18px;
 
   /* fill */
-  background-color: var(--colorBackground);
+  background-color: var(--colorWhite);
   border-bottom: 1px solid var(--colorBorder);
 
   @media (--viewportMedium) {
     height: var(--topbarHeightDesktop);
-    padding: 0 12px 0 24px;
+    padding: 0 24px;
   }
 
   @media (--viewportLarge) {
@@ -83,7 +84,30 @@
 .mobileActions {
   display: flex;
   align-items: center;
+  gap: 8px;
   height: 100%;
+}
+
+/* "Log in": a 48px text link (Main mockup) */
+.mobileLoginLink {
+  display: inline-flex;
+  align-items: center;
+  height: 48px;
+  padding: 0 14px;
+  font-size: 15px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorText);
+  border-radius: var(--borderRadiusMedium);
+
+  &:hover {
+    color: var(--colorText);
+    text-decoration: none;
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--focusRing);
+  }
 }
 
 /* Child component's size (and positioning) should be given here */
@@ -106,8 +130,8 @@
   background-color: transparent;
 
   &:focus-visible {
-    outline: 2px solid var(--marketplaceColor);
-    outline-offset: -4px;
+    outline: none;
+    box-shadow: var(--focusRing);
   }
 
   /* Hovers */
@@ -125,8 +149,26 @@
   }
 }
 
+/* "Menu": icon plus word, secondary button style (1.5px Navy border) */
 .menu {
   position: relative;
+  gap: 6px;
+  width: auto;
+  padding: 0 14px;
+  font-size: 15px;
+  font-weight: var(--fontWeightSemiBold);
+  line-height: 24px;
+  background-color: var(--colorWhite);
+  border: 1.5px solid var(--colorBorderStrong);
+
+  &:enabled:hover,
+  &:enabled:active {
+    background-color: var(--colorBackground);
+  }
+}
+
+.menuLabel {
+  color: var(--colorText);
 }
 
 .menuIcon,
@@ -147,7 +189,7 @@
 
   /* Style: red dot with a border matching the topbar background */
   background-color: var(--colorFail);
-  border: 2px solid var(--colorBackground);
+  border: 2px solid var(--colorWhite);
 
   animation-name: notificationPop;
   animation-duration: 0.1s;
@@ -320,4 +362,10 @@
   @media (--viewportMedium) {
     margin: 0;
   }
+}
+
+/* On the labelled Menu button the dot sits on the corner, not over the word */
+.menu .notificationDot {
+  top: -5px;
+  right: -5px;
 }

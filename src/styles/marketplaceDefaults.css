@@ -179,8 +179,9 @@
 
   /* ================ Topbar related ================ */
 
-  --topbarHeight: 60px;
-  --topbarHeightDesktop: 64px;
+  /* 48px buttons + 12px padding on phones, 52px buttons + 14px padding on desktop (mockups) */
+  --topbarHeight: 72px;
+  --topbarHeightDesktop: 80px;
 
   --TopbarMobileMenu_topMargin: 96px;
 

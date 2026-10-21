@@ -17,6 +17,7 @@ import {
   LinkedLogo,
   Modal,
   ModalMissingInformation,
+  NamedLink,
 } from '../../../components';
 import { getSearchPageResourceLocatorStringParams } from '../../SearchPage/SearchPage.shared';
 
@@ -297,19 +298,21 @@ const TopbarComponent = props => {
   const showSearchForm =
     showSearchOnAllPages || showSearchOnSearchPage || showSearchNotOnLandingPage;
 
-  const mobileSearchButtonMaybe = showSearchForm ? (
-    <Button
-      id={MOBILE_SEARCH_BUTTON_ID}
-      rootClassName={css.searchMenu}
-      onClick={() => redirectToURLWithModalState(history, location, 'mobilesearch')}
-      title={intl.formatMessage({ id: 'Topbar.searchIcon' })}
-    >
-      <SearchIcon
-        className={css.searchMenuIcon}
-        ariaLabel={intl.formatMessage({ id: 'Topbar.searchIcon' })}
-      />
-    </Button>
-  ) : null;
+  // The homepage has its own search card, so there's no search icon on it (Main mockup)
+  const mobileSearchButtonMaybe =
+    showSearchForm && resolvedCurrentPage !== 'LandingPage' ? (
+      <Button
+        id={MOBILE_SEARCH_BUTTON_ID}
+        rootClassName={css.searchMenu}
+        onClick={() => redirectToURLWithModalState(history, location, 'mobilesearch')}
+        title={intl.formatMessage({ id: 'Topbar.searchIcon' })}
+      >
+        <SearchIcon
+          className={css.searchMenuIcon}
+          ariaLabel={intl.formatMessage({ id: 'Topbar.searchIcon' })}
+        />
+      </Button>
+    ) : null;
 
   const handleSkipToMainContent = e => {
     e.preventDefault();
@@ -354,16 +357,21 @@ const TopbarComponent = props => {
         />
         <div className={css.mobileActions}>
           {mobileSearchButtonMaybe}
+          {isAuthenticated ? null : (
+            <NamedLink name="LoginPage" className={css.mobileLoginLink}>
+              <FormattedMessage id="Topbar.logIn" />
+            </NamedLink>
+          )}
+          {/* DESIGN.md: every icon has a word next to it; the menu button says "Menu" */}
           <Button
             id={MOBILE_MENU_BUTTON_ID}
             rootClassName={css.menu}
             onClick={() => redirectToURLWithModalState(history, location, 'mobilemenu')}
-            title={intl.formatMessage({ id: 'Topbar.menuIcon' })}
           >
-            <MenuIcon
-              className={css.menuIcon}
-              ariaLabel={intl.formatMessage({ id: 'Topbar.menuIcon' })}
-            />
+            <MenuIcon className={css.menuIcon} />
+            <span className={css.menuLabel}>
+              <FormattedMessage id="Topbar.menuButton" />
+            </span>
             {notificationDot}
           </Button>
         </div>
