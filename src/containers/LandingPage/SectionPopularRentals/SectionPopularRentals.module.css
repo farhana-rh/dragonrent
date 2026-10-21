@@ -8,127 +8,38 @@
   composes: sectionContent from '../LandingPage.module.css';
 }
 
-/* 2 columns on mobile, 3 on tablet, 4 on desktop */
+.header {
+  composes: sectionHeader from '../LandingPage.module.css';
+}
+
+.title {
+  composes: sectionTitle from '../LandingPage.module.css';
+}
+
+.link {
+  composes: sectionLink from '../LandingPage.module.css';
+}
+
+.buttonMobile {
+  composes: sectionButtonMobile from '../LandingPage.module.css';
+}
+
+/* 2 columns on phones, 4 from tablet up (Main and HomeDesktop mockups) */
 .list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 24px 12px;
+  gap: 12px;
   margin: 0;
   padding: 0;
   list-style: none;
 
-  & > li {
-    min-width: 0;
-  }
-
-  /* Keep the mobile list short: 4 listings, then "View all" */
-  & > li:nth-child(n + 5) {
-    display: none;
-  }
-
   @media (--viewportMedium) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 32px 16px;
-
-    /* Two full rows of 3 on tablet */
-    & > li:nth-child(n + 5) {
-      display: block;
-    }
-    & > li:nth-child(n + 7) {
-      display: none;
-    }
-  }
-
-  @media (--viewportLarge) {
     grid-template-columns: repeat(4, minmax(0, 1fr));
-
-    & > li:nth-child(n + 7) {
-      display: block;
-    }
+    gap: 20px;
   }
 }
 
-/* Loading skeletons */
-.skeleton {
+.item {
+  display: flex;
   min-width: 0;
-}
-
-.skeletonImage {
-  aspect-ratio: 4 / 3;
-  border-radius: var(--borderRadiusLarge);
-  background-color: var(--colorSurfaceSubtle);
-}
-
-.skeletonLine,
-.skeletonLineShort {
-  height: 14px;
-  margin-top: 14px;
-  border-radius: var(--borderRadius);
-  background-color: var(--colorSurfaceSubtle);
-}
-
-.skeletonLineShort {
-  width: 50%;
-  margin-top: 8px;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .skeletonImage,
-  .skeletonLine,
-  .skeletonLineShort {
-    animation: pulse 1.6s ease-in-out infinite;
-  }
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.55;
-  }
-}
-
-/* Empty and error states */
-.message {
-  padding: 30px 24px;
-  text-align: center;
-  background-color: var(--colorSurface);
-  border: 1px solid var(--colorBorder);
-  border-radius: var(--borderRadiusLarge);
-
-  @media (--viewportMedium) {
-    padding: 40px 32px;
-  }
-}
-
-.messageTitle {
-  margin: 0;
-  padding: 0;
-  font-size: 17px;
-  line-height: 24px;
-  font-weight: var(--fontWeightSemiBold);
-  color: var(--colorText);
-}
-
-.messageText {
-  max-width: 420px;
-  margin: 6px auto 0 auto;
-  padding: 0;
-  font-size: 15px;
-  line-height: 24px;
-  color: var(--colorTextSecondary);
-}
-
-.errorDetails {
-  margin: 6px 0 0 0;
-  font-size: 14px;
-}
-
-.messageLink {
-  composes: buttonSecondaryInline from global;
-  display: inline-flex;
-  align-items: center;
-  margin-top: 18px;
 }

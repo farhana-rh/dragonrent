@@ -7,7 +7,6 @@ import SectionExploreRentals from './SectionExploreRentals/SectionExploreRentals
 import SectionPopularRentals from './SectionPopularRentals/SectionPopularRentals';
 import SectionUseCases from './SectionUseCases/SectionUseCases';
 import SectionHowItWorks from './SectionHowItWorks/SectionHowItWorks';
-import SectionRentWithConfidence from './SectionRentWithConfidence/SectionRentWithConfidence';
 import SectionHostCta from './SectionHostCta/SectionHostCta';
 
 const { Money } = sdkTypes;
@@ -73,7 +72,6 @@ const HomePageSections = () => (
     />
     <SectionUseCases sectionId="use-cases" categories={categories} />
     <SectionHowItWorks sectionId="how-dragonrent-works" />
-    <SectionRentWithConfidence sectionId="rent-with-confidence" />
     <SectionHostCta sectionId="list-an-item" />
   </>
 );

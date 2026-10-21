@@ -1,27 +1,45 @@
-import React, { useEffect, useRef, useState } from 'react';
-import classNames from 'classnames';
+import React from 'react';
 
-import { FormattedMessage, useIntl } from '../../../util/reactIntl';
+import { FormattedMessage } from '../../../util/reactIntl';
 
-import { howItWorksSteps } from '../landingPageConfig';
+import { howItWorksSteps, trustPoints } from '../landingPageConfig';
 
 import css from './SectionHowItWorks.module.css';
 
-const AUDIENCES = Object.keys(howItWorksSteps);
+// 24px line icons with a 2px stroke (DESIGN.md: Lucide-style), always next to a word
+const TRUST_ICON_PATHS = {
+  lock: 'M5 11h14v10H5zM8 11V7a4 4 0 0 1 8 0v4',
+  star: 'M12 3l2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3 6.4 20.2l1.1-6.2L3 9.6l6.2-.9z',
+  shield: 'M12 3l7 3v6c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6zM9 12l2 2 4-4',
+};
+
+const TrustIcon = props => {
+  const { name } = props;
+  return (
+    <svg
+      className={css.trustIcon}
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d={TRUST_ICON_PATHS[name]}
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
 
 /**
- * Id of the tab for an audience. Linking to `#<tab id>` (e.g. from the host call to action)
- * scrolls to the tabs and selects that audience.
- *
- * @param {string} sectionId
- * @param {string} audience 'rent' or 'lend'
- * @returns {string} element id
- */
-export const getAudienceTabId = (sectionId, audience) => `${sectionId}-tab-${audience}`;
-
-/**
- * Four-step explanation of renting and lending on DragonRent, with tabs to switch between
- * the renter's and the lender's steps.
+ * "How it works" in three steps, followed by the trust points. On desktop the steps are cards
+ * and the trust points a row; on phones the steps are a list and the trust points a
+ * "Safe and simple" card. Matches the Main and HomeDesktop mockups.
  *
  * @component
  * @param {Object} props
@@ -30,97 +48,48 @@ export const getAudienceTabId = (sectionId, audience) => `${sectionId}-tab-${aud
  */
 const SectionHowItWorks = props => {
   const { sectionId } = props;
-  const intl = useIntl();
-  const [selected, setSelected] = useState(AUDIENCES[0]);
-  const tabRefs = useRef({});
   const titleId = `${sectionId}-title`;
-  const panelId = `${sectionId}-panel`;
-
-  // Select an audience when the page is opened or navigated to with its tab id as the hash
-  useEffect(() => {
-    const selectFromHash = () => {
-      const audience = AUDIENCES.find(
-        a => window.location.hash === `#${getAudienceTabId(sectionId, a)}`
-      );
-      if (audience) {
-        setSelected(audience);
-      }
-    };
-    selectFromHash();
-    window.addEventListener('hashchange', selectFromHash);
-    return () => window.removeEventListener('hashchange', selectFromHash);
-  }, [sectionId]);
-
-  // Arrow keys move between tabs, as recommended for the ARIA tabs pattern
-  const handleKeyDown = e => {
-    const offset = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
-    if (!offset) {
-      return;
-    }
-    e.preventDefault();
-    const index = AUDIENCES.indexOf(selected);
-    const next = AUDIENCES[(index + offset + AUDIENCES.length) % AUDIENCES.length];
-    setSelected(next);
-    tabRefs.current[next]?.focus();
-  };
-
-  const steps = howItWorksSteps[selected];
+  const trustTitleId = `${sectionId}-trust-title`;
 
   return (
     <section id={sectionId} className={css.root} aria-labelledby={titleId}>
       <div className={css.content}>
         <h2 id={titleId} className={css.title}>
-          <FormattedMessage id="LandingPage.howItWorks.title" />
+          <FormattedMessage id="LandingPage.howItWorks.titleV2" />
         </h2>
 
-        <div
-          className={css.tabs}
-          role="tablist"
-          aria-label={intl.formatMessage({ id: 'LandingPage.howItWorks.tabsLabel' })}
-          onKeyDown={handleKeyDown}
-        >
-          {AUDIENCES.map(audience => {
-            const isSelected = audience === selected;
-            return (
-              <button
-                key={audience}
-                ref={el => (tabRefs.current[audience] = el)}
-                id={getAudienceTabId(sectionId, audience)}
-                type="button"
-                role="tab"
-                aria-selected={isSelected}
-                aria-controls={panelId}
-                tabIndex={isSelected ? 0 : -1}
-                className={classNames(css.tab, { [css.tabSelected]: isSelected })}
-                onClick={() => setSelected(audience)}
-              >
-                <FormattedMessage id={`LandingPage.howItWorks.tab.${audience}`} />
-              </button>
-            );
-          })}
-        </div>
-
-        <div
-          id={panelId}
-          role="tabpanel"
-          aria-labelledby={getAudienceTabId(sectionId, selected)}
-          className={css.panel}
-        >
-          <ol className={css.steps}>
-            {steps.map((step, i) => (
-              <li key={step} className={css.step}>
-                <span className={css.stepNumber} aria-hidden="true">
-                  {i + 1}
-                </span>
+        <ol className={css.steps}>
+          {howItWorksSteps.map((step, i) => (
+            <li key={step} className={css.step}>
+              <span className={css.stepNumber} aria-hidden="true">
+                {i + 1}
+              </span>
+              <div className={css.stepText}>
                 <h3 className={css.stepTitle}>
-                  <FormattedMessage id={`LandingPage.howItWorks.${selected}.${step}.title`} />
+                  <FormattedMessage id={`LandingPage.howItWorks.steps.${step}.title`} />
                 </h3>
                 <p className={css.stepDescription}>
-                  <FormattedMessage id={`LandingPage.howItWorks.${selected}.${step}.text`} />
+                  <FormattedMessage id={`LandingPage.howItWorks.steps.${step}.text`} />
                 </p>
+              </div>
+            </li>
+          ))}
+        </ol>
+
+        <div className={css.trust} role="group" aria-labelledby={trustTitleId}>
+          <h3 id={trustTitleId} className={css.trustTitle}>
+            <FormattedMessage id="LandingPage.trustPoints.title" />
+          </h3>
+          <ul className={css.trustList}>
+            {trustPoints.map(point => (
+              <li key={point.id} className={css.trustItem}>
+                <TrustIcon name={point.icon} />
+                <span>
+                  <FormattedMessage id={`LandingPage.trustPoints.${point.id}`} />
+                </span>
               </li>
             ))}
-          </ol>
+          </ul>
         </div>
       </div>
     </section>

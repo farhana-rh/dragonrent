@@ -45,25 +45,23 @@
 
 .label {
   position: absolute;
-  top: 12px;
   left: 12px;
+  bottom: 12px;
+  display: inline-flex;
+  align-items: center;
   max-width: calc(100% - 24px);
-  padding: 2px 12px;
+  min-height: 36px;
+  padding: 0 12px;
 
   font-size: 13px;
-  line-height: 24px;
+  line-height: 18px;
   font-weight: var(--fontWeightMedium);
   color: var(--colorText);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 
-  background-color: var(--colorSurface);
-  border-radius: 999px;
-
-  @media (--viewportMedium) {
-    top: 16px;
-    left: 16px;
-    max-width: calc(100% - 32px);
-  }
+  background-color: var(--colorWhite);
+  border-radius: var(--borderRadius);
+  box-shadow: var(--boxShadowCard);
 }

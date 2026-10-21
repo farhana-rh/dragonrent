@@ -3,15 +3,14 @@ import React, { useEffect } from 'react';
 import { useConfiguration } from '../../../context/configurationContext';
 import { FormattedMessage } from '../../../util/reactIntl';
 
-import { ErrorMessage, ListingCard, NamedLink } from '../../../components';
-
-import SectionHeader from '../SectionHeader/SectionHeader';
+import { ListingCard, NamedLink } from '../../../components';
 
 import css from './SectionPopularRentals.module.css';
 
-// The featuredListings duck fetches up to 10 listings; mobile shows only the first 4 (see css)
-const MAX_LISTINGS = 8;
-const SKELETON_KEYS = ['a', 'b', 'c', 'd'];
+// DESIGN.md: hide the section until the marketplace has at least 8 real listings,
+// then show the first 4 (one row on desktop, 2 × 2 on phones).
+export const MIN_LISTINGS_TO_SHOW = 8;
+const LISTINGS_SHOWN = 4;
 
 // Title depends on how the listings were selected in Console, so the heading stays accurate:
 // "newest" shows recently published listings, "queryString" shows a hand-picked selection.
@@ -19,27 +18,26 @@ const TITLE_IDS = {
   newest: 'LandingPage.popularRentals.titleNewest',
   queryString: 'LandingPage.popularRentals.titleFeatured',
 };
-const SUBTITLE_IDS = {
-  newest: 'LandingPage.popularRentals.subtitleNewest',
-  queryString: 'LandingPage.popularRentals.subtitleFeatured',
-};
 
-const ListingSkeletons = () => (
-  <ul className={css.list} aria-hidden="true">
-    {SKELETON_KEYS.map(key => (
-      <li key={key} className={css.skeleton}>
-        <div className={css.skeletonImage} />
-        <div className={css.skeletonLine} />
-        <div className={css.skeletonLineShort} />
-      </li>
-    ))}
-  </ul>
+const ArrowIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+    <path
+      d="M6 3.5L10.5 8 6 12.5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
 );
 
 /**
- * Listings section on the landing page. It is driven by a "Featured listings" section in
- * Console (Content → Pages → landing-page): the listing selection (newest or a search query)
- * is configured there and fetched with the shared featuredListings duck.
+ * Listings section on the landing page, styled after "Popular near you" in the Main and
+ * HomeDesktop mockups. It is driven by a "Featured listings" section in Console
+ * (Content → Pages → landing-page): the listing selection (newest or a search query) is
+ * configured there and fetched with the shared featuredListings duck. Nothing is shown while
+ * loading, on errors or with fewer than MIN_LISTINGS_TO_SHOW listings.
  *
  * @component
  * @param {Object} props
@@ -47,7 +45,7 @@ const ListingSkeletons = () => (
  * @param {('newest'|'queryString')} props.listingSelection
  * @param {Array<Object>} props.allSections all sections on the page (needed by the fetch)
  * @param {Object} props.options contains featuredListings data and fetch function
- * @returns {JSX.Element} listings section
+ * @returns {JSX.Element|null} listings section
  */
 const SectionPopularRentals = props => {
   const { sectionId, listingSelection, allSections, options } = props;
@@ -57,10 +55,8 @@ const SectionPopularRentals = props => {
 
   const sectionData = featuredListingData?.[sectionId] || {};
   const { listingIds, fetched = false, inProgress, error } = sectionData;
-  const listings = (listingIds && getListingEntitiesById
-    ? getListingEntitiesById(listingIds)
-    : []
-  ).slice(0, MAX_LISTINGS);
+  const allListings =
+    listingIds && getListingEntitiesById ? getListingEntitiesById(listingIds) : [];
 
   useEffect(() => {
     // Same trigger as PageBuilder's SectionListings: fetch once on the client
@@ -69,64 +65,42 @@ const SectionPopularRentals = props => {
     }
   }, []);
 
+  if (!fetched || error || allListings.length < MIN_LISTINGS_TO_SHOW) {
+    return null;
+  }
+
+  const listings = allListings.slice(0, LISTINGS_SHOWN);
   const titleId = `${sectionId}-title`;
-  const isLoading = !fetched && !error;
 
   return (
-    <section
-      id={sectionId}
-      className={css.root}
-      aria-labelledby={titleId}
-      aria-busy={isLoading ? 'true' : undefined}
-    >
+    <section id={sectionId} className={css.root} aria-labelledby={titleId}>
       <div className={css.content}>
-        <SectionHeader
-          titleId={titleId}
-          title={<FormattedMessage id={TITLE_IDS[listingSelection] || TITLE_IDS.queryString} />}
-          subtitle={
-            <FormattedMessage id={SUBTITLE_IDS[listingSelection] || SUBTITLE_IDS.queryString} />
-          }
-          linkText={<FormattedMessage id="LandingPage.popularRentals.viewAll" />}
-          linkProps={{ name: 'SearchPage' }}
-        />
+        <div className={css.header}>
+          <h2 id={titleId} className={css.title}>
+            <FormattedMessage id={TITLE_IDS[listingSelection] || TITLE_IDS.queryString} />
+          </h2>
+          <NamedLink className={css.link} name="SearchPage">
+            <FormattedMessage id="LandingPage.popularRentals.seeAllRentals" />
+            <ArrowIcon />
+          </NamedLink>
+        </div>
 
-        {error ? (
-          <div className={css.message} role="alert">
-            <p className={css.messageTitle}>
-              <FormattedMessage id="LandingPage.popularRentals.errorTitle" />
-            </p>
-            <ErrorMessage className={css.errorDetails} error={error} />
-            <NamedLink className={css.messageLink} name="SearchPage">
-              <FormattedMessage id="LandingPage.popularRentals.browseAll" />
-            </NamedLink>
-          </div>
-        ) : isLoading ? (
-          <ListingSkeletons />
-        ) : listings.length === 0 ? (
-          <div className={css.message} role="status">
-            <p className={css.messageTitle}>
-              <FormattedMessage id="LandingPage.popularRentals.emptyTitle" />
-            </p>
-            <p className={css.messageText}>
-              <FormattedMessage id="LandingPage.popularRentals.emptyText" />
-            </p>
-            <NamedLink className={css.messageLink} name="NewListingPage">
-              <FormattedMessage id="LandingPage.popularRentals.emptyCta" />
-            </NamedLink>
-          </div>
-        ) : (
-          <ul className={css.list}>
-            {listings.map(listing => (
-              <li key={listing.id.uuid}>
-                <ListingCard
-                  listing={listing}
-                  showAuthorInfo={false}
-                  renderSizes="(max-width: 767px) 50vw, (max-width: 1023px) 33vw, 260px"
-                />
-              </li>
-            ))}
-          </ul>
-        )}
+        <ul className={css.list}>
+          {listings.map(listing => (
+            <li key={listing.id.uuid} className={css.item}>
+              <ListingCard
+                listing={listing}
+                showAuthorInfo={false}
+                renderSizes="(max-width: 767px) 50vw, (max-width: 1239px) 25vw, 300px"
+              />
+            </li>
+          ))}
+        </ul>
+
+        <NamedLink className={css.buttonMobile} name="SearchPage">
+          <FormattedMessage id="LandingPage.popularRentals.seeAllRentals" />
+          <ArrowIcon />
+        </NamedLink>
       </div>
     </section>
   );

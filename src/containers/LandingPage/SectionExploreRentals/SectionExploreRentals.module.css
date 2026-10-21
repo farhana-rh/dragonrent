@@ -8,57 +8,76 @@
   composes: sectionContent from '../LandingPage.module.css';
 }
 
-/* Scrolls sideways on mobile, 4 per row on tablet and up to 8 in one row on desktop */
+.header {
+  composes: sectionHeader from '../LandingPage.module.css';
+}
+
+.title {
+  composes: sectionTitle from '../LandingPage.module.css';
+}
+
+.link {
+  composes: sectionLink from '../LandingPage.module.css';
+}
+
+.buttonMobile {
+  composes: sectionButtonMobile from '../LandingPage.module.css';
+}
+
+/* 2 columns on phones; as many 250px+ columns as fit from tablet up (4 at full width) */
 .list {
-  composes: scrollRow from '../LandingPage.module.css';
-  /* Narrow enough that part of the next tile shows on small phones, hinting at scrolling */
-  grid-auto-columns: 96px;
-  margin-top: 0;
-  margin-bottom: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 
   @media (--viewportMedium) {
-    grid-auto-columns: auto;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 16px;
-  }
-
-  @media (--viewportLarge) {
-    /* One equal column per category, however many there are */
-    grid-template-columns: none;
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(0, 1fr);
   }
 }
 
 .item {
   display: flex;
+  min-width: 0;
 }
 
+/* Icon square and name side by side */
 .tile {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 12px;
+  gap: 10px;
   width: 100%;
-  min-height: 96px;
-  padding: 18px 6px;
+  min-height: 72px;
+  padding: 12px;
 
-  text-align: center;
+  /* 15px on phones so longer names ("Photography") fit in a half-width tile */
+  font-size: 15px;
+  line-height: 1.3;
+  font-weight: var(--fontWeightSemiBold);
   color: var(--colorText);
-  background-color: var(--colorSurface);
+  background-color: var(--colorWhite);
   border: 1px solid var(--colorBorder);
   border-radius: var(--borderRadiusLarge);
-  transition: border-color var(--transitionStyleButton), box-shadow var(--transitionStyleButton);
+  transition: border-color var(--transitionStyleButton);
 
   &:hover {
+    color: var(--colorText);
     text-decoration: none;
-    border-color: var(--colorBorderStrong);
-    box-shadow: var(--boxShadowCard);
+    border-color: var(--marketplaceColor);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--focusRing);
   }
 
   @media (--viewportMedium) {
-    min-height: 120px;
-    padding: 24px 8px;
+    gap: 16px;
+    padding: 18px;
+    font-size: 16px;
   }
 }
 
@@ -66,32 +85,27 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
-  color: var(--marketplaceColorDark);
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  color: var(--marketplaceColor);
   background-color: var(--colorAccentSubtle);
-  border-radius: 50%;
+  border-radius: var(--borderRadiusMedium);
 
   @media (--viewportMedium) {
-    width: 48px;
-    height: 48px;
+    width: 52px;
+    height: 52px;
   }
 }
 
 .icon {
-  width: 20px;
-  height: 20px;
-
-  @media (--viewportMedium) {
-    width: 22px;
-    height: 22px;
-  }
+  width: 22px;
+  height: 22px;
 }
 
 .name {
-  max-width: 100%;
-  font-size: 14px;
-  line-height: 18px;
-  font-weight: var(--fontWeightMedium);
-  overflow-wrap: anywhere;
+  min-width: 0;
+  /* Wrap at spaces; only split a word that can't fit on its own line */
+  overflow-wrap: break-word;
+  hyphens: auto;
 }

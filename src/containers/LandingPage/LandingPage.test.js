@@ -10,11 +10,12 @@ import {
 
 import { LandingPageComponent, buildLandingPageData } from './LandingPage';
 import { getAvailableSearchFields } from './HeroSearchForm/HeroSearchForm';
-import { getPopularCategories } from './SectionHomeHero/SectionHomeHero';
 import SectionExploreRentals from './SectionExploreRentals/SectionExploreRentals';
 import SectionHostCta from './SectionHostCta/SectionHostCta';
-import SectionPopularRentals from './SectionPopularRentals/SectionPopularRentals';
-import SectionRentWithConfidence from './SectionRentWithConfidence/SectionRentWithConfidence';
+import SectionHowItWorks from './SectionHowItWorks/SectionHowItWorks';
+import SectionPopularRentals, {
+  MIN_LISTINGS_TO_SHOW,
+} from './SectionPopularRentals/SectionPopularRentals';
 import SectionUseCases, { getAvailableUseCases } from './SectionUseCases/SectionUseCases';
 
 const { screen, waitFor } = testingLibrary;
@@ -32,18 +33,19 @@ describe('LandingPage', () => {
     // PageBuilder is loaded lazily, which can take longer than the default 1s on a busy machine
     await waitFor(
       () => {
-        expect(screen.getByText('LandingPage.hero.titleNew')).toBeInTheDocument();
+        expect(screen.getByText('LandingPage.hero.titleV2')).toBeInTheDocument();
       },
       { timeout: 5000 }
     );
     expect(screen.getByRole('search')).toBeInTheDocument();
-    expect(screen.getByText('LandingPage.howItWorks.title')).toBeInTheDocument();
-    expect(screen.getByText('LandingPage.trust.titleNew')).toBeInTheDocument();
-    expect(screen.getByText('LandingPage.hostCta.titleNew')).toBeInTheDocument();
+    expect(screen.getByText('LandingPage.hero.whatLabel')).toBeInTheDocument();
+    expect(screen.getByText('LandingPage.howItWorks.titleV2')).toBeInTheDocument();
+    expect(screen.getByText('LandingPage.trustPoints.title')).toBeInTheDocument();
+    expect(screen.getByText('LandingPage.lendBanner.title')).toBeInTheDocument();
     // "Browse by use case" is not on the page
     expect(screen.queryByText('LandingPage.useCases.title')).not.toBeInTheDocument();
     // No featured listings section in Console: no listings section
-    expect(screen.queryByText('LandingPage.popularRentals.seeAll')).not.toBeInTheDocument();
+    expect(screen.queryAllByText('LandingPage.popularRentals.seeAllRentals')).toHaveLength(0);
   });
 
   it('renders the page even if the hosted landing page failed to load', async () => {
@@ -53,7 +55,7 @@ describe('LandingPage', () => {
     // PageBuilder is loaded lazily, which can take longer than the default 1s on a busy machine
     await waitFor(
       () => {
-        expect(screen.getByText('LandingPage.hero.titleNew')).toBeInTheDocument();
+        expect(screen.getByText('LandingPage.hero.titleV2')).toBeInTheDocument();
       },
       { timeout: 5000 }
     );
@@ -70,7 +72,6 @@ describe('buildLandingPageData', () => {
       'homeHero',
       'homeExploreRentals',
       'homeHowItWorks',
-      'homeRentWithConfidence',
       'homeHostCta',
     ]);
     expect(meta.pageTitle.content).toEqual('LandingPage.metaTitle');
@@ -97,8 +98,14 @@ describe('buildLandingPageData', () => {
         listingSearchQuery: { a: 1 },
       },
     ]);
-    // Listings come right after the category tiles
-    expect(sections[2].sectionType).toEqual('listings');
+    // Listings come right after the hero, before the category tiles (as in the mockups)
+    expect(sections.map(s => s.sectionType)).toEqual([
+      'homeHero',
+      'listings',
+      'homeExploreRentals',
+      'homeHowItWorks',
+      'homeHostCta',
+    ]);
   });
 });
 
@@ -132,17 +139,7 @@ describe('getAvailableSearchFields', () => {
 });
 
 describe('Category-driven sections', () => {
-  it('picks popular categories and use cases only for existing categories', () => {
-    const consoleCategories = [
-      { id: 'sports-and-outdoor', name: 'Sports & Outdoor' },
-      { id: 'home-and-appliances', name: 'Home & Appliances' },
-      { id: 'cameras-and-photography', name: 'Cameras & Photography' },
-    ];
-    // In the order of popularCategoryIds, skipping categories that aren't popular
-    expect(getPopularCategories(consoleCategories).map(c => c.id)).toEqual([
-      'cameras-and-photography',
-      'sports-and-outdoor',
-    ]);
+  it('picks use cases only for existing categories', () => {
     expect(getAvailableUseCases(categories).map(u => u.id)).toEqual([
       'outdoorAdventures',
       'photography',
@@ -152,15 +149,15 @@ describe('Category-driven sections', () => {
   it('renders category tiles linking to category searches', () => {
     render(<SectionExploreRentals sectionId="explore" categories={categories} />);
 
-    expect(screen.getByText('LandingPage.categories.title')).toBeInTheDocument();
+    expect(screen.getByText('LandingPage.categories.titleV2')).toBeInTheDocument();
     expect(screen.getByText('Bikes').closest('a')).toHaveAttribute(
       'href',
       '/s?pub_categoryLevel1=bikes'
     );
-    expect(screen.getByText('LandingPage.categories.seeAll').closest('a')).toHaveAttribute(
-      'href',
-      '/s'
-    );
+    // A text link next to the title (desktop) and a full-width button (phones)
+    const seeAll = screen.getAllByText('LandingPage.categories.seeAll');
+    expect(seeAll).toHaveLength(2);
+    seeAll.forEach(el => expect(el.closest('a')).toHaveAttribute('href', '/s'));
   });
 
   it('renders a category with no configured icon', () => {
@@ -187,35 +184,29 @@ describe('Category-driven sections', () => {
   });
 });
 
-describe('SectionRentWithConfidence', () => {
-  it('shows only items whose feature is live', () => {
-    render(<SectionRentWithConfidence sectionId="trust" />);
-
-    expect(screen.getByText('LandingPage.trust.transparentPricing.title')).toBeInTheDocument();
-    expect(screen.getByText('LandingPage.trust.reviews.title')).toBeInTheDocument();
-    expect(screen.queryByText('LandingPage.trust.securePayments.title')).not.toBeInTheDocument();
-    expect(screen.queryByText('LandingPage.trust.support.title')).not.toBeInTheDocument();
-  });
-
-  it('hides the trust page link until a trust page is configured', () => {
-    render(<SectionRentWithConfidence sectionId="trust" />);
-
-    expect(screen.getByText('LandingPage.trust.titleNew')).toBeInTheDocument();
-    expect(screen.queryByText('LandingPage.trust.learnMore')).not.toBeInTheDocument();
-  });
-});
-
 describe('SectionHostCta', () => {
-  it('links to listing creation and to the lender steps', () => {
+  it('has one secondary button to start lending', () => {
     render(<SectionHostCta sectionId="list-an-item" />);
 
-    expect(screen.getByText('LandingPage.hostCta.primaryButton').closest('a')).toHaveAttribute(
+    expect(screen.getByText('LandingPage.lendBanner.button').closest('a')).toHaveAttribute(
       'href',
       '/l/new'
     );
-    expect(screen.getByText('LandingPage.hostCta.secondaryButton').closest('a')).toHaveAttribute(
-      'href',
-      '#how-dragonrent-works-tab-lend'
+    expect(screen.getAllByRole('link')).toHaveLength(1);
+  });
+});
+
+describe('SectionHowItWorks', () => {
+  it('shows three numbered steps and the trust points', () => {
+    render(<SectionHowItWorks sectionId="how" />);
+
+    const steps = screen.getAllByRole('listitem');
+    // 3 steps + 3 trust points
+    expect(steps).toHaveLength(6);
+    expect(screen.getByText('LandingPage.howItWorks.steps.find.title')).toBeInTheDocument();
+    expect(screen.getByText('LandingPage.howItWorks.steps.pickUp.title')).toBeInTheDocument();
+    expect(screen.getByRole('group', { name: 'LandingPage.trustPoints.title' })).toHaveTextContent(
+      'LandingPage.trustPoints.identity'
     );
   });
 });
@@ -237,7 +228,12 @@ describe('SectionPopularRentals', () => {
     };
   };
 
-  it('fetches listings on mount and shows a busy state while loading', () => {
+  const createListings = count =>
+    [...Array(count).keys()].map(i =>
+      createListing(`l${i}`, { title: `Listing ${i}` }, { author: createUser('u1') })
+    );
+
+  it('fetches listings on mount and shows nothing while loading', () => {
     const onFetch = jest.fn();
     const { container } = render(<SectionPopularRentals {...sectionProps({}, [], onFetch)} />);
 
@@ -247,56 +243,41 @@ describe('SectionPopularRentals', () => {
       expect.any(Object),
       expect.any(Array)
     );
-    expect(container.querySelector('section')).toHaveAttribute('aria-busy', 'true');
-    expect(screen.getByText('LandingPage.popularRentals.titleNewest')).toBeInTheDocument();
-    expect(screen.getByText('LandingPage.popularRentals.subtitleNewest')).toBeInTheDocument();
+    expect(container).toBeEmptyDOMElement();
   });
 
-  it('renders fetched listings', () => {
-    const listing = createListing(
-      'l1',
-      { title: 'Electric cargo bike' },
-      { author: createUser('u1') }
-    );
-    const onFetch = jest.fn();
-    render(
-      <SectionPopularRentals
-        {...sectionProps({ fetched: true, listingIds: [listing.id] }, [listing], onFetch)}
-      />
-    );
-
-    expect(onFetch).not.toHaveBeenCalled();
-    expect(screen.getByText('Electric cargo bike')).toBeInTheDocument();
-  });
-
-  it('renders at most 8 listings', () => {
-    const listings = [...Array(10).keys()].map(i =>
-      createListing(`l${i}`, { title: `Listing ${i}` }, { author: createUser('u1') })
-    );
-    render(
+  it('stays hidden until there are enough listings', () => {
+    const listings = createListings(MIN_LISTINGS_TO_SHOW - 1);
+    const { container } = render(
       <SectionPopularRentals
         {...sectionProps({ fetched: true, listingIds: listings.map(l => l.id) }, listings)}
       />
     );
 
-    expect(screen.getByText('Listing 7')).toBeInTheDocument();
-    expect(screen.queryByText('Listing 8')).not.toBeInTheDocument();
+    expect(container).toBeEmptyDOMElement();
   });
 
-  it('renders an empty state', () => {
-    render(<SectionPopularRentals {...sectionProps({ fetched: true, listingIds: [] })} />);
-
-    expect(screen.getByRole('status')).toHaveTextContent('LandingPage.popularRentals.emptyTitle');
-    expect(screen.getByText('LandingPage.popularRentals.emptyCta').closest('a')).toHaveAttribute(
-      'href',
-      '/l/new'
+  it('shows the first 4 listings once there are enough', () => {
+    const listings = createListings(10);
+    const onFetch = jest.fn();
+    render(
+      <SectionPopularRentals
+        {...sectionProps({ fetched: true, listingIds: listings.map(l => l.id) }, listings, onFetch)}
+      />
     );
+
+    expect(onFetch).not.toHaveBeenCalled();
+    expect(screen.getByText('LandingPage.popularRentals.titleNewest')).toBeInTheDocument();
+    expect(screen.getByText('Listing 3')).toBeInTheDocument();
+    expect(screen.queryByText('Listing 4')).not.toBeInTheDocument();
   });
 
-  it('renders an error state', () => {
+  it('stays hidden when loading fails', () => {
     const error = { type: 'error', name: 'Error', message: 'Request failed', status: 500 };
-    render(<SectionPopularRentals {...sectionProps({ fetched: false, error })} />);
+    const { container } = render(
+      <SectionPopularRentals {...sectionProps({ fetched: false, error })} />
+    );
 
-    expect(screen.getByRole('alert')).toHaveTextContent('LandingPage.popularRentals.errorTitle');
+    expect(container).toBeEmptyDOMElement();
   });
 });

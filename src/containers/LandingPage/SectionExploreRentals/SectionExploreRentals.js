@@ -7,14 +7,26 @@ import { categorySearchTo } from '../../../util/search';
 import { NamedLink } from '../../../components';
 
 import CategoryIcon from '../CategoryIcon/CategoryIcon';
-import SectionHeader from '../SectionHeader/SectionHeader';
 import { categoryVisuals, MAX_CATEGORY_TILES } from '../landingPageConfig';
 
 import css from './SectionExploreRentals.module.css';
 
+const ArrowIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+    <path
+      d="M6 3.5L10.5 8 6 12.5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
 /**
- * "Browse by category" tiles. Categories come from Console (Listings → Categories); the
- * section is not rendered when the marketplace has no categories.
+ * "Or pick a category" tiles, as in the Main and HomeDesktop mockups. Categories come from
+ * Console (Listings → Categories); the section is not rendered when there are none.
  *
  * @component
  * @param {Object} props
@@ -38,12 +50,16 @@ const SectionExploreRentals = props => {
   return (
     <section id={sectionId} className={css.root} aria-labelledby={titleId}>
       <div className={css.content}>
-        <SectionHeader
-          titleId={titleId}
-          title={<FormattedMessage id="LandingPage.categories.title" />}
-          linkText={<FormattedMessage id="LandingPage.categories.seeAll" />}
-          linkProps={{ name: 'SearchPage' }}
-        />
+        <div className={css.header}>
+          <h2 id={titleId} className={css.title}>
+            <FormattedMessage id="LandingPage.categories.titleV2" />
+          </h2>
+          <NamedLink className={css.link} name="SearchPage">
+            <FormattedMessage id="LandingPage.categories.seeAll" />
+            <ArrowIcon />
+          </NamedLink>
+        </div>
+
         <ul className={css.list}>
           {categories.map(category => (
             <li key={category.id} className={css.item}>
@@ -56,6 +72,11 @@ const SectionExploreRentals = props => {
             </li>
           ))}
         </ul>
+
+        <NamedLink className={css.buttonMobile} name="SearchPage">
+          <FormattedMessage id="LandingPage.categories.seeAll" />
+          <ArrowIcon />
+        </NamedLink>
       </div>
     </section>
   );

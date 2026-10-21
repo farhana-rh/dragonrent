@@ -1,44 +1,40 @@
 @import '../../styles/customMediaQueries.css';
 
+/*
+ * Listing card (dragonrent-design/docs/DESIGN.md → Components → Listing card):
+ * a white card with a Mist border and 12px corners; the photo on top, then the title and the
+ * price. The soft card shadow is used because the whole card is a link.
+ */
 .root {
-  /* Layout */
   display: flex;
   flex-direction: column;
+  width: 100%;
+  overflow: hidden;
   color: var(--colorText);
+  background-color: var(--colorWhite);
+  border: 1px solid var(--colorBorder);
+  border-radius: var(--borderRadiusLarge);
+  box-shadow: var(--boxShadowCard);
+  transition: border-color var(--transitionStyleButton);
 
   /* Remove link's hover effect */
   &:hover {
     text-decoration: none;
-
-    & .title {
-      color: var(--marketplaceColor);
-    }
+    border-color: var(--marketplaceColor);
   }
 
   &:focus-visible {
     outline: none;
-
-    & .aspectRatioWrapper {
-      box-shadow: 0 0 0 2px var(--colorBackground), 0 0 0 4px var(--marketplaceColor);
-    }
+    box-shadow: var(--focusRing);
   }
 }
 
 .aspectRatioWrapper {
   overflow: hidden;
-  transition: filter var(--transitionStyleButton), box-shadow var(--transitionStyleButton);
-  background: var(--colorSurfaceSubtle); /* Loading BG color */
-  border-radius: var(--borderRadiusLarge);
-
-  @media (--viewportMedium) {
-    &:hover {
-      filter: brightness(0.96);
-    }
-  }
+  background: var(--colorAccentSubtle); /* Loading BG color */
 }
 
 .rootForImage {
-  border-radius: var(--borderRadiusLarge);
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -59,89 +55,70 @@
 }
 
 .info {
-  /* Layout */
   display: flex;
   flex-direction: column;
+  gap: 4px;
   /* ⚠️ padding width is hardcoded in SectionListings.js calculateCarouselHeight() as cardInfoPadding*/
-  padding: 12px 0 2px 0;
-}
-
-/* ⚠️ the total calculated height of this selector is hardcoded in SectionListings.js calculateCarouselHeight() as priceHeight*/
-.price {
-  /* Layout */
-  flex-shrink: 0;
-  margin-top: 6px;
-
-  font-size: 14px;
-  line-height: 20px;
-  color: var(--colorTextMuted);
+  padding: 12px;
 
   @media (--viewportMedium) {
-    margin-top: 8px;
+    padding: 14px 16px 16px 16px;
   }
 }
 
+/* "€12 / day": the price 20px/700, the unit 13px Slate */
+/* ⚠️ the total calculated height of this selector is hardcoded in SectionListings.js calculateCarouselHeight() as priceHeight*/
+.price {
+  flex-shrink: 0;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.3;
+  color: var(--colorTextSecondary);
+}
+
 .priceValue {
-  /* Font */
-  font-size: 16px;
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.2;
   font-weight: var(--fontWeightBold);
   color: var(--colorText);
-
-  /* Remove default margins from font */
-  margin-top: 0;
-  margin-bottom: 0;
 }
 
 .perUnit {
-  /* Font */
+  margin: 0;
+  font-size: 13px;
   font-weight: var(--fontWeightRegular);
-  color: var(--colorTextMuted);
-
-  /* Remove default margins from font */
-  margin-top: 0;
-  margin-bottom: 0;
+  color: var(--colorTextSecondary);
 }
 
 .mainInfo {
   display: flex;
   flex-direction: column;
+  gap: 2px;
 }
 
+/* Listing title: 16px in 2-column phone grids, 18px from tablet up */
 /* ⚠️ the calculated height of this selector is hardcoded in SectionListings.js calculateCarouselHeight() as titleHeightSingleLine */
 .title {
-  /* Font */
-  font-size: 15px;
-  line-height: 20px;
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.3;
   font-weight: var(--fontWeightSemiBold);
   color: var(--colorText);
-  margin: 0;
-  transition: color var(--transitionStyleButton);
 
   @media (--viewportMedium) {
-    font-size: 16px;
-    line-height: 22px;
+    font-size: 18px;
   }
 }
 
 /* ⚠️ the calculated height of this selector is hardcoded in SectionListings.js calculateCarouselHeight() as authorInfoHeight & authorInfoHeighMobile */
 .authorInfo {
-  /* Font */
+  margin: 0;
+  padding: 0;
   font-size: 13px;
-  line-height: 18px;
+  line-height: 1.4;
   font-weight: var(--fontWeightRegular);
-  color: var(--colorTextMuted);
-
-  padding-top: 2px;
-  padding-bottom: 0;
-
-  /* Remove default margins from font */
-  margin-top: 0;
-  margin-bottom: 0;
-
-  @media (--viewportMedium) {
-    font-size: 14px;
-    line-height: 20px;
-  }
+  color: var(--colorTextSecondary);
 }
 
 .longWord {

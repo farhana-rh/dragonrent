@@ -4,19 +4,17 @@ import { FormattedMessage } from '../../../util/reactIntl';
 
 import { NamedLink } from '../../../components';
 
-import { getAudienceTabId } from '../SectionHowItWorks/SectionHowItWorks';
-import { HOW_IT_WORKS_SECTION_ID } from '../landingPageConfig';
-
 import css from './SectionHostCta.module.css';
 
 /**
- * Call to action for people who want to rent out their items. The secondary link opens the
- * lender's steps in the "How it works" section.
+ * "Have things you rarely use?" banner for people who want to lend their items, as in the
+ * Main and HomeDesktop mockups. The search is the page's one primary action, so this button
+ * is a secondary one.
  *
  * @component
  * @param {Object} props
  * @param {string} props.sectionId
- * @returns {JSX.Element} host call-to-action section
+ * @returns {JSX.Element} lend call-to-action section
  */
 const SectionHostCta = props => {
   const { sectionId } = props;
@@ -28,23 +26,15 @@ const SectionHostCta = props => {
         <div className={css.banner}>
           <div className={css.text}>
             <h2 id={titleId} className={css.title}>
-              <FormattedMessage id="LandingPage.hostCta.titleNew" />
+              <FormattedMessage id="LandingPage.lendBanner.title" />
             </h2>
             <p className={css.description}>
-              <FormattedMessage id="LandingPage.hostCta.description" />
+              <FormattedMessage id="LandingPage.lendBanner.text" />
             </p>
           </div>
-          <div className={css.actions}>
-            <NamedLink name="NewListingPage" className={css.primaryButton}>
-              <FormattedMessage id="LandingPage.hostCta.primaryButton" />
-            </NamedLink>
-            <a
-              className={css.secondaryButton}
-              href={`#${getAudienceTabId(HOW_IT_WORKS_SECTION_ID, 'lend')}`}
-            >
-              <FormattedMessage id="LandingPage.hostCta.secondaryButton" />
-            </a>
-          </div>
+          <NamedLink name="NewListingPage" className={css.button}>
+            <FormattedMessage id="LandingPage.lendBanner.button" />
+          </NamedLink>
         </div>
       </div>
     </section>

@@ -1,67 +1,147 @@
 @import '../../styles/customMediaQueries.css';
 
-/* Shared layout classes for the landing page sections. Compose these in section styles. */
+/*
+ * Shared layout classes for the landing page sections. Compose these in section styles.
+ * Layout follows dragonrent-design/docs/design/mockups/Main.html (phone) and HomeDesktop.html.
+ */
 
 /*
  * Every section is a grid item of PageBuilder's <main>. min-width: 0 lets it shrink to the
- * viewport; otherwise a horizontally scrolling row inside it (e.g. the category tiles)
- * widens the whole page on mobile.
+ * viewport; otherwise wide content inside it widens the whole page on mobile.
  */
 .sectionRoot {
   min-width: 0;
 }
 
-/* Vertical rhythm: 6px baseline on mobile, 8px from tablet up */
+/* Space above each section: 6px baseline on mobile, 8px from tablet up */
 .section {
   composes: sectionRoot;
-  padding: 36px 0;
+  padding: 36px 0 0 0;
 
   @media (--viewportMedium) {
-    padding: 56px 0;
+    padding: 56px 0 0 0;
   }
 
   @media (--viewportLarge) {
-    padding: 64px 0;
+    padding: 64px 0 0 0;
   }
 }
 
-/* Full-width white band with hairlines, used to break up the cream page */
-.sectionBand {
-  composes: section;
-  background-color: var(--colorSurface);
-  border-top: 1px solid var(--colorBorder);
-  border-bottom: 1px solid var(--colorBorder);
-}
-
-/* Content column aligned with the topbar and footer */
+/* Content column, the same width as the top bar and footer in the mockups */
 .sectionContent {
-  max-width: var(--contentMaxWidthPages);
+  max-width: 1240px;
   margin: 0 auto;
-  padding: 0 16px;
+  padding: 0 18px;
 
   @media (--viewportMedium) {
     padding: 0 24px;
   }
+}
 
-  @media (--viewportLarge) {
+/* Section heading row: title on the left, a "See all" link on the right from tablet up */
+.sectionHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+
+  @media (--viewportMedium) {
+    margin-bottom: 24px;
+  }
+}
+
+.sectionTitle {
+  margin: 0;
+  padding: 0;
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: var(--fontWeightSemiBold);
+  letter-spacing: -0.3px;
+  color: var(--colorText);
+}
+
+/* "See all …" text link next to a section title (hidden on phones, which get a button) */
+.sectionLink {
+  display: none;
+
+  @media (--viewportMedium) {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    font-weight: var(--fontWeightSemiBold);
+    color: var(--marketplaceColor);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+
+    &:hover {
+      color: var(--marketplaceColorDark);
+    }
+  }
+}
+
+/* Secondary button: white, 1.5px Navy border, Navy text (DESIGN.md components) */
+.buttonSecondaryHome {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 24px;
+
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorText);
+  text-decoration: none;
+  background-color: var(--colorWhite);
+  border: 1.5px solid var(--colorBorderStrong);
+  border-radius: var(--borderRadiusMedium);
+
+  &:hover {
+    color: var(--colorText);
+    text-decoration: none;
+    background-color: var(--colorBackground);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--focusRing);
+  }
+
+  @media (--viewportMedium) {
+    min-height: 52px;
     padding: 0 32px;
   }
 }
 
-/* Lists that scroll horizontally on mobile and become a grid from tablet up */
+/* Full-width secondary button under a list on phones ("See all rentals") */
+.sectionButtonMobile {
+  composes: buttonSecondaryHome;
+  width: 100%;
+  margin-top: 18px;
+
+  @media (--viewportMedium) {
+    display: none;
+  }
+}
+
+/* Lists that scroll horizontally on mobile and become a grid from tablet up
+   (used by SectionUseCases, which is not on the page at the moment) */
 .scrollRow {
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: minmax(150px, 42%);
   gap: 12px;
-  margin: 0 -16px;
-  padding: 0 16px 6px 16px;
+  margin: 0 -18px;
+  padding: 0 18px 6px 18px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  scroll-padding: 0 16px;
+  scroll-padding: 0 18px;
   list-style: none;
 
-  /* Hide the scrollbar but keep scrolling */
   scrollbar-width: none;
   &::-webkit-scrollbar {
     display: none;

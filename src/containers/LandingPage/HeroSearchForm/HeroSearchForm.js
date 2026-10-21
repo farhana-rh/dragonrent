@@ -19,7 +19,6 @@ import { Form, IconSearch, PrimaryButton } from '../../../components';
 import { getSearchQueryParams } from '../../PageBuilder/Primitives/SearchCTA/SearchCTA';
 import FilterKeyword from '../../PageBuilder/Primitives/SearchCTA/FilterKeyword/FilterKeyword';
 import FilterLocation from '../../PageBuilder/Primitives/SearchCTA/FilterLocation/FilterLocation';
-import FilterDateRange from '../../PageBuilder/Primitives/SearchCTA/FilterDateRange/FilterDateRange';
 
 import css from './HeroSearchForm.module.css';
 
@@ -37,22 +36,27 @@ export const getAvailableSearchFields = config => {
   return { keywords: true, location: hasMapAccess, dates: hasDatesFilter };
 };
 
+// A labelled field: the label sits above the input (DESIGN.md: labels above fields)
 const SearchField = props => {
-  const { id, label, className, children } = props;
+  const { id, label, icon, className, children } = props;
   const labelId = `${id}-label`;
   return (
     <div role="group" aria-labelledby={labelId} className={classNames(css.field, className)}>
       <span id={labelId} className={css.fieldLabel}>
         {label}
       </span>
-      {children}
+      <div className={css.fieldBox}>
+        {icon ? <span className={css.fieldIcon}>{icon}</span> : null}
+        {children}
+      </div>
     </div>
   );
 };
 
 /**
- * Search form for the landing page hero: What (keywords), Where (location) and When (dates).
- * Submits to the SearchPage with the same query parameters as the PageBuilder's SearchCTA.
+ * Search card for the landing page hero: "What do you need?" (keywords) and "Where?" (location),
+ * as in the Main and HomeDesktop mockups. Submits to the SearchPage with the same query parameters
+ * as the PageBuilder's SearchCTA. Dates are picked later, on the search and listing pages.
  *
  * @component
  * @param {Object} props
@@ -68,7 +72,6 @@ const HeroSearchForm = props => {
   const [submitDisabled, setSubmitDisabled] = useState(false);
 
   const fields = getAvailableSearchFields(config);
-  const fieldCount = Object.values(fields).filter(Boolean).length;
 
   const onSubmit = values => {
     const queryParams = getSearchQueryParams(values, config);
@@ -83,11 +86,13 @@ const HeroSearchForm = props => {
           role="search"
           aria-label={intl.formatMessage({ id: 'LandingPage.hero.searchLabel' })}
           onSubmit={handleSubmit}
-          className={classNames(css.root, css[`fields${fieldCount}`], className)}
+          className={classNames(css.root, className)}
         >
           <SearchField
             id="hero-search-what"
-            label={<FormattedMessage id="LandingPage.hero.searchWhat" />}
+            className={css.whatField}
+            label={<FormattedMessage id="LandingPage.hero.whatLabel" />}
+            icon={<IconSearch rootClassName={css.inputIcon} />}
           >
             <FilterKeyword className={css.filter} />
           </SearchField>
@@ -95,7 +100,8 @@ const HeroSearchForm = props => {
           {fields.location ? (
             <SearchField
               id="hero-search-where"
-              label={<FormattedMessage id="LandingPage.hero.searchWhere" />}
+              className={css.whereField}
+              label={<FormattedMessage id="LandingPage.hero.whereLabel" />}
             >
               <FilterLocation
                 className={css.filter}
@@ -105,25 +111,10 @@ const HeroSearchForm = props => {
             </SearchField>
           ) : null}
 
-          {fields.dates ? (
-            <SearchField
-              id="hero-search-when"
-              label={<FormattedMessage id="LandingPage.hero.searchWhen" />}
-              className={css.datesField}
-            >
-              <FilterDateRange className={css.filter} config={config} alignLeft={false} />
-            </SearchField>
-          ) : null}
-
-          <div className={css.submitWrapper}>
-            <PrimaryButton className={css.submitButton} type="submit" disabled={submitDisabled}>
-              <IconSearch rootClassName={css.searchIcon} />
-              {/* Visually hidden from tablet up, where the button shows only the icon */}
-              <span className={css.submitLabel}>
-                <FormattedMessage id="LandingPage.hero.searchButton" />
-              </span>
-            </PrimaryButton>
-          </div>
+          <PrimaryButton className={css.submitButton} type="submit" disabled={submitDisabled}>
+            <IconSearch rootClassName={css.buttonIcon} />
+            <FormattedMessage id="LandingPage.hero.searchButton" />
+          </PrimaryButton>
         </Form>
       )}
     />

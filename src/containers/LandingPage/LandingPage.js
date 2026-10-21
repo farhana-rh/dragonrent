@@ -18,7 +18,6 @@ import SectionHomeHero from './SectionHomeHero/SectionHomeHero';
 import SectionExploreRentals from './SectionExploreRentals/SectionExploreRentals';
 import SectionPopularRentals from './SectionPopularRentals/SectionPopularRentals';
 import SectionHowItWorks from './SectionHowItWorks/SectionHowItWorks';
-import SectionRentWithConfidence from './SectionRentWithConfidence/SectionRentWithConfidence';
 import SectionHostCta from './SectionHostCta/SectionHostCta';
 import { HOW_IT_WORKS_SECTION_ID } from './landingPageConfig';
 
@@ -36,7 +35,6 @@ const sectionComponents = {
   // by this type when it stores fetched listings.
   listings: { component: SectionPopularRentals },
   homeHowItWorks: { component: SectionHowItWorks },
-  homeRentWithConfidence: { component: SectionRentWithConfidence },
   homeHostCta: { component: SectionHostCta },
 };
 
@@ -68,13 +66,14 @@ export const buildLandingPageData = (hostedPageData, formatMessage) => {
     : [];
 
   const sections = [
+    // Order follows the Main and HomeDesktop mockups (dragonrent-design/docs/design/mockups)
     { sectionType: 'homeHero', sectionId: 'hero' },
-    { sectionType: 'homeExploreRentals', sectionId: 'explore-rentals' },
     ...popularRentalsMaybe,
+    { sectionType: 'homeExploreRentals', sectionId: 'explore-rentals' },
     // "Browse by use case" (SectionUseCases) is not on the page at the moment. To bring it back,
     // add it to sectionComponents and here: { sectionType: 'homeUseCases', sectionId: 'use-cases' }
+    // How it works also shows the trust points ("Safe and simple")
     { sectionType: 'homeHowItWorks', sectionId: HOW_IT_WORKS_SECTION_ID },
-    { sectionType: 'homeRentWithConfidence', sectionId: 'rent-with-confidence' },
     { sectionType: 'homeHostCta', sectionId: 'list-an-item' },
   ];
 

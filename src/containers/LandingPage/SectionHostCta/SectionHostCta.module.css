@@ -1,10 +1,12 @@
 @import '../../../styles/customMediaQueries.css';
 
+/* Last section on the page: extra space before the footer */
 .root {
   composes: section from '../LandingPage.module.css';
+  padding-bottom: 48px;
 
-  @media (--viewportLarge) {
-    padding-bottom: 80px;
+  @media (--viewportMedium) {
+    padding-bottom: 72px;
   }
 }
 
@@ -12,124 +14,57 @@
   composes: sectionContent from '../LandingPage.module.css';
 }
 
-/* Brand-coloured banner: copy and buttons stacked on mobile, side by side on desktop */
+/* Ice banner: text and button stacked on phones, side by side from tablet up */
 .banner {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 24px;
-  padding: 30px 24px;
-
-  color: var(--colorWhite);
-  background-color: var(--marketplaceColor);
-  border-radius: 16px;
-
-  @media (--viewportMedium) {
-    gap: 32px;
-    padding: 48px 40px;
-    border-radius: 24px;
-  }
-
-  @media (--viewportLarge) {
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: center;
-    gap: 48px;
-    padding: 48px 64px;
-  }
-}
-
-.text {
-  min-width: 0;
-}
-
-.title {
-  margin: 0;
-  padding: 0;
-  font-size: 26px;
-  line-height: 32px;
-  font-weight: var(--fontWeightBold);
-  letter-spacing: -0.02em;
-  color: var(--colorWhite);
-
-  @media (--viewportMedium) {
-    font-size: 32px;
-    line-height: 40px;
-  }
-}
-
-.description {
-  max-width: 520px;
-  margin: 12px 0 0 0;
-  padding: 0;
-  font-size: 15px;
-  line-height: 24px;
-  color: var(--colorWhite);
-  opacity: 0.9;
-
-  @media (--viewportMedium) {
-    margin: 16px 0 0 0;
-    font-size: 16px;
-  }
-}
-
-.actions {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 18px;
+  padding: 30px 18px;
+  background-color: var(--colorAccentSubtle);
+  border-radius: var(--borderRadiusLarge);
 
   @media (--viewportMedium) {
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 16px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 40px;
+  }
+
+  @media (--viewportLarge) {
+    padding: 56px;
+  }
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 620px;
+}
+
+.title {
+  composes: sectionTitle from '../LandingPage.module.css';
+}
+
+.description {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--colorText);
+
+  @media (--viewportMedium) {
+    font-size: 18px;
   }
 }
 
 .button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 48px;
-  padding: 0 24px;
+  composes: buttonSecondaryHome from '../LandingPage.module.css';
+  width: 100%;
 
-  font-size: 15px;
-  line-height: 24px;
-  font-weight: var(--fontWeightSemiBold);
-  text-align: center;
-  border-radius: 999px;
-  transition: background-color var(--transitionStyleButton),
-    border-color var(--transitionStyleButton);
-
-  &:hover {
-    text-decoration: none;
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--colorWhite);
-    outline-offset: 2px;
-  }
-}
-
-/* Highlight button stands out against the brand colour */
-.primaryButton {
-  composes: button;
-  color: var(--colorText);
-  background-color: var(--colorAttention);
-  border: 1px solid var(--colorAttention);
-
-  &:hover {
-    color: var(--colorText);
-    background-color: var(--colorWhite);
-    border-color: var(--colorWhite);
-  }
-}
-
-.secondaryButton {
-  composes: button;
-  color: var(--colorWhite);
-  background-color: transparent;
-  border: 1px solid var(--colorLightTransparent);
-
-  &:hover {
-    color: var(--colorWhite);
-    border-color: var(--colorWhite);
+  @media (--viewportMedium) {
+    width: auto;
   }
 }

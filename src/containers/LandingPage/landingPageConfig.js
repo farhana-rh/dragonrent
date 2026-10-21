@@ -50,14 +50,6 @@ export const categoryVisuals = {
   party: { icon: 'party', tone: 'blush', image: null },
 };
 
-// Shown as quick links under the hero search, if these categories exist
-export const popularCategoryIds = [
-  'cameras-and-photography',
-  'tools-and-equipment',
-  'sports-and-outdoor',
-  'furniture-and-events',
-];
-
 // Maximum number of category tiles in "Explore rentals"
 export const MAX_CATEGORY_TILES = 8;
 
@@ -75,31 +67,16 @@ export const useCases = [
   { id: 'transport', categoryId: 'vehicles', tone: 'slate', image: null },
 ];
 
-// "How it works" steps for each audience. The first audience is selected by default.
-export const howItWorksSteps = {
-  rent: ['find', 'request', 'pickUp', 'return'],
-  lend: ['list', 'accept', 'handOver', 'getPaid'],
-};
+// "How it works" steps, in order (Main and HomeDesktop mockups)
+export const howItWorksSteps = ['find', 'request', 'pickUp'];
 
 /**
- * "Rent with confidence" items. Only items marked `enabled` are shown: an item should be
- * enabled only once the feature it describes is live on the marketplace.
- *
- * - securePayments: enable when Stripe is configured (publishable key + Console secret key).
- * - support: enable when the support channel and hours are decided, and update the
- *   LandingPage.trust.support.text translation.
+ * Trust points shown with "How it works" ("Safe and simple" on phones). Each one describes how
+ * the marketplace already works: card payments go through Stripe, reviews come from completed
+ * rentals, and Stripe verifies an owner's identity before paying them out.
  */
-export const trustItems = [
-  { id: 'transparentPricing', icon: 'pricing', enabled: true },
-  { id: 'clearAvailability', icon: 'calendar', enabled: true },
-  { id: 'reviews', icon: 'star', enabled: true },
-  { id: 'profiles', icon: 'profile', enabled: true },
-  { id: 'securePayments', icon: 'lock', enabled: false },
-  { id: 'support', icon: 'message', enabled: false },
+export const trustPoints = [
+  { id: 'payments', icon: 'lock' },
+  { id: 'reviews', icon: 'star' },
+  { id: 'identity', icon: 'shield' },
 ];
-
-/**
- * Console page (Content → Pages) linked from the trust section as "Read how we protect you".
- * Keep this null until the page exists, so the link is never broken. Example: 'trust-and-safety'.
- */
-export const trustPageId = null;
