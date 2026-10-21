@@ -29,6 +29,13 @@ gets paid. It runs on production hosting.
 | Analytics | Loaded only after cookie consent | 8 Oct |
 | Checkout | No terms checkbox until rental terms and damage policy pages exist; simplified top bar | 17 Oct |
 | Commission | Owner pays 15% (minimum €1); renters pay no service fee, so the listed price is the price | 20 Oct |
+| Duration pricing cap | A shorter rental never costs more than the next longer package | 21 Oct |
+| Location search | Suggestions limited to Finland | 21 Oct |
+| Design system | "Arctic Blue + Geist" from `dragonrent-design/docs/DESIGN.md` replaces the orange/Inter design: cobalt #2457C5, Geist via `@fontsource/geist`, plain wording ("Send request", "Owner/Renter", "Messages") | 21 Oct |
+| Text keys | New keys stay in `en.json`/`fi.json` (two languages); existing template wording is changed in Console's marketplace texts | 21 Oct |
+| Listing card | Distance only after a place search; no rating on cards | 21 Oct |
+| Verified badge | Console metadata field (Yes/No) set by the operator after an ID check; the check itself still to be defined | 21 Oct |
+| Homepage | Stays code-built, restyled to the Main/HomeDesktop mockups; "Popular near you" hidden until 8+ listings | 21 Oct |
 
 ## In scope
 
@@ -98,9 +105,10 @@ Worked examples (daily €12, 3-day €30, 7-day €60):
 | 7 | 60 ÷ 7 × 7 | €60.00 |
 | 10 | 60 ÷ 7 × 10 = 85.714… | €85.71 |
 
-**Open question:** with these numbers, 6 days (€60) costs the same as 7 days (€60), and 5 days
-(€50) is close behind. Should a shorter rental ever be capped at the next tier's price, for example
-"never charge more than the 7-day price for 3–6 days"? Decide before Day 6.
+**Cap (decided 21 Oct):** a rental never costs more than the next longer package. For 3–6 days the
+total is the 3-day rate per day, capped at the 7-day price; for 1–2 days it is the daily price per
+day, capped at the 3-day price (when one is set). This keeps prices increasing with length whatever
+prices owners enter, so renters are never pushed to book extra days for free.
 
 **Technical note for Day 6:** the price is calculated in `server/api-util/lineItems.js`, so the
 browser can't change it. The booking process itself is not changed.

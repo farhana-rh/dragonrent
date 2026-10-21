@@ -16,6 +16,12 @@ import React from 'react';
 import ReactDOMClient from 'react-dom/client';
 import { loadableReady } from '@loadable/component';
 
+// Geist font (DragonRent design system), self-hosted through @fontsource
+import '@fontsource/geist/400.css';
+import '@fontsource/geist/500.css';
+import '@fontsource/geist/600.css';
+import '@fontsource/geist/700.css';
+
 // Import default styles before other CSS-related modules are imported
 // This ensures that the styles in marketplaceDefaults.css are included
 // as first ones in the final build CSS build file.

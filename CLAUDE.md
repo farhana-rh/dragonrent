@@ -14,8 +14,14 @@ DragonRent is a rental marketplace MVP for Finland, built on Sharetribe Web Temp
 - `docs/FLOWS.md`: renter and owner flows, sitemap
 - `docs/MAP.md`: where each page, component and the pricing code live
 
-Design mockups are in `Rental App/` (PNG exports of the "dhar" designs; copy their layout and style,
-not their Dhaka-specific content) and the approved "DragonRent Mockups.pdf" (not in the repo).
+## Design source of truth
+
+**Before any UI work, read `dragonrent-design/docs/DESIGN.md` and the matching mockup in
+`dragonrent-design/docs/design/mockups/`** (HTML files; open them in a browser or read their inline
+styles).
+If either is missing for the page you're about to change, stop and ask the user instead of designing
+from older material. The new mockups replace the earlier `Rental App/` ("dhar") exports and
+"DragonRent Mockups.pdf", which are kept only for reference.
 
 ## Commands
 
@@ -49,7 +55,9 @@ phase, stop and report build and test results.
 - Explain any change to search data logic or transaction behaviour BEFORE implementing it.
 - Accounts: one account can both rent and lend. Listing type: daily rental only.
 - Languages: English (primary) and Finnish only, both at launch. Add new strings to `en.json` and
-  `fi.json`. Do NOT add strings to de/es/fr or the other locale files.
+  `fi.json`. Do NOT add strings to de/es/fr or the other locale files. DESIGN.md says to put wording
+  in Console; agreed exception (21 Oct): new keys go in the JSON files (Console holds one language),
+  existing template wording is changed in Console.
 - Currency: EUR only.
 - No favourites/wishlist hearts and no fake data. Listing cards show "New" or omit the rating. The
   listing page may compute a rating from the reviews it loads.
@@ -65,8 +73,8 @@ phase, stop and report build and test results.
 - Hosted `translations.json` contains every template key, so **editing an existing key in
   `src/translations/*.json` has no runtime effect**. Use NEW keys for changed copy, e.g.
   `"LandingPage.heroTitle"`.
-- Hosted branding (colour, logo) overrides `src/config/configBranding.js` and the local brand colour
-  `#c2410c`. Tell the user which Console changes are needed for the design to show.
+- Hosted branding (colour, logo) overrides `src/config/configBranding.js`. The brand colour is cobalt
+  `#2457C5` (DESIGN.md, 21 Oct); Console → Branding must be set to it for the design to show.
 - Current Console state (Dev, checked 20 Oct) is summarised in `docs/SCOPE.md` and the setup steps
   in `docs/CONSOLE-SETUP.md`: one user type with both roles, daily rental only, delivery fields,
   15% owner commission, orange branding, placeholder policy pages.

@@ -20,33 +20,34 @@
   * Colors used for different functions (like error texts)
   * Subtle color variants are used in Stripe verification status box
   */
-  --colorSuccess: #138041;
-  --colorSuccessDark: #0d542a;
-  --colorSuccessLight: #1aad57;
-  --colorSuccessSubtle: #f0fff6;
-  --colorFail: #e7000b;
-  --colorFailDark: #cc0000;
-  --colorFailSubtle: #fff0f0;
-  --colorAttention: #ffaa00;
-  --colorAttentionDark: #b25900;
-  --colorAttentionSubtle: #fff7f0;
+  /* DragonRent "Arctic Blue" semantic colours (dragonrent-design/docs/DESIGN.md) */
+  --colorSuccess: #108981; /* icons only; white text on it is too faint */
+  --colorSuccessDark: #0b6b65; /* text on the success tint */
+  --colorSuccessLight: #108981;
+  --colorSuccessSubtle: #ddf3f1; /* success tint */
+  --colorFail: #ef4444; /* field borders and icons */
+  --colorFailDark: #ef4444;
+  --colorFailSubtle: #f7fafc;
+  --colorAttention: #f59e0b; /* stars and icons, never as text */
+  --colorAttentionDark: #b45309; /* star outline, warning icons */
+  --colorAttentionSubtle: #fef3c7; /* warning tint, with Navy text */
   --colorBannedLight: var(--marketplaceColorLight);
   --colorBannedDark: var(--marketplaceColor);
 
   /* B&W and Grey palette */
-  /* DragonRent uses warm neutrals (hue 36) instead of the template's cool greys */
+  /* Template greys mapped onto the Arctic Blue palette: Snow, Mist, Slate and Navy */
 
   --colorWhite: hsl(0 0% 100%);
-  --colorGrey50: hsl(36 33% 97%);
-  --colorGrey100: hsl(36 20% 89%);
-  --colorGrey200: hsl(36 12% 80%);
-  --colorGrey300: hsl(36 8% 68%);
-  --colorGrey400: hsl(36 6% 57%);
-  --colorGrey500: hsl(36 5% 47%);
-  --colorGrey600: hsl(36 5% 36%);
-  --colorGrey700: hsl(36 6% 26%);
-  --colorGrey800: hsl(36 7% 17%);
-  --colorGrey900: hsl(36 8% 11%);
+  --colorGrey50: #f7fafc; /* Snow */
+  --colorGrey100: #e7ebf0; /* Mist */
+  --colorGrey200: #e7ebf0; /* Mist */
+  --colorGrey300: #4a5b78; /* Slate */
+  --colorGrey400: #4a5b78; /* Slate */
+  --colorGrey500: #4a5b78; /* Slate */
+  --colorGrey600: #4a5b78; /* Slate */
+  --colorGrey700: #172b4d; /* Navy */
+  --colorGrey800: #172b4d; /* Navy */
+  --colorGrey900: #172b4d; /* Navy */
   --colorBlack: hsl(0 0% 0%);
 
   --colorLightTransparent: rgba(255, 255, 255, 0.65);
@@ -54,31 +55,31 @@
   /* ================ DragonRent design tokens ================ */
 
   /* Surfaces */
-  --colorBackground: #f9f6f1; /* page background (cream) */
-  --colorSurface: var(--colorWhite); /* cards, panels, footer */
-  --colorSurfaceSubtle: #f4efe7; /* inset boxes inside cards */
+  --colorBackground: #f7fafc; /* Snow: page background */
+  --colorSurface: var(--colorWhite); /* cards, inputs */
+  --colorSurfaceSubtle: #f7fafc; /* Snow: inset boxes inside cards */
 
   /* Text */
-  --colorText: #1f1d1a; /* headings and primary text */
-  --colorTextSecondary: #5c5750; /* body copy, descriptions */
-  --colorTextMuted: #807a72; /* meta text, captions */
+  --colorText: #172b4d; /* Navy: headings and main text */
+  --colorTextSecondary: #4a5b78; /* Slate: secondary text */
+  --colorTextMuted: #4a5b78; /* Slate: captions (nothing lighter, for contrast) */
 
   /* Borders */
-  --colorBorder: #ebe5dc; /* dividers, card outlines */
-  --colorBorderStrong: #b9b2a7; /* input and outline button borders */
+  --colorBorder: #e7ebf0; /* Mist: borders, dividers, inputs */
+  --colorBorderStrong: #172b4d; /* Navy: secondary button outline */
 
   /* Accent tints */
-  --colorAccentSubtle: #fcebe0; /* step numbers, selected states */
+  --colorAccentSubtle: #dce8fa; /* Ice: icon tiles, selected days, step numbers */
 
-  /* Image placeholder tints (used until real photography is available) */
-  --colorPlaceholderSage: #dce3da;
-  --colorPlaceholderSand: #e5ddd0;
-  --colorPlaceholderBlush: #e8dbd3;
-  --colorPlaceholderSlate: #dee0e5;
-  --colorPlaceholderStone: #e3dfd3;
+  /* Image placeholder tints (used until real photography is available): Ice and Mist only */
+  --colorPlaceholderSage: #dce8fa;
+  --colorPlaceholderSand: #e7ebf0;
+  --colorPlaceholderBlush: #dce8fa;
+  --colorPlaceholderSlate: #e7ebf0;
+  --colorPlaceholderStone: #dce8fa;
 
   /* Focus ring for keyboard navigation */
-  --focusRing: 0 0 0 3px rgb(194 65 12 / 25%);
+  --focusRing: 0 0 0 3px #2457c5; /* 3px Cobalt ring */
 
   /**
   * Marketplace color comes by default from src/config/brandingConfig.js
@@ -86,17 +87,17 @@
   * In the future, we are planning to bring more --marketplace* CSS Properties
   * from hosted assets, which means that they could be managed through Console.
   */
-  --marketplaceColor: #c2410c; /* hsl(17, 88%, 40%) */
-  --marketplaceColorLight: #ef5a1b; /* hsl(17, 88%, 50%) */
-  --marketplaceColorDark: #923109; /* hsl(17, 88%, 30%) */
+  --marketplaceColor: #2457c5; /* Cobalt */
+  --marketplaceColorLight: #2457c5;
+  --marketplaceColorDark: #1b46a3; /* Cobalt dark: hover, pressed */
 
   /**
    * The fill color used by <PrimaryButton>
    * These might be overwritten by values from hosted assets
    */
-  --colorPrimaryButton: #c2410c;
-  --colorPrimaryButtonDark: #923109;
-  --colorPrimaryButtonLight: #ef5a1b;
+  --colorPrimaryButton: #2457c5;
+  --colorPrimaryButtonDark: #1b46a3;
+  --colorPrimaryButtonLight: #2457c5;
 
   /** 
    * The fill color used by <SecondaryButton>
@@ -113,7 +114,7 @@
   --colorStatusFinalState: var(--colorGrey600);
 
   /* ================ Font ================ */
-  --fontFamily: 'Inter', -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif,
+  --fontFamily: 'Geist', system-ui, sans-serif,
     'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 
   --fontWeightRegular: 400;
@@ -151,7 +152,8 @@
   --boxShadowSectionLocationHover: 0 10px 30px 0 rgba(0, 0, 0, 0.1);
   --boxShadowBottomForm: 0 -2px 4px 0 rgba(0, 0, 0, 0.05);
   --boxShadowFilterButton: 0 4px 16px 0 rgba(0, 0, 0, 0.2);
-  --boxShadowCard: 0 1px 2px 0 rgba(31, 29, 26, 0.04), 0 4px 16px 0 rgba(31, 29, 26, 0.06);
+  --boxShadowCard: 0 4px 14px rgba(23, 43, 77, 0.06); /* clickable cards only */
+  --boxShadowRaised: 0 14px 40px rgba(23, 43, 77, 0.08); /* search box, booking panel */
 
   /* ================ Z-index base levels ================ */
 
@@ -166,9 +168,9 @@
 
   /* ================ Border radius ================ */
 
-  --borderRadius: 4px;
-  --borderRadiusMedium: 8px;
-  --borderRadiusLarge: 12px;
+  --borderRadius: 8px; /* chips, status tags */
+  --borderRadiusMedium: 10px; /* buttons, inputs */
+  --borderRadiusLarge: 12px; /* cards */
 
   /* ================ Transition styles ================ */
 
@@ -526,7 +528,7 @@ select {
 
   /* Borders */
   border-radius: var(--borderRadiusMedium);
-  border: 1px solid var(--colorBorderStrong);
+  border: 1px solid var(--colorBorder);
   color: var(--colorText);
   outline: none;
 
@@ -588,7 +590,7 @@ textarea {
 
   /* Borders */
   border-radius: var(--borderRadiusMedium);
-  border: 1px solid var(--colorBorderStrong);
+  border: 1px solid var(--colorBorder);
   color: var(--colorText);
   outline: none;
 
@@ -946,7 +948,7 @@ textarea {
 
   /* Borders */
   border-radius: var(--borderRadiusMedium);
-  border: 1px solid var(--colorBorderStrong);
+  border: 1px solid var(--colorBorder);
   color: var(--colorText);
   outline: none;
 
@@ -1330,7 +1332,7 @@ textarea {
 
   /* Borders */
   border-radius: var(--borderRadiusMedium);
-  border: 1px solid var(--colorBorderStrong);
+  border: 1px solid var(--colorBorder);
   background: var(--colorWhite);
 
   cursor: pointer;
