@@ -91,6 +91,7 @@ const allowShowingExtraInfo = (showExtraInfo, transactionPartyInfo) => {
  * @param {Function} props.actionButtons - The action buttons function
  * @param {React.ReactNode} props.orderBreakdown - The order breakdown
  * @param {React.ReactNode} props.orderPanel - The order panel
+ * @param {React.ReactNode} [props.requestSent] - "Request sent!" panel shown instead of the heading
  * @param {object} props.config - The config
  * @param {intlShape} props.intl - The intl
  * @returns {JSX.Element} The TransactionPanel component
@@ -118,6 +119,7 @@ export class TransactionPanelComponent extends Component {
       intl,
       stateData = {},
       showBookingLocation = false,
+      requestSent,
       requestQuote,
       offer,
       fileAttachments,
@@ -209,23 +211,25 @@ export class TransactionPanelComponent extends Component {
               </div>
             ) : null}
 
-            <PanelHeading
-              processName={stateData.processName}
-              processState={stateData.processState}
-              showExtraInfo={allowShowingExtraInfo(stateData.showExtraInfo, transactionPartyInfo)}
-              showPriceOnMobile={showPrice}
-              price={listing?.attributes?.price}
-              intl={intl}
-              deliveryMethod={deliveryMethod}
-              isPendingPayment={!!stateData.isPendingPayment}
-              transactionRole={transactionRole}
-              providerName={authorDisplayName}
-              customerName={customerDisplayName}
-              marketplaceName={marketplaceName}
-              listingId={listing?.id?.uuid}
-              listingTitle={listingTitle}
-              listingDeleted={listingDeleted}
-            />
+            {requestSent || (
+              <PanelHeading
+                processName={stateData.processName}
+                processState={stateData.processState}
+                showExtraInfo={allowShowingExtraInfo(stateData.showExtraInfo, transactionPartyInfo)}
+                showPriceOnMobile={showPrice}
+                price={listing?.attributes?.price}
+                intl={intl}
+                deliveryMethod={deliveryMethod}
+                isPendingPayment={!!stateData.isPendingPayment}
+                transactionRole={transactionRole}
+                providerName={authorDisplayName}
+                customerName={customerDisplayName}
+                marketplaceName={marketplaceName}
+                listingId={listing?.id?.uuid}
+                listingTitle={listingTitle}
+                listingDeleted={listingDeleted}
+              />
+            )}
 
             {requestQuote}
             {offer}

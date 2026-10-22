@@ -42,7 +42,14 @@ export const getStateDataForBookingProcess = (txInfo, processInfo) => {
       return { processName, processState, showDetailCardHeadings: true };
     })
     .cond([states.PREAUTHORIZED, CUSTOMER], () => {
-      return { processName, processState, showDetailCardHeadings: true, showExtraInfo: true };
+      // DragonRent: the renter sees "Request sent!" and what happens next (Sent mockup)
+      return {
+        processName,
+        processState,
+        showDetailCardHeadings: true,
+        showExtraInfo: true,
+        showRequestSent: true,
+      };
     })
     .cond([states.PREAUTHORIZED, PROVIDER], () => {
       const primary = isCustomerBanned ? null : actionButtonProps(transitions.ACCEPT, PROVIDER);

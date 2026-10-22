@@ -53,13 +53,13 @@ const RentalSummary = props => {
       <dl className={css.details}>
         <div className={css.detail}>
           <dt className={css.label}>
-            <FormattedMessage id="CheckoutPage.rental.starts" />
+            <FormattedMessage id="BookingDatesForm.pickUpTitle" />
           </dt>
           <dd className={css.value}>{formatDate(intl, range.start, range)}</dd>
         </div>
         <div className={css.detail}>
           <dt className={css.label}>
-            <FormattedMessage id="CheckoutPage.rental.ends" />
+            <FormattedMessage id="BookingDatesForm.returnTitle" />
           </dt>
           <dd className={css.value}>{formatDate(intl, range.end, range)}</dd>
         </div>

@@ -7,7 +7,6 @@ import { getBookedQuantity, getBookingTimeRange } from '../../../util/bookingTim
 import { createBooking, createTransaction } from '../../../util/testData';
 import { renderWithProviders as render, testingLibrary } from '../../../util/testHelpers';
 
-import CheckoutSteps from '../CheckoutSteps/CheckoutSteps';
 import RentalSummary from './RentalSummary';
 
 const { screen, within } = testingLibrary;
@@ -81,17 +80,5 @@ describe('RentalSummary', () => {
       <RentalSummary transaction={tx} listingLinkProps={listingLinkProps} />
     );
     expect(container).toBeEmptyDOMElement();
-  });
-});
-
-describe('CheckoutSteps', () => {
-  it('marks dates as done and payment as the current step', () => {
-    render(<CheckoutSteps currentStep="payment" />);
-
-    const steps = within(screen.getByRole('list')).getAllByRole('listitem');
-    expect(steps).toHaveLength(3);
-    expect(steps[0]).toHaveTextContent('CheckoutPage.steps.completed');
-    expect(steps[1]).toHaveAttribute('aria-current', 'step');
-    expect(steps[2]).not.toHaveAttribute('aria-current');
   });
 });

@@ -1,6 +1,8 @@
 @import '../../../styles/customMediaQueries.css';
 
 .root {
+  /* Day cell size; DatePicker.js sets it from the cellSize prop */
+  --datepickerCellSize: 38px;
   display: block;
   width: 100%;
   min-width: 272px;
@@ -25,11 +27,14 @@
   --datepickerHeaderArrowColor: var(--marketplaceColor);
   --datepickerDateOutline: auto;
   --datepickerButtonOutlineColor: var(--colorGrey600);
+  /* Dates mockup: the chosen days are Cobalt, the days between them Ice */
   --datepickerSelectedFgColor: var(--colorWhite);
-  --datepickerSelectedBgColor: var(--colorSuccess);
-  --datepickerSelectedBorder: solid 1px var(--colorSuccess);
+  --datepickerSelectedBgColor: var(--marketplaceColor);
+  --datepickerSelectedBorder: solid 1px var(--marketplaceColor);
   --datepickerSelectedHoveredFgColor: var(--colorWhite);
-  --datepickerSelectedHoveredBgColor: var(--colorSuccess);
+  --datepickerSelectedHoveredBgColor: var(--marketplaceColorDark);
+  --datepickerRangeFgColor: var(--marketplaceColor);
+  --datepickerRangeBgColor: var(--colorAccentSubtle);
 }
 
 .datepicker {
@@ -131,17 +136,17 @@
 
 .calendarViewport {
   display: block;
-  width: 270px;
+  width: calc(7 * var(--datepickerCellSize) + 4px);
   height: 100%;
   overflow: hidden;
   position: relative;
 }
 .calendars {
   display: flex;
-  width: calc(3 * 266px);
+  width: calc(3 * 7 * var(--datepickerCellSize));
   position: relative;
   top: 0;
-  transform: translateX(-264px);
+  transform: translateX(calc(-7 * var(--datepickerCellSize) + 2px));
 }
 
 .slide {
@@ -154,7 +159,7 @@
 .calendarTable {
   table-layout: fixed;
   border-collapse: collapse;
-  width: 266px;
+  width: calc(7 * var(--datepickerCellSize));
 }
 
 .weekday > span {
@@ -171,8 +176,8 @@
   text-align: center;
   cursor: pointer;
   padding: 0;
-  width: 38px;
-  height: 38px;
+  width: var(--datepickerCellSize);
+  height: var(--datepickerCellSize);
   font-size: 15px;
   line-height: 24px;
   position: relative;
@@ -226,7 +231,7 @@
 
 .renderedDay {
   width: 100%;
-  height: 37px;
+  height: calc(var(--datepickerCellSize) - 1px);
 }
 
 .dateSelected {
@@ -236,7 +241,7 @@
     justify-content: center;
     align-items: center;
     background-color: var(--datepickerSelectedBgColor);
-    border-radius: calc(37px / 2);
+    border-radius: calc((var(--datepickerCellSize) - 1px) / 2);
     color: var(--datepickerFgColor);
   }
 }
@@ -246,8 +251,8 @@
   & .renderedDay {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
-    border-top-right-radius: calc(37px / 2);
-    border-bottom-right-radius: calc(37px / 2);
+    border-top-right-radius: calc((var(--datepickerCellSize) - 1px) / 2);
+    border-bottom-right-radius: calc((var(--datepickerCellSize) - 1px) / 2);
     color: var(--colorWhite);
   }
 
@@ -260,8 +265,8 @@
 .dateStart {
   &:hover .renderedDay,
   & .renderedDay {
-    border-top-left-radius: calc(37px / 2);
-    border-bottom-left-radius: calc(37px / 2);
+    border-top-left-radius: calc((var(--datepickerCellSize) - 1px) / 2);
+    border-bottom-left-radius: calc((var(--datepickerCellSize) - 1px) / 2);
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     color: var(--colorWhite);
@@ -275,19 +280,30 @@
 
 .dateStart.dateEnd {
   & .renderedDay {
-    border-radius: calc(37px / 2);
+    border-radius: calc((var(--datepickerCellSize) - 1px) / 2);
   }
 }
 
 .dateInRange {
   & .renderedDay {
-    background-color: var(--datepickerSelectedBgColor);
-    color: var(--datepickerSelectedFgColor);
+    background-color: var(--datepickerRangeBgColor, var(--datepickerSelectedBgColor));
+    color: var(--datepickerRangeFgColor, var(--datepickerSelectedFgColor));
+    font-weight: var(--fontWeightSemiBold);
   }
 
   &:hover .renderedDay {
     background-color: var(--datepickerSelectedHoveredBgColor);
     color: var(--datepickerSelectedHoveredFgColor);
+  }
+}
+
+/* The chosen days are part of the range too; keep them Cobalt over the range colour */
+.dateInRange.dateSelected,
+.dateInRange.dateStart,
+.dateInRange.dateEnd {
+  & .renderedDay {
+    background-color: var(--datepickerSelectedBgColor);
+    color: var(--datepickerSelectedFgColor);
   }
 }
 

@@ -267,14 +267,17 @@ describe('OrderPanel', () => {
       routeConfiguration,
     });
     await waitFor(() => {
-      expect(queryAllByText('title!')).toHaveLength(2);
+      // The phone date sheet has a step heading instead of the title (Dates mockup)
+      expect(queryAllByText('title!')).toHaveLength(1);
+      expect(getByText('OrderPanel.datesStep')).toBeInTheDocument();
+      expect(getByText('OrderPanel.datesHeading')).toBeInTheDocument();
       // Daily price ("€X a day") in the panel and in the mobile bar
       expect(queryAllByText('OrderPanel.perDayText')).toHaveLength(2);
       expect(queryAllByText('OrderPanel.pickDatesHint')).toHaveLength(1);
       expect(queryAllByText('OrderPanel.author')).toHaveLength(2);
       expect(getByText('BookingDatesForm.pickUpTitle')).toBeInTheDocument();
       expect(getByText('BookingDatesForm.returnTitle')).toBeInTheDocument();
-      expect(getByText('BookingDatesForm.sendRequest')).toBeInTheDocument();
+      expect(getByText('BookingDatesForm.pickBothDays')).toBeInTheDocument();
       expect(getByText('OrderPanel.chargedOnlyIfAccepted')).toBeInTheDocument();
       expect(getByText('OrderPanel.ctaChooseDates')).toBeInTheDocument();
     });
@@ -324,7 +327,7 @@ describe('OrderPanel', () => {
       expect(queryAllByText('OrderPanel.author')).toHaveLength(2);
       expect(getByText('BookingDatesForm.pickUpTitle')).toBeInTheDocument();
       expect(getByText('BookingDatesForm.returnTitle')).toBeInTheDocument();
-      expect(getByText('BookingDatesForm.sendRequest')).toBeInTheDocument();
+      expect(getByText('BookingDatesForm.pickBothDays')).toBeInTheDocument();
       expect(getByText('OrderPanel.chargedOnlyIfAccepted')).toBeInTheDocument();
       expect(getByText('OrderPanel.ctaButtonMessageBooking')).toBeInTheDocument();
     });

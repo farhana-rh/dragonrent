@@ -100,12 +100,13 @@
   }
 }
 
+/* "Step 2 of 2" above the heading */
 .steps {
-  margin-top: 12px;
-
-  @media (--viewportLarge) {
-    margin-top: 0;
-  }
+  margin: 0 0 6px 0;
+  padding: 0;
+  font-size: 15px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorTextSecondary);
 }
 
 .rentalSummary {

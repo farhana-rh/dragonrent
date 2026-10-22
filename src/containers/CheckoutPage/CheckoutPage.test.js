@@ -202,9 +202,9 @@ describe('CheckoutPage', () => {
     };
     render(<CheckoutPageWithPayment {...props} />);
 
-    const bookingTitle = 'CheckoutPage.default-booking.heading';
+    const bookingTitle = 'CheckoutPage.checkAndSend';
     expect(screen.getByRole('heading', { name: bookingTitle })).toBeInTheDocument();
-    expect(screen.getByRole('list', { name: 'CheckoutPage.steps.label' })).toBeInTheDocument();
+    expect(screen.getByText('CheckoutPage.stepLabel')).toBeInTheDocument();
     const orderBreakdownTitle = 'CheckoutPage.priceDetails';
     expect(screen.getByRole('heading', { name: orderBreakdownTitle })).toBeInTheDocument();
 
@@ -229,7 +229,7 @@ describe('CheckoutPage', () => {
     expect(getTextbox('StripePaymentForm.messageLabel')).toBeInTheDocument();
 
     expect(
-      screen.getByRole('button', { name: 'StripePaymentForm.submitBookingRequest' })
+      screen.getByRole('button', { name: 'StripePaymentForm.sendRequest' })
     ).toBeInTheDocument();
   });
 

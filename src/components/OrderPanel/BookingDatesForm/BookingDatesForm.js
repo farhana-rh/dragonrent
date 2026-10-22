@@ -7,7 +7,6 @@ import { FormattedMessage, useIntl } from '../../../util/reactIntl';
 import { required, bookingDatesRequired, composeValidators } from '../../../util/validators';
 import {
   getStartOf,
-  addTime,
   isSameDay,
   isDateSameOrAfter,
   isInRange,
@@ -21,7 +20,7 @@ import { LINE_ITEM_DAY, propTypes } from '../../../util/types';
 import { timeSlotsPerDate } from '../../../util/generators';
 import { BOOKING_PROCESS_NAME } from '../../../transactions/transaction';
 
-import { Form, PrimaryButton, FieldDateRangePicker, FieldSelect, H6 } from '../../../components';
+import { Form, PrimaryButton, FieldDateRangeController, FieldSelect } from '../../../components';
 
 import EstimatedCustomerBreakdownMaybe from '../EstimatedCustomerBreakdownMaybe';
 
@@ -30,6 +29,47 @@ import FetchLineItemsError from '../FetchLineItemsError/FetchLineItemsError.js';
 import css from './BookingDatesForm.module.css';
 
 const TODAY = new Date();
+
+// Dates mockup: day cells are at least 44px (DESIGN.md tap targets); 7 × 44px fits the booking
+// panel on desktop and phones
+const CALENDAR_CELL_SIZE = 44;
+
+/**
+ * Pick up and Return tiles above the calendar (Dates mockup). The Return tile is highlighted
+ * while it's still waiting for a day.
+ *
+ * @param {Object} props
+ * @param {Date} [props.startDate] pick-up day in the listing's time zone
+ * @param {Date} [props.inclusiveEndDate] return day in the listing's time zone
+ * @param {string} props.timeZone
+ * @returns {JSX.Element}
+ */
+const ChosenDays = props => {
+  const { startDate, inclusiveEndDate, timeZone } = props;
+  const intl = useIntl();
+  const formatDay = date =>
+    intl.formatDate(date, { weekday: 'short', day: 'numeric', month: 'short', timeZone });
+  const pickADay = intl.formatMessage({ id: 'BookingDatesForm.pickADay' });
+
+  return (
+    <div className={css.chosenDays} aria-live="polite">
+      <div className={css.chosenDay}>
+        <span className={css.chosenDayLabel}>
+          <FormattedMessage id="BookingDatesForm.pickUpTitle" />
+        </span>
+        <span className={css.chosenDayValue}>{startDate ? formatDay(startDate) : pickADay}</span>
+      </div>
+      <div className={startDate && !inclusiveEndDate ? css.chosenDayWaiting : css.chosenDay}>
+        <span className={css.chosenDayLabel}>
+          <FormattedMessage id="BookingDatesForm.returnTitle" />
+        </span>
+        <span className={css.chosenDayValue}>
+          {inclusiveEndDate ? formatDay(inclusiveEndDate) : pickADay}
+        </span>
+      </div>
+    </div>
+  );
+};
 
 const nextMonthFn = (currentMoment, timeZone, offset = 1) =>
   getStartOf(currentMoment, 'month', timeZone, offset, 'months');
@@ -508,8 +548,6 @@ const onPriceVariantChange = props => value => {
  * @param {Function} props.onFetchTransactionLineItems - Handler for fetching transaction line items
  * @param {string} props.timeZone - The time zone
  * @param {string} props.marketplaceName - Name of the marketplace
- * @param {string} [props.startDatePlaceholder] - Placeholder for the start date
- * @param {string} [props.endDatePlaceholder] - Placeholder for the end date
  * @param {number} props.dayCountAvailableForBooking - Number of days available for booking
  * @param {Array<Object>} [props.priceVariants] - The price variants
  * @param {ReactNode} [props.priceVariantFieldComponent] - The component to use for the price variant field
@@ -610,8 +648,6 @@ export const BookingDatesForm = props => {
       unitPrice={unitPrice}
       render={formRenderProps => {
         const {
-          endDatePlaceholder,
-          startDatePlaceholder,
           formId,
           handleSubmit,
           lineItemUnitType,
@@ -621,7 +657,6 @@ export const BookingDatesForm = props => {
           onFetchTimeSlots,
           form: formApi,
           finePrintComponent: FinePrint,
-          sectionHeadingAs = 'h3',
         } = formRenderProps;
         const { startDate, endDate } = values?.bookingDates ? values.bookingDates : {};
         const priceVariantName = values?.priceVariantName || null;
@@ -647,19 +682,6 @@ export const BookingDatesForm = props => {
             : null;
         const showEstimatedBreakdown =
           breakdownData && lineItems && !fetchLineItemsInProgress && !fetchLineItemsError;
-
-        const dateFormatOptions = {
-          weekday: 'short',
-          month: 'short',
-          day: 'numeric',
-        };
-
-        const startOfToday = getStartOf(TODAY, 'day', timeZone);
-        const tomorrow = addTime(startOfToday, 1, 'days');
-        const startDatePlaceholderText =
-          startDatePlaceholder || intl.formatDate(startOfToday, dateFormatOptions);
-        const endDatePlaceholderText =
-          endDatePlaceholder || intl.formatDate(tomorrow, dateFormatOptions);
 
         const relevantTimeSlots =
           startDate && !endDate
@@ -700,7 +722,8 @@ export const BookingDatesForm = props => {
         );
 
         const isDaily = lineItemUnitType === LINE_ITEM_DAY;
-        const submitDisabled = isPriceVariationsInUse && !isPublishedListing;
+        const hasBothDays = !!(startDate && endDate);
+        const submitDisabled = (isPriceVariationsInUse && !isPublishedListing) || !hasBothDays;
 
         return (
           <Form onSubmit={handleSubmit} className={classes} enforcePagePreloadFor="CheckoutPage">
@@ -713,20 +736,20 @@ export const BookingDatesForm = props => {
               />
             ) : null}
 
-            <FieldDateRangePicker
+            <ChosenDays
+              startDate={startDate}
+              inclusiveEndDate={
+                endDate && isDaily ? getInclusiveEndDate(endDate, timeZone) : endDate
+              }
+              timeZone={timeZone}
+            />
+
+            <FieldDateRangeController
               className={css.bookingDates}
               name="bookingDates"
-              isDaily={isDaily}
-              startDateId={`${formId}.bookingStartDate`}
-              startDateLabel={intl.formatMessage({
-                id: 'BookingDatesForm.pickUpTitle',
-              })}
-              startDatePlaceholderText={startDatePlaceholderText}
-              endDateId={`${formId}.bookingEndDate`}
-              endDateLabel={intl.formatMessage({
-                id: 'BookingDatesForm.returnTitle',
-              })}
-              endDatePlaceholderText={endDatePlaceholderText}
+              formId={formId}
+              cellSize={CALENDAR_CELL_SIZE}
+              hasFocusOnMount={false}
               format={v => {
                 const { startDate, endDate } = v || {};
                 // Format the Final Form field's value for the DateRangePicker
@@ -769,9 +792,6 @@ export const BookingDatesForm = props => {
                 const localizedDate = timeOfDayFromLocalToTimeZone(date, timeZone);
                 onMonthClick(localizedDate < currentMonth ? prevMonthFn : nextMonthFn);
                 setCurrentMonth(localizedDate);
-              }}
-              onClose={() => {
-                setCurrentMonth(startDate || endDate || startOfToday);
               }}
               onChange={values => {
                 const { startDate: startDateFromValues, endDate: endDateFromValues } = values || {};
@@ -827,12 +847,14 @@ export const BookingDatesForm = props => {
               </FieldSelect>
             ) : null}
 
+            {startDate && !endDate ? (
+              <p className={css.returnPrompt}>
+                <FormattedMessage id="BookingDatesForm.pickReturnDay" />
+              </p>
+            ) : null}
+
             {showEstimatedBreakdown ? (
               <div className={css.priceBreakdownContainer}>
-                <H6 as={sectionHeadingAs} className={css.bookingBreakdownTitle}>
-                  <FormattedMessage id="BookingDatesForm.priceBreakdownTitle" />
-                </H6>
-                <hr className={css.totalDivider} />
                 <EstimatedCustomerBreakdownMaybe
                   breakdownData={breakdownData}
                   lineItems={lineItems}
@@ -851,7 +873,11 @@ export const BookingDatesForm = props => {
                 inProgress={fetchLineItemsInProgress}
                 disabled={submitDisabled}
               >
-                <FormattedMessage id="BookingDatesForm.sendRequest" />
+                {hasBothDays ? (
+                  <FormattedMessage id="BookingDatesForm.continue" />
+                ) : (
+                  <FormattedMessage id="BookingDatesForm.pickBothDays" />
+                )}
               </PrimaryButton>
             </div>
             <FinePrint

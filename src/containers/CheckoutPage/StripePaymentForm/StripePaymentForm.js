@@ -735,10 +735,8 @@ class StripePaymentForm extends Component {
             disabled={submitDisabled}
           >
             {billingDetailsNeeded && isBooking ? (
-              <FormattedMessage
-                id="StripePaymentForm.submitBookingRequest"
-                values={{ totalPrice: totalPriceMaybe, hasPrice: totalPriceMaybe ? 'yes' : 'no' }}
-              />
+              // DESIGN.md words: "Send request"; the total is shown above the button
+              <FormattedMessage id="StripePaymentForm.sendRequest" />
             ) : billingDetailsNeeded ? (
               <FormattedMessage
                 id="StripePaymentForm.submitPaymentInfo"

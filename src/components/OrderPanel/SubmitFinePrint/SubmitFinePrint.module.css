@@ -1,3 +1,5 @@
+@import '../../../styles/customMediaQueries.css';
+
 .finePrint {
   composes: marketplaceTinyFontStyles from global;
   text-align: center;
@@ -7,7 +9,12 @@
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  margin: 18px 0 0 0;
+  /* Same side margins as the form on phones, where the form fills the sheet */
+  margin: 18px 24px 0 24px;
+
+  @media (--viewportMedium) {
+    margin: 18px 0 0 0;
+  }
   padding: 0;
   font-size: 13px;
   line-height: 20px;

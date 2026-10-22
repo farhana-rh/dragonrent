@@ -497,7 +497,19 @@ const OrderPanel = props => {
         usePortal
       >
         <div className={css.modalHeading}>
-          <H1 className={css.heading}>{title}</H1>
+          {isBooking && unitType === 'day' ? (
+            <>
+              {/* Dates mockup: choosing dates is step 1 of 2, checking and sending is step 2 */}
+              <p className={css.modalStep}>
+                <FormattedMessage id="OrderPanel.datesStep" />
+              </p>
+              <H1 className={css.heading}>
+                <FormattedMessage id="OrderPanel.datesHeading" />
+              </H1>
+            </>
+          ) : (
+            <H1 className={css.heading}>{title}</H1>
+          )}
         </div>
 
         {showListingImage && !hideTitle && (

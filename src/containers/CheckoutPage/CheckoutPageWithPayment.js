@@ -43,7 +43,6 @@ import {
 import { getErrorMessages } from './ErrorMessages';
 
 import StripePaymentForm from './StripePaymentForm/StripePaymentForm';
-import CheckoutSteps from './CheckoutSteps/CheckoutSteps';
 import RentalSummary from './RentalSummary/RentalSummary';
 import DetailsSideCard from './DetailsSideCard';
 import MobileListingImage from './MobileListingImage';
@@ -637,10 +636,15 @@ export const CheckoutPageWithPayment = props => {
             <FormattedMessage id="CheckoutPage.backToListing" />
           </NamedLink>
           <div className={css.headingContainer}>
+            {/* Checkout mockup: picking dates was step 1 of 2, this is step 2 */}
+            {isBooking ? (
+              <p className={css.steps}>
+                <FormattedMessage id="CheckoutPage.stepLabel" />
+              </p>
+            ) : null}
             <H3 as="h1" className={css.heading}>
-              {isBooking ? <FormattedMessage id="CheckoutPage.default-booking.heading" /> : title}
+              {isBooking ? <FormattedMessage id="CheckoutPage.checkAndSend" /> : title}
             </H3>
-            {isBooking ? <CheckoutSteps className={css.steps} currentStep="payment" /> : null}
             <H4 as="h2" className={css.detailsHeadingMobile}>
               <FormattedMessage id="CheckoutPage.listingTitle" values={{ listingTitle }} />
             </H4>

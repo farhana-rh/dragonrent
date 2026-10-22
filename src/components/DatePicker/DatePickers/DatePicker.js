@@ -54,8 +54,8 @@ import DatePickerFooter from './DatePickerFooter';
 import css from './DatePicker.module.css';
 import DatePickerHeader from './DatePickerHeader.js';
 
+// Default day cell size. DatePicker.module.css reads it from --datepickerCellSize.
 const CELL_WIDTH = 38;
-const SLIDE_WIDTH = CELL_WIDTH * 7;
 const OUTLINE_WIDTH = 2;
 
 const CalendarMonth = props => {
@@ -296,7 +296,9 @@ const DatePicker = props => {
     isDayBlocked = () => false,
     isBlockedBetween = () => false,
     hasFocusOnMount = true,
+    cellSize = CELL_WIDTH,
   } = props;
+  const SLIDE_WIDTH = cellSize * 7;
 
   const pickerRef = useRef(null);
 
@@ -550,7 +552,7 @@ const DatePicker = props => {
   // Note 2: Stylesheet needs to be changed too if cells are resized
   const rows = getCalendarRows(currentDate, firstDayOfWeek);
   const extraHeight = 52; // weekday row + some extra
-  const height = rows ? `${rows.length * CELL_WIDTH + extraHeight}px` : '242px';
+  const height = rows ? `${rows.length * cellSize + extraHeight}px` : '242px';
 
   const commonMonthProps = {
     currentDate,
@@ -589,6 +591,7 @@ const DatePicker = props => {
         [css.disabled]: disabled,
       })}
       role="application"
+      style={{ '--datepickerCellSize': `${cellSize}px` }}
     >
       <div className={css.datepicker} ref={pickerRef}>
         <DatePickerHeader

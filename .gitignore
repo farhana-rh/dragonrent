@@ -14,3 +14,6 @@ build
 .env
 npm-debug.log
 yarn-error.log
+
+# Local test logins for headless browser checks (never commit)
+.env.test-accounts

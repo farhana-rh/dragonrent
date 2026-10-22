@@ -4,7 +4,7 @@
   padding: 18px;
   background-color: var(--colorSurface);
   border: 1px solid var(--colorBorder);
-  border-radius: 16px;
+  border-radius: var(--borderRadiusLarge);
 
   @media (--viewportMedium) {
     padding: 24px 32px;

@@ -379,7 +379,10 @@ describe('TransactionPage', () => {
       // Listing's title (side card)
       // NOTE: OrderPanel is codes-plitted and "test.each" don't work with async setup
 
-      expect(screen.queryAllByText('listing-item title')).toHaveLength(1);
+      // ("Request sent!" names the item too)
+      expect(screen.queryAllByText('listing-item title')).toHaveLength(
+        stateData.showRequestSent ? 2 : 1
+      );
 
       // Primary action button
       // E.g.
@@ -495,10 +498,17 @@ describe('TransactionPage', () => {
       });
 
       const state = stateData.processState;
-      const txTitle = `TransactionPage.${processName}.${transactionRole}.${state}.title`;
+      const txTitle = stateData.showRequestSent
+        ? // The renter waiting for an answer sees "Request sent!" instead (Sent mockup)
+
+          'RequestSent.heading'
+        : `TransactionPage.${processName}.${transactionRole}.${state}.title`;
       expect(screen.getByText(txTitle)).toBeInTheDocument();
 
-      expect(screen.getByText('TransactionPage.listingTitleMobile')).toBeInTheDocument();
+      // "Request sent!" names the item in its own panel
+      if (!stateData.showRequestSent) {
+        expect(screen.getByText('TransactionPage.listingTitleMobile')).toBeInTheDocument();
+      }
 
       // Order breakdown
       const expectedLength = isInquiry ? 0 : 2;
@@ -665,10 +675,17 @@ describe('TransactionPage', () => {
       });
 
       const state = stateData.processState;
-      const txTitle = `TransactionPage.${processName}.${transactionRole}.${state}.title`;
+      const txTitle = stateData.showRequestSent
+        ? // The renter waiting for an answer sees "Request sent!" instead (Sent mockup)
+
+          'RequestSent.heading'
+        : `TransactionPage.${processName}.${transactionRole}.${state}.title`;
       expect(screen.getByText(txTitle)).toBeInTheDocument();
 
-      expect(screen.getByText('TransactionPage.listingTitleMobile')).toBeInTheDocument();
+      // "Request sent!" names the item in its own panel
+      if (!stateData.showRequestSent) {
+        expect(screen.getByText('TransactionPage.listingTitleMobile')).toBeInTheDocument();
+      }
 
       // Order breakdown
       const expectedLength = isInquiry ? 0 : 2;
@@ -716,7 +733,10 @@ describe('TransactionPage', () => {
 
       // Listing's title (side card)
       // NOTE: OrderPanel is codes-plitted and "test.each" don't work with async setup
-      expect(screen.queryAllByText('listing-item title')).toHaveLength(1);
+      // ("Request sent!" names the item too)
+      expect(screen.queryAllByText('listing-item title')).toHaveLength(
+        stateData.showRequestSent ? 2 : 1
+      );
 
       // Primary action button
       // E.g.
@@ -831,10 +851,17 @@ describe('TransactionPage', () => {
       });
 
       const state = stateData.processState;
-      const txTitle = `TransactionPage.${processName}.${transactionRole}.${state}.title`;
+      const txTitle = stateData.showRequestSent
+        ? // The renter waiting for an answer sees "Request sent!" instead (Sent mockup)
+
+          'RequestSent.heading'
+        : `TransactionPage.${processName}.${transactionRole}.${state}.title`;
       expect(screen.getByText(txTitle)).toBeInTheDocument();
 
-      expect(screen.getByText('TransactionPage.listingTitleMobile')).toBeInTheDocument();
+      // "Request sent!" names the item in its own panel
+      if (!stateData.showRequestSent) {
+        expect(screen.getByText('TransactionPage.listingTitleMobile')).toBeInTheDocument();
+      }
 
       // Order breakdown
       const expectedLength = isInquiry ? 0 : 2;
@@ -1000,10 +1027,17 @@ describe('TransactionPage', () => {
       });
 
       const state = stateData.processState;
-      const txTitle = `TransactionPage.${processName}.${transactionRole}.${state}.title`;
+      const txTitle = stateData.showRequestSent
+        ? // The renter waiting for an answer sees "Request sent!" instead (Sent mockup)
+
+          'RequestSent.heading'
+        : `TransactionPage.${processName}.${transactionRole}.${state}.title`;
       expect(screen.getByText(txTitle)).toBeInTheDocument();
 
-      expect(screen.getByText('TransactionPage.listingTitleMobile')).toBeInTheDocument();
+      // "Request sent!" names the item in its own panel
+      if (!stateData.showRequestSent) {
+        expect(screen.getByText('TransactionPage.listingTitleMobile')).toBeInTheDocument();
+      }
 
       // Order breakdown
       const expectedLength = isInquiry ? 0 : 2;
@@ -1051,7 +1085,10 @@ describe('TransactionPage', () => {
 
       // Listing's title (side card)
       // NOTE: OrderPanel is codes-plitted and "test.each" don't work with async setup
-      expect(screen.queryAllByText('listing-item title')).toHaveLength(1);
+      // ("Request sent!" names the item too)
+      expect(screen.queryAllByText('listing-item title')).toHaveLength(
+        stateData.showRequestSent ? 2 : 1
+      );
 
       // Primary action button
       // E.g.
@@ -1152,10 +1189,16 @@ describe('TransactionPage', () => {
 
       await waitFor(() => {
         const state = stateData.processState;
-        const txTitle = `TransactionPage.${processName}.${transactionRole}.${state}.title`;
+        const txTitle = stateData.showRequestSent
+          ? // The renter waiting for an answer sees "Request sent!" instead (Sent mockup)
+            'RequestSent.heading'
+          : `TransactionPage.${processName}.${transactionRole}.${state}.title`;
         expect(screen.getByText(txTitle)).toBeInTheDocument();
 
-        expect(screen.getByText('TransactionPage.listingTitleMobile')).toBeInTheDocument();
+        // "Request sent!" names the item in its own panel
+        if (!stateData.showRequestSent) {
+          expect(screen.getByText('TransactionPage.listingTitleMobile')).toBeInTheDocument();
+        }
 
         // Activity feed (here we just check the heading)
         expect(screen.getByText('TransactionPanel.activityHeading')).toBeInTheDocument();
@@ -1236,10 +1279,16 @@ describe('TransactionPage', () => {
 
       await waitFor(() => {
         const state = stateData.processState;
-        const txTitle = `TransactionPage.${processName}.${transactionRole}.${state}.title`;
+        const txTitle = stateData.showRequestSent
+          ? // The renter waiting for an answer sees "Request sent!" instead (Sent mockup)
+            'RequestSent.heading'
+          : `TransactionPage.${processName}.${transactionRole}.${state}.title`;
         expect(screen.getByText(txTitle)).toBeInTheDocument();
 
-        expect(screen.getByText('TransactionPage.listingTitleMobile')).toBeInTheDocument();
+        // "Request sent!" names the item in its own panel
+        if (!stateData.showRequestSent) {
+          expect(screen.getByText('TransactionPage.listingTitleMobile')).toBeInTheDocument();
+        }
 
         // Activity feed (here we just check the heading)
         expect(screen.getByText('TransactionPanel.activityHeading')).toBeInTheDocument();
@@ -1321,16 +1370,22 @@ describe('TransactionPage', () => {
 
       await waitFor(() => {
         const state = stateData.processState;
-        const txTitle = `TransactionPage.${processName}.${transactionRole}.${state}.title`;
+        const txTitle = stateData.showRequestSent
+          ? // The renter waiting for an answer sees "Request sent!" instead (Sent mockup)
+            'RequestSent.heading'
+          : `TransactionPage.${processName}.${transactionRole}.${state}.title`;
         expect(screen.getByText(txTitle)).toBeInTheDocument();
 
-        expect(screen.getByText('TransactionPage.listingTitleMobile')).toBeInTheDocument();
+        // "Request sent!" names the item in its own panel
+        if (!stateData.showRequestSent) {
+          expect(screen.getByText('TransactionPage.listingTitleMobile')).toBeInTheDocument();
+        }
 
         // Activity feed (here we just check the heading)
         expect(screen.getByText('TransactionPanel.activityHeading')).toBeInTheDocument();
 
-        // Listing's title (side card)
-        expect(getAllByText('listing-item title')).toHaveLength(3);
+        // Listing's title (side card); the phone date sheet shows "When do you need it?" instead
+        expect(getAllByText('listing-item title')).toHaveLength(2);
         // Daily price ("€X a day") in the panel and in the mobile bar
         expect(getAllByText('OrderPanel.perDayText')).toHaveLength(2);
         expect(getAllByText('OrderPanel.pickDatesHint')).toHaveLength(1);
@@ -1338,7 +1393,7 @@ describe('TransactionPage', () => {
         // BookingDatesForm inputs
         expect(getByText('BookingDatesForm.pickUpTitle')).toBeInTheDocument();
         expect(getByText('BookingDatesForm.returnTitle')).toBeInTheDocument();
-        expect(getByText('BookingDatesForm.sendRequest')).toBeInTheDocument();
+        expect(getByText('BookingDatesForm.pickBothDays')).toBeInTheDocument();
       });
     });
 
@@ -1403,10 +1458,16 @@ describe('TransactionPage', () => {
 
       await waitFor(() => {
         const state = stateData.processState;
-        const txTitle = `TransactionPage.${processName}.${transactionRole}.${state}.title`;
+        const txTitle = stateData.showRequestSent
+          ? // The renter waiting for an answer sees "Request sent!" instead (Sent mockup)
+            'RequestSent.heading'
+          : `TransactionPage.${processName}.${transactionRole}.${state}.title`;
         expect(screen.getByText(txTitle)).toBeInTheDocument();
 
-        expect(screen.getByText('TransactionPage.listingTitleMobile')).toBeInTheDocument();
+        // "Request sent!" names the item in its own panel
+        if (!stateData.showRequestSent) {
+          expect(screen.getByText('TransactionPage.listingTitleMobile')).toBeInTheDocument();
+        }
 
         // Activity feed (here we just check the heading)
         expect(screen.getByText('TransactionPanel.activityHeading')).toBeInTheDocument();
@@ -1487,10 +1548,16 @@ describe('TransactionPage', () => {
 
       await waitFor(() => {
         const state = stateData.processState;
-        const txTitle = `TransactionPage.${processName}.${transactionRole}.${state}.title`;
+        const txTitle = stateData.showRequestSent
+          ? // The renter waiting for an answer sees "Request sent!" instead (Sent mockup)
+            'RequestSent.heading'
+          : `TransactionPage.${processName}.${transactionRole}.${state}.title`;
         expect(screen.getByText(txTitle)).toBeInTheDocument();
 
-        expect(screen.getByText('TransactionPage.listingTitleMobile')).toBeInTheDocument();
+        // "Request sent!" names the item in its own panel
+        if (!stateData.showRequestSent) {
+          expect(screen.getByText('TransactionPage.listingTitleMobile')).toBeInTheDocument();
+        }
 
         // Activity feed (here we just check the heading)
         expect(screen.getByText('TransactionPanel.activityHeading')).toBeInTheDocument();
@@ -1568,10 +1635,16 @@ describe('TransactionPage', () => {
 
       await waitFor(() => {
         const state = stateData.processState;
-        const txTitle = `TransactionPage.${processName}.${transactionRole}.${state}.title`;
+        const txTitle = stateData.showRequestSent
+          ? // The renter waiting for an answer sees "Request sent!" instead (Sent mockup)
+            'RequestSent.heading'
+          : `TransactionPage.${processName}.${transactionRole}.${state}.title`;
         expect(screen.getByText(txTitle)).toBeInTheDocument();
 
-        expect(screen.getByText('TransactionPage.listingTitleMobile')).toBeInTheDocument();
+        // "Request sent!" names the item in its own panel
+        if (!stateData.showRequestSent) {
+          expect(screen.getByText('TransactionPage.listingTitleMobile')).toBeInTheDocument();
+        }
 
         // Activity feed (here we just check the heading)
         expect(screen.getByText('TransactionPanel.activityHeading')).toBeInTheDocument();

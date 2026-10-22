@@ -73,6 +73,7 @@ import ReviewModal from './ReviewModal/ReviewModal';
 import RequestChangesModal from './RequestChangesModal/RequestChangesModal';
 import MakeCounterOfferModal from './MakeCounterOfferModal/MakeCounterOfferModal';
 import SendMessageForm from './SendMessageForm/SendMessageForm';
+import RequestSent from './RequestSent/RequestSent';
 import TransactionPanel from './TransactionPanel/TransactionPanel';
 
 import {
@@ -932,6 +933,17 @@ export const TransactionPageComponent = props => {
       }
       transactionFieldsComponent={
         <TransactionFields {...customTransactionFieldProps('customer')} />
+      }
+      requestSent={
+        stateData.showRequestSent ? (
+          <RequestSent
+            transaction={transaction}
+            listing={listing}
+            providerName={otherUserDisplayNameString}
+            timeZone={timeZone}
+            messageInputId={showSendMessageForm ? `${SEND_MESSAGE_FORM_ID}.message` : null}
+          />
+        ) : null
       }
       requestQuote={
         <RequestQuote
