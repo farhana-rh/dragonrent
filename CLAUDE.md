@@ -96,7 +96,45 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
   must not change, so the final text must describe what really happens. Keep the placeholder out
   of the live UI until the user decides.
 
+## Day 8 decisions (22 Oct)
 
+- **Search runs the map variant** (hosted layout says `map`), so the live page is
+  `SearchPageWithMap.js`; `SearchPageWithGrid.js` isn't used.
+- **Cards show "From €X / day"**: the search request fetches `price3DaysInSubunits` and
+  `price7DaysInSubunits`. Price filter and price sort still use the 1-day price (known limitation).
+- **Distance on cards** only after a place search whose area is under 10 km across (street,
+  postcode, area); a city's bounds centre is too far off. No area name: listings don't store one.
+- **Lend-an-item order:** Details → Photos → Prices → Location → Availability (Details first: the
+  draft needs a title). Availability publishes. Step frame only for the booking process.
+- **No "What you earn" box** on the Prices step until fees are decided (commission is server-only).
+- **Booking calendar** is inline (`FieldDateRangeController`) with 44px cells (48px doesn't fit the
+  392px panel); "Continue" goes to checkout, "Send request" is only on checkout.
+- **"Request sent!"** (renter, preauthorized) and the owner's request view (waiting/accepted/
+  declined, "You get" = `payoutTotal`) replace `PanelHeading` via display flags in
+  `TransactionPage.stateDataBooking.js`. Decline asks for confirmation (`confirm` on the button
+  props); transitions are unchanged.
+- **Messages rows** keep the other person's avatar. Item photos need `listing.images` in the inbox
+  query: explain and get approval first.
+
+### Waiting for the user, after Days 9 and 10
+
+- **Booking emails don't show the duration discount.** `ext/transaction-processes/default-booking/
+  templates` (new-request, accepted-request, money-paid) only render known line items, so a
+  discounted rental shows "€15 × 3 days = €45" then "Total €30". Fix = add a
+  `line-item/duration-discount` row to those templates, which is a transaction process change: needs
+  the user's approval, then a push with the Sharetribe CLI. Not approved yet.
+- **Console list** (handed over 22 Oct): branding colour #2457C5, image aspect 4:3, localization
+  locale (currently `fi`, so English pages format dates and prices in Finnish), footer, marketplace
+  texts (Inbox → Messages, "Post a new listing" → "Lend an item", Provider/Customer → Owner/Renter
+  keys) and booking email texts.
+- **Test data** (in the app as the owner): close "aaa"/"aaaa"; drill 3-day €30 / 7-day €60; drill
+  availability time zone is `Asia/Dhaka` and only Mondays are open: set Europe/Helsinki and open
+  more days.
+- **Test logins** for headless screenshots go in `.env.test-accounts` (git-ignored):
+  `RENTER_EMAIL`, `RENTER_PASSWORD`, `OWNER_EMAIL`, `OWNER_PASSWORD`. Not created yet; the wizard,
+  checkout, booking and Messages pages haven't been checked in a browser.
+
+## Console and hosted assets
 
 - Hosted `translations.json` contains every template key, so **editing an existing key in
   `src/translations/*.json` has no runtime effect**. Use NEW keys for changed copy, e.g.
@@ -114,8 +152,15 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
 - Homepage: custom sections in `src/containers/LandingPage/` (`Section*`, `HomeTile`, `HomeMedia`,
   `HeroSearchForm`, `landingPageConfig.js`). "Popular rentals" uses the existing featured-listings
   logic.
-- Search: `src/containers/SearchPage/` (`SearchFilterChips`, primary/secondary filters in
-  `SearchPageWithGrid.js`).
+- Search: `src/containers/SearchPage/SearchPageWithMap.js` (phone header in
+  `SearchFiltersMobile`, `SearchResultsHeading`, `SearchFilterChips`, heading and summary text in
+  `searchSummary.js`, empty state in `NoSearchResultsMaybe`). Cards: `src/components/ListingCard/`.
+- Lend an item: `src/containers/EditListingPage/EditListingWizard/` (`StepFrame` for the header and
+  Back/Next bar; forms' submit buttons compose `stepSubmit`).
+- Booking dates: `src/components/OrderPanel/BookingDatesForm/`; calendar size and colours in
+  `src/components/DatePicker/DatePickers/` (`cellSize` prop).
+- Booking pages: `src/containers/TransactionPage/` (`RequestSent`, `OwnerRequest`,
+  `ActionButtons` confirm). Messages: `src/containers/InboxPage/InboxPage.js` (`InboxItem`).
 - Listing page: `src/containers/ListingPage/` (`ListingPageCarousel.js`: `ListingBreadcrumbs`,
   `SectionListingHeading`, galleries, `SectionPriceTiles`, `SectionOwner`, `SectionAboutRental`,
   `SectionWhatYouGet`, Details, `SectionMapMaybe` "Pick-up and return", `SectionReviews`). Price
@@ -123,7 +168,7 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
   `fetchSimilarListingsThunk` in `ListingPage.duck.js`.
 - Topbar: `src/containers/TopbarContainer/Topbar/` (`TopbarDesktop/PrimaryNav`).
 - Dashboard: `src/containers/DashboardPage/` (`/dashboard`, read-only data).
-- Checkout: presentation only in `src/containers/CheckoutPage/` (`CheckoutSteps`, `RentalSummary`).
+- Checkout: presentation only in `src/containers/CheckoutPage/` ("Step 2 of 2", `RentalSummary`).
   Never change its payment logic.
 - Global styles and colour variables: `src/styles/marketplaceDefaults.css`.
 
@@ -134,3 +179,11 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
   the Sharetribe client secret into chat; they go in `.env`/Console/Render only.
 - Staging runs on Render; its environment variables are set in the Render dashboard.
 - `build/` is generated output. Rebuild it rather than editing it.
+- Tests: `CI=true yarn test-ci` for everything (without `CI=true` it hangs in watch mode). Run
+  Prettier only on files you edited.
+- Stopping `yarn dev` can leave `scripts/start.js` and `server/apiServer.js` holding ports 3000 and
+  3500; stop those node processes before starting it again. Don't build while dev is running.
+- Screenshots: headless Chrome with `--remote-debugging-port=9333`, driven over CDP; capture the
+  viewport, not the full page, for fixed bars. The map loads late.
+- Never `git add` whole folders without checking `git status`: the user keeps untracked files in
+  the repo (e.g. `src/assets/1 · Eye Key@2x.png`, the design zips).

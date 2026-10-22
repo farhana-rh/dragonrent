@@ -52,22 +52,22 @@ Status: ✅ done · 🟡 partly done · ⬜ not started
 | Search by location and dates | Console search settings, restyled homepage search | 2, 5 | 🟡 code done; Console search settings exist |
 | Browse categories | Console categories (5 top-level, 3 subcategories each) + homepage category row | 2, 5 | ✅ |
 | Popular/newest listings on home | Console "Featured listings" section + restyled section | 2, 5 | 🟡 needs the Console section and listings |
-| Duration pricing (1, 3, 7 days) | Two optional price fields, server-side line items (discount line, commission on the discounted total), price table on listing page, price range on cards | 6 | 🟡 server rule, pricing form and listing page price tiles done; card range comes with the search page |
+| Duration pricing (1, 3, 7 days) | Two optional price fields, server-side line items (discount line, commission on the discounted total), price table on listing page, price range on cards | 6 | 🟡 done in the app (cards show "From €X / day", 22 Oct); booking emails don't show the discount line yet (needs a template change, waiting for approval) |
 | Booking request, owner accepts | Console listing type, default booking process | 2 | 🟡 listing type exists; no test booking yet |
 | Card payment, payouts, commission | Stripe Connect (test mode now), Console commission | 2 | 🟡 Stripe test keys set; commission not set |
-| Messaging | Built-in inbox, restyled | 8 | ⬜ restyle |
+| Messaging | Built-in inbox, restyled | 8 | ✅ rows restyled 22 Oct; "Messages" wording is a Console text |
 | Two-way reviews, rating on listing page | Built-in, restyled | 7 | ✅ listing page |
 | Approximate location until booked | Fuzzy location setting in the template | 7 | ✅ (UI only) |
 | Owner dashboard | `/dashboard` (requests waiting, active rentals, listings) | — | ✅ added 17 Oct |
 | Restyled checkout | Presentation only | 8 | ✅ |
 | Restyled search | Filter chips, cards | 8 | ✅ |
-| Listing wizard tweaks | Fewer words, photo tips, pricing step for tiers | 6, 8 | ⬜ |
-| Inbox and transaction page restyle | Presentation and status wording | 8 | ⬜ |
+| Listing wizard tweaks | Fewer words, photo tips, pricing step for tiers | 6, 8 | ✅ 22 Oct: steps, photo tips, live price hints |
+| Inbox and transaction page restyle | Presentation and status wording | 8 | ✅ 22 Oct: request sent, owner request with decline confirm, Messages rows |
 | Delivery option | Console listing field "Delivery possible" (yes/no) + note on listing page | 2, 7 | ⬜ |
 | Cancellation terms | Console page `/p/cancellation-policy` + short block on listing page | 7, 9 | ⬜ |
 | Legal pages | Terms, Privacy, Damage policy, Cancellation policy, FAQ, How it works | 9 | ⬜ |
 | Cookie notice + analytics | Analytics after consent; Sentry error logging | 9 | ⬜ |
-| Email texts | Console email templates (request, accepted, declined, reminders) | 8 | ⬜ |
+| Email texts | Console email templates (request, accepted, declined, reminders) | 8 | 🟡 wording list handed to the user 22 Oct; Console edits after Day 10 |
 
 ## Console setup (Dev, checked 20 Oct)
 
