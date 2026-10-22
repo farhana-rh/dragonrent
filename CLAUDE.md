@@ -13,6 +13,8 @@ DragonRent is a rental marketplace MVP for Finland, built on Sharetribe Web Temp
 - `docs/SCOPE.md`: frozen MVP scope, decisions and the duration pricing rule. Read it first.
 - `docs/FLOWS.md`: renter and owner flows, sitemap
 - `docs/MAP.md`: where each page, component and the pricing code live
+- `docs/LAUNCH.md`: Day 10 runbook (go/no-go list, Live setup, Render variables, smoke test)
+- `docs/PHASE2.md`: everything cut or found during the build
 
 ## Design source of truth
 
@@ -187,6 +189,11 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
   the Sharetribe client secret into chat; they go in `.env`/Console/Render only.
 - Staging runs on Render; its environment variables are set in the Render dashboard.
 - `build/` is generated output. Rebuild it rather than editing it.
+- Check server-side rendering after adding packages: `yarn build`, then
+  `NODE_ENV=production PORT=4000 REACT_APP_MARKETPLACE_ROOT_URL=http://localhost:4000 node
+  server/index.js`. The server build bundles CSS from node_modules
+  (`config/sharetribeWebpackConfig.js`); without that, the Geist font import made every page a
+  500 (fixed 23 Oct, so staging was broken from 21 Oct until that fix is deployed).
 - Tests: `CI=true yarn test-ci` for everything (without `CI=true` it hangs in watch mode). Run
   Prettier only on files you edited.
 - Stopping `yarn dev` can leave `scripts/start.js` and `server/apiServer.js` holding ports 3000 and
