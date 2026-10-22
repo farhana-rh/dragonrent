@@ -71,3 +71,43 @@
   color: var(--colorGrey700);
   margin-top: 4px;
 }
+
+/* "Say no to Mikko?" box (OwnerRequest mockup) */
+.confirmBox {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px;
+  background-color: var(--colorSurface);
+  border: 1.5px solid var(--colorBorderStrong);
+  border-radius: var(--borderRadiusLarge);
+}
+
+.confirmTitle {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorText);
+}
+
+.confirmText {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--colorTextSecondary);
+}
+
+/* Final and not undoable, so Navy rather than the Cobalt main action */
+.confirmButton {
+  background-color: var(--colorText);
+  color: var(--colorWhite);
+
+  &:hover,
+  &:focus {
+    background-color: var(--colorText);
+    opacity: 0.9;
+  }
+}

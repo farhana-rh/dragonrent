@@ -27,6 +27,11 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-day title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -34,11 +39,6 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-day title
     </div>
     <div
       class="itemDetails"
@@ -57,8 +57,25 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.accepted.status
         </span>
@@ -95,6 +112,11 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-day title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -102,11 +124,6 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-day title
     </div>
     <div
       class="itemDetails"
@@ -125,8 +142,20 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.canceled.status
         </span>
@@ -163,6 +192,11 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-day title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -170,11 +204,6 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-day title
     </div>
     <div
       class="itemDetails"
@@ -193,8 +222,25 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.delivered.status
         </span>
@@ -235,6 +281,11 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       />
     </div>
     <div
+      class="itemTitle"
+    >
+      listing-day title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -242,11 +293,6 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-day title
     </div>
     <div
       class="itemDetails"
@@ -265,8 +311,25 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.preauthorized.status
         </span>
@@ -303,6 +366,11 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-day title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -310,11 +378,6 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-day title
     </div>
     <div
       class="itemDetails"
@@ -333,8 +396,20 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.declined.status
         </span>
@@ -371,6 +446,11 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-day title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -378,11 +458,6 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-day title
     </div>
     <div
       class="itemDetails"
@@ -401,8 +476,20 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.expired.status
         </span>
@@ -439,6 +526,11 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-day title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -446,11 +538,6 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-day title
     </div>
     <div
       class="itemDetails"
@@ -469,8 +556,20 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusAccepted"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M20 6 9 17l-5-5"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.reviewed.status
         </span>
@@ -507,6 +606,11 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-day title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -514,11 +618,6 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-day title
     </div>
     <div
       class="itemDetails"
@@ -537,8 +636,20 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="itemState"
     >
       <div
-        class="stateName stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.payment-expired.status
         </span>
@@ -575,6 +686,11 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-day title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -582,11 +698,6 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-day title
     </div>
     <div
       class="itemDetails"
@@ -605,8 +716,20 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusAccepted"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M20 6 9 17l-5-5"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.reviewed.status
         </span>
@@ -643,6 +766,11 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-day title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -650,11 +778,6 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-day title
     </div>
     <div
       class="itemDetails"
@@ -673,8 +796,20 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusAccepted"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M20 6 9 17l-5-5"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.reviewed.status
         </span>
@@ -711,6 +846,11 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-day title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -720,19 +860,31 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-day title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.inquiry.status
         </span>
@@ -769,6 +921,11 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-day title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -776,11 +933,6 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-day title
     </div>
     <div
       class="itemDetails"
@@ -799,8 +951,25 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.accepted.status
         </span>
@@ -837,6 +1006,11 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-day title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -844,11 +1018,6 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-day title
     </div>
     <div
       class="itemDetails"
@@ -867,8 +1036,25 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.delivered.status
         </span>
@@ -905,6 +1091,11 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-day title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -912,11 +1103,6 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-day title
     </div>
     <div
       class="itemDetails"
@@ -935,8 +1121,20 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.declined.status
         </span>
@@ -973,6 +1171,11 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-day title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -980,11 +1183,6 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-day title
     </div>
     <div
       class="itemDetails"
@@ -1003,8 +1201,25 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="itemState"
     >
       <div
-        class="stateName stateNoActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.pending-payment.status
         </span>
@@ -1041,6 +1256,11 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-day title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -1048,11 +1268,6 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-day title
     </div>
     <div
       class="itemDetails"
@@ -1071,8 +1286,25 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="itemState"
     >
       <div
-        class="stateName stateNoActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.pending-payment.status
         </span>
@@ -1109,6 +1341,11 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-day title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -1116,11 +1353,6 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-day title
     </div>
     <div
       class="itemDetails"
@@ -1139,8 +1371,25 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.reviewed-by-customer.status
         </span>
@@ -1177,6 +1426,11 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-day title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -1184,11 +1438,6 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-day title
     </div>
     <div
       class="itemDetails"
@@ -1207,8 +1456,20 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="itemState"
     >
       <div
-        class="stateName stateNoActionNeeded"
+        class="stateName statusAccepted"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M20 6 9 17l-5-5"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.reviewed-by-provider.status
         </span>
@@ -1245,6 +1506,11 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-day title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -1252,11 +1518,6 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-day title
     </div>
     <div
       class="itemDetails"
@@ -1275,8 +1536,20 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusAccepted"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M20 6 9 17l-5-5"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.reviewed.status
         </span>
@@ -1313,6 +1586,11 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-day title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -1320,11 +1598,6 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-day title
     </div>
     <div
       class="itemDetails"
@@ -1343,8 +1616,20 @@ exports[`InboxPage InboxItem: default-booking process with "day" check booking: 
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusAccepted"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M20 6 9 17l-5-5"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.reviewed.status
         </span>
@@ -1381,6 +1666,11 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-hour title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -1388,11 +1678,6 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       >
         provider display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-hour title
     </div>
     <div
       class="itemDetails"
@@ -1411,8 +1696,25 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.accepted.status
         </span>
@@ -1449,6 +1751,11 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-hour title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -1456,11 +1763,6 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       >
         provider display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-hour title
     </div>
     <div
       class="itemDetails"
@@ -1479,8 +1781,20 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.canceled.status
         </span>
@@ -1517,6 +1831,11 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-hour title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -1524,11 +1843,6 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       >
         provider display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-hour title
     </div>
     <div
       class="itemDetails"
@@ -1547,8 +1861,25 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.delivered.status
         </span>
@@ -1585,6 +1916,11 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-hour title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -1592,11 +1928,6 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       >
         provider display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-hour title
     </div>
     <div
       class="itemDetails"
@@ -1615,8 +1946,25 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="itemState"
     >
       <div
-        class="stateName stateNoActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.preauthorized.status
         </span>
@@ -1653,6 +2001,11 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-hour title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -1660,11 +2013,6 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       >
         provider display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-hour title
     </div>
     <div
       class="itemDetails"
@@ -1683,8 +2031,20 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.declined.status
         </span>
@@ -1721,6 +2081,11 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-hour title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -1728,11 +2093,6 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       >
         provider display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-hour title
     </div>
     <div
       class="itemDetails"
@@ -1751,8 +2111,20 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.expired.status
         </span>
@@ -1789,6 +2161,11 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-hour title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -1796,11 +2173,6 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       >
         provider display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-hour title
     </div>
     <div
       class="itemDetails"
@@ -1819,8 +2191,20 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusAccepted"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M20 6 9 17l-5-5"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.reviewed.status
         </span>
@@ -1857,6 +2241,11 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-hour title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -1864,11 +2253,6 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       >
         provider display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-hour title
     </div>
     <div
       class="itemDetails"
@@ -1887,8 +2271,20 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="itemState"
     >
       <div
-        class="stateName stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.payment-expired.status
         </span>
@@ -1925,6 +2321,11 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-hour title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -1932,11 +2333,6 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       >
         provider display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-hour title
     </div>
     <div
       class="itemDetails"
@@ -1955,8 +2351,20 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusAccepted"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M20 6 9 17l-5-5"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.reviewed.status
         </span>
@@ -1993,6 +2401,11 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-hour title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -2000,11 +2413,6 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       >
         provider display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-hour title
     </div>
     <div
       class="itemDetails"
@@ -2023,8 +2431,20 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusAccepted"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M20 6 9 17l-5-5"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.reviewed.status
         </span>
@@ -2061,6 +2481,11 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-hour title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -2070,19 +2495,31 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-hour title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.inquiry.status
         </span>
@@ -2119,6 +2556,11 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-hour title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -2126,11 +2568,6 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       >
         provider display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-hour title
     </div>
     <div
       class="itemDetails"
@@ -2149,8 +2586,25 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.accepted.status
         </span>
@@ -2187,6 +2641,11 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-hour title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -2194,11 +2653,6 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       >
         provider display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-hour title
     </div>
     <div
       class="itemDetails"
@@ -2217,8 +2671,25 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.delivered.status
         </span>
@@ -2255,6 +2726,11 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-hour title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -2262,11 +2738,6 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       >
         provider display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-hour title
     </div>
     <div
       class="itemDetails"
@@ -2285,8 +2756,20 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.declined.status
         </span>
@@ -2323,6 +2806,11 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-hour title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -2330,11 +2818,6 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       >
         provider display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-hour title
     </div>
     <div
       class="itemDetails"
@@ -2353,8 +2836,25 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.pending-payment.status
         </span>
@@ -2391,6 +2891,11 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-hour title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -2398,11 +2903,6 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       >
         provider display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-hour title
     </div>
     <div
       class="itemDetails"
@@ -2421,8 +2921,25 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.pending-payment.status
         </span>
@@ -2459,6 +2976,11 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-hour title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -2466,11 +2988,6 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       >
         provider display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-hour title
     </div>
     <div
       class="itemDetails"
@@ -2489,8 +3006,20 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="itemState"
     >
       <div
-        class="stateName stateNoActionNeeded"
+        class="stateName statusAccepted"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M20 6 9 17l-5-5"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.reviewed-by-customer.status
         </span>
@@ -2527,6 +3056,11 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-hour title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -2534,11 +3068,6 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       >
         provider display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-hour title
     </div>
     <div
       class="itemDetails"
@@ -2557,8 +3086,25 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.reviewed-by-provider.status
         </span>
@@ -2595,6 +3141,11 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-hour title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -2602,11 +3153,6 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       >
         provider display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-hour title
     </div>
     <div
       class="itemDetails"
@@ -2625,8 +3171,20 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusAccepted"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M20 6 9 17l-5-5"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.reviewed.status
         </span>
@@ -2663,6 +3221,11 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-hour title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -2670,11 +3233,6 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       >
         provider display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing-hour title
     </div>
     <div
       class="itemDetails"
@@ -2693,8 +3251,20 @@ exports[`InboxPage InboxItem: default-booking process with "hour" check booking:
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusAccepted"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M20 6 9 17l-5-5"
+          />
+        </svg>
         <span>
           InboxPage.default-booking.reviewed.status
         </span>
@@ -2731,6 +3301,11 @@ exports[`InboxPage InboxItem: default-inquiry process with "inquiry" item check 
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing1 title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -2740,19 +3315,31 @@ exports[`InboxPage InboxItem: default-inquiry process with "inquiry" item check 
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing1 title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-inquiry.free-inquiry.status
         </span>
@@ -2789,6 +3376,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -2798,19 +3390,26 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateNoActionNeeded"
+        class="stateName statusOther"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.completed.status
         </span>
@@ -2847,6 +3446,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -2856,19 +3460,31 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.offer-pending.status
         </span>
@@ -2905,6 +3521,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -2914,19 +3535,26 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateNoActionNeeded"
+        class="stateName statusOther"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.completed.status
         </span>
@@ -2963,6 +3591,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -2972,19 +3605,26 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.canceled.status
         </span>
@@ -3021,6 +3661,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -3030,19 +3675,26 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.canceled.status
         </span>
@@ -3079,6 +3731,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -3088,19 +3745,26 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateNoActionNeeded"
+        class="stateName statusOther"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.offer-accepted.status
         </span>
@@ -3137,6 +3801,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -3146,19 +3815,26 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateNoActionNeeded"
+        class="stateName statusOther"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.customer-offer-pending.status
         </span>
@@ -3195,6 +3871,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -3204,19 +3885,26 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.offer-rejected.status
         </span>
@@ -3253,6 +3941,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -3262,19 +3955,26 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.offer-rejected.status
         </span>
@@ -3311,6 +4011,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -3320,19 +4025,31 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.offer-pending.status
         </span>
@@ -3369,6 +4086,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -3378,19 +4100,31 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.delivered.status
         </span>
@@ -3427,6 +4161,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -3436,19 +4175,31 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.delivered.status
         </span>
@@ -3485,6 +4236,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -3494,19 +4250,26 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.reviewed.status
         </span>
@@ -3543,6 +4306,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -3552,19 +4320,26 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.payment-expired.status
         </span>
@@ -3601,6 +4376,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -3610,19 +4390,26 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.reviewed.status
         </span>
@@ -3659,6 +4446,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -3668,19 +4460,26 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.reviewed.status
         </span>
@@ -3717,6 +4516,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -3726,19 +4530,31 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.inquiry.status
         </span>
@@ -3775,6 +4591,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -3784,19 +4605,31 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.offer-pending.status
         </span>
@@ -3833,6 +4666,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -3842,19 +4680,31 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.offer-pending.status
         </span>
@@ -3891,6 +4741,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -3900,19 +4755,31 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.offer-pending.status
         </span>
@@ -3949,6 +4816,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -3958,19 +4830,26 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateNoActionNeeded"
+        class="stateName statusOther"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.completed.status
         </span>
@@ -4007,6 +4886,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -4016,19 +4900,31 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.offer-pending.status
         </span>
@@ -4065,6 +4961,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -4074,19 +4975,26 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.canceled.status
         </span>
@@ -4123,6 +5031,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -4132,19 +5045,26 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.canceled.status
         </span>
@@ -4181,6 +5101,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -4190,19 +5115,26 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.canceled.status
         </span>
@@ -4239,6 +5171,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -4248,19 +5185,31 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.delivered.status
         </span>
@@ -4297,6 +5246,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -4306,19 +5260,31 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.delivered.status
         </span>
@@ -4355,6 +5321,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -4364,19 +5335,26 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.offer-rejected.status
         </span>
@@ -4413,6 +5391,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -4422,19 +5405,26 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.offer-rejected.status
         </span>
@@ -4471,6 +5461,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -4480,19 +5475,26 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.request-rejected.status
         </span>
@@ -4529,6 +5531,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -4538,19 +5545,26 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateNoActionNeeded"
+        class="stateName statusOther"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.changes-requested.status
         </span>
@@ -4587,6 +5601,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -4596,19 +5615,31 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.offer-pending.status
         </span>
@@ -4645,6 +5676,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -4654,19 +5690,31 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.offer-pending.status
         </span>
@@ -4703,6 +5751,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -4712,19 +5765,31 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.offer-pending.status
         </span>
@@ -4761,6 +5826,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -4770,19 +5840,26 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.offer-rejected.status
         </span>
@@ -4819,6 +5896,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -4828,19 +5910,26 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.offer-rejected.status
         </span>
@@ -4877,6 +5966,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -4886,19 +5980,26 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.request-rejected.status
         </span>
@@ -4935,6 +6036,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -4944,19 +6050,26 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateNoActionNeeded"
+        class="stateName statusOther"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.changes-requested.status
         </span>
@@ -4993,6 +6106,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -5002,19 +6120,31 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateNoActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.pending-payment.status
         </span>
@@ -5051,6 +6181,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -5060,19 +6195,26 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateNoActionNeeded"
+        class="stateName statusOther"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.quote-requested.status
         </span>
@@ -5109,6 +6251,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -5118,19 +6265,26 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateNoActionNeeded"
+        class="stateName statusOther"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.reviewed-by-customer.status
         </span>
@@ -5167,6 +6321,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -5176,19 +6335,31 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.reviewed-by-provider.status
         </span>
@@ -5225,6 +6396,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -5234,19 +6410,26 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.reviewed.status
         </span>
@@ -5283,6 +6466,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -5292,19 +6480,26 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.reviewed.status
         </span>
@@ -5341,6 +6536,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -5350,19 +6550,31 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.update-pending.status
         </span>
@@ -5399,6 +6611,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -5408,19 +6625,31 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.update-pending.status
         </span>
@@ -5457,6 +6686,11 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing-request title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -5466,19 +6700,26 @@ exports[`InboxPage InboxItem: default-negotiation process with "request" check n
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing-request title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-negotiation.request-rejected.status
         </span>
@@ -5519,6 +6760,11 @@ exports[`InboxPage InboxItem: default-purchase process with "item" InboxItem wit
       />
     </div>
     <div
+      class="itemTitle"
+    >
+      listing1 title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -5528,19 +6774,31 @@ exports[`InboxPage InboxItem: default-purchase process with "item" InboxItem wit
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing1 title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-purchase.purchased.status
         </span>
@@ -5577,6 +6835,11 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing1 title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -5584,11 +6847,6 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing1 title
     </div>
     <div
       class="itemDetails"
@@ -5601,8 +6859,20 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-purchase.canceled.status
         </span>
@@ -5639,6 +6909,11 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing1 title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -5646,11 +6921,6 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing1 title
     </div>
     <div
       class="itemDetails"
@@ -5663,8 +6933,20 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-purchase.canceled.status
         </span>
@@ -5701,6 +6983,11 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing1 title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -5708,11 +6995,6 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing1 title
     </div>
     <div
       class="itemDetails"
@@ -5725,8 +7007,25 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-purchase.completed.status
         </span>
@@ -5763,6 +7062,11 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing1 title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -5770,11 +7074,6 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing1 title
     </div>
     <div
       class="itemDetails"
@@ -5787,8 +7086,20 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="itemState"
     >
       <div
-        class="stateName stateNoActionNeeded"
+        class="stateName statusOther"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"
+          />
+        </svg>
         <span>
           InboxPage.default-purchase.received.status
         </span>
@@ -5825,6 +7136,11 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing1 title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -5832,11 +7148,6 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing1 title
     </div>
     <div
       class="itemDetails"
@@ -5849,8 +7160,20 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-purchase.canceled.status
         </span>
@@ -5887,6 +7210,11 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing1 title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -5894,11 +7222,6 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing1 title
     </div>
     <div
       class="itemDetails"
@@ -5911,8 +7234,20 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-purchase.canceled.status
         </span>
@@ -5953,6 +7288,11 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       />
     </div>
     <div
+      class="itemTitle"
+    >
+      listing1 title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -5960,11 +7300,6 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing1 title
     </div>
     <div
       class="itemDetails"
@@ -5977,8 +7312,25 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-purchase.purchased.status
         </span>
@@ -6015,6 +7367,11 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing1 title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -6022,11 +7379,6 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing1 title
     </div>
     <div
       class="itemDetails"
@@ -6039,8 +7391,25 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-purchase.disputed.status
         </span>
@@ -6077,6 +7446,11 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing1 title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -6084,11 +7458,6 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing1 title
     </div>
     <div
       class="itemDetails"
@@ -6101,8 +7470,20 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-purchase.reviewed.status
         </span>
@@ -6139,6 +7520,11 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing1 title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -6146,11 +7532,6 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing1 title
     </div>
     <div
       class="itemDetails"
@@ -6163,8 +7544,20 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="itemState"
     >
       <div
-        class="stateName stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-purchase.payment-expired.status
         </span>
@@ -6201,6 +7594,11 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing1 title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -6208,11 +7606,6 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing1 title
     </div>
     <div
       class="itemDetails"
@@ -6225,8 +7618,20 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-purchase.reviewed.status
         </span>
@@ -6263,6 +7668,11 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing1 title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -6270,11 +7680,6 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing1 title
     </div>
     <div
       class="itemDetails"
@@ -6287,8 +7692,20 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-purchase.reviewed.status
         </span>
@@ -6325,6 +7742,11 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing1 title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -6334,19 +7756,31 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       </span>
     </div>
     <div
-      class="itemTitle"
-    >
-      listing1 title
-    </div>
-    <div
       class="itemDetails"
     />
     <div
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-purchase.inquiry.status
         </span>
@@ -6383,6 +7817,11 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing1 title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -6390,11 +7829,6 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing1 title
     </div>
     <div
       class="itemDetails"
@@ -6407,8 +7841,20 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="itemState"
     >
       <div
-        class="stateName stateNoActionNeeded"
+        class="stateName statusOther"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"
+          />
+        </svg>
         <span>
           InboxPage.default-purchase.delivered.status
         </span>
@@ -6445,6 +7891,11 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing1 title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -6452,11 +7903,6 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing1 title
     </div>
     <div
       class="itemDetails"
@@ -6469,8 +7915,20 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="itemState"
     >
       <div
-        class="stateName stateNoActionNeeded"
+        class="stateName statusOther"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"
+          />
+        </svg>
         <span>
           InboxPage.default-purchase.received.status
         </span>
@@ -6507,6 +7965,11 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing1 title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -6514,11 +7977,6 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing1 title
     </div>
     <div
       class="itemDetails"
@@ -6531,8 +7989,20 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="itemState"
     >
       <div
-        class="stateName stateNoActionNeeded"
+        class="stateName statusOther"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"
+          />
+        </svg>
         <span>
           InboxPage.default-purchase.received.status
         </span>
@@ -6569,6 +8039,11 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing1 title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -6576,11 +8051,6 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing1 title
     </div>
     <div
       class="itemDetails"
@@ -6593,8 +8063,20 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="itemState"
     >
       <div
-        class="stateName stateNoActionNeeded"
+        class="stateName statusOther"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"
+          />
+        </svg>
         <span>
           InboxPage.default-purchase.received.status
         </span>
@@ -6631,6 +8113,11 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing1 title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -6638,11 +8125,6 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing1 title
     </div>
     <div
       class="itemDetails"
@@ -6655,8 +8137,25 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-purchase.disputed.status
         </span>
@@ -6693,6 +8192,11 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing1 title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -6700,11 +8204,6 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing1 title
     </div>
     <div
       class="itemDetails"
@@ -6717,8 +8216,20 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="itemState"
     >
       <div
-        class="stateName stateNoActionNeeded"
+        class="stateName statusOther"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"
+          />
+        </svg>
         <span>
           InboxPage.default-purchase.delivered.status
         </span>
@@ -6755,6 +8266,11 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing1 title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -6762,11 +8278,6 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing1 title
     </div>
     <div
       class="itemDetails"
@@ -6779,8 +8290,25 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-purchase.pending-payment.status
         </span>
@@ -6817,6 +8345,11 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing1 title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -6824,11 +8357,6 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing1 title
     </div>
     <div
       class="itemDetails"
@@ -6841,8 +8369,25 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-purchase.pending-payment.status
         </span>
@@ -6879,6 +8424,11 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing1 title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -6886,11 +8436,6 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing1 title
     </div>
     <div
       class="itemDetails"
@@ -6903,8 +8448,25 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="itemState"
     >
       <div
-        class="stateName stateActionNeeded"
+        class="stateName statusWaiting"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <path
+            d="M12 6v6l4 2"
+          />
+        </svg>
         <span>
           InboxPage.default-purchase.reviewed-by-customer.status
         </span>
@@ -6941,6 +8503,11 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing1 title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -6948,11 +8515,6 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing1 title
     </div>
     <div
       class="itemDetails"
@@ -6965,8 +8527,20 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="itemState"
     >
       <div
-        class="stateName stateNoActionNeeded"
+        class="stateName statusOther"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"
+          />
+        </svg>
         <span>
           InboxPage.default-purchase.reviewed-by-provider.status
         </span>
@@ -7003,6 +8577,11 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing1 title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -7010,11 +8589,6 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing1 title
     </div>
     <div
       class="itemDetails"
@@ -7027,8 +8601,20 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-purchase.reviewed.status
         </span>
@@ -7065,6 +8651,11 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="rowNotificationDot"
     />
     <div
+      class="itemTitle"
+    >
+      listing1 title
+    </div>
+    <div
       class="itemUsername"
     >
       <span
@@ -7072,11 +8663,6 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       >
         customer display name
       </span>
-    </div>
-    <div
-      class="itemTitle"
-    >
-      listing1 title
     </div>
     <div
       class="itemDetails"
@@ -7089,8 +8675,20 @@ exports[`InboxPage InboxItem: default-purchase process with "item" check purchas
       class="itemState"
     >
       <div
-        class="stateName stateConcluded stateNoActionNeeded"
+        class="stateName statusEnded"
       >
+        <svg
+          aria-hidden="true"
+          class="statusIcon"
+          focusable="false"
+          height="16"
+          viewBox="0 0 24 24"
+          width="16"
+        >
+          <path
+            d="M18 6 6 18M6 6l12 12"
+          />
+        </svg>
         <span>
           InboxPage.default-purchase.reviewed.status
         </span>

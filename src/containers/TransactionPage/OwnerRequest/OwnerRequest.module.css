@@ -1,0 +1,170 @@
+@import '../../../styles/customMediaQueries.css';
+
+/* OwnerRequest mockup: status tag, "Mikko wants to rent your drill", dates and payout */
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin: 20px 24px 24px 24px;
+
+  @media (--viewportMedium) {
+    margin: 32px 0 32px 0;
+  }
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.icon {
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Status tag: icon plus a word, 8px corners, 13px/600 */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 14px;
+  font-size: 13px;
+  font-weight: var(--fontWeightSemiBold);
+  border-radius: var(--borderRadius);
+}
+
+.tagWaiting {
+  color: var(--colorText);
+  background-color: var(--colorAttentionSubtle);
+}
+
+.tagAccepted {
+  color: var(--colorSuccessDark);
+  background-color: var(--colorSuccessSubtle);
+}
+
+.tagDeclined {
+  color: var(--colorText);
+  background-color: var(--colorBorder);
+}
+
+.heading {
+  margin: 0;
+  padding: 0;
+  font-size: 32px;
+  line-height: 1.18;
+  font-weight: var(--fontWeightBold);
+  letter-spacing: -0.6px;
+  color: var(--colorText);
+  overflow-wrap: anywhere;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px;
+  background-color: var(--colorSurface);
+  border: 1px solid var(--colorBorder);
+  border-radius: var(--borderRadiusLarge);
+}
+
+.listingTitle {
+  margin: 0;
+  padding: 0 0 12px 0;
+  font-size: 16px;
+  line-height: 1.35;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorText);
+  border-bottom: 1px solid var(--colorBorder);
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.rowLabel {
+  color: var(--colorTextSecondary);
+}
+
+.rowValue {
+  margin: 0;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorText);
+  text-align: right;
+}
+
+.payout {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--colorBorder);
+}
+
+.payoutLabel {
+  font-size: 16px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorText);
+}
+
+.payoutValue {
+  font-size: 24px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorText);
+}
+
+.note {
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--colorTextSecondary);
+}
+
+.outcomeAccepted,
+.outcomeDeclined {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 18px;
+  border-radius: var(--borderRadiusLarge);
+}
+
+.outcomeAccepted {
+  background-color: var(--colorAccentSubtle);
+}
+
+.outcomeDeclined {
+  background-color: var(--colorBorder);
+}
+
+.outcomeTitle {
+  margin: 0;
+  padding: 0;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorText);
+}
+
+.outcomeText {
+  margin: 0;
+  padding: 0;
+  color: var(--colorText);
+}

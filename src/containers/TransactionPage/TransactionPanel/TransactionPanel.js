@@ -92,6 +92,7 @@ const allowShowingExtraInfo = (showExtraInfo, transactionPartyInfo) => {
  * @param {React.ReactNode} props.orderBreakdown - The order breakdown
  * @param {React.ReactNode} props.orderPanel - The order panel
  * @param {React.ReactNode} [props.requestSent] - "Request sent!" panel shown instead of the heading
+ * @param {React.ReactNode} [props.ownerRequest] - The owner's view of a request, instead of the heading
  * @param {object} props.config - The config
  * @param {intlShape} props.intl - The intl
  * @returns {JSX.Element} The TransactionPanel component
@@ -120,6 +121,7 @@ export class TransactionPanelComponent extends Component {
       stateData = {},
       showBookingLocation = false,
       requestSent,
+      ownerRequest,
       requestQuote,
       offer,
       fileAttachments,
@@ -211,7 +213,7 @@ export class TransactionPanelComponent extends Component {
               </div>
             ) : null}
 
-            {requestSent || (
+            {requestSent || ownerRequest || (
               <PanelHeading
                 processName={stateData.processName}
                 processState={stateData.processState}

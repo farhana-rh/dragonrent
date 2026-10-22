@@ -206,126 +206,153 @@
   }
 }
 
+/*
+ * Messages rows (DESIGN.md → Messages): the item, the other person and the dates, a status tag
+ * with an icon and a word, and a Cobalt dot for unread.
+ */
 .itemLink {
   flex: 1;
+  min-width: 0;
 
-  /* Layout */
-  display: inline-grid;
-  grid-template-columns: 22px auto;
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr);
   grid-template-areas:
-    'dot name    state'
-    '... item    state'
-    '... details state'
-    '... seats   state';
+    'dot   item'
+    '...   name'
+    '...   details'
+    '...   seats'
+    '...   state';
+  gap: 2px 0;
   padding: 2px 0 6px;
-  gap: 4px 0;
 
-  /* Remove text underline from this link */
   text-decoration: none;
+  border-radius: var(--borderRadiusMedium);
+
   &:hover {
     text-decoration: none;
   }
 
-  &:hover .itemUsername {
-    /* Hightlight the username when the whole item is hovered */
+  &:hover .itemTitle {
     color: var(--marketplaceColor);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--focusRing);
+  }
+
+  @media (--viewportMedium) {
+    grid-template-columns: 14px minmax(0, 1fr) auto;
+    grid-template-areas:
+      'dot   item    state'
+      '...   name    state'
+      '...   details state'
+      '...   seats   state';
+    column-gap: 12px;
   }
 }
 
 .rowNotificationDot {
   grid-area: dot;
-  justify-self: center;
   align-self: flex-start;
+  width: 8px;
+  height: 8px;
   margin-top: 8px;
-
-  width: 6px;
-  height: 6px;
-
-  @media (--viewportLarge) {
-    margin-top: 5px;
-    margin-left: 5px;
-  }
-
-  @media (--viewportLarge) {
-    justify-self: flex-start;
-    width: 8px;
-    height: 8px;
-  }
 }
 
+/* Unread: a Cobalt dot */
 .notificationDot {
-  color: var(--colorWhite);
-
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background-color: var(--colorFail);
+  background-color: var(--marketplaceColor);
+}
+
+.itemTitle {
+  grid-area: item;
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorText);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.itemUsername,
+.itemDetails,
+.itemSeats {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--colorTextSecondary);
 }
 
 .itemUsername {
   grid-area: name;
-
-  /* Font */
-  composes: textSmall from global;
-  font-weight: var(--fontWeightBold);
-  color: var(--colorGrey700);
-
-  margin-top: 0;
-  margin-bottom: 0;
-
-  @media (--viewportMedium) {
-    line-height: 16px;
-    padding: 0;
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-}
-.itemTitle {
-  composes: marketplaceTinyFontStyles from global;
-  grid-area: item;
-  color: var(--colorGrey700);
-
-  margin-top: 0;
-  margin-bottom: 0;
 }
 
 .itemDetails {
-  composes: marketplaceTinyFontStyles from global;
   grid-area: details;
-  color: var(--colorGrey700);
-
-  margin-top: 0;
-  margin-bottom: 0;
 }
 
 .itemSeats {
-  composes: marketplaceTinyFontStyles from global;
   grid-area: seats;
-  color: var(--colorGrey700);
-
-  margin-top: 0;
-  margin-bottom: 0;
 }
 
 .itemState {
   grid-area: state;
-
-  /* Font */
-  composes: marketplaceTinyFontStyles from global;
-  line-height: 18px;
-  font-weight: var(--fontWeightMedium);
-  letter-spacing: normal;
-
-  justify-self: flex-end;
-  text-align: end;
-
+  justify-self: start;
   margin-top: 6px;
-  margin-bottom: 0px;
 
   @media (--viewportMedium) {
+    justify-self: end;
+    align-self: center;
     margin-top: 0;
-    margin-bottom: 0;
   }
+}
+
+/* Status tag: icon plus a word, 8px corners, 13px/600 */
+.stateName {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 0 10px;
+  font-size: 13px;
+  line-height: 1.3;
+  font-weight: var(--fontWeightSemiBold);
+  border-radius: var(--borderRadius);
+}
+
+.statusIcon {
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.statusWaiting {
+  color: var(--colorText);
+  background-color: var(--colorAttentionSubtle);
+}
+
+.statusAccepted {
+  color: var(--colorSuccessDark);
+  background-color: var(--colorSuccessSubtle);
+}
+
+.statusEnded {
+  color: var(--colorText);
+  background-color: var(--colorBorder);
+}
+
+.statusOther {
+  color: var(--colorText);
+  background-color: var(--colorAccentSubtle);
 }
 
 .pagination {
@@ -336,19 +363,6 @@
 
 .stateName {
   /* This class is empty on purpose, it is used below for banned users */
-}
-
-.stateActionNeeded {
-  font-weight: var(--fontWeightMedium);
-  color: var(--colorStatusActionNeeded);
-}
-
-.stateNoActionNeeded {
-  color: var(--colorStatusNormal);
-}
-
-.stateConcluded {
-  color: var(--colorStatusFinalState);
 }
 
 .bookingActionNeeded {

@@ -74,6 +74,7 @@ import RequestChangesModal from './RequestChangesModal/RequestChangesModal';
 import MakeCounterOfferModal from './MakeCounterOfferModal/MakeCounterOfferModal';
 import SendMessageForm from './SendMessageForm/SendMessageForm';
 import RequestSent from './RequestSent/RequestSent';
+import OwnerRequest from './OwnerRequest/OwnerRequest';
 import TransactionPanel from './TransactionPanel/TransactionPanel';
 
 import {
@@ -942,6 +943,17 @@ export const TransactionPageComponent = props => {
             providerName={otherUserDisplayNameString}
             timeZone={timeZone}
             messageInputId={showSendMessageForm ? `${SEND_MESSAGE_FORM_ID}.message` : null}
+          />
+        ) : null
+      }
+      ownerRequest={
+        stateData.ownerRequestStatus ? (
+          <OwnerRequest
+            status={stateData.ownerRequestStatus}
+            transaction={transaction}
+            listing={listing}
+            customerName={otherUserDisplayNameString}
+            timeZone={timeZone}
           />
         ) : null
       }

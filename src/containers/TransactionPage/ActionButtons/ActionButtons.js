@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames';
 
-import { useIntl } from '../../../util/reactIntl';
+import { FormattedMessage, useIntl } from '../../../util/reactIntl';
 import { getStartOf } from '../../../util/dates';
 import { allowCustomerCounterOffer, allowProviderUpdateOffer } from '../../../util/configHelpers';
 
@@ -144,6 +144,38 @@ const getButtonStatus = (buttonProps, additionalInfo) => {
  * @param {string} [props.timeZone] - The time zone
  * @param {boolean} [props.isCounterpartyInactive] - Whether the counterparty is inactive
  */
+/**
+ * "Say no to Mikko?" (OwnerRequest mockup): asked before a final action such as declining.
+ *
+ * @param {Object} props
+ * @param {string} props.id - id prefix for the heading
+ * @param {string} props.name - the other person's name
+ * @param {Function} props.onConfirm - runs the action
+ * @param {Function} props.onCancel - goes back to the buttons
+ * @param {boolean} [props.inProgress]
+ * @returns {JSX.Element}
+ */
+const ConfirmAction = props => {
+  const { id, name, onConfirm, onCancel, inProgress } = props;
+  const headingId = `${id}_confirmHeading`;
+  return (
+    <div className={css.confirmBox} role="group" aria-labelledby={headingId}>
+      <p id={headingId} className={css.confirmTitle}>
+        <FormattedMessage id="ActionButtons.confirmDeclineTitle" values={{ name }} />
+      </p>
+      <p className={css.confirmText}>
+        <FormattedMessage id="ActionButtons.confirmDeclineText" values={{ name }} />
+      </p>
+      <Button className={css.confirmButton} inProgress={inProgress} onClick={onConfirm}>
+        <FormattedMessage id="ActionButtons.confirmDecline" />
+      </Button>
+      <SecondaryButton disabled={inProgress} onClick={onCancel}>
+        <FormattedMessage id="ActionButtons.confirmGoBack" />
+      </SecondaryButton>
+    </div>
+  );
+};
+
 const ActionButtons = props => {
   const {
     className,
@@ -164,6 +196,7 @@ const ActionButtons = props => {
   } = props;
 
   const intl = useIntl();
+  const [isConfirmingSecondary, setIsConfirmingSecondary] = useState(false);
 
   if (isListingDeleted && isProvider) {
     return null;
@@ -204,6 +237,23 @@ const ActionButtons = props => {
 
   const classes = classNames(rootClassName || css.root, className);
 
+  // A secondary action with `confirm` (e.g. declining a request) asks first
+  const secondaryConfirm = secondaryButtonProps?.confirm;
+  if (showButtons && secondaryConfirm && isConfirmingSecondary) {
+    return (
+      <div className={classes}>
+        <div className={css.actionErrors}>{secondaryErrorMessage}</div>
+        <ConfirmAction
+          id={containerId}
+          name={secondaryConfirm.name}
+          inProgress={secondaryButtonProps.inProgress}
+          onConfirm={secondaryButtonProps.onAction}
+          onCancel={() => setIsConfirmingSecondary(false)}
+        />
+      </div>
+    );
+  }
+
   return showButtons ? (
     <div className={classes}>
       <div className={css.actionErrors}>
@@ -239,7 +289,11 @@ const ActionButtons = props => {
                   id={`${containerId}_${ACTION_BUTTON_2_ID}`}
                   inProgress={secondaryButtonProps?.inProgress}
                   disabled={buttonsDisabled || disabled}
-                  onClick={secondaryButtonProps.onAction}
+                  onClick={
+                    secondaryConfirm
+                      ? () => setIsConfirmingSecondary(true)
+                      : secondaryButtonProps.onAction
+                  }
                 >
                   {secondaryButtonProps.buttonText}
                 </SecondaryButton>

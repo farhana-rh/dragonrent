@@ -151,6 +151,55 @@ const handleSortSelect = (tab, routeConfiguration, history) => urlParam => {
  * @param {stateDataShape} props.stateData - The state data
  * @returns {JSX.Element} inbox item component
  */
+// Status tags (DESIGN.md → Status tag): waiting, accepted and ended requests each get an icon
+// and a colour; the words come from the transaction's status text.
+const WAITING_STATES = ['preauthorized', 'pending-payment'];
+const ACCEPTED_STATES = [
+  'accepted',
+  'delivered',
+  'reviewed',
+  'reviewed-by-customer',
+  'reviewed-by-provider',
+];
+const ENDED_STATES = ['declined', 'expired', 'canceled', 'payment-expired'];
+
+const getStatusKind = (processName, processState, actionNeeded, isFinal) => {
+  if (actionNeeded || WAITING_STATES.includes(processState)) {
+    return 'waiting';
+  }
+  if (processName === 'default-booking' && ACCEPTED_STATES.includes(processState)) {
+    return 'accepted';
+  }
+  if (ENDED_STATES.includes(processState) || isFinal) {
+    return 'ended';
+  }
+  return 'other';
+};
+
+const StatusIcon = ({ kind }) => (
+  <svg
+    className={css.statusIcon}
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+    focusable="false"
+  >
+    {kind === 'waiting' ? (
+      <>
+        <circle cx="12" cy="12" r="10" />
+        <path d="M12 6v6l4 2" />
+      </>
+    ) : kind === 'accepted' ? (
+      <path d="M20 6 9 17l-5-5" />
+    ) : kind === 'ended' ? (
+      <path d="M18 6 6 18M6 6l12 12" />
+    ) : (
+      <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+    )}
+  </svg>
+);
+
 export const InboxItem = props => {
   const {
     transactionRole,
@@ -188,10 +237,12 @@ export const InboxItem = props => {
   const linkClasses = classNames(css.itemLink, {
     [css.bannedUserLink]: isOtherUserBanned,
   });
+  const statusKind = getStatusKind(processName, processState, actionNeeded, isFinal);
   const stateClasses = classNames(css.stateName, {
-    [css.stateConcluded]: isFinal,
-    [css.stateActionNeeded]: actionNeeded,
-    [css.stateNoActionNeeded]: !actionNeeded,
+    [css.statusWaiting]: statusKind === 'waiting',
+    [css.statusAccepted]: statusKind === 'accepted',
+    [css.statusEnded]: statusKind === 'ended',
+    [css.statusOther]: statusKind === 'other',
   });
 
   return (
@@ -205,8 +256,8 @@ export const InboxItem = props => {
         params={{ id: tx.id.uuid }}
       >
         <div className={css.rowNotificationDot}>{rowNotificationDot}</div>
-        <div className={css.itemUsername}>{otherUserDisplayName}</div>
         <div className={css.itemTitle}>{listing?.attributes?.title}</div>
+        <div className={css.itemUsername}>{otherUserDisplayName}</div>
         <div className={css.itemDetails}>
           {isBooking ? (
             <BookingTimeInfoMaybe transaction={tx} />
@@ -221,6 +272,7 @@ export const InboxItem = props => {
         ) : null}
         <div className={css.itemState}>
           <div className={stateClasses}>
+            <StatusIcon kind={statusKind} />
             <FormattedMessage
               id={`InboxPage.${processName}.${processState}.status`}
               values={{ transactionRole }}

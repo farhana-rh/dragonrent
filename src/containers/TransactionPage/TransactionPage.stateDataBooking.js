@@ -16,6 +16,7 @@ export const getStateDataForBookingProcess = (txInfo, processInfo) => {
   const { transaction, transactionRole, nextTransitions } = txInfo;
   const isProviderBanned = transaction?.provider?.attributes?.banned;
   const isCustomerBanned = transaction?.provider?.attributes?.banned;
+  const customerName = transaction?.customer?.attributes?.profile?.displayName || '';
   const _ = CONDITIONAL_RESOLVER_WILDCARD;
 
   const {
@@ -53,7 +54,14 @@ export const getStateDataForBookingProcess = (txInfo, processInfo) => {
     })
     .cond([states.PREAUTHORIZED, PROVIDER], () => {
       const primary = isCustomerBanned ? null : actionButtonProps(transitions.ACCEPT, PROVIDER);
-      const secondary = isCustomerBanned ? null : actionButtonProps(transitions.DECLINE, PROVIDER);
+      const declineProps = isCustomerBanned
+        ? null
+        : actionButtonProps(transitions.DECLINE, PROVIDER);
+      // DragonRent (OwnerRequest mockup): Decline asks for a confirmation first. The decline
+      // transition itself is unchanged.
+      const secondary = declineProps
+        ? { ...declineProps, confirm: { name: customerName } }
+        : declineProps;
       return {
         processName,
         processState,
@@ -61,6 +69,23 @@ export const getStateDataForBookingProcess = (txInfo, processInfo) => {
         showActionButtons: true,
         primaryButtonProps: primary,
         secondaryButtonProps: secondary,
+        ownerRequestStatus: 'waiting',
+      };
+    })
+    .cond([states.ACCEPTED, PROVIDER], () => {
+      return {
+        processName,
+        processState,
+        showDetailCardHeadings: true,
+        ownerRequestStatus: 'accepted',
+      };
+    })
+    .cond([states.DECLINED, PROVIDER], () => {
+      return {
+        processName,
+        processState,
+        showDetailCardHeadings: true,
+        ownerRequestStatus: 'declined',
       };
     })
     .cond([states.DELIVERED, _], () => {
