@@ -11,3 +11,44 @@
 .inputError {
   border: var(--borderErrorField);
 }
+
+/* Password field with a "Show" / "Hide" button inside it */
+.passwordWrapper {
+  position: relative;
+}
+
+.inputWithToggle {
+  padding-right: 80px;
+}
+
+.passwordToggle {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  bottom: 2px;
+  min-width: 64px;
+  padding: 0 12px;
+  margin: 0;
+
+  font-family: var(--fontFamily);
+  font-size: 15px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--marketplaceColor);
+
+  background: none;
+  border: none;
+  border-radius: var(--borderRadiusMedium);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--marketplaceColorDark);
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    box-shadow: var(--focusRing);
+  }
+}

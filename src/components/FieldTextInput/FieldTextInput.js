@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { Field } from 'react-final-form';
 import classNames from 'classnames';
+
+import { useIntl } from '../../util/reactIntl';
 import { ValidationError, ExpandingTextarea, HelpText } from '../../components';
 
 import css from './FieldTextInput.module.css';
@@ -26,6 +28,9 @@ const FieldTextInputComponent = props => {
     ...rest
   } = props;
 
+  const intl = useIntl();
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
   if (label && !id) {
     throw new Error('id required when a label is given');
   }
@@ -42,7 +47,10 @@ const FieldTextInputComponent = props => {
   const fieldMeta = { touched: hasError, error: errorText };
 
   // Textarea doesn't need type.
-  const { type, ...inputWithoutType } = input;
+  const { type: inputType, ...inputWithoutType } = input;
+  // DESIGN.md: password fields have a "Show" button, so people can check what they typed
+  const isPassword = inputType === 'password';
+  const type = isPassword && isPasswordVisible ? 'text' : inputType;
   // Uncontrolled input uses defaultValue instead of value.
   const { value: defaultValue, ...inputWithoutValue } = input;
   // Use inputRef if it is passed as prop.
@@ -54,6 +62,7 @@ const FieldTextInputComponent = props => {
       [css.inputSuccess]: valid,
       [css.inputError]: hasError,
       [css.textarea]: isTextarea,
+      [css.inputWithToggle]: isPassword,
     });
   const maxLength = CONTENT_MAX_LENGTH;
   const inputProps = isTextarea
@@ -70,13 +79,13 @@ const FieldTextInputComponent = props => {
     ? {
         className: inputClasses,
         id,
-        type,
         defaultValue,
         ...refMaybe,
         ...inputWithoutValue,
         ...rest,
+        type,
       }
-    : { className: inputClasses, id, type, ...refMaybe, ...input, ...rest };
+    : { className: inputClasses, id, ...refMaybe, ...input, ...rest, type };
 
   const labelClassMaybe = labelClassName ? { className: labelClassName } : {};
   const classes = classNames(rootClassName || css.root, className);
@@ -87,7 +96,29 @@ const FieldTextInputComponent = props => {
           {label}
         </label>
       ) : null}
-      {isTextarea ? <ExpandingTextarea {...inputProps} /> : <input {...inputProps} />}
+      {isTextarea ? (
+        <ExpandingTextarea {...inputProps} />
+      ) : isPassword ? (
+        <div className={css.passwordWrapper}>
+          <input {...inputProps} />
+          <button
+            type="button"
+            className={css.passwordToggle}
+            onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+            aria-pressed={isPasswordVisible}
+            aria-controls={id}
+            aria-label={intl.formatMessage({
+              id: isPasswordVisible ? 'FieldTextInput.hidePassword' : 'FieldTextInput.showPassword',
+            })}
+          >
+            {intl.formatMessage({
+              id: isPasswordVisible ? 'FieldTextInput.hide' : 'FieldTextInput.show',
+            })}
+          </button>
+        </div>
+      ) : (
+        <input {...inputProps} />
+      )}
       <HelpText helpText={helpText} />
       {hideErrorMessage ? null : <ValidationError fieldMeta={fieldMeta} />}
     </div>

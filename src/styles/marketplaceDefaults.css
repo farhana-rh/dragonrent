@@ -524,8 +524,9 @@ select {
   width: 100%;
   margin: 0;
 
-  /* 6 + 24 + 4 + borders are divisible by 6 */
-  padding: 6px 12px 4px 12px;
+  /* DESIGN.md: inputs are 48px tall on every screen (11 + 24 + 11 + borders) */
+  padding: 11px 16px 11px 16px;
+  line-height: 24px;
   background-color: #fff;
 
   /* Borders */
@@ -537,7 +538,7 @@ select {
   /* Transition */
   transition: all ease-in-out 100ms;
 
-  padding: 6px 24px 4px 12px;
+  padding: 11px 32px 11px 16px;
 
   /* Unset user agent styles */
   appearance: none;
@@ -586,8 +587,9 @@ textarea {
   width: 100%;
   margin: 0;
 
-  /* 6 + 24 + 4 + borders are divisible by 6 */
-  padding: 6px 12px 4px 12px;
+  /* DESIGN.md: inputs are 48px tall on every screen (11 + 24 + 11 + borders) */
+  padding: 11px 16px 11px 16px;
+  line-height: 24px;
   background-color: #fff;
 
   /* Borders */
@@ -944,8 +946,9 @@ textarea {
   width: 100%;
   margin: 0;
 
-  /* 6 + 24 + 4 + borders are divisible by 6 */
-  padding: 6px 12px 4px 12px;
+  /* DESIGN.md: inputs are 48px tall on every screen (11 + 24 + 11 + borders) */
+  padding: 11px 16px 11px 16px;
+  line-height: 24px;
   background-color: #fff;
 
   /* Borders */
