@@ -12,12 +12,13 @@ import { createSlug } from '../../util/urlHelpers';
 
 import {
   AspectRatioWrapper,
+  IconLocation,
   NamedLink,
   ResponsiveImage,
   ListingCardThumbnail,
 } from '../../components';
 
-import { getListingCardTranslations } from './ListingCard.helpers';
+import { getDistanceText, getListingCardTranslations } from './ListingCard.helpers';
 
 import css from './ListingCard.module.css';
 
@@ -93,6 +94,7 @@ const ListingCardImage = props => {
  * @param {string?} props.renderSizes for img/srcset
  * @param {Function?} props.setActiveListing
  * @param {boolean?} props.showAuthorInfo
+ * @param {LatLng?} props.distanceOrigin searched place; when given, the card shows the distance
  * @returns {JSX.Element} listing card to be used in search result panel etc.
  */
 export const ListingCard = props => {
@@ -109,6 +111,7 @@ export const ListingCard = props => {
     setActiveListing,
     showAuthorInfo = true,
     lazyLoadImage = true,
+    distanceOrigin,
   } = props;
 
   const translations = getListingCardTranslations(listing, config, intl);
@@ -121,6 +124,7 @@ export const ListingCard = props => {
     priceMessage,
     authorName,
   } = translations;
+  const distanceText = distanceOrigin ? getDistanceText(listing, distanceOrigin, intl) : null;
 
   const classes = classNames(rootClassName || css.root, className);
 
@@ -196,6 +200,12 @@ export const ListingCard = props => {
             title={priceTooltip}
           >
             {priceMessage}
+          </div>
+        ) : null}
+        {distanceText ? (
+          <div className={classNames(css.distance, { [css.lightText]: darkMode })}>
+            <IconLocation rootClassName={css.distanceIcon} />
+            <span>{distanceText}</span>
           </div>
         ) : null}
       </div>

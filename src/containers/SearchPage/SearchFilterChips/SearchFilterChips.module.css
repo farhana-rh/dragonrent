@@ -18,18 +18,18 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  height: 32px;
-  padding: 0 12px;
+  height: 44px;
+  padding: 0 14px;
 
   font-family: var(--fontFamily);
-  font-size: 14px;
+  font-size: 15px;
   line-height: 18px;
   font-weight: var(--fontWeightMedium);
   color: var(--colorText);
 
   background-color: var(--colorSurface);
   border: 1px solid var(--colorBorderStrong);
-  border-radius: var(--borderRadiusMedium);
+  border-radius: var(--borderRadius);
   cursor: pointer;
   transition: border-color var(--transitionStyleButton);
 
@@ -49,11 +49,12 @@
 }
 
 .clearAll {
-  padding: 0;
+  min-height: 44px;
+  padding: 0 4px;
   margin: 0;
 
   font-family: var(--fontFamily);
-  font-size: 14px;
+  font-size: 15px;
   line-height: 20px;
   font-weight: var(--fontWeightSemiBold);
   color: var(--marketplaceColor);

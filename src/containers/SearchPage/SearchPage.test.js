@@ -290,6 +290,8 @@ const getSearchParams = config => {
       'publicData.transactionProcessAlias',
       'publicData.unitType',
       'publicData.cardStyle',
+      'publicData.price3DaysInSubunits',
+      'publicData.price7DaysInSubunits',
       // These help rendering of 'purchase' listings,
       // when transitioning from search page to listing page
       'publicData.pickupEnabled',
@@ -445,8 +447,19 @@ describe('SearchPage', () => {
 
       // Has SortBy component
       expect(getByText('MainPanelHeader.sortBy')).toBeInTheDocument();
-      expect(getAllByText('Newest')).toHaveLength(4); // desktop and mobile dropdowns & selected
-      expect(getAllByText('Oldest')).toHaveLength(2); // desktop and mobile dropdowns
+      // One sort menu under the results heading: the selected option and the option itself
+      expect(getAllByText('Newest')).toHaveLength(2);
+      expect(getAllByText('Oldest')).toHaveLength(1);
+
+      // Phones: search summary and the Filters / Map buttons (Search mockup). The Dates button
+      // needs a dates filter, which this config doesn't have.
+      expect(getByRole('button', { name: 'SearchPage.changeSearch' })).toBeInTheDocument();
+      expect(queryByText('SearchFiltersMobile.datesButton')).not.toBeInTheDocument();
+      expect(getByText('SearchFiltersMobile.openMapView')).toBeInTheDocument();
+      // Results heading
+      expect(
+        getByRole('heading', { level: 1, name: 'SearchPage.resultsHeading' })
+      ).toBeInTheDocument();
 
       // Has no Cat filter (primary filter tied to 'Cats' category)
       expect(queryByText('Cat')).not.toBeInTheDocument();

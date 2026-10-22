@@ -19,6 +19,7 @@ import css from './SearchResultsPanel.module.css';
  * @param {Object} props.search - The search
  * @param {Function} props.setActiveListing - The function to handle the active listing
  * @param {boolean} [props.isMapVariant] - Whether the map variant is enabled
+ * @param {LatLng} [props.distanceOrigin] - The searched place; cards show their distance from it
  * @returns {JSX.Element}
  */
 const SearchResultsPanel = props => {
@@ -32,6 +33,7 @@ const SearchResultsPanel = props => {
     isMapVariant = true,
     listingTypeParam,
     intl,
+    distanceOrigin,
   } = props;
   const classes = classNames(rootClassName || css.root, className);
   const pageName = listingTypeParam ? 'SearchPageWithListingType' : 'SearchPage';
@@ -83,6 +85,8 @@ const SearchResultsPanel = props => {
               listing={l}
               renderSizes={cardRenderSizes(isMapVariant)}
               setActiveListing={setActiveListing}
+              showAuthorInfo={false}
+              distanceOrigin={distanceOrigin}
             />
           </li>
         ))}

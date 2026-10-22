@@ -204,6 +204,39 @@ export const hasSameSDKBounds = (sdkBounds1, sdkBounds2) => {
 };
 
 /**
+ * Center point of the given bounds. Doesn't handle bounds that cross the antimeridian.
+ *
+ * @param {LatLngBounds} sdkBounds
+ * @return {LatLng|null} center of the bounds, or null without valid bounds
+ */
+export const boundsCenter = sdkBounds => {
+  if (!(sdkBounds instanceof LatLngBounds)) {
+    return null;
+  }
+  const { ne, sw } = sdkBounds;
+  return new LatLng((ne.lat + sw.lat) / 2, (ne.lng + sw.lng) / 2);
+};
+
+/**
+ * Straight-line (great-circle) distance between two points, using the haversine formula.
+ *
+ * @param {LatLng} from
+ * @param {LatLng} to
+ * @return {number|null} distance in kilometres, or null if either point is missing
+ */
+export const distanceInKm = (from, to) => {
+  if (!from || !to) {
+    return null;
+  }
+  const dLat = (to.lat - from.lat) * DEG_TO_RAD;
+  const dLng = (to.lng - from.lng) * DEG_TO_RAD;
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(from.lat * DEG_TO_RAD) * Math.cos(to.lat * DEG_TO_RAD) * Math.sin(dLng / 2) ** 2;
+  return (2 * EARTH_RADIUS * Math.asin(Math.sqrt(a))) / 1000;
+};
+
+/**
  * Return googleMapsAPIKey or mapboxAccessToken depending on which map provider is selected.
  *
  * @param {Object} mapConfig

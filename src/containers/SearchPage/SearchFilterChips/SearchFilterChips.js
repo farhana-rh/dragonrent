@@ -10,7 +10,7 @@ import css from './SearchFilterChips.module.css';
 const CATEGORY_PARAMS = ['pub_categoryLevel1', 'pub_categoryLevel2', 'pub_categoryLevel3'];
 
 // Find the name of the deepest selected category (e.g. "Bikes" or "Bikes › Cargo bikes")
-const getCategoryName = (categories, params) => {
+export const getCategoryName = (categories, params) => {
   let options = categories;
   let name = null;
   for (const param of CATEGORY_PARAMS) {

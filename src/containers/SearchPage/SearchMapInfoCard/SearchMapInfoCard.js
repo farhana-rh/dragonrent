@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { useIntl } from '../../../util/reactIntl';
 import { propTypes } from '../../../util/types';
 import { formatMoney } from '../../../util/currency';
+import { getLowestDailyPrice } from '../../../util/durationPricing';
 import { ensureListing } from '../../../util/data';
 import { isPriceVariationsEnabled, requireListingImage } from '../../../util/configHelpers';
 
@@ -15,8 +16,11 @@ import css from './SearchMapInfoCard.module.css';
 const ListingCard = props => {
   const { className, clickHandler, intl, isInCarousel, listing, urlToListing, config } = props;
 
-  const { title, price, publicData } = listing.attributes;
+  const { title, price: listingPrice, publicData } = listing.attributes;
   const { cardStyle } = publicData || {};
+  // Daily listings with 3- or 7-day prices show their lowest daily rate, as the cards do
+  const price = getLowestDailyPrice(listingPrice, publicData);
+  const hasLowerDurationPrice = !!listingPrice && price.amount < listingPrice.amount;
   const formattedPrice =
     price && price.currency === config.currency
       ? formatMoney(intl, price)
@@ -48,7 +52,12 @@ const ListingCard = props => {
   const isPriceVariationsInUse = isPriceVariationsEnabled(publicData, foundListingTypeConfig);
   const hasMultiplePriceVariants = isPriceVariationsInUse && publicData?.priceVariants?.length > 1;
 
-  const priceMessage = hasMultiplePriceVariants
+  const priceMessage = hasLowerDurationPrice
+    ? intl.formatMessage(
+        { id: 'SearchMapInfoCard.dailyPriceFrom' },
+        { price: priceValue, pricePerUnit }
+      )
+    : hasMultiplePriceVariants
     ? intl.formatMessage(
         { id: 'SearchMapInfoCard.priceStartingFrom' },
         { priceValue, pricePerUnit }

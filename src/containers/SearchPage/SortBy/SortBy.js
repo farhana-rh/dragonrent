@@ -18,7 +18,8 @@ import css from './SortBy.module.css';
  * @param {boolean} [props.showAsPopup] - Whether to show as popup
  * @param {boolean} props.isConflictingFilterActive - Whether the conflicting filter is active
  * @param {boolean} [props.hasConflictingFilters] - Whether there are filters that could conflict
- * @param {'mobile' | 'desktop'} [props.mode] - The mode
+ * @param {'mobile' | 'desktop' | 'inline'} [props.mode] - The mode; 'inline' is a text button
+ *   under the results heading
  * @returns {JSX.Element}
  */
 const SortBy = props => {
@@ -43,7 +44,12 @@ const SortBy = props => {
   const { relevanceKey, relevanceFilter, queryParamName } = sortConfig;
 
   const mobileClassesMaybe =
-    mode === 'mobile'
+    mode === 'inline'
+      ? {
+          rootClassName: css.sortByInline,
+          menuLabelRootClassName: css.sortByInlineLabel,
+        }
+      : mode === 'mobile'
       ? {
           rootClassName: css.sortBy,
           menuLabelRootClassName: css.sortByMenuLabel,

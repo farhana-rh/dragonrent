@@ -68,3 +68,41 @@
     line-height: 20px;
   }
 }
+
+/* Under the results heading: "Sort by: Newest ⌄" as a quiet text button, 44px tap area */
+.sortByInline {
+  display: inline-flex;
+}
+
+.sortByInlineLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: auto;
+  min-height: 44px;
+  padding: 0 4px;
+  margin: 0 0 0 -4px;
+
+  font-size: 13px;
+  line-height: 1.4;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorText);
+
+  background: none;
+  border: none;
+  border-radius: var(--borderRadiusMedium);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--marketplaceColor);
+    text-decoration: none;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    box-shadow: var(--focusRing);
+  }
+}

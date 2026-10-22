@@ -3,6 +3,20 @@ import classNames from 'classnames';
 
 import css from './PopupOpenerButton.module.css';
 
+// Selected filter chips show a check, so the state isn't shown by colour alone
+const IconCheck = () => (
+  <svg
+    className={css.checkIcon}
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <path d="M20 6 9 17l-5-5" />
+  </svg>
+);
+
 /**
  * PopupOpenerButton component
  *
@@ -28,6 +42,7 @@ const PopupOpenerButton = props => {
       onClick={() => toggleOpen()}
       {...rest}
     >
+      {isSelected ? <IconCheck /> : null}
       {children}
     </button>
   );

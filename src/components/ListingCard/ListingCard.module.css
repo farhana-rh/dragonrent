@@ -121,6 +121,30 @@
   color: var(--colorTextSecondary);
 }
 
+/* "3 km away", only after a place search: 13px Slate with a pin icon */
+.distance {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--colorTextSecondary);
+}
+
+.distance.lightText {
+  color: var(--colorWhite);
+}
+
+.distanceIcon {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2px;
+}
+
 .longWord {
   /* fallback option */
   word-break: break-all;

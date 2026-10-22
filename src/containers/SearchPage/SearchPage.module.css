@@ -101,6 +101,8 @@
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  /* Let the row of filter buttons scroll instead of widening the page */
+  min-width: 0;
   padding: 2px 0 0 0;
 
   @media (--viewportMedium) {
@@ -135,21 +137,36 @@
   }
 }
 
-.mainPanelMapVariant {
-  composes: mainPanel;
+/* Map variant, desktop: the filter chips row above the results heading */
+.filterBarMapVariant {
+  display: none;
 
   @media (--viewportMedium) {
-    padding: 18px 24px 0 24px;
-    margin-bottom: 21px;
+    display: flex;
+    padding: 24px 24px 0 24px;
   }
 
   @media (--viewportLarge) {
-    padding: 23px 36px 0 36px;
+    padding: 24px 36px 0 36px;
   }
 }
 
+/* Map variant: results heading, sort order, active filter chips and the empty state */
+.resultsHeaderMapVariant {
+  padding: 0 16px;
+
+  @media (--viewportMedium) {
+    padding: 0 24px;
+  }
+
+  @media (--viewportLarge) {
+    padding: 0 36px;
+  }
+}
+
+/* Map variant, phones: search summary and the Filters / Dates / Map buttons */
 .searchFiltersMobileMap {
-  padding: 16px 24px;
+  padding: 12px 16px;
 
   @media (--viewportMedium) {
     display: none;
@@ -186,7 +203,11 @@
 
 .listingsForMapVariant {
   composes: listings;
-  padding: 0 24px;
+  padding: 0 16px;
+
+  @media (--viewportMedium) {
+    padding: 0 24px;
+  }
 
   @media (--viewportLarge) {
     padding: 0 36px;

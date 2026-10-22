@@ -1,87 +1,208 @@
 @import '../../../styles/customMediaQueries.css';
 
+/*
+ * Phone header of the Search mockup: the current search as a button, then Filters, Dates and
+ * Map as secondary buttons (48px). Selected ones turn Cobalt with a check.
+ */
 .root {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  background-color: var(--colorBackground);
-
-  /* sticky result summary in mobile */
-  position: sticky;
-  top: 0;
-  z-index: 1;
+  gap: 12px;
+  background-color: var(--colorSurface);
+  border-bottom: 1px solid var(--colorBorder);
 }
 
-.searchResultSummary {
-  composes: h3 from global;
-  margin-top: 6px;
+.icon {
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 
+.searchIcon {
+  color: var(--colorTextSecondary);
+}
+
+.searchSummary {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-width: 0;
+  height: 48px;
+  padding: 0 16px;
+  margin: 0;
 
-  background-color: var(--colorBackground);
+  font-family: var(--fontFamily);
+  text-align: left;
+  color: var(--colorText);
 
-  @media (--viewportMedium) {
-    margin-top: 8px;
+  background-color: var(--colorSurface);
+  border: 1px solid var(--colorBorder);
+  border-radius: var(--borderRadiusMedium);
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--colorText);
   }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    box-shadow: var(--focusRing);
+  }
+}
+
+.searchSummaryText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.2;
+}
+
+.searchSummaryTitle,
+.searchSummarySubtitle {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.searchSummaryTitle {
+  font-size: 15px;
+  font-weight: var(--fontWeightSemiBold);
+}
+
+.searchSummarySubtitle {
+  font-size: 13px;
+  color: var(--colorTextSecondary);
 }
 
 .buttons {
   display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  /* Room for the focus ring of the first and last button */
+  padding: 3px;
+  margin: -3px;
 }
 
-.mapIcon {
-  /* Font */
-  composes: marketplaceTinyFontStyles from global;
-  font-weight: var(--fontWeightMedium);
-
-  /* background map image */
-  background-image: url(./images/map_icon216x105.png);
-  background-size: cover;
-
-  border-radius: 3px;
-  width: 72px;
-  height: 35px;
-  padding: 9px 22px;
+.button,
+.buttonSelected {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 16px;
   margin: 0;
+
+  font-family: var(--fontFamily);
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: var(--fontWeightSemiBold);
+  white-space: nowrap;
+
+  border-radius: var(--borderRadiusMedium);
+  cursor: pointer;
+  transition: all var(--transitionStyleButton);
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    box-shadow: var(--focusRing);
+  }
 }
 
+.button {
+  color: var(--colorText);
+  background-color: var(--colorSurface);
+  border: 1.5px solid var(--colorBorderStrong);
+
+  &:hover {
+    background-color: var(--colorBackground);
+  }
+}
+
+.buttonSelected {
+  color: var(--colorWhite);
+  background-color: var(--marketplaceColor);
+  border: 1.5px solid var(--marketplaceColor);
+
+  &:hover {
+    background-color: var(--marketplaceColorDark);
+    border-color: var(--marketplaceColorDark);
+  }
+}
+
+.buttonLabel {
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* "2 on" next to Filters */
+.count {
+  font-weight: var(--fontWeightMedium);
+}
+
+/* Full-screen filter sheet */
 .modalContainer {
   width: 100%;
-  padding: 94px 0;
-  margin: 0 24px;
+  padding: 84px 0 0 0;
+  margin: 0 16px;
 }
 
 .modalHeadingWrapper {
-  padding-bottom: 31px;
-  border-bottom: 1px solid var(--colorGrey100);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--colorBorder);
 }
 
 .modalHeading {
-  composes: h1 from global;
-  margin-top: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorText);
 }
 
 .resetAllButton {
-  composes: h5 from global;
-  font-weight: var(--fontWeightMedium);
-  color: var(--colorGrey600);
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 4px;
+  margin: 0;
 
-  /* Layout */
-  display: inline;
-  float: right;
-  margin: 8px 0 0 0;
-  padding: 0;
+  font-family: var(--fontFamily);
+  font-size: 15px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--marketplaceColor);
 
-  /* Override button styles */
-  outline: none;
-  text-align: left;
+  background: none;
   border: none;
+  border-radius: var(--borderRadius);
   cursor: pointer;
 
-  &:focus,
   &:hover {
-    color: var(--colorBlack);
+    color: var(--marketplaceColorDark);
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    box-shadow: var(--focusRing);
   }
 }
 
@@ -100,15 +221,15 @@
   left: 0;
 
   width: 100vw;
-  padding: 18px 24px;
+  padding: 12px 16px;
 
-  background: var(--colorWhite);
-  box-shadow: 0 -2px 4px 0 rgba(0, 0, 0, 0.1);
+  background: var(--colorSurface);
+  border-top: 1px solid var(--colorBorder);
   z-index: 11;
 }
 
 .showListingsButton {
-  background-color: var(--marketplaceColor);
-  display: inline-block;
-  border-radius: 3px;
+  width: 100%;
+  min-height: 52px;
+  border-radius: var(--borderRadiusMedium);
 }

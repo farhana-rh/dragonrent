@@ -4,7 +4,7 @@ import debounce from 'lodash/debounce';
 import classNames from 'classnames';
 
 import { isOriginInUse } from '../../util/search';
-import { parse } from '../../util/urlHelpers';
+import { parse, stringify } from '../../util/urlHelpers';
 import { createResourceLocatorString, pathByRouteName } from '../../util/routes';
 import { makeGetListingsByIdSelector } from '../../ducks/marketplaceData.duck';
 import { manageDisableScrolling, isScrollingDisabled } from '../../ducks/ui.duck';
@@ -27,20 +27,28 @@ import {
 
 import FilterComponent from './FilterComponent';
 import SearchMap from './SearchMap/SearchMap';
-import MainPanelHeader from './MainPanelHeader/MainPanelHeader';
 import SearchFiltersSecondary from './SearchFiltersSecondary/SearchFiltersSecondary';
 import SearchFiltersPrimary from './SearchFiltersPrimary/SearchFiltersPrimary';
+import SearchFilterChips from './SearchFilterChips/SearchFilterChips';
 import SearchFiltersMobile from './SearchFiltersMobile/SearchFiltersMobile';
+import SearchResultsHeading from './SearchResultsHeading/SearchResultsHeading';
 import SortBy from './SortBy/SortBy';
 import SearchResultsPanel from './SearchResultsPanel/SearchResultsPanel';
 import NoSearchResultsMaybe from './NoSearchResultsMaybe/NoSearchResultsMaybe';
 import SearchPageAccessWrapper from './SearchPageAccessWrapper';
 import SearchErrors from './SearchErrors';
+import {
+  getDistanceOrigin,
+  getResultsHeading,
+  getSearchParts,
+  getSearchSummary,
+} from './searchSummary';
 
 import css from './SearchPage.module.css';
 
 const MODAL_BREAKPOINT = 768; // Search is in modal on mobile layout
 const SEARCH_WITH_MAP_DEBOUNCE = 300; // Little bit of debounce before search is initiated.
+const NON_FILTER_PARAMS = ['address', 'bounds', 'origin', 'sort'];
 
 // Primary filters have their content in dropdown-popup.
 // With this offset we move the dropdown to the left a few pixels on desktop layout.
@@ -60,6 +68,7 @@ export class SearchPageComponent extends Component {
     this.onMapMoveEnd = debounce(this.onMapMoveEnd.bind(this), SEARCH_WITH_MAP_DEBOUNCE);
     this.onOpenMobileModal = this.onOpenMobileModal.bind(this);
     this.onCloseMobileModal = this.onCloseMobileModal.bind(this);
+    this.openMobileSearch = this.openMobileSearch.bind(this);
 
     // Filter functions
     this.applyFilters = this.applyFilters.bind(this);
@@ -139,6 +148,13 @@ export class SearchPageComponent extends Component {
   // for example when a filter modal is opened in mobile view
   onCloseMobileModal() {
     this.setState({ isMobileModalOpen: false });
+  }
+
+  // Open the topbar's search form on phones ("Change search" in the Search mockup)
+  openMobileSearch() {
+    const { history, location } = this.props;
+    const searchString = `?${stringify({ mobilesearch: 'open', ...parse(location.search) })}`;
+    history.push(`${location.pathname}${searchString}`);
   }
 
   // Apply the filters by redirecting to SearchPage with new filters.
@@ -238,7 +254,6 @@ export class SearchPageComponent extends Component {
       availableFilters,
       hasSecondaryFilters,
       selectedFilters,
-      selectedFiltersCountForMobile,
       isValidDatesFilter,
       selectedSecondaryFiltersCount,
       totalItems,
@@ -290,7 +305,6 @@ export class SearchPageComponent extends Component {
           showAsPopup
           mode={mode}
           labelId={`${mode}-search-page-sort-by`}
-          contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
         />
       ) : null;
     };
@@ -305,6 +319,23 @@ export class SearchPageComponent extends Component {
     );
 
     const { bounds, origin } = searchParamsInURL || {};
+
+    // Search mockup: heading "18 items near Helsinki", the search summary on phones, and the
+    // distance on cards after a place search
+    // searchParamsInURL has the address, which the valid query params leave out
+    const searchParts = getSearchParts(searchParamsInURL || {}, config, intl);
+    const resultsHeading = getResultsHeading(searchParts, totalItems, intl);
+    const searchSummary = getSearchSummary(searchParts, intl);
+    const isMapSearch = !!parse(location.search).mapSearch;
+    const distanceOrigin = getDistanceOrigin(searchParamsInURL || {}, isMapSearch);
+    // The place, the map area and the sort order aren't filters the renter set in the sheet
+    const selectedFiltersCount = Object.keys(validQueryParams).filter(
+      key => !NON_FILTER_PARAMS.includes(key)
+    ).length;
+    const datesFilterConfig = availableFilters.find(f => f.schemaType === 'dates');
+    const datesFilterToggleId = datesFilterConfig
+      ? `SearchFiltersMobile.${datesFilterConfig.key.toLowerCase()}.plain.toggle`
+      : null;
 
     // Set topbar class based on if a modal is open in
     // a child component
@@ -327,7 +358,6 @@ export class SearchPageComponent extends Component {
             <SearchFiltersMobile
               className={css.searchFiltersMobileMap}
               urlQueryParams={validQueryParams}
-              sortByComponent={sortBy('mobile')}
               listingsAreLoaded={listingsAreLoaded}
               resultsCount={totalItems}
               searchInProgress={searchInProgress}
@@ -338,10 +368,13 @@ export class SearchPageComponent extends Component {
               onOpenModal={this.onOpenMobileModal}
               onCloseModal={this.onCloseMobileModal}
               resetAll={this.resetAll}
-              selectedFiltersCount={selectedFiltersCountForMobile}
-              noResultsInfo={noResultsInfo}
+              selectedFiltersCount={selectedFiltersCount}
               location={location}
               isMapVariant
+              searchSummary={searchSummary}
+              onOpenSearch={this.openMobileSearch}
+              datesFilterToggleId={datesFilterToggleId}
+              selectedDatesLabel={searchParts.datesLabel}
             >
               {availableFilters.map(filterConfig => {
                 const key = `SearchFiltersMobile.${filterConfig.scope || 'built-in'}.${
@@ -366,17 +399,11 @@ export class SearchPageComponent extends Component {
                 );
               })}
             </SearchFiltersMobile>
-            <MainPanelHeader
-              className={css.mainPanelMapVariant}
-              sortByComponent={sortBy('desktop')}
-              isSortByActive={sortConfig.active}
-              listingsAreLoaded={listingsAreLoaded}
-              resultsCount={totalItems}
-              searchInProgress={searchInProgress}
-              searchListingsError={searchListingsError}
-              noResultsInfo={noResultsInfo}
-            >
-              <SearchFiltersPrimary {...propsForSecondaryFiltersToggle}>
+            <div className={css.filterBarMapVariant} data-testid="filterBar">
+              <SearchFiltersPrimary
+                className={css.primaryFilters}
+                {...propsForSecondaryFiltersToggle}
+              >
                 {availablePrimaryFilters.map(filterConfig => {
                   const key = `SearchFiltersPrimary.${filterConfig.scope || 'built-in'}.${
                     filterConfig.key
@@ -400,7 +427,25 @@ export class SearchPageComponent extends Component {
                   );
                 })}
               </SearchFiltersPrimary>
-            </MainPanelHeader>
+            </div>
+
+            <div className={css.resultsHeaderMapVariant}>
+              <SearchResultsHeading
+                heading={resultsHeading}
+                searchInProgress={searchInProgress}
+                sortByComponent={sortBy('inline')}
+              >
+                <SearchFilterChips
+                  className={css.filterChips}
+                  urlQueryParams={validQueryParams}
+                  config={config}
+                  intl={intl}
+                  onRemove={params => this.getHandleChangedValueFn(true)(params)}
+                  onClearAll={this.resetAll}
+                />
+              </SearchResultsHeading>
+              {noResultsInfo}
+            </div>
             {isSecondaryFiltersOpen ? (
               <div className={classNames(css.searchFiltersPanel)}>
                 <SearchFiltersSecondary
@@ -453,6 +498,7 @@ export class SearchPageComponent extends Component {
                   isMapVariant
                   listingTypeParam={listingTypePathParam}
                   intl={intl}
+                  distanceOrigin={distanceOrigin}
                 />
               </div>
             )}

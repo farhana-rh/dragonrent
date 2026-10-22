@@ -10,9 +10,13 @@
   margin: 0;
 
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  gap: 24px;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 16px;
   width: 100%;
+
+  @media (--viewportMedium) {
+    gap: 24px;
+  }
 
   @media (--viewportLarge) {
     grid-template-columns: repeat(2, 1fr);

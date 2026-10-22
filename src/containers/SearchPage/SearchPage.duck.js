@@ -443,6 +443,9 @@ export const loadData = (params, search, config) => (dispatch, getState, sdk) =>
         'publicData.transactionProcessAlias',
         'publicData.unitType',
         'publicData.cardStyle',
+        // DragonRent duration prices, for "From €X a day" on cards and map labels
+        'publicData.price3DaysInSubunits',
+        'publicData.price7DaysInSubunits',
         // These help rendering of 'purchase' listings,
         // when transitioning from search page to listing page
         'publicData.pickupEnabled',

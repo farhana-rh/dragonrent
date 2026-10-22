@@ -1,0 +1,37 @@
+@import '../../../styles/customMediaQueries.css';
+
+/* Search mockup: "18 drills near Helsinki" (page heading), the sort order under it in 13px Slate */
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 24px 0 12px 0;
+
+  @media (--viewportMedium) {
+    gap: 8px;
+    padding: 8px 0 16px 0;
+  }
+}
+
+.heading {
+  margin: 0;
+  padding: 0;
+  font-size: 32px;
+  line-height: 1.2;
+  font-weight: var(--fontWeightBold);
+  color: var(--colorText);
+  overflow-wrap: anywhere;
+}
+
+.sortRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.sortLabel {
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--colorTextSecondary);
+}

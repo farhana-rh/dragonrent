@@ -1,28 +1,35 @@
 @import '../../../styles/customMediaQueries.css';
 
+/*
+ * Filter chip (dragonrent-design/docs/DESIGN.md → Components → Filter chip): 44px tall.
+ * Unselected is white with a Mist border; selected is Cobalt with white text and a check icon.
+ */
 .label,
 .labelSelected {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   width: auto;
-  height: 35px;
-  min-height: 35px;
+  height: 44px;
+  min-height: 44px;
 
-  padding: 0 18px;
-  margin: 0 9px 0 0;
+  padding: 0 16px;
+  margin: 0;
 
   transition: all var(--transitionStyleButton);
   cursor: pointer;
 
   /* Font */
+  font-family: var(--fontFamily);
   font-weight: var(--fontWeightSemiBold);
-  font-size: 13px;
-  line-height: 18px;
-  letter-spacing: 0.2px;
+  font-size: 15px;
+  line-height: 20px;
 
-  /* Button text styles */
-  /* Default button text is centered without decorations */
   text-align: center;
   text-decoration: none;
+  white-space: nowrap;
+
+  border-radius: var(--borderRadius);
 
   &:focus,
   &:hover {
@@ -38,24 +45,10 @@
     box-shadow: none;
     cursor: not-allowed;
   }
-
-  @media (--viewportMedium) {
-    height: 40px;
-    min-height: 0;
-    padding: 0 16px;
-    margin: 0;
-
-    font-weight: var(--fontWeightMedium);
-    font-size: 14px;
-    line-height: 20px;
-  }
 }
 
 .label {
-  /* Button borders */
-  border: 1px solid var(--colorBorderStrong);
-  border-radius: var(--borderRadiusMedium);
-
+  border: 1px solid var(--colorBorder);
   background-color: var(--colorSurface);
   color: var(--colorText);
 
@@ -64,27 +57,34 @@
     border-color: var(--colorText);
   }
   &:disabled {
-    border-color: var(--colorBorder);
+    color: var(--colorTextSecondary);
   }
 }
 
 .labelSelected {
-  /* Button borders */
-  border-radius: var(--borderRadiusMedium);
   border: 1px solid var(--marketplaceColor);
-
-  /* Selected filters use a tinted accent, as in the design */
-  background-color: var(--colorAccentSubtle);
-  color: var(--marketplaceColorDark);
+  background-color: var(--marketplaceColor);
+  color: var(--colorWhite);
 
   &:hover,
   &:focus {
-    border: 1px solid var(--marketplaceColorDark);
+    border-color: var(--marketplaceColorDark);
+    background-color: var(--marketplaceColorDark);
   }
   &:disabled {
     background-color: var(--colorBorder);
-    color: var(--colorTextMuted);
+    border-color: var(--colorBorder);
+    color: var(--colorTextSecondary);
   }
+}
+
+.checkIcon {
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .labelEllipsis {

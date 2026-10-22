@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { injectIntl, intlShape } from '../../../util/reactIntl';
 import { propTypes } from '../../../util/types';
 import { formatMoney } from '../../../util/currency';
+import { getLowestDailyPrice } from '../../../util/durationPricing';
 import { ensureListing } from '../../../util/data';
 import { isPriceVariationsEnabled } from '../../../util/configHelpers';
 
@@ -47,7 +48,10 @@ class SearchMapPriceLabel extends Component {
       config,
     } = this.props;
     const currentListing = ensureListing(listing);
-    const { price, publicData, title } = currentListing.attributes;
+    const { price: listingPrice, publicData, title } = currentListing.attributes;
+    // Daily listings with 3- or 7-day prices show their lowest daily rate, as the cards do
+    const price = getLowestDailyPrice(listingPrice, publicData);
+    const hasLowerDurationPrice = !!listingPrice && price.amount < listingPrice.amount;
 
     // Create formatted price if currency is known or alternatively show just the unknown currency.
     const formattedPrice =
@@ -69,7 +73,9 @@ class SearchMapPriceLabel extends Component {
     const hasMultiplePriceVariants =
       isPriceVariationsInUse && publicData?.priceVariants?.length > 1;
 
-    const priceMessage = hasMultiplePriceVariants
+    const priceMessage = hasLowerDurationPrice
+      ? intl.formatMessage({ id: 'ListingCard.fromPrice' }, { price: formattedPrice })
+      : hasMultiplePriceVariants
       ? intl.formatMessage({ id: 'SearchMapInfoCard.priceStartingFrom' }, { priceValue })
       : intl.formatMessage({ id: 'SearchMapInfoCard.price' }, { priceValue });
 
