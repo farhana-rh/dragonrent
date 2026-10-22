@@ -98,6 +98,19 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
   must not change, so the final text must describe what really happens. Keep the placeholder out
   of the live UI until the user decides.
 
+## Status (23 Oct)
+
+- **Days 0–9 code done**, all on `feature/redesign`, pushed to GitHub 23 Oct (not merged to `main`;
+  production deploys from `main`, so merge by pull request after the signed-in test run, with the
+  user's approval). Staging may deploy from `main`: check which branch Render uses.
+- **Day 9:** 9a cookie banner, 9b Sentry, 9c legal drafts done. 9d test run: signed-out pages done
+  (no overflow, Geist everywhere; fixed 36px phone inputs → 48px and added a Show/Hide password
+  button in `FieldTextInput`). **Signed-in flows not tested yet**: waiting for
+  `.env.test-accounts`. Do this first when it exists.
+- **Day 10:** prep only (`docs/LAUNCH.md`, `docs/PHASE2.md`, server-rendering fix). Live plan,
+  live Stripe, production Render service, domain and the real-card smoke test are the user's.
+  DragonRent is not live.
+
 ## Day 8 decisions (22 Oct)
 
 - **Search runs the map variant** (hosted layout says `map`), so the live page is
@@ -118,7 +131,11 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
 - **Messages rows** keep the other person's avatar. Item photos need `listing.images` in the inbox
   query: explain and get approval first.
 
-### Waiting for the user, after Days 9 and 10
+### Waiting for the user before launch (go/no-go list in `docs/LAUNCH.md`)
+
+- **Decisions still open:** fees, cancellation rule (see "Open" above), booking-email discount
+  line (below), and whether to use analytics at all (if not, remove the cookie banner's "count
+  visits" line).
 
 - **Booking emails don't show the duration discount.** `ext/transaction-processes/default-booking/
   templates` (new-request, accepted-request, money-paid) only render known line items, so a
@@ -128,7 +145,8 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
 - **Console list** (handed over 22 Oct): branding colour #2457C5, image aspect 4:3, localization
   locale (currently `fi`, so English pages format dates and prices in Finnish), footer, marketplace
   texts (Inbox → Messages, "Post a new listing" → "Lend an item", Provider/Customer → Owner/Renter
-  keys) and booking email texts.
+  keys) and booking email texts. Found in the 23 Oct test run: set the first section title of each
+  `/p/…` Console page as H1, and label the sign-up phone field "(optional)".
 - **Test data** (in the app as the owner): close "aaa"/"aaaa"; drill 3-day €30 / 7-day €60; drill
   availability time zone is `Asia/Dhaka` and only Mondays are open: set Europe/Helsinki and open
   more days.
@@ -180,7 +198,12 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
 - Dashboard: `src/containers/DashboardPage/` (`/dashboard`, read-only data).
 - Checkout: presentation only in `src/containers/CheckoutPage/` ("Step 2 of 2", `RentalSummary`).
   Never change its payment logic.
-- Global styles and colour variables: `src/styles/marketplaceDefaults.css`.
+- Cookie banner: `src/components/CookieConsent/`, choice stored by `src/util/cookieConsent.js`;
+  analytics scripts are gated in `src/util/includeScripts.js` (`analyticsConsent`), wired in
+  `src/app.js`. "Cookie settings" is in `SectionFooter`.
+- Password Show/Hide: `src/components/FieldTextInput/` (any `type="password"` field).
+- Global styles and colour variables: `src/styles/marketplaceDefaults.css` (form fields are 48px
+  on every screen).
 
 ## Environment notes
 
