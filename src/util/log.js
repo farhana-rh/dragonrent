@@ -43,7 +43,7 @@ const loadSentry = (() => {
         // any uncaught exception.
         Sentry.init({
           dsn: appSettings.sentryDsn,
-          environment: appSettings.env,
+          environment: appSettings.sentryEnvironment,
           ignoreErrors,
         });
         return Sentry;

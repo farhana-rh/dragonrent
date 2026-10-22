@@ -30,6 +30,9 @@ const appSettings = {
 
   // Sentry DSN (Data Source Name), a client key for authenticating calls to Sentry
   sentryDsn: process.env.REACT_APP_SENTRY_DSN,
+  // Environment name shown in Sentry, e.g. "staging" or "live". Staging and live both run with
+  // REACT_APP_ENV=production, so this keeps their errors apart. Falls back to REACT_APP_ENV.
+  sentryEnvironment: process.env.REACT_APP_SENTRY_ENVIRONMENT || process.env.REACT_APP_ENV,
 
   // If webapp is using SSL (i.e. it's behind 'https' protocol)
   usingSSL: process.env.REACT_APP_SHARETRIBE_USING_SSL === 'true',

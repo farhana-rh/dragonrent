@@ -113,3 +113,22 @@ Uses `docs/seed-listings.csv`.
 - [ ] Note what you set (commission numbers, field keys) in this file, so Test and Live get the same.
 - [ ] Before launch, copy the Dev settings to the other environments (Sharetribe tutorial: "Copy
   no-code changes from Test to Dev"; the same tool works between other environments).
+
+## 9. Error monitoring: Sentry (Day 9, 20 min)
+
+The template already sends errors to Sentry from the browser and the server; it only needs a key.
+
+- [ ] Create a free account at sentry.io and a project of type **React** (one project is enough
+  for both the browser and the server).
+- [ ] Copy the project's **DSN** (Settings → Client Keys). It's a public key, not a secret.
+- [ ] In the Render dashboard, add to the staging service:
+  - `REACT_APP_SENTRY_DSN` = the DSN
+  - `REACT_APP_SENTRY_ENVIRONMENT` = `staging`
+- [ ] On the live service (Day 10) use the same DSN with `REACT_APP_SENTRY_ENVIRONMENT` = `live`.
+- [ ] Redeploy, open the site, and check that Sentry shows the environment. To send a test error,
+  open the browser console on the site and run
+  `setTimeout(() => { throw new Error('Sentry test'); })`.
+- [ ] In Sentry → Alerts, turn on an email alert for new issues.
+
+What Sentry receives: error messages, the page address, the browser, and the signed-in user's id
+(a random id, not their name or email). Mention error monitoring in the privacy policy.
