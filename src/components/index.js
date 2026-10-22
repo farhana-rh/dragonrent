@@ -151,5 +151,6 @@ export { default as StripeConnectAccountForm } from './StripeConnectAccountForm/
 //////////////////////////////////////////////
 
 export { default as LayoutComposer, LayoutSingleColumn, LayoutSideNavigation } from './LayoutComposer';
+export { default as CookieConsent } from './CookieConsent/CookieConsent';
 export { default as MaintenanceMode } from './MaintenanceMode/MaintenanceMode';
 export { default as ModalMissingInformation } from './ModalMissingInformation/ModalMissingInformation';

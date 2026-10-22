@@ -47,7 +47,11 @@ describe('SectionFooter', () => {
     render(<SectionFooter {...props} />);
 
     await screen.findByText('Terms');
-    expect(screen.queryAllByRole('button')).toHaveLength(0);
+    // The only button is "Cookie settings", which reopens the cookie banner
+    expect(screen.getAllByRole('button')).toHaveLength(1);
+    expect(
+      screen.getByRole('button', { name: 'SectionFooter.cookieSettings' })
+    ).toBeInTheDocument();
     expect(screen.queryByText('SectionFooter.marketplaceCountry')).not.toBeInTheDocument();
   });
 });

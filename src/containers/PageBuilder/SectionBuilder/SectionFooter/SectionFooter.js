@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { useConfiguration } from '../../../../context/configurationContext';
-import { useIntl } from '../../../../util/reactIntl';
+import { FormattedMessage, useIntl } from '../../../../util/reactIntl';
+import { openCookieSettings } from '../../../../util/cookieConsent';
 import { pickFieldOptions } from '../../PageBuilder.helpers';
 
 import { NamedLink } from '../../../../components';
@@ -110,7 +111,12 @@ const SectionFooter = props => {
           </nav>
         ) : null}
 
-        <Field data={copyright} className={css.copyright} />
+        <div className={css.bottomRow}>
+          <Field data={copyright} className={css.copyright} />
+          <button type="button" className={css.cookieSettings} onClick={openCookieSettings}>
+            <FormattedMessage id="SectionFooter.cookieSettings" />
+          </button>
+        </div>
       </div>
     </SectionContainer>
   );

@@ -52,13 +52,18 @@ const canDeferStripeLibrary = (initialPathname, routeConfiguration) => {
  *       Stripe.js is injected here when `stripe.publishableKey` is set; consumers can
  *       wait for {@link STRIPE_JS_LOADED_EVENT} on `window` if the script may still be loading.
  *
- * Note 2: When adding new external scripts/styles/fonts/etc.,
+ * Note 2: Analytics scripts (Google Analytics, Plausible) are only included with
+ *         props.analyticsConsent (DragonRent: analytics only after cookie consent).
+ *
+ * Note 3: When adding new external scripts/styles/fonts/etc.,
  *         if a Content Security Policy (CSP) is turned on, the new URLs
  *         should be whitelisted in the policy. Check: server/csp.js
  */
 export const IncludeScripts = props => {
   const { marketplaceRootURL: rootURL, maps, analytics, stripe } = props?.config || {};
   const { googleAnalyticsId, plausibleDomains } = analytics;
+  // Analytics scripts load only after the visitor allows them (components/CookieConsent)
+  const analyticsConsent = props?.analyticsConsent === true;
 
   const routeConfiguration = useRouteConfiguration();
   // Note: Affects Mapbox only. Google Maps initialization is not yet ready to support asynchronous loading.
@@ -141,7 +146,7 @@ export const IncludeScripts = props => {
     );
   }
 
-  if (googleAnalyticsId && hasGoogleAnalyticsv4Id) {
+  if (analyticsConsent && googleAnalyticsId && hasGoogleAnalyticsv4Id) {
     // Google Analytics: gtag.js
     // NOTE: This template is a single-page application (SPA).
     //       gtag.js sends initial page_view event after page load.
@@ -169,7 +174,7 @@ export const IncludeScripts = props => {
     }
   }
 
-  if (plausibleDomains) {
+  if (analyticsConsent && plausibleDomains) {
     // If plausibleDomains is not an empty string, include their script too.
     analyticsLibraries.push(
       <script

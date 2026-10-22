@@ -22,8 +22,9 @@ import {
 } from './util/webStorageHelpers';
 import { includeCSSProperties } from './util/style';
 import { IncludeScripts } from './util/includeScripts';
+import { useCookieConsent } from './util/cookieConsent';
 
-import { MaintenanceMode } from './components';
+import { CookieConsent, MaintenanceMode } from './components';
 
 // routing
 import routeConfiguration from './routing/routeConfiguration';
@@ -222,15 +223,26 @@ export const ClientApp = props => {
       >
         <Provider store={store}>
           <HelmetProvider>
-            <IncludeScripts config={appConfig} initialPathname={window.location.pathname} />
+            <IncludeScriptsWithConsent
+              config={appConfig}
+              initialPathname={window.location.pathname}
+            />
             <BrowserRouter>
               <Routes logLoadDataCalls={logLoadDataCalls} />
+              <CookieConsent />
             </BrowserRouter>
           </HelmetProvider>
         </Provider>
       </IntlProvider>
     </Configurations>
   );
+};
+
+// Analytics scripts are added only after the visitor allows them in the cookie banner.
+// The server never adds them: the choice is stored in the browser.
+const IncludeScriptsWithConsent = props => {
+  const consent = useCookieConsent();
+  return <IncludeScripts {...props} analyticsConsent={consent?.analytics === true} />;
 };
 
 /**
