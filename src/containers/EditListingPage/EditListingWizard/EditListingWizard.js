@@ -37,7 +37,11 @@ import {
 } from '../../../util/fieldHelpers';
 import { ensureCurrentUser, ensureListing } from '../../../util/data';
 import { getDisplayAccountType } from '../../../util/stripeConnect';
-import { INQUIRY_PROCESS_NAME, resolveLatestProcessName } from '../../../transactions/transaction';
+import {
+  BOOKING_PROCESS_NAME,
+  INQUIRY_PROCESS_NAME,
+  resolveLatestProcessName,
+} from '../../../transactions/transaction';
 
 // Import shared components
 import {
@@ -61,6 +65,7 @@ import EditListingWizardTab, {
   PHOTOS,
   STYLE,
 } from './EditListingWizardTab';
+import { StepBar, StepHeader, stepFrameCss } from './StepFrame/StepFrame';
 import css from './EditListingWizard.module.css';
 
 // This is the initial tab on editlisting wizard.
@@ -101,8 +106,10 @@ const tabsForListingType = (processName, listingTypeConfig) => {
   //         Details tab asks for "title" and is therefore the first tab in the wizard flow.
   // Note 4: Ensure that the last panel contains the messaging for not-yet-verified files so
   //         that it is clear to the user why the 'publish' button is disabled during verification
+  // DragonRent (ListPhotos / ListPrices mockups): Details → Photos → Prices → Location →
+  // Availability. Details stays first because it creates the draft, which needs a title.
   const tabs = {
-    ['default-booking']: [DETAILS, ...locationMaybe, PRICING, AVAILABILITY, ...styleOrPhotosTab],
+    ['default-booking']: [DETAILS, ...styleOrPhotosTab, PRICING, ...locationMaybe, AVAILABILITY],
     ['default-purchase']: [DETAILS, PRICING_AND_STOCK, ...deliveryMaybe, ...styleOrPhotosTab],
     ['default-negotiation']: [DETAILS, ...locationMaybe, ...pricingMaybe, ...styleOrPhotosTab],
     ['default-inquiry']: [DETAILS, ...locationMaybe, ...pricingMaybe, ...styleOrPhotosTab],
@@ -161,6 +168,35 @@ const tabLabelAndSubmit = (intl, tab, isNewListingFlow, isPriceDisabled, process
   return {
     label: intl.formatMessage({ id: labelKey }),
     submitButton: intl.formatMessage({ id: submitButtonKey }),
+  };
+};
+
+// Short step names for "Step 3 of 5 · Prices"
+const STEP_LABEL_KEYS = {
+  [DETAILS]: 'EditListingWizard.stepLabel.details',
+  [PHOTOS]: 'EditListingWizard.stepLabel.photos',
+  [PRICING]: 'EditListingWizard.stepLabel.pricing',
+  [LOCATION]: 'EditListingWizard.stepLabel.location',
+  [AVAILABILITY]: 'EditListingWizard.stepLabel.availability',
+};
+
+/**
+ * Label and submit button text of a step in the lend-an-item flow. The steps are reordered from
+ * the template's, so the submit buttons say "Next", and "Publish" on the last step.
+ *
+ * @param {Object} intl
+ * @param {string} tab
+ * @param {Array<string>} tabs steps of this listing type
+ * @returns {{ label: string, submitButton: string }}
+ */
+const stepLabelAndSubmit = (intl, tab, tabs) => {
+  const labelKey = STEP_LABEL_KEYS[tab];
+  const isLastStep = tab === tabs[tabs.length - 1];
+  return {
+    label: labelKey ? intl.formatMessage({ id: labelKey }) : tab,
+    submitButton: intl.formatMessage({
+      id: isLastStep ? 'EditListingWizard.publish' : 'EditListingWizard.next',
+    }),
   };
 };
 
@@ -703,22 +739,40 @@ class EditListingWizard extends Component {
       return <NamedRedirect name="EditListingPage" params={pathParams} />;
     }
 
+    // New daily rentals go step by step: a step header, and Back and Next in a bottom bar.
+    // Other processes keep the template's tabs (DragonRent only uses the booking process).
+    const isStepFlow =
+      isNewListingFlow && processName === BOOKING_PROCESS_NAME && tabs.length > 1;
+    const stepIndex = tabs.indexOf(selectedTab);
+    const stepClasses = isStepFlow
+      ? classNames(stepFrameCss.flow, { [stepFrameCss.flowFirstStep]: stepIndex === 0 })
+      : null;
+
     return (
-      <div className={classes}>
+      <div className={classNames(classes, stepClasses)}>
+        {isStepFlow ? (
+          <StepHeader
+            step={stepIndex + 1}
+            total={tabs.length}
+            label={stepLabelAndSubmit(intl, selectedTab, tabs).label}
+          />
+        ) : null}
         <Tabs
-          rootClassName={css.tabsContainer}
-          navRootClassName={css.nav}
+          rootClassName={classNames(css.tabsContainer, { [stepFrameCss.content]: isStepFlow })}
+          navRootClassName={isStepFlow ? css.navHidden : css.nav}
           tabRootClassName={css.tab}
           ariaLabel={intl.formatMessage({ id: 'EditListingWizard.screenreader.tabNavigation' })}
         >
           {tabs.map(tab => {
-            const tabTranslations = tabLabelAndSubmit(
-              intl,
-              tab,
-              isNewListingFlow,
-              isPriceDisabled,
-              resolveLatestProcessName(processName)
-            );
+            const tabTranslations = isStepFlow
+              ? stepLabelAndSubmit(intl, tab, tabs)
+              : tabLabelAndSubmit(
+                  intl,
+                  tab,
+                  isNewListingFlow,
+                  isPriceDisabled,
+                  resolveLatestProcessName(processName)
+                );
             return (
               <EditListingWizardTab
                 {...rest}
@@ -754,6 +808,9 @@ class EditListingWizard extends Component {
             );
           })}
         </Tabs>
+        {isStepFlow ? (
+          <StepBar backLinkProps={stepIndex > 0 ? tabLink(tabs[stepIndex - 1]) : null} />
+        ) : null}
         <Modal
           id="EditListingWizard.payoutModal"
           isOpen={this.state.showPayoutDetails}

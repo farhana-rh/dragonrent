@@ -15,7 +15,13 @@ import {
   LISTING_PAGE_PARAM_TYPE_EDIT,
   LISTING_PAGE_PARAM_TYPE_NEW,
 } from '../../util/urlHelpers';
-import { createCurrentUser, createStock, createOwnListing, fakeIntl } from '../../util/testData';
+import {
+  createCurrentUser,
+  createImage,
+  createStock,
+  createOwnListing,
+  fakeIntl,
+} from '../../util/testData';
 import {
   renderWithProviders as render,
   testingLibrary,
@@ -392,7 +398,7 @@ describe('EditListingPage', () => {
       expect(getByText(tabLabel)).toBeInTheDocument();
 
       // Tab: panel title
-      expect(getByText('EditListingDetailsPanel.createListingTitle')).toBeInTheDocument();
+      expect(getByText('EditListingWizard.stepHeading.details')).toBeInTheDocument();
     });
 
     // Select parent category
@@ -466,7 +472,7 @@ describe('EditListingPage', () => {
       expect(getByText(tabLabel)).toBeInTheDocument();
 
       // Tab: panel title
-      expect(getByText('EditListingDetailsPanel.createListingTitle')).toBeInTheDocument();
+      expect(getByText('EditListingWizard.stepHeading.details')).toBeInTheDocument();
       expect(getByRole('textbox', { name: 'EditListingDetailsForm.title' })).toBeInTheDocument();
       // Check description exists
       expect(
@@ -590,7 +596,7 @@ describe('EditListingPage', () => {
       expect(getByText(tabLabel)).toBeInTheDocument();
 
       // Tab: panel title
-      expect(getByText('EditListingDetailsPanel.createListingTitle')).toBeInTheDocument();
+      expect(getByText('EditListingWizard.stepHeading.details')).toBeInTheDocument();
     });
 
     // Simulate user interaction and select parent level category
@@ -897,9 +903,9 @@ describe('EditListingPage', () => {
       // Tab: panel title
       expect(getByText('EditListingPhotosPanel.title')).toBeInTheDocument();
 
-      expect(getByText('EditListingPhotosForm.chooseImage')).toBeInTheDocument();
+      expect(getByText('EditListingPhotosForm.takeOrChoosePhotos')).toBeInTheDocument();
       expect(getByText('EditListingPhotosForm.imageTypes')).toBeInTheDocument();
-      expect(getByText('EditListingPhotosForm.addImagesTip')).toBeInTheDocument();
+      expect(getByText('EditListingPhotosForm.tipsHeading')).toBeInTheDocument();
       expect(getByText('EditListingWizard.edit.savePhotos')).toBeInTheDocument();
     });
   });
@@ -1417,6 +1423,103 @@ describe('EditListingPage', () => {
 
     // Tab/form: existing building
     expect(getByLabelText('EditListingPricingForm.price1Day')).toHaveValue('$12.00');
+  });
+
+  // DragonRent lend-an-item steps: Details → Photos → Prices → Location → Availability
+  const createDraftDailyListing = () =>
+    createOwnListing(
+      'listing-draft',
+      {
+        title: 'the listing',
+        description: 'Lorem ipsum',
+        state: 'draft',
+        price: new Money(1200, 'USD'),
+        publicData: {
+          listingType: 'rent-bicycles-daily',
+          transactionProcessAlias: 'default-booking/release-1',
+          unitType: 'day',
+          amenities: ['dog_1'],
+          location: { address: 'Main Street 123', building: 'A 1' },
+        },
+      },
+      { images: [createImage('image-1')] }
+    );
+
+  it('Booking (day): new listing flow shows steps on the pricing step', async () => {
+    const user = userEvent.setup();
+    const config = getConfig(listingTypesBookingDay, listingFieldsBooking);
+    const routeConfiguration = getRouteConfiguration(config.layout);
+    const listing = createDraftDailyListing();
+    const props = {
+      ...commonProps,
+      params: {
+        id: listing.id.uuid,
+        slug: 'slug',
+        type: LISTING_PAGE_PARAM_TYPE_DRAFT,
+        tab: PRICING,
+      },
+    };
+
+    const { getByText, getAllByText, getByRole, queryByText } = render(
+      <EditListingPage {...props} />,
+      {
+        initialState: initialState(listing),
+        config,
+        routeConfiguration,
+      }
+    );
+
+    await waitFor(() => {
+      // Step header instead of tabs: Prices is step 3 of 5
+      expect(getByRole('progressbar', { name: 'EditListingWizard.stepProgress' })).toHaveAttribute(
+        'aria-valuenow',
+        '3'
+      );
+      expect(getByText('EditListingWizard.stepCount')).toBeInTheDocument();
+      expect(queryByText('EditListingWizard.tabLabelPricing')).not.toBeInTheDocument();
+      expect(getByText('EditListingWizard.stepHeading.pricing')).toBeInTheDocument();
+
+      // Bottom bar: Back to the photos step and Next
+      expect(getByRole('link', { name: 'EditListingWizard.back' })).toHaveAttribute(
+        'href',
+        '/l/slug/listing-draft/draft/photos'
+      );
+      expect(getByRole('button', { name: 'EditListingWizard.next' })).toBeInTheDocument();
+    });
+
+    // Live hints: empty 3-day and 7-day prices fall back to the day price
+    expect(getAllByText('EditListingPricingForm.durationHintEmpty')).toHaveLength(2);
+    await user.type(getByRole('textbox', { name: /EditListingPricingForm.price3Days/ }), '30');
+    expect(getByText('EditListingPricingForm.durationHintPerDay')).toBeInTheDocument();
+  });
+
+  it('Booking (day): new listing flow publishes from the availability step', async () => {
+    const config = getConfig(listingTypesBookingDay, listingFieldsBooking);
+    const routeConfiguration = getRouteConfiguration(config.layout);
+    const listing = createDraftDailyListing();
+    const props = {
+      ...commonProps,
+      params: {
+        id: listing.id.uuid,
+        slug: 'slug',
+        type: LISTING_PAGE_PARAM_TYPE_DRAFT,
+        tab: AVAILABILITY,
+      },
+    };
+
+    const { getByRole } = render(<EditListingPage {...props} />, {
+      initialState: initialState(listing),
+      config,
+      routeConfiguration,
+    });
+
+    await waitFor(() => {
+      expect(getByRole('progressbar', { name: 'EditListingWizard.stepProgress' })).toHaveAttribute(
+        'aria-valuenow',
+        '5'
+      );
+      expect(getByRole('button', { name: 'EditListingWizard.publish' })).toBeEnabled();
+    });
   });
 
   it('Booking (day): edit flow on availability tab', async () => {
@@ -2287,9 +2390,9 @@ describe('EditListingPage', () => {
       // Tab: panel title
       expect(getByText('EditListingPhotosPanel.title')).toBeInTheDocument();
 
-      expect(getByText('EditListingPhotosForm.chooseImage')).toBeInTheDocument();
+      expect(getByText('EditListingPhotosForm.takeOrChoosePhotos')).toBeInTheDocument();
       expect(getByText('EditListingPhotosForm.imageTypes')).toBeInTheDocument();
-      expect(getByText('EditListingPhotosForm.addImagesTip')).toBeInTheDocument();
+      expect(getByText('EditListingPhotosForm.tipsHeading')).toBeInTheDocument();
       expect(getByText('EditListingWizard.edit.savePhotos')).toBeInTheDocument();
     });
   });
@@ -2848,9 +2951,9 @@ describe('EditListingPage', () => {
       // Tab: panel title
       expect(getByText('EditListingPhotosPanel.title')).toBeInTheDocument();
 
-      expect(getByText('EditListingPhotosForm.chooseImage')).toBeInTheDocument();
+      expect(getByText('EditListingPhotosForm.takeOrChoosePhotos')).toBeInTheDocument();
       expect(getByText('EditListingPhotosForm.imageTypes')).toBeInTheDocument();
-      expect(getByText('EditListingPhotosForm.addImagesTip')).toBeInTheDocument();
+      expect(getByText('EditListingPhotosForm.tipsHeading')).toBeInTheDocument();
       expect(getByText('EditListingWizard.edit.savePhotos')).toBeInTheDocument();
     });
   });
@@ -3006,7 +3109,7 @@ describe('EditListingPage', () => {
       expect(getByText(tabLabel)).toBeInTheDocument();
 
       // Tab: panel title
-      expect(getByText('EditListingDetailsPanel.createListingTitle')).toBeInTheDocument();
+      expect(getByText('EditListingWizard.stepHeading.details')).toBeInTheDocument();
 
       // Tab/form: form title
       expect(getByRole('textbox', { name: 'EditListingDetailsForm.title' })).toBeInTheDocument();

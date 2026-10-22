@@ -65,6 +65,8 @@
 }
 
 .submitButton {
+  /* In the lend-an-item steps this is Next in the bottom bar */
+  composes: stepSubmit from '../StepFrame/StepFrame.module.css';
   margin-top: auto;
   margin-bottom: 24px;
   flex-shrink: 0;

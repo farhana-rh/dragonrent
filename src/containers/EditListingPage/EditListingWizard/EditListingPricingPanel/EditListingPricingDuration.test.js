@@ -1,11 +1,15 @@
 import React from 'react';
 import '@testing-library/jest-dom';
+import { createIntl } from 'react-intl';
 
 import { fakeIntl } from '../../../../util/testData';
 import { types as sdkTypes } from '../../../../util/sdkLoader';
 import { renderWithProviders as render, testingLibrary } from '../../../../util/testHelpers';
 
+import messages from '../../../../translations/en.json';
+
 import EditListingPricingForm, {
+  getDurationPriceHints,
   validatePrice3Days,
   validatePrice7Days,
 } from './EditListingPricingForm';
@@ -104,5 +108,39 @@ describe('EditListingPricingForm with duration prices', () => {
     expect(screen.getByText('EditListingPricingForm.price7Days')).toBeInTheDocument();
     expect(screen.getAllByText('EditListingPricingForm.optional')).toHaveLength(2);
     expect(screen.getByText('EditListingPricingForm.price3DaysHint')).toBeInTheDocument();
+  });
+});
+
+describe('getDurationPriceHints', () => {
+  const enIntl = createIntl({ locale: 'en', messages });
+
+  it('shows what renters pay when the longer prices are empty', () => {
+    expect(getDurationPriceHints({ price: eur(1500) }, enIntl)).toEqual({
+      hint3: 'Leave it empty and renters pay €15.00 a day.',
+      hint7: 'Leave it empty and renters pay €15.00 a day.',
+    });
+  });
+
+  it('shows the price per day and the saving (ListPrices mockup: €15, €30, €56)', () => {
+    const values = { price: eur(1500), price3Days: eur(3000), price7Days: eur(5600) };
+    expect(getDurationPriceHints(values, enIntl)).toEqual({
+      hint3: 'Works out to €10.00 a day. Renters save €15.00.',
+      // A week is compared with the 3-day rate: 7 × €10 = €70
+      hint7: 'Works out to €8.00 a day. Renters save €14.00.',
+    });
+  });
+
+  it('leaves out the saving when there is none', () => {
+    const values = { price: eur(1000), price3Days: eur(3000) };
+    expect(getDurationPriceHints(values, enIntl).hint3).toBe('Works out to €10.00 a day.');
+  });
+
+  it('gives no live hint for an invalid price, which shows its own error', () => {
+    const values = { price: eur(1000), price3Days: eur(4000) };
+    expect(getDurationPriceHints(values, enIntl).hint3).toBeNull();
+  });
+
+  it('gives no hints without a day price', () => {
+    expect(getDurationPriceHints({}, enIntl)).toEqual({ hint3: null, hint7: null });
   });
 });

@@ -14,3 +14,21 @@
     padding: 48px calc((100% - 1056px) / 2) 82px 59px;
   }
 }
+
+/* Lend an item steps: one centred column, 16px side gutters (ListPhotos / ListPrices mockups) */
+.stepPanel {
+  width: 100%;
+  max-width: 672px;
+  margin: 0 auto;
+  padding: 24px 16px 0 16px;
+
+  @media (--viewportLarge) {
+    padding: 40px 16px 0 16px;
+    border-left: none;
+    background-color: transparent;
+  }
+
+  @media (--viewportLargeWithPaddings) {
+    padding: 40px 16px 0 16px;
+  }
+}

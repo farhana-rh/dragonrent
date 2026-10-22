@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import classNames from 'classnames';
 
 // Import configs and util modules
 import {
@@ -182,7 +183,7 @@ const EditListingWizardTab = props => {
 
   const panelProps = tab => {
     return {
-      className: css.panel,
+      className: classNames(css.panel, { [css.stepPanel]: isNewListingFlow }),
       errors,
       listing,
       panelUpdated: updatedTab === tab,
@@ -271,14 +272,17 @@ const EditListingWizardTab = props => {
           onAddAvailabilityException={onAddAvailabilityException}
           onDeleteAvailabilityException={onDeleteAvailabilityException}
           onNextTab={() =>
-            redirectAfterDraftUpdate(
-              listing.id,
-              params,
-              tab,
-              marketplaceTabs,
-              history,
-              routeConfiguration
-            )
+            // DragonRent: Availability is the last step, so its button publishes the listing
+            isLastTab(AVAILABILITY)
+              ? handlePublishListing(listing.id)
+              : redirectAfterDraftUpdate(
+                  listing.id,
+                  params,
+                  tab,
+                  marketplaceTabs,
+                  history,
+                  routeConfiguration
+                )
           }
           config={config}
           history={history}

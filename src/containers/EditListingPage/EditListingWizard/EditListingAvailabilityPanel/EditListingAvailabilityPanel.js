@@ -15,6 +15,7 @@ import EditListingAvailabilityPlanForm from './EditListingAvailabilityPlanForm';
 import EditListingAvailabilityExceptionForm from './EditListingAvailabilityExceptionForm';
 import WeeklyCalendar from './WeeklyCalendar/WeeklyCalendar';
 
+import { StepIntro, stepFrameCss } from '../StepFrame/StepFrame';
 import css from './EditListingAvailabilityPanel.module.css';
 
 // This is the order of days as JavaScript understands them
@@ -269,7 +270,7 @@ const EditListingAvailabilityPanel = props => {
         messageProps: { listingTitle: listing.attributes.title },
       }
     : {
-        id: 'EditListingAvailabilityPanel.createListingTitle',
+        id: 'EditListingWizard.stepHeading.availability',
         values: { lineBreak: <br /> },
         messageProps: {},
       };
@@ -282,9 +283,10 @@ const EditListingAvailabilityPanel = props => {
           { ...panelHeadingProps.messageProps }
         )}
       />
-      <H3 as="h1">
+      <H3 as="h1" rootClassName={isPublished ? null : stepFrameCss.stepHeading}>
         <FormattedMessage id={panelHeadingProps.id} values={{ ...panelHeadingProps.values }} />
       </H3>
+      {isPublished ? null : <StepIntro id="EditListingWizard.stepIntro.availability" />}
 
       <div className={css.planInfo}>
         {!hasAvailabilityPlan ? (
@@ -347,11 +349,18 @@ const EditListingAvailabilityPanel = props => {
         </p>
       ) : null}
 
+      {errors.publishListingError ? (
+        <p className={css.error}>
+          <FormattedMessage id="EditListingPhotosForm.publishListingFailed" />
+        </p>
+      ) : null}
+
       {!isPublished ? (
         <Button
           className={css.goToNextTabButton}
           onClick={onNextTab}
-          disabled={!hasAvailabilityPlan}
+          disabled={!hasAvailabilityPlan || disabled}
+          ready={ready}
         >
           {submitButtonText}
         </Button>

@@ -10,6 +10,7 @@ import { H3, ListingLink } from '../../../../components';
 
 // Import modules from this directory
 import EditListingPhotosForm from './EditListingPhotosForm';
+import { StepIntro, stepFrameCss } from '../StepFrame/StepFrame';
 import css from './EditListingPhotosPanel.module.css';
 
 const getInitialValues = params => {
@@ -71,7 +72,7 @@ const EditListingPhotosPanel = props => {
         messageProps: { listingTitle: listing.attributes.title },
       }
     : {
-        id: 'EditListingPhotosPanel.createListingTitle',
+        id: 'EditListingWizard.stepHeading.photos',
         values: { lineBreak: <br /> },
         messageProps: {},
       };
@@ -84,9 +85,10 @@ const EditListingPhotosPanel = props => {
           { ...panelHeadingProps.messageProps }
         )}
       />
-      <H3 as="h1">
+      <H3 as="h1" rootClassName={isPublished ? null : stepFrameCss.stepHeading}>
         <FormattedMessage id={panelHeadingProps.id} values={{ ...panelHeadingProps.values }} />
       </H3>
+      {isPublished ? null : <StepIntro id="EditListingWizard.stepIntro.photos" />}
 
       <EditListingPhotosForm
         className={css.form}

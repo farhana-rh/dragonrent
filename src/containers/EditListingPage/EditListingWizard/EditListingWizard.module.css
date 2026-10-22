@@ -51,6 +51,11 @@
   }
 }
 
+/* New listings show a step header instead of the tab list */
+.navHidden {
+  display: none;
+}
+
 .tab {
   margin-left: 16px;
   white-space: nowrap;

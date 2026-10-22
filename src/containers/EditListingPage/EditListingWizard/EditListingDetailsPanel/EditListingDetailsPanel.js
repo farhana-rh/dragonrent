@@ -23,6 +23,7 @@ import { H3, ListingLink } from '../../../../components';
 // Import modules from this directory
 import ErrorMessage from './ErrorMessage';
 import EditListingDetailsForm from './EditListingDetailsForm';
+import { StepIntro, stepFrameCss } from '../StepFrame/StepFrame';
 import css from './EditListingDetailsPanel.module.css';
 
 /**
@@ -363,7 +364,7 @@ const EditListingDetailsPanel = props => {
         messageProps: { listingTitle: listing.attributes.title },
       }
     : {
-        id: 'EditListingDetailsPanel.createListingTitle',
+        id: 'EditListingWizard.stepHeading.details',
         values: { lineBreak: <br /> },
         messageProps: {},
       };
@@ -376,9 +377,10 @@ const EditListingDetailsPanel = props => {
           { ...panelHeadingProps.messageProps }
         )}
       />
-      <H3 as="h1">
+      <H3 as="h1" rootClassName={isPublished ? null : stepFrameCss.stepHeading}>
         <FormattedMessage id={panelHeadingProps.id} values={{ ...panelHeadingProps.values }} />
       </H3>
+      {isPublished ? null : <StepIntro id="EditListingWizard.stepIntro.details" />}
 
       {canShowEditListingDetailsForm ? (
         <EditListingDetailsForm

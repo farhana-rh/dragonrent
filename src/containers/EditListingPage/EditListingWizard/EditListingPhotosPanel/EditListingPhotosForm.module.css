@@ -12,8 +12,8 @@
 .imagesFieldArray {
   flex-shrink: 0;
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 24px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
   margin: 0 0 24px 0;
 
   /* Prevents iOS Safari's long-press-to-select-text while Sortable's own drag
@@ -21,7 +21,7 @@
   user-select: none;
 
   @media (--viewportMedium) {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
@@ -66,129 +66,15 @@
   opacity: 1 !important;
 }
 
-.addImageWrapper {
-  float: left;
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-
-  &::after {
-    content: '.';
-    visibility: hidden;
-    display: block;
-    height: 0;
-    clear: both;
-  }
-}
-
 /* Remove pointer-events while an image is being dragged. */
 .addImageWrapperDragging {
   pointer-events: none;
-}
-
-.addImage {
-  /* Layout */
-  /* Maintain aspect ratio */
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 0;
-
-  /* Colors */
-  background-color: var(--colorWhite);
-
-  @media (--viewportLarge) {
-    background-color: var(--colorGrey50);
-  }
-
-  border-style: dashed;
-  border-color: var(--colorGrey100);
-  border-width: 2px;
-  border-radius: var(--borderRadiusMedium);
-
-  /* Behaviour */
-  cursor: pointer;
-  transition: var(--transitionStyleButton);
-
-  &:hover {
-    border-color: var(--colorGrey300);
-  }
 }
 
 .grabbingCursor {
   /* Use move as a fallback if grab is unsupported */
   cursor: move;
   cursor: grabbing;
-}
-
-.chooseImageText {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.chooseImage {
-  composes: h4 from global;
-  color: var(--colorGrey700);
-  font-weight: var(--fontWeightSemiBold);
-
-  margin-top: 0;
-  margin-bottom: 0;
-
-  @media (--viewportLarge) {
-    font-weight: var(--fontWeightSemiBold);
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-}
-
-.imageTypes {
-  composes: marketplaceTinyFontStyles from global;
-  color: var(--colorGrey600);
-
-  margin-top: 0;
-  margin-bottom: 0;
-
-  @media (--viewportLarge) {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-}
-
-.addImageInput {
-  clip-path: inset(50%);
-  height: 1px;
-  width: 1px;
-  padding: 0;
-  border: 0;
-  overflow: hidden;
-  position: absolute;
-  white-space: nowrap;
-
-  &:focus ~ .addImage {
-    border-color: var(--colorGrey300);
-  }
-}
-
-.tip {
-  composes: h5 from global;
-
-  flex-shrink: 0;
-  color: var(--colorGrey600);
-  margin-top: 24px;
-  margin-bottom: 60px;
-
-  @media (--viewportLarge) {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
 }
 
 .error {
@@ -229,8 +115,157 @@
 }
 
 .submitButton {
+  /* In the lend-an-item steps this is Next in the bottom bar */
+  composes: stepSubmit from '../StepFrame/StepFrame.module.css';
   @media (--viewportLarge) {
     display: inline-block;
     width: 241px;
   }
+}
+
+/* ListPhotos mockup: dashed area with a camera icon and "Take or choose photos" */
+.addImageWrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.addImage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 24px 20px;
+  margin: 0;
+
+  text-align: center;
+  background-color: var(--colorSurface);
+  border: 2px dashed var(--colorBorder);
+  border-radius: var(--borderRadiusLarge);
+  cursor: pointer;
+  transition: border-color var(--transitionStyleButton);
+
+  &:hover {
+    border-color: var(--marketplaceColor);
+  }
+}
+
+.chooseImageText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.icon {
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cameraCircle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  color: var(--marketplaceColor);
+  background-color: var(--colorAccentSubtle);
+}
+
+/* Looks like a secondary button; the whole area is the file input's label */
+.chooseImage {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 24px;
+
+  font-size: 16px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorText);
+  background-color: var(--colorSurface);
+  border: 1.5px solid var(--colorBorderStrong);
+  border-radius: var(--borderRadiusMedium);
+}
+
+.imageTypes {
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--colorTextSecondary);
+}
+
+.addImageInput {
+  clip-path: inset(50%);
+  height: 1px;
+  width: 1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+
+  &:focus-visible ~ .addImage {
+    border-color: var(--marketplaceColor);
+  }
+
+  &:focus-visible ~ .addImage .chooseImage {
+    box-shadow: var(--focusRing);
+  }
+}
+
+/* "Added: 2 photos" */
+.addedCount {
+  margin: 0 0 10px 0;
+  padding: 0;
+  font-size: 15px;
+  line-height: 1.4;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorText);
+}
+
+/* "Tips for good photos": Ice box with checks */
+.tips {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 20px;
+  margin: 0 0 24px 0;
+  background-color: var(--colorAccentSubtle);
+  border-radius: var(--borderRadiusLarge);
+}
+
+.tipsHeading {
+  margin: 0;
+  padding: 0;
+  font-size: 18px;
+  line-height: 1.3;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorText);
+}
+
+.tipsList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tipItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--colorText);
+}
+
+.tipIcon {
+  stroke-width: 2.6px;
 }

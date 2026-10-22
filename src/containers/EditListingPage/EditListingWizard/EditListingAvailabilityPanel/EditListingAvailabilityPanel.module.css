@@ -72,6 +72,7 @@
 }
 
 .goToNextTabButton {
+  composes: stepSubmit from '../StepFrame/StepFrame.module.css';
   margin-top: auto;
   margin-bottom: 24px;
   flex-shrink: 0;

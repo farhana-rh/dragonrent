@@ -15,13 +15,67 @@ import { isUploadImageOverLimitError } from '../../../../util/errors';
 import { listingImageIdentifierStrings } from '../../EditListingPage.shared';
 
 // Import shared components
-import { Button, Form, AspectRatioWrapper, NamedLink } from '../../../../components';
+import { Button, Form, NamedLink } from '../../../../components';
 
 // Import modules from this directory
 import ListingImage from './ListingImage';
 import css from './EditListingPhotosForm.module.css';
 
 const ACCEPT_IMAGES = 'image/*';
+
+// Lucide-style icons for the ListPhotos mockup
+const Icon = ({ className, size = 20, children }) => (
+  <svg
+    className={classNames(css.icon, className)}
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+    focusable="false"
+  >
+    {children}
+  </svg>
+);
+const IconCamera = () => (
+  <Icon size={30}>
+    <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" />
+    <circle cx="12" cy="13" r="3" />
+  </Icon>
+);
+const IconPlus = () => (
+  <Icon>
+    <path d="M5 12h14" />
+    <path d="M12 5v14" />
+  </Icon>
+);
+const IconCheck = () => (
+  <Icon className={css.tipIcon}>
+    <path d="M20 6 9 17l-5-5" />
+  </Icon>
+);
+
+const PHOTO_TIP_KEYS = [
+  'EditListingPhotosForm.tipDaylight',
+  'EditListingPhotosForm.tipWholeItem',
+  'EditListingPhotosForm.tipIncluded',
+];
+
+// "Tips for good photos" box (ListPhotos mockup)
+const PhotoTips = () => (
+  <section className={css.tips}>
+    <h2 className={css.tipsHeading}>
+      <FormattedMessage id="EditListingPhotosForm.tipsHeading" />
+    </h2>
+    <ul className={css.tipsList}>
+      {PHOTO_TIP_KEYS.map(key => (
+        <li key={key} className={css.tipItem}>
+          <IconCheck />
+          <FormattedMessage id={key} />
+        </li>
+      ))}
+    </ul>
+  </section>
+);
 
 // Split out of the main bundle - only fetched once this form actually mounts.
 const Sortable = loadable.lib(() => import(/* webpackChunkName: "sortablejs" */ 'sortablejs'));
@@ -127,15 +181,13 @@ export const FieldAddImage = props => {
         const inputProps = { accept, id: name, name, onChange, type };
         return (
           <div className={classNames(css.addImageWrapper, className)}>
-            <AspectRatioWrapper width={aspectWidth} height={aspectHeight}>
-              {fieldDisabled ? null : <input {...inputProps} className={css.addImageInput} />}
-              <label
-                htmlFor={name}
-                className={classNames(css.addImage, { [css.grabbingCursor]: isChoosing })}
-              >
-                {label}
-              </label>
-            </AspectRatioWrapper>
+            {fieldDisabled ? null : <input {...inputProps} className={css.addImageInput} />}
+            <label
+              htmlFor={name}
+              className={classNames(css.addImage, { [css.grabbingCursor]: isChoosing })}
+            >
+              {label}
+            </label>
           </div>
         );
       }}
@@ -363,6 +415,43 @@ export const EditListingPhotosForm = props => {
               </p>
             ) : null}
 
+            <FieldAddImage
+              id="addImage"
+              name="addImage"
+              accept={ACCEPT_IMAGES}
+              className={isDragging ? css.addImageWrapperDragging : null}
+              isChoosing={isChoosing}
+              label={
+                <span className={css.chooseImageText}>
+                  <span className={css.cameraCircle}>
+                    <IconCamera />
+                  </span>
+                  <span className={css.chooseImage}>
+                    <IconPlus />
+                    <FormattedMessage id="EditListingPhotosForm.takeOrChoosePhotos" />
+                  </span>
+                  <span className={css.imageTypes}>
+                    <FormattedMessage id="EditListingPhotosForm.imageTypes" />
+                  </span>
+                </span>
+              }
+              type="file"
+              disabled={state.imageUploadRequested}
+              formApi={form}
+              onImageUploadHandler={onImageUploadHandler}
+              aspectWidth={aspectWidth}
+              aspectHeight={aspectHeight}
+            />
+
+            {images.length > 0 ? (
+              <p className={css.addedCount}>
+                <FormattedMessage
+                  id="EditListingPhotosForm.addedCount"
+                  values={{ count: images.length }}
+                />
+              </p>
+            ) : null}
+
             <div className={classNames(css.imagesFieldArray, { [css.grabbingCursor]: isChoosing })}>
               <FieldArray
                 name="images"
@@ -439,30 +528,6 @@ export const EditListingPhotosForm = props => {
                   )}
                 </Sortable>
               ) : null}
-
-              <FieldAddImage
-                id="addImage"
-                name="addImage"
-                accept={ACCEPT_IMAGES}
-                className={isDragging ? css.addImageWrapperDragging : null}
-                isChoosing={isChoosing}
-                label={
-                  <span className={css.chooseImageText}>
-                    <span className={css.chooseImage}>
-                      <FormattedMessage id="EditListingPhotosForm.chooseImage" />
-                    </span>
-                    <span className={css.imageTypes}>
-                      <FormattedMessage id="EditListingPhotosForm.imageTypes" />
-                    </span>
-                  </span>
-                }
-                type="file"
-                disabled={state.imageUploadRequested}
-                formApi={form}
-                onImageUploadHandler={onImageUploadHandler}
-                aspectWidth={aspectWidth}
-                aspectHeight={aspectHeight}
-              />
             </div>
 
             {imagesError ? <div className={css.arrayError}>{imagesError}</div> : null}
@@ -472,9 +537,7 @@ export const EditListingPhotosForm = props => {
               uploadImageError={uploadImageError}
             />
 
-            <p className={css.tip}>
-              <FormattedMessage id="EditListingPhotosForm.addImagesTip" />
-            </p>
+            <PhotoTips />
 
             <div className={css.submitSection}>
               <PublishListingError error={publishListingError} />

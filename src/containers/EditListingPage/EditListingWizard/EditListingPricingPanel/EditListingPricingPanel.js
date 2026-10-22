@@ -22,6 +22,7 @@ import {
   getInitialValuesForStartTimeInterval,
   handleSubmitValuesForStartTimeInterval,
 } from './StartTimeInverval';
+import { stepFrameCss } from '../StepFrame/StepFrame';
 import css from './EditListingPricingPanel.module.css';
 
 const { Money } = sdkTypes;
@@ -180,7 +181,7 @@ const EditListingPricingPanel = props => {
         messageProps: { listingTitle: listing.attributes.title },
       }
     : {
-        id: 'EditListingPricingPanel.createListingTitle',
+        id: 'EditListingWizard.stepHeading.pricing',
         values: { lineBreak: <br /> },
         messageProps: {},
       };
@@ -193,7 +194,7 @@ const EditListingPricingPanel = props => {
           { ...panelHeadingProps.messageProps }
         )}
       />
-      <H3 as="h1">
+      <H3 as="h1" rootClassName={isPublished ? null : stepFrameCss.stepHeading}>
         <FormattedMessage id={panelHeadingProps.id} values={{ ...panelHeadingProps.values }} />
       </H3>
       {priceCurrencyValid ? (

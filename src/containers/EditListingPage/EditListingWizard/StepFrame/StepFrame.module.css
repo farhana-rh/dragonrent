@@ -1,0 +1,183 @@
+@import '../../../../styles/customMediaQueries.css';
+
+/*
+ * Lend an item steps (ListPhotos and ListPrices mockups): a header with "Close", "Step 3 of 5 ·
+ * Prices" and a progress bar, and a bottom bar with Back and Next.
+ *
+ * Each step's Next is the submit button of that step's form, so it stays inside its <form>. The
+ * bar behind it is drawn here, and the button is placed into the bar with `stepSubmit`, which the
+ * step forms compose. Both use the same column width, so Back and Next line up in the bar.
+ */
+.flow {
+  --stepBarContentWidth: min(100vw, 672px);
+  --stepBarSideGap: max(16px, calc((100vw - 640px) / 2));
+  --stepBarGap: 10px;
+  --stepBarHeight: 82px;
+}
+
+/* Header */
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 16px 16px 16px;
+  background-color: var(--colorSurface);
+  border-bottom: 1px solid var(--colorBorder);
+
+  @media (--viewportMedium) {
+    padding: 12px var(--stepBarSideGap) 16px var(--stepBarSideGap);
+  }
+}
+
+.headerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.close {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 48px;
+  padding: 0 10px 0 4px;
+  margin-left: -4px;
+
+  font-size: 15px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorText);
+  border-radius: var(--borderRadiusMedium);
+
+  &:hover {
+    color: var(--marketplaceColor);
+    text-decoration: none;
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--focusRing);
+  }
+}
+
+.icon {
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.stepCount {
+  margin: 0;
+  font-size: 15px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorTextSecondary);
+  text-align: right;
+}
+
+.progress {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 6px;
+}
+
+.progressStep,
+.progressStepDone {
+  height: 8px;
+  border-radius: 999px;
+  background-color: var(--colorBorder);
+}
+
+.progressStepDone {
+  background-color: var(--marketplaceColor);
+}
+
+/* Bottom bar behind Back and Next */
+.bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  height: var(--stepBarHeight);
+  background-color: var(--colorSurface);
+  border-top: 1px solid var(--colorBorder);
+}
+
+/* Secondary button: white, 1.5px Navy border, Navy text */
+.back {
+  position: fixed;
+  left: var(--stepBarSideGap);
+  bottom: 15px;
+  z-index: 11;
+  width: calc((var(--stepBarContentWidth) - 32px - var(--stepBarGap)) / 3);
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 16px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorText);
+  background-color: var(--colorSurface);
+  border: 1.5px solid var(--colorBorderStrong);
+  border-radius: var(--borderRadiusMedium);
+
+  &:hover {
+    text-decoration: none;
+    background-color: var(--colorBackground);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--focusRing);
+  }
+}
+
+/* Composed by the step forms' submit buttons. Only takes effect inside .flow. */
+.stepSubmit {
+  box-sizing: border-box;
+}
+
+.flow .stepSubmit {
+  position: fixed;
+  right: var(--stepBarSideGap);
+  bottom: 15px;
+  z-index: 11;
+  width: calc((var(--stepBarContentWidth) - 32px - var(--stepBarGap)) * 2 / 3);
+  min-height: 52px;
+  margin: 0;
+}
+
+/* The first step has no Back, so Next takes the whole bar */
+.flowFirstStep .stepSubmit {
+  width: calc(var(--stepBarContentWidth) - 32px);
+}
+
+/* Step heading (page heading, 32px/700) and its one-line intro in Slate */
+.stepHeading {
+  margin: 0;
+  padding: 0;
+  font-size: 32px;
+  line-height: 1.15;
+  font-weight: var(--fontWeightBold);
+  letter-spacing: -0.6px;
+  color: var(--colorText);
+}
+
+.stepIntro {
+  margin: 6px 0 24px 0;
+  padding: 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--colorTextSecondary);
+}
+
+/* Room under the step's content so the bar doesn't cover it */
+.content {
+  padding-bottom: calc(var(--stepBarHeight) + 32px);
+}

@@ -100,9 +100,73 @@ export const validatePrice7Days = intl => (value, allValues) => {
   return undefined;
 };
 
+const formatAmount = (intl, amount, currency) =>
+  formatMoney(intl, new Money(Math.round(amount), currency));
+
+/**
+ * Live hints under the 3-day and 7-day prices (ListPrices mockup): what the price works out to
+ * per day and how much renters save, or what renters pay when the field is left empty.
+ * Invalid prices get no live hint: the field shows its validation error instead.
+ *
+ * @param {Object} values form values (price, price3Days, price7Days as Money)
+ * @param {Object} intl
+ * @returns {{ hint3: string|null, hint7: string|null }} null when there's no live hint to show
+ */
+export const getDurationPriceHints = (values, intl) => {
+  const daily = amountOf(values?.price);
+  if (daily == null) {
+    return { hint3: null, hint7: null };
+  }
+  const { currency } = values.price;
+  const price3 = amountOf(values.price3Days);
+  const price7 = amountOf(values.price7Days);
+  const isValid3 = price3 != null && !validatePrice3Days(intl)(values.price3Days, values);
+  const isValid7 = price7 != null && !validatePrice7Days(intl)(values.price7Days, values);
+
+  const tierHint = (total, days, shorterRatePerDay) => {
+    const save = shorterRatePerDay * days - total;
+    return intl.formatMessage(
+      { id: 'EditListingPricingForm.durationHintPerDay' },
+      {
+        perDay: formatAmount(intl, total / days, currency),
+        save: save >= 1 ? formatAmount(intl, save, currency) : 'none',
+      }
+    );
+  };
+  const emptyHint = ratePerDay =>
+    intl.formatMessage(
+      { id: 'EditListingPricingForm.durationHintEmpty' },
+      { perDay: formatAmount(intl, ratePerDay, currency) }
+    );
+
+  // A week is compared with the best shorter rate: the 3-day price per day, when it's set
+  const rateBeforeWeek = isValid3 ? Math.min(price3 / 3, daily) : daily;
+
+  return {
+    hint3: price3 == null ? emptyHint(daily) : isValid3 ? tierHint(price3, 3, daily) : null,
+    hint7:
+      price7 == null
+        ? emptyHint(rateBeforeWeek)
+        : isValid7
+        ? tierHint(price7, 7, rateBeforeWeek)
+        : null,
+  };
+};
+
 // A price field with its label above and a hint below (DESIGN.md: labels above fields)
 const DurationPriceField = props => {
-  const { id, name, label, hint, isOptional, currencyConfig, validate, autoFocus, intl } = props;
+  const {
+    id,
+    name,
+    label,
+    hint,
+    isOptional,
+    currencyConfig,
+    validate,
+    autoFocus,
+    placeholder,
+    intl,
+  } = props;
   const labelWithOptional = isOptional ? (
     <>
       {label}{' '}
@@ -121,11 +185,15 @@ const DurationPriceField = props => {
         className={css.input}
         autoFocus={autoFocus}
         label={labelWithOptional}
-        placeholder={intl.formatMessage({ id: 'EditListingPricingForm.priceInputPlaceholder' })}
+        placeholder={
+          placeholder || intl.formatMessage({ id: 'EditListingPricingForm.priceInputPlaceholder' })
+        }
         currencyConfig={currencyConfig}
         validate={validate}
       />
-      <p className={css.hint}>{hint}</p>
+      <p className={css.hint} aria-live="polite">
+        {hint}
+      </p>
     </div>
   );
 };
@@ -227,6 +295,10 @@ export const EditListingPricingForm = props => (
       const isUsingPriceVariants = isFixedLengthBooking || isBookingPriceVariationsInUse;
       const isDurationPricing = isBooking && unitType === DAY && !isUsingPriceVariants;
       const currencyConfig = appSettings.getCurrencyFormatting(marketplaceCurrency);
+      const { hint3, hint7 } = isDurationPricing ? getDurationPriceHints(formValues, intl) : {};
+      const optionalPlaceholder = intl.formatMessage({
+        id: 'EditListingPricingForm.optionalPricePlaceholder',
+      });
 
       return (
         <Form onSubmit={handleSubmit} className={classes}>
@@ -252,7 +324,8 @@ export const EditListingPricingForm = props => (
                 name="price3Days"
                 isOptional
                 label={intl.formatMessage({ id: 'EditListingPricingForm.price3Days' })}
-                hint={intl.formatMessage({ id: 'EditListingPricingForm.price3DaysHint' })}
+                hint={hint3 || intl.formatMessage({ id: 'EditListingPricingForm.price3DaysHint' })}
+                placeholder={optionalPlaceholder}
                 currencyConfig={currencyConfig}
                 validate={validatePrice3Days(intl)}
                 intl={intl}
@@ -262,7 +335,8 @@ export const EditListingPricingForm = props => (
                 name="price7Days"
                 isOptional
                 label={intl.formatMessage({ id: 'EditListingPricingForm.price7Days' })}
-                hint={intl.formatMessage({ id: 'EditListingPricingForm.price7DaysHint' })}
+                hint={hint7 || intl.formatMessage({ id: 'EditListingPricingForm.price7DaysHint' })}
+                placeholder={optionalPlaceholder}
                 currencyConfig={currencyConfig}
                 validate={validatePrice7Days(intl)}
                 intl={intl}
