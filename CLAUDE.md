@@ -130,6 +130,14 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
 - **Test data** (in the app as the owner): close "aaa"/"aaaa"; drill 3-day €30 / 7-day €60; drill
   availability time zone is `Asia/Dhaka` and only Mondays are open: set Europe/Helsinki and open
   more days.
+- **Legal pages (9c, 22 Oct):** drafts for Terms, Privacy, Cancellation policy, Damage policy and
+  FAQ are in `docs/legal/` (all "Draft, needs legal review"), written from the real booking
+  process. The user pastes the lawyer-reviewed text into the Console pages with the same ids and
+  adds Cancellation policy, Damage policy and FAQ to the footer links. Checkout shows "By sending a
+  request, you agree to the Terms of Service and the Cancellation policy" (no checkbox).
+- **Sentry:** built in; needs `REACT_APP_SENTRY_DSN` and `REACT_APP_SENTRY_ENVIRONMENT` in Render
+  (`docs/CONSOLE-SETUP.md` section 9). Analytics loads only after cookie consent
+  (`src/util/cookieConsent.js`); no analytics ID is set yet.
 - **Test logins** for headless screenshots go in `.env.test-accounts` (git-ignored):
   `RENTER_EMAIL`, `RENTER_PASSWORD`, `OWNER_EMAIL`, `OWNER_PASSWORD`. Not created yet; the wizard,
   checkout, booking and Messages pages haven't been checked in a browser.

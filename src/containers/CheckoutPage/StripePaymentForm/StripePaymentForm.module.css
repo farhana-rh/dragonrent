@@ -173,6 +173,28 @@
   color: var(--colorTextSecondary);
 }
 
+/* "By sending a request you agree to the Terms and the Cancellation policy." */
+.termsInfo {
+  max-width: 520px;
+  margin: 8px auto 0 auto;
+  padding: 0;
+  font-size: 13px;
+  line-height: 1.4;
+  text-align: center;
+  color: var(--colorTextSecondary);
+}
+
+.termsLink {
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--marketplaceColor);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+
+  &:hover {
+    color: var(--marketplaceColorDark);
+  }
+}
+
 .submitButton {
   min-height: 56px;
   border-radius: var(--borderRadiusLarge);

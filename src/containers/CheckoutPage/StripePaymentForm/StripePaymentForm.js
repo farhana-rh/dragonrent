@@ -22,6 +22,7 @@ import {
   FieldCheckbox,
   FieldTextInput,
   IconSpinner,
+  NamedLink,
   SavedCardDetails,
   StripePaymentAddress,
   CustomExtendedDataField,
@@ -750,12 +751,36 @@ class StripePaymentForm extends Component {
             )}
           </PrimaryButton>
           {isBooking ? (
-            <p className={css.paymentInfo}>
-              <FormattedMessage
-                id="StripePaymentForm.bookingFinePrint"
-                values={{ name: providerDisplayName }}
-              />
-            </p>
+            <>
+              <p className={css.paymentInfo}>
+                <FormattedMessage
+                  id="StripePaymentForm.bookingFinePrint"
+                  values={{ name: providerDisplayName }}
+                />
+              </p>
+              {/* No checkbox: sending the request is the agreement (docs/SCOPE.md, 17 Oct) */}
+              <p className={css.termsInfo}>
+                <FormattedMessage
+                  id="StripePaymentForm.agreeToTerms"
+                  values={{
+                    termsLink: (
+                      <NamedLink name="TermsOfServicePage" className={css.termsLink}>
+                        <FormattedMessage id="StripePaymentForm.termsLinkText" />
+                      </NamedLink>
+                    ),
+                    cancellationLink: (
+                      <NamedLink
+                        name="CMSPage"
+                        params={{ pageId: 'cancellation-policy' }}
+                        className={css.termsLink}
+                      >
+                        <FormattedMessage id="StripePaymentForm.cancellationLinkText" />
+                      </NamedLink>
+                    ),
+                  }}
+                />
+              </p>
+            </>
           ) : !isDownload ? (
             <p className={css.paymentInfo}>
               <FormattedMessage

@@ -231,6 +231,8 @@ describe('CheckoutPage', () => {
     expect(
       screen.getByRole('button', { name: 'StripePaymentForm.sendRequest' })
     ).toBeInTheDocument();
+    // Sending the request means agreeing to the terms and the cancellation policy
+    expect(screen.getByText('StripePaymentForm.agreeToTerms')).toBeInTheDocument();
   });
 
   it('Check that inquiry process has relevant info', () => {
