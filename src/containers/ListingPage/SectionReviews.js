@@ -7,7 +7,8 @@ import { getReviewsSummary } from './ListingPage.shared';
 
 import css from './ListingPage.module.css';
 
-const INITIAL_REVIEW_COUNT = 4;
+// Two reviews first (Listing mockups), the rest behind "Show all"
+const INITIAL_REVIEW_COUNT = 2;
 
 /**
  * Reviews section. The heading shows the average of the listing's loaded reviews.

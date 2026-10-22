@@ -1,0 +1,136 @@
+@import '../../../styles/customMediaQueries.css';
+
+.root {
+  composes: listingSection from '../ListingPageSections.module.css';
+}
+
+.card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 18px 12px;
+  padding: 18px;
+
+  background-color: var(--colorSurface);
+  border: 1px solid var(--colorBorder);
+  border-radius: var(--borderRadiusLarge);
+
+  @media (--viewportMedium) {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 16px 20px;
+    padding: 24px;
+  }
+}
+
+.avatar {
+  flex-shrink: 0;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.name {
+  margin: 0;
+  padding: 0;
+  font-size: 15px;
+  line-height: 22px;
+  font-weight: var(--fontWeightRegular);
+  color: var(--colorTextSecondary);
+}
+
+.nameValue {
+  font-size: 18px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorText);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+  margin: 0;
+  padding: 0;
+  font-size: 15px;
+  line-height: 22px;
+  color: var(--colorTextSecondary);
+}
+
+.verified {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 12px;
+
+  font-size: 13px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--marketplaceColor);
+  background-color: var(--colorAccentSubtle);
+  border-radius: var(--borderRadius);
+}
+
+.icon {
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Secondary button: full width on phones, beside the owner on wider screens */
+.contactButton {
+  composes: buttonSecondary from global;
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  width: 100%;
+
+  @media (--viewportMedium) {
+    grid-column: auto;
+    width: auto;
+    min-height: 52px;
+    padding: 0 20px;
+  }
+}
+
+/* Inquiry modal (same as ListingPage.module.css) */
+.inquiryModalContent {
+  flex-grow: 1;
+  display: flex;
+}
+
+.inquiryForm {
+  flex-grow: 1;
+  margin: 70px 0 100px 0;
+
+  @media (--viewportMedium) {
+    display: flex;
+    flex-direction: column;
+    min-height: 400px;
+    margin: 0;
+  }
+}
+
+.inquirySubmitButtonWrapper {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 24px;
+  background-color: var(--colorWhite);
+
+  @media (--viewportMedium) {
+    position: static;
+    padding: 0;
+    margin-top: auto;
+  }
+}

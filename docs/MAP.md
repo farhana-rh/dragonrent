@@ -8,7 +8,7 @@ Where the main parts of the site live. Paths are relative to the repo root.
 | --- | --- | --- |
 | Home | `LandingPage/LandingPage.js` | Code-based sections `Section*`, `HeroSearchForm`, `CategoryIcon`, `landingPageConfig.js` |
 | Search | `SearchPage/SearchPageWithGrid.js` (+ `SearchPageWithMap.js`) | `SearchFilterChips`, primary/secondary filters |
-| Listing | `ListingPage/ListingPageCarousel.js` | `Section*` blocks, `ListingBreadcrumbs`, similar listings in `ListingPage.duck.js` |
+| Listing | `ListingPage/ListingPageCarousel.js` | `Section*` blocks (price tiles, owner card, what you get, pick-up and return), `ListingBreadcrumbs`, similar listings in `ListingPage.duck.js`; tiers in `util/durationPricing.js` |
 | Listing wizard | `EditListingPage/EditListingWizard/` | Pricing step: `EditListingPricingPanel/EditListingPricingForm.js` (tiers go here on Day 6) |
 | Checkout | `CheckoutPage/CheckoutPageWithPayment.js` | `CheckoutSteps`, `RentalSummary`, restyled `DetailsSideCard` and `StripePaymentForm` |
 | Inbox | `InboxPage/InboxPage.js` | — |

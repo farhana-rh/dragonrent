@@ -21,6 +21,32 @@
   }
 }
 
+/* Breadcrumbs, title row and photos. Desktop: breadcrumbs › title › photo mosaic
+   (ListingDesktop mockup). Phones and tablets: photos first, then the title (Listing mockup). */
+.pageTop {
+  display: flex;
+  flex-direction: column;
+}
+
+.galleryArea {
+  order: -1;
+
+  @media (--viewportLarge) {
+    order: 0;
+  }
+}
+
+/* "About this item" and "What you get" side by side when there's room */
+.aboutGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+
+  @media (--viewportMedium) {
+    grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+    column-gap: 32px;
+  }
+}
+
 /* Shared section styles (see ListingPageSections.module.css) */
 .listingSection {
   composes: listingSection from './ListingPageSections.module.css';
@@ -44,9 +70,10 @@
 }
 
 .reviewsHeadingStar {
-  width: 18px;
-  height: 18px;
-  fill: var(--colorText);
+  width: 24px;
+  height: 24px;
+  fill: var(--colorAttention);
+  stroke: var(--colorAttentionDark);
 }
 
 .noReviews {
@@ -60,15 +87,24 @@
 .reviewsList {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 24px;
+  gap: 12px;
 
+  /* Each review is a card */
   & > li {
     margin: 0;
+    padding: 16px;
+    background-color: var(--colorSurface);
+    border: 1px solid var(--colorBorder);
+    border-radius: var(--borderRadiusLarge);
   }
 
   @media (--viewportMedium) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 32px;
+    gap: 16px;
+
+    & > li {
+      padding: 20px;
+    }
   }
 }
 
@@ -369,8 +405,8 @@
 
   @media (--viewportLarge) {
     /* Full width - (order column + gap) */
-    max-width: calc(100% - 408px);
-    flex-basis: calc(100% - 408px);
+    max-width: calc(100% - 428px);
+    flex-basis: calc(100% - 428px);
     flex-shrink: 0;
     flex-grow: 1;
   }
@@ -379,20 +415,20 @@
 .orderColumnForProductLayout {
   @media (--viewportLarge) {
     display: block;
-    margin-left: 56px;
-    flex-basis: 352px;
+    margin-left: 48px;
+    flex-basis: 380px;
     flex-shrink: 0;
   }
 }
 
 .contentWrapperForProductLayout {
   margin: 0 0 24px 0;
-  padding-top: 24px;
+  padding-top: 12px;
 
   @media (--viewportMedium) {
     width: 100%;
     margin: 0 auto 32px auto;
-    padding-top: 32px;
+    padding-top: 16px;
   }
 
   @media (--viewportLarge) {
@@ -682,6 +718,28 @@
 
 .sectionMap {
   composes: listingSection;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+
+  @media (--viewportMedium) {
+    grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+    gap: 24px;
+    align-items: start;
+  }
+}
+
+.pickUpText {
+  display: flex;
+  flex-direction: column;
+}
+
+.pickUpDescription {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--colorText);
 }
 
 .sectionReviews,
@@ -752,25 +810,19 @@
 }
 
 .map {
-  /* Dimensions: Map takes all available space from viewport (excludes action button and section title) */
-  height: calc(100vh - 193px);
+  display: block;
   width: 100%;
-
-  /* Static map: dimensions are 640px */
-  max-width: 640px;
-  max-height: 640px;
-  background-color: #eee;
+  height: 240px;
   padding: 0;
+  overflow: hidden;
+  background-color: var(--colorAccentSubtle);
   border: 0;
+  border-radius: var(--borderRadiusLarge);
   cursor: pointer;
 
-  @media (--viewportMedium) {
-    height: 75vh;
-  }
-
-  @media (--viewportLarge) {
-    height: 417px;
-    margin-bottom: 7px;
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--focusRing);
   }
 }
 

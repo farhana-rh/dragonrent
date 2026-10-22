@@ -81,8 +81,9 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
 - **Search sorting:** newest first, with keyword search. No "Closest first": Sharetribe can't sort
   by distance and search by keyword at the same time.
 - **Distance ("1.2 km away"):** not on the item page; only on search results after a place search.
-- **Approximate location:** turn on fuzzy location (`src/config/configMaps.js`) with the item page
-  work, so the exact address is only shared after the owner accepts.
+- **Approximate location:** fuzzy location is on (`src/config/configMaps.js`). The item page shows
+  only the area and a circle on the map; the address is shown on the booking page after the owner
+  accepts. This is UI-level only: the address is in listing public data.
 
 ### Open (revisit before launch; don't build a final version yet)
 
@@ -115,8 +116,11 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
   logic.
 - Search: `src/containers/SearchPage/` (`SearchFilterChips`, primary/secondary filters in
   `SearchPageWithGrid.js`).
-- Listing page: `src/containers/ListingPage/` (`Section*`, `ListingBreadcrumbs`). Similar listings
-  are fetched by `fetchSimilarListingsThunk` in `ListingPage.duck.js`.
+- Listing page: `src/containers/ListingPage/` (`ListingPageCarousel.js`: `ListingBreadcrumbs`,
+  `SectionListingHeading`, galleries, `SectionPriceTiles`, `SectionOwner`, `SectionAboutRental`,
+  `SectionWhatYouGet`, Details, `SectionMapMaybe` "Pick-up and return", `SectionReviews`). Price
+  tiles and "From €X a day" use `src/util/durationPricing.js`. Similar listings are fetched by
+  `fetchSimilarListingsThunk` in `ListingPage.duck.js`.
 - Topbar: `src/containers/TopbarContainer/Topbar/` (`TopbarDesktop/PrimaryNav`).
 - Dashboard: `src/containers/DashboardPage/` (`/dashboard`, read-only data).
 - Checkout: presentation only in `src/containers/CheckoutPage/` (`CheckoutSteps`, `RentalSummary`).

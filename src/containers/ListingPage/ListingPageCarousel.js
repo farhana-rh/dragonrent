@@ -6,8 +6,7 @@ import classNames from 'classnames';
 // Utils
 import { FormattedMessage } from '../../util/reactIntl';
 import { LISTING_STATE_CLOSED, propTypes } from '../../util/types';
-import { displayPrice } from '../../util/configHelpers';
-import { OFFER, REQUEST, isBookingProcessAlias } from '../../transactions/transaction';
+import { OFFER, REQUEST } from '../../transactions/transaction';
 
 // Global ducks (for Redux actions and thunks)
 import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
@@ -32,6 +31,7 @@ import {
 import {
   LoadingPage,
   ErrorPage,
+  getListingArea,
   handleContactUser,
   handleSubmitInquiry,
   handleNavigateToMakeOfferPage,
@@ -44,15 +44,15 @@ import {
 import SectionGalleryMosaic from './SectionGalleryMosaic/SectionGalleryMosaic';
 import Notifications from './Notifications/Notifications';
 import SectionReviews from './SectionReviews';
-import SectionAuthorMaybe from './SectionAuthorMaybe';
+import SectionOwner from './SectionOwner/SectionOwner';
 import SectionMapMaybe from './SectionMapMaybe';
 import SectionGallery from './SectionGallery';
 import CustomListingFields from './CustomListingFields';
 import ListingBreadcrumbs from './ListingBreadcrumbs/ListingBreadcrumbs';
 import SectionListingHeading from './SectionListingHeading/SectionListingHeading';
 import SectionAboutRental from './SectionAboutRental/SectionAboutRental';
-import SectionAvailability from './SectionAvailability/SectionAvailability';
-import SectionPolicies from './SectionPolicies/SectionPolicies';
+import SectionPriceTiles from './SectionPriceTiles/SectionPriceTiles';
+import SectionWhatYouGet, { INCLUDED_ACCESSORIES_KEY } from './SectionWhatYouGet/SectionWhatYouGet';
 import SectionSimilarListings from './SectionSimilarListings/SectionSimilarListings';
 import ListingPageAccessWrapper from './ListingPageAccessWrapper';
 
@@ -163,16 +163,18 @@ export const ListingPageComponent = props => {
   }
   const unitType = publicData.unitType;
   const isNegotiation = processType === 'negotiation';
-  const isBookable = isBookingProcessAlias(publicData?.transactionProcessAlias);
 
-  // Top-level category for breadcrumbs (from the hosted listing-categories asset)
+  // Category and subcategory for breadcrumbs (from the hosted listing-categories asset)
   const topLevelCategory = (config.categoryConfiguration?.categories || []).find(
     c => c.id === publicData?.categoryLevel1
   );
-  const listingTypeConfig = config.listing.listingTypes.find(
-    lt => lt.listingType === publicData?.listingType
+  const subcategory = (topLevelCategory?.subcategories || []).find(
+    c => c.id === publicData?.categoryLevel2
   );
-  const showPriceInHeading = displayPrice(listingTypeConfig);
+  // "What you get" shows the included accessories, so the Details list leaves them out
+  const detailFieldConfigs = listingConfig.listingFields.filter(
+    fieldConfig => fieldConfig.key !== INCLUDED_ACCESSORIES_KEY
+  );
 
   const commonParams = { params, history, routes: routeConfiguration };
   const onContactUser = handleContactUser({
@@ -261,78 +263,84 @@ export const ListingPageComponent = props => {
               tab: listingTab,
             }}
           />
-          <ListingBreadcrumbs title={title} category={topLevelCategory} />
-          {showListingImage ? (
-            <>
-              {/* Swipeable gallery on mobile and tablet, photo mosaic on desktop */}
-              <SectionGallery
-                listing={currentListing}
-                variantPrefix={config.layout.listingImage.variantPrefix}
-                aspectWidth={config.layout.listingImage.aspectWidth}
-                aspectHeight={config.layout.listingImage.aspectHeight}
-              />
-              <SectionGalleryMosaic
-                listing={currentListing}
-                onManageDisableScrolling={onManageDisableScrolling}
-              />
-            </>
-          ) : null}
+          <div className={css.pageTop}>
+            <ListingBreadcrumbs
+              title={title}
+              category={topLevelCategory}
+              subcategory={subcategory}
+            />
+            <SectionListingHeading
+              richTitle={richTitle}
+              title={title}
+              listing={currentListing}
+              reviews={reviews}
+              reviewsLinkProps={{
+                name: isVariant ? 'ListingPageVariant' : 'ListingPage',
+                params,
+                to: { hash: '#reviews' },
+              }}
+            />
+            {showListingImage ? (
+              <div className={css.galleryArea}>
+                {/* Swipeable gallery on mobile and tablet, photo mosaic on desktop */}
+                <SectionGallery
+                  listing={currentListing}
+                  variantPrefix={config.layout.listingImage.variantPrefix}
+                  aspectWidth={config.layout.listingImage.aspectWidth}
+                  aspectHeight={config.layout.listingImage.aspectHeight}
+                />
+                <SectionGalleryMosaic
+                  listing={currentListing}
+                  onManageDisableScrolling={onManageDisableScrolling}
+                />
+              </div>
+            ) : null}
+          </div>
 
           <div className={css.contentWrapperForProductLayout}>
             <div className={css.mainColumnForProductLayout}>
-              <SectionListingHeading
-                richTitle={richTitle}
-                listing={currentListing}
-                reviews={reviews}
-                authorDisplayName={authorDisplayName}
+              <SectionPriceTiles
+                price={price}
+                publicData={publicData}
                 marketplaceCurrency={config.currency}
-                showPrice={showPriceInHeading}
-                reviewsLinkProps={{
-                  name: isVariant ? 'ListingPageVariant' : 'ListingPage',
-                  params,
-                  to: { hash: '#reviews' },
-                }}
               />
 
-              {showDescription && <SectionAboutRental text={description} />}
-
-              <CustomListingFields
-                publicData={publicData}
-                metadata={metadata}
-                listingFieldConfigs={listingConfig.listingFields}
-                categoryConfiguration={config.categoryConfiguration}
-                intl={intl}
-              />
-
-              {isBookable ? (
-                <SectionAvailability
-                  listing={currentListing}
-                  monthlyTimeSlots={props.monthlyTimeSlots}
-                  firstDayOfWeek={config.localization.firstDayOfWeek}
-                />
-              ) : null}
-
-              <SectionMapMaybe
-                geolocation={geolocation}
-                publicData={publicData}
-                listingId={currentListing.id}
-                mapsConfig={config.maps}
-              />
-              <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
-              <SectionAuthorMaybe
+              <SectionOwner
                 title={title}
                 listing={currentListing}
                 authorDisplayName={authorDisplayName}
+                currentUser={currentUser}
                 onContactUser={onContactUser}
                 isInquiryModalOpen={isAuthenticated && inquiryModalOpen}
                 onCloseInquiryModal={() => setInquiryModalOpen(false)}
                 sendInquiryError={sendInquiryError}
                 sendInquiryInProgress={sendInquiryInProgress}
                 onSubmitInquiry={onSubmitInquiry}
-                currentUser={currentUser}
                 onManageDisableScrolling={onManageDisableScrolling}
               />
-              <SectionPolicies />
+
+              <div className={css.aboutGrid}>
+                {showDescription && <SectionAboutRental text={description} />}
+                <SectionWhatYouGet publicData={publicData} />
+              </div>
+
+              <CustomListingFields
+                publicData={publicData}
+                metadata={metadata}
+                listingFieldConfigs={detailFieldConfigs}
+                categoryConfiguration={config.categoryConfiguration}
+                intl={intl}
+              />
+
+              <SectionMapMaybe
+                geolocation={geolocation}
+                publicData={publicData}
+                listingId={currentListing.id}
+                mapsConfig={config.maps}
+                authorDisplayName={authorDisplayName}
+                area={getListingArea(publicData)}
+              />
+              <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
             </div>
             <div className={css.orderColumnForProductLayout}>
               <OrderPanel

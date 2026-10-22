@@ -719,12 +719,12 @@ export const BookingDatesForm = props => {
               isDaily={isDaily}
               startDateId={`${formId}.bookingStartDate`}
               startDateLabel={intl.formatMessage({
-                id: 'BookingDatesForm.bookingStartTitle',
+                id: 'BookingDatesForm.pickUpTitle',
               })}
               startDatePlaceholderText={startDatePlaceholderText}
               endDateId={`${formId}.bookingEndDate`}
               endDateLabel={intl.formatMessage({
-                id: 'BookingDatesForm.bookingEndTitle',
+                id: 'BookingDatesForm.returnTitle',
               })}
               endDatePlaceholderText={endDatePlaceholderText}
               format={v => {
@@ -851,10 +851,14 @@ export const BookingDatesForm = props => {
                 inProgress={fetchLineItemsInProgress}
                 disabled={submitDisabled}
               >
-                <FormattedMessage id="BookingDatesForm.requestToBook" />
+                <FormattedMessage id="BookingDatesForm.sendRequest" />
               </PrimaryButton>
             </div>
-            <FinePrint payoutDetailsWarning={payoutDetailsWarning} isOwnListing={isOwnListing} />
+            <FinePrint
+              payoutDetailsWarning={payoutDetailsWarning}
+              isOwnListing={isOwnListing}
+              isBookingRequest
+            />
           </Form>
         );
       }}

@@ -1,0 +1,103 @@
+@import '../../../styles/customMediaQueries.css';
+
+.root {
+  composes: listingSection from '../ListingPageSections.module.css';
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.title {
+  composes: listingSectionTitle from '../ListingPageSections.module.css';
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  max-width: 560px;
+  margin: 0;
+  /* Room for the "Best price" tag that sits on the tile's top border */
+  padding: 12px 0 0 0;
+  list-style: none;
+
+  @media (--viewportMedium) {
+    gap: 12px;
+  }
+}
+
+.tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 12px 6px;
+  text-align: center;
+
+  background-color: var(--colorSurface);
+  border: 2px solid var(--colorBorder);
+  border-radius: var(--borderRadiusLarge);
+
+  @media (--viewportMedium) {
+    padding: 16px 12px;
+  }
+}
+
+.bestTile {
+  border-color: var(--marketplaceColor);
+}
+
+.bestPrice {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  height: 30px;
+  padding: 0 12px;
+  white-space: nowrap;
+
+  font-size: 13px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorSuccessDark);
+  background-color: var(--colorSuccessSubtle);
+  border-radius: var(--borderRadius);
+}
+
+.days {
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--colorTextSecondary);
+
+  @media (--viewportMedium) {
+    font-size: 15px;
+  }
+}
+
+.total {
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorText);
+  white-space: nowrap;
+
+  @media (--viewportMedium) {
+    font-size: 24px;
+  }
+}
+
+.perDay {
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--colorTextSecondary);
+}
+
+.note {
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--colorTextSecondary);
+}

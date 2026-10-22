@@ -57,7 +57,7 @@ export const search = {
 // coordinates are still accessible in the HTTP requests and the
 // Redux store.
 export const fuzzy = {
-  enabled: false,
+  enabled: true,
 
   // Amount of maximum offset in meters that is applied to obfuscate
   // the original coordinates. The actual value is random, but the
@@ -70,5 +70,5 @@ export const fuzzy = {
   defaultZoomLevel: 13,
 
   // Color of the circle on the Map component.
-  circleColor: '#c0392b',
+  circleColor: '#2457c5', // DragonRent Cobalt (--marketplaceColor)
 };

@@ -119,6 +119,28 @@ export const getReviewsSummary = reviews => {
   return { average: Math.round((sum / ratings.length) * 10) / 10, count: ratings.length };
 };
 
+/**
+ * Rough area of the listing for the title row and pick-up text, e.g. "Kallio" from
+ * "Kallio, Helsinki, Suomi" or "Helsinki" from "Mannerheimintie 1, 00100 Helsinki, Suomi".
+ * Parts with numbers (street addresses) are skipped, so the exact address is never shown.
+ *
+ * @param {Object} publicData listing's public data
+ * @returns {string|null} area name
+ */
+export const getListingArea = publicData => {
+  const address = publicData?.location?.address;
+  if (typeof address !== 'string') {
+    return null;
+  }
+  const parts = address
+    .split(',')
+    .map(part => part.trim().replace(/^\d{5}\s+/, ''))
+    .filter(part => part.length > 0);
+  // The last part is the country
+  const candidates = parts.length > 1 ? parts.slice(0, -1) : parts;
+  return candidates.find(part => !/\d/.test(part)) || null;
+};
+
 export const listingImages = (listing, variantName) =>
   (listing.images || [])
     .map(image => {

@@ -198,6 +198,36 @@ export const getSimilarListingsQueryParams = (listing, config) => {
   };
 };
 
+/**
+ * A listings query response without the given listing, its included images and its author.
+ * Stored entities are merged one level deep, so a sparse copy of these would replace the
+ * richer data the listing page loaded (image variants, the author's profile).
+ *
+ * @param {Object} response SDK response with data.data and data.included
+ * @param {Object} listing listing to leave out
+ * @returns {Object} response with the same shape
+ */
+export const withoutListing = (response, listing) => {
+  const listingId = listing?.id?.uuid;
+  const { data = [], included = [] } = response?.data || {};
+  const current = data.find(l => l.id.uuid === listingId);
+  const currentImageIds = new Set(
+    (current?.relationships?.images?.data || []).map(img => img.id.uuid)
+  );
+  const authorId = listing?.author?.id?.uuid;
+  const isCurrentListingData = entity =>
+    (entity.type === 'image' && currentImageIds.has(entity.id.uuid)) ||
+    (entity.type === 'user' && entity.id.uuid === authorId);
+  return {
+    ...response,
+    data: {
+      ...response.data,
+      data: data.filter(l => l.id.uuid !== listingId),
+      included: included.filter(entity => !isCurrentListingData(entity)),
+    },
+  };
+};
+
 export const fetchSimilarListingsThunk = createAsyncThunk(
   'ListingPage/fetchSimilarListings',
   ({ listing, config }, { dispatch, rejectWithValue, extra: sdk }) => {
@@ -208,11 +238,12 @@ export const fetchSimilarListingsThunk = createAsyncThunk(
     return sdk.listings
       .query(queryParams)
       .then(response => {
-        dispatch(addMarketplaceEntities(response));
-        return response.data.data
-          .map(l => l.id)
-          .filter(id => id.uuid !== listing.id.uuid)
-          .slice(0, SIMILAR_LISTINGS_COUNT);
+        // The results may include the current listing, with only card-sized image variants.
+        // Storing it would replace the variants the listing page loaded for its gallery, so
+        // the current listing and its images are left out before the results are stored.
+        const similarResponse = withoutListing(response, listing);
+        dispatch(addMarketplaceEntities(similarResponse));
+        return similarResponse.data.data.map(l => l.id).slice(0, SIMILAR_LISTINGS_COUNT);
       })
       .catch(e => {
         log.error(e, 'similar-listings-fetch-failed', { listingId: listing.id.uuid });

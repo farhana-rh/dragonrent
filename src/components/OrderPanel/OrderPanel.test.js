@@ -268,15 +268,15 @@ describe('OrderPanel', () => {
     });
     await waitFor(() => {
       expect(queryAllByText('title!')).toHaveLength(2);
-      expect(queryAllByText('OrderPanel.price')).toHaveLength(1);
-      expect(queryAllByText('OrderPanel.priceInMobileCTA')).toHaveLength(1);
-      expect(queryAllByText('OrderPanel.perUnit')).toHaveLength(1);
+      // Daily price ("€X a day") in the panel and in the mobile bar
+      expect(queryAllByText('OrderPanel.perDayText')).toHaveLength(2);
+      expect(queryAllByText('OrderPanel.pickDatesHint')).toHaveLength(1);
       expect(queryAllByText('OrderPanel.author')).toHaveLength(2);
-      expect(getByText('BookingDatesForm.bookingStartTitle')).toBeInTheDocument();
-      expect(getByText('BookingDatesForm.bookingEndTitle')).toBeInTheDocument();
-      expect(getByText('BookingDatesForm.requestToBook')).toBeInTheDocument();
-      expect(getByText('OrderPanel.youWontBeChargedInfo')).toBeInTheDocument();
-      expect(getByText('OrderPanel.ctaButtonMessageBooking')).toBeInTheDocument();
+      expect(getByText('BookingDatesForm.pickUpTitle')).toBeInTheDocument();
+      expect(getByText('BookingDatesForm.returnTitle')).toBeInTheDocument();
+      expect(getByText('BookingDatesForm.sendRequest')).toBeInTheDocument();
+      expect(getByText('OrderPanel.chargedOnlyIfAccepted')).toBeInTheDocument();
+      expect(getByText('OrderPanel.ctaChooseDates')).toBeInTheDocument();
     });
   });
 
@@ -322,10 +322,10 @@ describe('OrderPanel', () => {
       expect(queryAllByText('OrderPanel.priceInMobileCTA')).toHaveLength(1);
       expect(queryAllByText('OrderPanel.perUnit')).toHaveLength(1);
       expect(queryAllByText('OrderPanel.author')).toHaveLength(2);
-      expect(getByText('BookingDatesForm.bookingStartTitle')).toBeInTheDocument();
-      expect(getByText('BookingDatesForm.bookingEndTitle')).toBeInTheDocument();
-      expect(getByText('BookingDatesForm.requestToBook')).toBeInTheDocument();
-      expect(getByText('OrderPanel.youWontBeChargedInfo')).toBeInTheDocument();
+      expect(getByText('BookingDatesForm.pickUpTitle')).toBeInTheDocument();
+      expect(getByText('BookingDatesForm.returnTitle')).toBeInTheDocument();
+      expect(getByText('BookingDatesForm.sendRequest')).toBeInTheDocument();
+      expect(getByText('OrderPanel.chargedOnlyIfAccepted')).toBeInTheDocument();
       expect(getByText('OrderPanel.ctaButtonMessageBooking')).toBeInTheDocument();
     });
   });

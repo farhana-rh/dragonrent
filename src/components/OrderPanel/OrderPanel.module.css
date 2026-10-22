@@ -23,11 +23,11 @@
 
   /* Desktop: the booking card */
   @media (--viewportLarge) {
-    padding: 24px;
+    padding: 28px;
     background-color: var(--colorSurface);
     border: 1px solid var(--colorBorder);
     border-radius: var(--borderRadiusLarge);
-    box-shadow: var(--boxShadowCard);
+    box-shadow: var(--boxShadowRaised);
     margin-top: 0;
     margin-bottom: 0;
   }
@@ -81,6 +81,54 @@
   font-size: 15px;
   font-weight: var(--fontWeightRegular);
   color: var(--colorTextMuted);
+}
+
+/* DragonRent daily price: "From €8 a day" */
+.dailyPrice {
+  margin: 0 24px;
+
+  @media (--viewportMedium) {
+    margin: 0;
+  }
+}
+
+.dailyPriceInCTA {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  margin-right: 12px;
+}
+
+.dailyPriceLine,
+.pickDatesHint {
+  margin: 0;
+  padding: 0;
+}
+
+.dailyPriceLine {
+  font-size: 16px;
+  line-height: 30px;
+  color: var(--colorText);
+}
+
+.dailyPriceValue {
+  font-size: 24px;
+  font-weight: var(--fontWeightSemiBold);
+}
+
+.dailyPriceValueInCTA {
+  font-size: 20px;
+  font-weight: var(--fontWeightSemiBold);
+}
+
+.dailyPerUnit {
+  font-weight: var(--fontWeightRegular);
+}
+
+.pickDatesHint {
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--colorTextSecondary);
 }
 
 .author {
@@ -180,10 +228,13 @@
   bottom: 0;
   left: 0;
   width: 100vw;
-  padding: 12px 16px;
+  padding: 12px 16px 18px 16px;
   align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   background-color: var(--colorSurface);
   border-top: 1px solid var(--colorBorder);
+  box-shadow: var(--boxShadowBottomBar);
   display: flex;
 
   /* Contain repainting to this component only */
@@ -197,6 +248,14 @@
   @media (--viewportLarge) {
     display: none;
   }
+}
+
+/* Mobile bar button: as wide as its label, next to the price */
+.ctaButton {
+  width: auto;
+  min-height: 52px;
+  padding: 0 24px;
+  white-space: nowrap;
 }
 
 .priceContainerInCTA,

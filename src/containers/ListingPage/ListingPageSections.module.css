@@ -4,15 +4,15 @@
    Kept separate from ListingPage.module.css so that section components don't pull the page's
    stylesheet into other chunks (which causes CSS ordering conflicts). */
 
-/* A content block in the main column, separated by a hairline */
+/* A content block in the main column. Blocks are separated by space only (Listing mockups):
+   32px between blocks on phones, 40px on desktop. */
 .listingSection {
   margin: 0;
-  padding: 24px 16px;
-  border-top: 1px solid var(--colorBorder);
+  padding: 16px;
   scroll-margin-top: calc(var(--topbarHeight) + 24px);
 
   @media (--viewportMedium) {
-    padding: 32px 0;
+    padding: 20px 0;
     scroll-margin-top: calc(var(--topbarHeightDesktop) + 24px);
   }
 }

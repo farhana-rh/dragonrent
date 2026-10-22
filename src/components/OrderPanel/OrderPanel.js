@@ -23,6 +23,7 @@ import {
   LISTING_STATE_PUBLISHED,
 } from '../../util/types';
 import { formatMoney } from '../../util/currency';
+import { getDurationPriceTiles, getLowestDailyPrice } from '../../util/durationPricing';
 import { createSlug, parse, stringify } from '../../util/urlHelpers';
 import { userDisplayNameAsString } from '../../util/data';
 import {
@@ -140,6 +141,39 @@ const handleSubmit = (isOwnListing, isClosed, isDirectSubmit, onSubmit, history,
 
 const dateFormattingOptions = { month: 'short', day: 'numeric', weekday: 'short' };
 
+/**
+ * DragonRent daily price (Listing mockups): "From €8 a day" when the owner has set longer-rental
+ * prices, otherwise "€12 a day". In the mobile bar, a hint to pick dates is shown under it.
+ */
+const DailyPrice = props => {
+  const { price, publicData, intl, inCTA } = props;
+  const hasDurationPrices = getDurationPriceTiles(price, publicData).length > 1;
+  const lowestDailyPrice = getLowestDailyPrice(price, publicData);
+  const formattedPrice = formatMoney(intl, lowestDailyPrice);
+
+  return (
+    <div className={inCTA ? css.dailyPriceInCTA : css.dailyPrice}>
+      <p className={css.dailyPriceLine}>
+        <span className={inCTA ? css.dailyPriceValueInCTA : css.dailyPriceValue}>
+          {hasDurationPrices ? (
+            <FormattedMessage id="OrderPanel.fromPrice" values={{ price: formattedPrice }} />
+          ) : (
+            formattedPrice
+          )}
+        </span>{' '}
+        <span className={css.dailyPerUnit}>
+          <FormattedMessage id="OrderPanel.perDayText" />
+        </span>
+      </p>
+      {inCTA ? (
+        <p className={css.pickDatesHint}>
+          <FormattedMessage id="OrderPanel.pickDatesHint" />
+        </p>
+      ) : null}
+    </div>
+  );
+};
+
 const PriceMaybe = props => {
   const {
     price,
@@ -158,6 +192,14 @@ const PriceMaybe = props => {
 
   if (!showPrice || !price || (isPriceVariationsInUse && hasMultiplePriceVariants)) {
     return null;
+  }
+
+  const isDailyPrice =
+    unitType === 'day' && !isPriceVariationsInUse && price.currency === marketplaceCurrency;
+  if (isDailyPrice) {
+    return (
+      <DailyPrice price={price} publicData={publicData} intl={intl} inCTA={showCurrencyMismatch} />
+    );
   }
 
   // Get formatted price or currency code if the currency does not match with marketplace currency
@@ -601,6 +643,7 @@ const OrderPanel = props => {
         ) : (
           <PrimaryButton
             id={ORDER_PANEL_SUBMIT_BUTTON_ID}
+            className={css.ctaButton}
             onClick={handleSubmit(
               isOwnListing,
               isClosed,
@@ -611,7 +654,9 @@ const OrderPanel = props => {
             )}
             disabled={isOutOfStock}
           >
-            {isBooking ? (
+            {isBooking && unitType === 'day' ? (
+              <FormattedMessage id="OrderPanel.ctaChooseDates" />
+            ) : isBooking ? (
               <FormattedMessage id="OrderPanel.ctaButtonMessageBooking" />
             ) : isOutOfStock ? (
               <FormattedMessage id="OrderPanel.ctaButtonMessageNoStock" />

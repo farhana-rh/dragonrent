@@ -2,9 +2,9 @@ import { types as sdkTypes } from '../../util/sdkLoader';
 import { getDefaultConfiguration } from '../../util/testHelpers';
 import { createListing } from '../../util/testData';
 
-import { getReviewsSummary } from './ListingPage.shared';
-import { getSimilarListingsQueryParams } from './ListingPage.duck';
-import { getMonthWeeks } from './SectionAvailability/SectionAvailability';
+import { getListingArea, getReviewsSummary } from './ListingPage.shared';
+import { getSimilarListingsQueryParams, withoutListing } from './ListingPage.duck';
+import { splitIncludedItems } from './SectionWhatYouGet/SectionWhatYouGet';
 
 const { UUID } = sdkTypes;
 
@@ -50,20 +50,68 @@ describe('getSimilarListingsQueryParams', () => {
   });
 });
 
-describe('getMonthWeeks', () => {
-  it('lays out a month starting on Monday', () => {
-    // October 2026 starts on a Thursday
-    const weeks = getMonthWeeks('2026-10', 'Europe/Helsinki', 1);
-    expect(weeks).toHaveLength(5);
-    expect(weeks[0].slice(0, 3)).toEqual([null, null, null]);
-    expect(weeks[0][3]).toBeInstanceOf(Date);
-    // 31 days in total
-    expect(weeks.flat().filter(Boolean)).toHaveLength(31);
-    weeks.forEach(week => expect(week).toHaveLength(7));
+describe('withoutListing', () => {
+  const ref = (type, id) => ({ id: new UUID(id), type });
+  const listing = {
+    id: new UUID('current'),
+    author: { id: new UUID('owner') },
+  };
+  const response = {
+    data: {
+      data: [
+        {
+          ...ref('listing', 'current'),
+          relationships: { images: { data: [ref('image', 'img1')] } },
+        },
+        { ...ref('listing', 'other'), relationships: { images: { data: [ref('image', 'img2')] } } },
+      ],
+      included: [
+        ref('image', 'img1'),
+        ref('image', 'img2'),
+        ref('user', 'owner'),
+        ref('user', 'u2'),
+      ],
+    },
+  };
+
+  it("drops the current listing, its images and its owner so they don't overwrite page data", () => {
+    const result = withoutListing(response, listing);
+    expect(result.data.data.map(l => l.id.uuid)).toEqual(['other']);
+    expect(result.data.included.map(e => e.id.uuid)).toEqual(['img2', 'u2']);
+  });
+});
+
+describe('getListingArea', () => {
+  const area = address => getListingArea({ location: { address } });
+
+  it('returns the first named place, without the country', () => {
+    expect(area('Kallio, Helsinki, Suomi')).toEqual('Kallio');
+    expect(area('Helsinki, Uudenmaan maakunta, Suomi')).toEqual('Helsinki');
   });
 
-  it('lays out a month starting on Sunday', () => {
-    const weeks = getMonthWeeks('2026-10', 'Europe/Helsinki', 0);
-    expect(weeks[0].slice(0, 4)).toEqual([null, null, null, null]);
+  it('skips the street address and postal code', () => {
+    expect(area('Mannerheimintie 1, 00100 Helsinki, Suomi')).toEqual('Helsinki');
+  });
+
+  it('returns null without an address', () => {
+    expect(getListingArea({})).toEqual(null);
+    expect(area('Fleminginkatu 1')).toEqual(null);
+  });
+});
+
+describe('splitIncludedItems', () => {
+  it('splits on commas, semicolons and line breaks', () => {
+    expect(splitIncludedItems('2 batteries, charger;  carry case\nbits')).toEqual([
+      '2 batteries',
+      'charger',
+      'carry case',
+      'bits',
+    ]);
+  });
+
+  it('returns an empty list for empty values', () => {
+    expect(splitIncludedItems('')).toEqual([]);
+    expect(splitIncludedItems(undefined)).toEqual([]);
+    expect(splitIncludedItems(' , ')).toEqual([]);
   });
 });

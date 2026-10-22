@@ -13,10 +13,8 @@
 
 .grid {
   display: grid;
-  gap: 6px;
+  gap: 12px;
   height: 420px;
-  overflow: hidden;
-  border-radius: var(--borderRadiusLarge);
 }
 
 /* Layouts by number of photos */
@@ -30,22 +28,7 @@
   grid-template-columns: 2fr 1fr;
   grid-template-rows: 1fr 1fr;
 }
-.count4 {
-  grid-template-columns: 2fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-
-  & .tile:nth-child(4) {
-    grid-column: 2 / span 2;
-  }
-}
-.count5 {
-  grid-template-columns: 2fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-}
-
-.count3 .mainTile,
-.count4 .mainTile,
-.count5 .mainTile {
+.count3 .mainTile {
   grid-row: 1 / span 2;
 }
 
@@ -59,9 +42,9 @@
   padding: 0;
   overflow: hidden;
 
-  background-color: var(--colorSurfaceSubtle);
+  background-color: var(--colorAccentSubtle);
   border: none;
-  border-radius: 0;
+  border-radius: var(--borderRadiusLarge);
   cursor: pointer;
 
   &:hover .image {
@@ -101,21 +84,22 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  height: 36px;
-  padding: 0 14px;
+  height: 48px;
+  padding: 0 18px;
 
   font-family: var(--fontFamily);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: var(--fontWeightSemiBold);
   color: var(--colorText);
 
   background-color: var(--colorSurface);
-  border: 1px solid var(--colorBorderStrong);
+  border: none;
   border-radius: var(--borderRadiusMedium);
+  box-shadow: var(--boxShadowRaised);
   cursor: pointer;
 
   &:hover {
-    border-color: var(--colorText);
+    color: var(--marketplaceColor);
   }
 
   &:focus-visible {

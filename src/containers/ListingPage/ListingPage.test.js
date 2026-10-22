@@ -252,8 +252,8 @@ describe('ListingPage variants', () => {
       expect(getByText('Cat')).toBeInTheDocument();
       expect(getByText('Cat 1')).toBeInTheDocument();
 
-      // Has details location title
-      expect(getByRole('heading', { name: 'ListingPage.locationTitle' })).toBeInTheDocument();
+      // Has pick-up and return (location) title
+      expect(getByRole('heading', { name: 'ListingPage.pickUpTitle' })).toBeInTheDocument();
 
       // Has details reviews title
       const reviewsTitle = getByRole('heading', { name: 'ListingPage.reviewsSummary' });
@@ -310,8 +310,8 @@ describe('ListingPage variants', () => {
       expect(getByText('Cat')).toBeInTheDocument();
       expect(getByText('Cat 1')).toBeInTheDocument();
 
-      // Has details location title
-      expect(getByRole('heading', { name: 'ListingPage.locationTitle' })).toBeInTheDocument();
+      // Has pick-up and return (location) title
+      expect(getByRole('heading', { name: 'ListingPage.pickUpTitle' })).toBeInTheDocument();
 
       // Has details reviews title
       const reviewsTitle = getByRole('heading', { name: 'ListingPage.reviewsSummary' });
@@ -322,12 +322,9 @@ describe('ListingPage variants', () => {
       expect(sectionReviews.getByText('June 2023')).toBeInTheDocument();
       expect(sectionReviews.getAllByTitle('4/5')).toHaveLength(2);
 
-      // Has details provider/author title
-      expect(getByRole('heading', { name: 'ListingPage.aboutProviderTitle' })).toBeInTheDocument();
-      // Has link to provider's profile
-      expect(getByRole('link', { name: 'UserCard.viewProfileLink' })).toBeInTheDocument();
-      // Has button to contact provider
-      expect(getByRole('button', { name: 'UserCard.contactUser' })).toBeInTheDocument();
+      // Has the owner card with a button to ask the owner a question
+      expect(getByRole('heading', { name: 'ListingPage.ownsThisItem' })).toBeInTheDocument();
+      expect(getByRole('button', { name: 'ListingPage.askOwner' })).toBeInTheDocument();
     });
   });
 });

@@ -1,14 +1,12 @@
 @import '../../../styles/customMediaQueries.css';
 
+/* Phones go straight to the photos (Listing mockup) */
 .root {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 12px 16px;
+  display: none;
 
   @media (--viewportMedium) {
-    padding: 16px 0;
+    display: block;
+    padding: 24px 0 16px 0;
   }
 }
 
@@ -27,25 +25,28 @@
   align-items: center;
   min-width: 0;
   padding: 0;
-  font-size: 14px;
-  line-height: 20px;
-  color: var(--colorTextMuted);
+  font-size: 15px;
+  line-height: 24px;
+  color: var(--colorTextSecondary);
 
   &:not(:last-child)::after {
     content: '›';
     margin: 0 8px;
-    color: var(--colorTextMuted);
-  }
-
-  @media (--viewportMedium) {
-    padding: 0;
+    color: var(--colorTextSecondary);
   }
 }
 
 .link {
   color: var(--colorTextSecondary);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+
+  &:hover {
+    color: var(--marketplaceColor);
+  }
+}
+
+.lastLink {
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorText);
 
   &:hover {
     color: var(--marketplaceColor);
@@ -57,53 +58,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  color: var(--colorText);
-}
-
-.actions {
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-}
-
-.shareButton {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 8px;
-  margin: 0;
-
-  font-family: var(--fontFamily);
-  font-size: 14px;
-  line-height: 20px;
   font-weight: var(--fontWeightSemiBold);
   color: var(--colorText);
-
-  background: none;
-  border: none;
-  border-radius: var(--borderRadiusMedium);
-  cursor: pointer;
-
-  & span {
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-
-  &:hover {
-    color: var(--marketplaceColor);
-  }
-
-  &:focus-visible {
-    outline: none;
-    box-shadow: var(--focusRing);
-  }
-}
-
-.shareStatus {
-  font-size: 13px;
-  color: var(--colorSuccess);
-
-  &:empty {
-    display: none;
-  }
 }

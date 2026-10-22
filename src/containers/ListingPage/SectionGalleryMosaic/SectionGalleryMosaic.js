@@ -10,7 +10,8 @@ import ImageCarousel from '../ImageCarousel/ImageCarousel';
 import css from './SectionGalleryMosaic.module.css';
 
 const SHOW_ALL_PHOTOS_BUTTON_ID = 'showAllPhotosButton';
-const MAX_TILES = 5;
+// One large photo and two small ones (ListingDesktop mockup)
+const MAX_TILES = 3;
 const IMAGE_VARIANTS = ['scaled-small', 'scaled-medium', 'scaled-large', 'scaled-xlarge'];
 // Same sizes as ListingImageGallery's main slide, so the browser can reuse the image it
 // already downloaded for the (hidden on desktop) mobile gallery.
@@ -30,8 +31,8 @@ const IconGrid = () => (
 );
 
 /**
- * Desktop photo mosaic: one large photo and up to four smaller ones.
- * "Show all photos" opens the full image carousel in a modal.
+ * Desktop photo mosaic: one large photo and up to two smaller ones.
+ * "See all photos" opens the full image carousel in a modal.
  *
  * @component
  * @param {Object} props
@@ -84,7 +85,7 @@ const SectionGalleryMosaic = props => {
         onClick={openCarousel}
       >
         <IconGrid />
-        <FormattedMessage id="ListingPage.showAllPhotos" values={{ count: images.length }} />
+        <FormattedMessage id="ListingPage.seeAllPhotos" values={{ count: images.length }} />
       </button>
 
       <Modal

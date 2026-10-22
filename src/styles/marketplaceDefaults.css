@@ -154,6 +154,7 @@
   --boxShadowFilterButton: 0 4px 16px 0 rgba(0, 0, 0, 0.2);
   --boxShadowCard: 0 4px 14px rgba(23, 43, 77, 0.06); /* clickable cards only */
   --boxShadowRaised: 0 14px 40px rgba(23, 43, 77, 0.08); /* search box, booking panel */
+  --boxShadowBottomBar: 0 -8px 24px rgba(23, 43, 77, 0.08); /* fixed bars at the bottom of the screen */
 
   /* ================ Z-index base levels ================ */
 

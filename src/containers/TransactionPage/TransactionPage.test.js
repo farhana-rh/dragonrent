@@ -1331,15 +1331,14 @@ describe('TransactionPage', () => {
 
         // Listing's title (side card)
         expect(getAllByText('listing-item title')).toHaveLength(3);
-        // Default unit price is $55
-        expect(getAllByText('OrderPanel.price')).toHaveLength(1);
-        expect(getAllByText('OrderPanel.priceInMobileCTA')).toHaveLength(1);
-        expect(getAllByText('OrderPanel.perUnit')).toHaveLength(1);
+        // Daily price ("€X a day") in the panel and in the mobile bar
+        expect(getAllByText('OrderPanel.perDayText')).toHaveLength(2);
+        expect(getAllByText('OrderPanel.pickDatesHint')).toHaveLength(1);
 
-        // BookingTimeForm inputs
-        expect(getByText('BookingDatesForm.bookingStartTitle')).toBeInTheDocument();
-        expect(getByText('BookingDatesForm.bookingEndTitle')).toBeInTheDocument();
-        expect(getByText('BookingDatesForm.requestToBook')).toBeInTheDocument();
+        // BookingDatesForm inputs
+        expect(getByText('BookingDatesForm.pickUpTitle')).toBeInTheDocument();
+        expect(getByText('BookingDatesForm.returnTitle')).toBeInTheDocument();
+        expect(getByText('BookingDatesForm.sendRequest')).toBeInTheDocument();
       });
     });
 

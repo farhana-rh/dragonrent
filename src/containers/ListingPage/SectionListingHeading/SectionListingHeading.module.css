@@ -1,11 +1,28 @@
 @import '../../../styles/customMediaQueries.css';
 
 .root {
-  padding: 0 16px 24px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px 16px;
+  padding: 24px 16px 0 16px;
 
   @media (--viewportMedium) {
-    padding: 0 0 32px 0;
+    padding: 24px 0 0 0;
   }
+
+  @media (--viewportLarge) {
+    padding: 0 0 24px 0;
+  }
+}
+
+.titleColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  flex: 1 1 320px;
 }
 
 .title {
@@ -18,31 +35,47 @@
   color: var(--colorText);
 
   @media (--viewportMedium) {
-    font-size: 36px;
-    line-height: 44px;
+    font-size: 32px;
+    line-height: 36px;
   }
 }
 
 .meta {
   display: flex;
+  flex-direction: column;
+  gap: 6px 20px;
+
+  @media (--viewportMedium) {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+.rating,
+.area {
+  display: flex;
   align-items: center;
-  gap: 6px;
-  margin: 8px 0 0 0;
+  gap: 8px;
+  margin: 0;
   padding: 0;
   font-size: 15px;
   line-height: 24px;
+  color: var(--colorText);
+}
+
+.area {
   color: var(--colorTextSecondary);
 }
 
 .star {
-  width: 14px;
-  height: 14px;
-  fill: var(--colorText);
+  width: 18px;
+  height: 18px;
+  fill: var(--colorAttention);
+  stroke: var(--colorAttentionDark);
 }
 
-.rating {
+.ratingValue {
   font-weight: var(--fontWeightSemiBold);
-  color: var(--colorText);
 }
 
 .reviewsLink {
@@ -55,64 +88,36 @@
   }
 }
 
-/* The booking panel shows the price on desktop */
-.price {
-  margin: 12px 0 0 0;
-  padding: 0;
-  font-size: 15px;
-  line-height: 24px;
-  color: var(--colorTextMuted);
-
-  @media (--viewportLarge) {
-    display: none;
-  }
+.icon {
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
-.priceValue {
-  font-size: 22px;
-  font-weight: var(--fontWeightBold);
-  color: var(--colorText);
-}
-
-.perUnit {
-  color: var(--colorTextMuted);
-}
-
-.host {
+/* Share: secondary (outline) button */
+.share {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-top: 18px;
-  padding-top: 18px;
-  border-top: 1px solid var(--colorBorder);
-
-  @media (--viewportMedium) {
-    margin-top: 24px;
-    padding-top: 24px;
-  }
 }
 
-.avatar {
-  flex-shrink: 0;
-  width: 48px;
-  height: 48px;
+.shareButton {
+  composes: buttonSecondaryInline from global;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 18px;
 }
 
-.hostText {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-.hostName {
-  font-size: 15px;
-  line-height: 22px;
-  font-weight: var(--fontWeightSemiBold);
-  color: var(--colorText);
-}
-
-.hostSince {
+.shareStatus {
   font-size: 13px;
-  line-height: 18px;
-  color: var(--colorTextMuted);
+  color: var(--colorSuccessDark);
+
+  &:empty {
+    display: none;
+  }
 }

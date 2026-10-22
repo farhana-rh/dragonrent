@@ -40,7 +40,7 @@ const SectionAboutRental = props => {
   return (
     <section className={css.root} aria-labelledby="listing-about-title">
       <Heading as="h2" rootClassName={css.title} id="listing-about-title">
-        <FormattedMessage id="ListingPage.aboutRentalTitle" />
+        <FormattedMessage id="ListingPage.aboutItemTitle" />
       </Heading>
       <p
         id="listing-description"
