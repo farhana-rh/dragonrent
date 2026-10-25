@@ -102,7 +102,10 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
 
 - **Days 0–9 code done**, all on `feature/redesign`, pushed to GitHub 23 Oct (not merged to `main`;
   production deploys from `main`, so merge by pull request after the signed-in test run, with the
-  user's approval). Staging may deploy from `main`: check which branch Render uses.
+  user's approval).
+- **Staging (25 Oct):** https://dragonrent.onrender.com, Render service "dragonrent" (Free
+  instance: sleeps when idle, first load up to a minute). Deploys from `feature/redesign`, so a
+  push to that branch updates what the client sees. Uses the Dev marketplace and Stripe test keys.
 - **Day 9:** 9a cookie banner, 9b Sentry, 9c legal drafts done. 9d test run: signed-out pages done
   (no overflow, Geist everywhere; fixed 36px phone inputs → 48px and added a Show/Hide password
   button in `FieldTextInput`). **Signed-in flows not tested yet**: waiting for
