@@ -89,7 +89,8 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
 
 ### Open (revisit before launch; don't build a final version yet)
 
-- **Fees.** The mockups show a renter service fee (€30 → €33) and "after our 10% fee" for owners
+- **Fees (25 Oct: owner pays, renter pays nothing; percentage to confirm, Console has 15%).**
+  The mockups show a renter service fee (€30 → €33) and "after our 10% fee" for owners
   (€30 → you get €27). Console is currently owner 15% (min €1), renter 0%. Until decided, never
   hard-code a fee percentage or a service-fee line in the UI: show what the line items actually
   contain, and keep fee wording in translation keys so it can change in one place.
@@ -143,8 +144,12 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
 - **Booking emails don't show the duration discount.** `ext/transaction-processes/default-booking/
   templates` (new-request, accepted-request, money-paid) only render known line items, so a
   discounted rental shows "€15 × 3 days = €45" then "Total €30". Fix = add a
-  `line-item/duration-discount` row to those templates, which is a transaction process change: needs
-  the user's approval, then a push with the Sharetribe CLI. Not approved yet.
+  `line-item/duration-discount` row to those templates, which is a transaction process change.
+  **Approved 25 Oct; rows added** ("Longer rental discount", keys `*.DurationDiscountLabel`). Still
+  to do: pull the Dev process, check it matches the repo, push it with the Sharetribe CLI and move
+  the `release-1` alias (then the same in Live).
+- **Analytics (25 Oct): yes**, tool to pick (Plausible or Google Analytics; both supported by env
+  variables). Commission: the user leans to 10% (owner only); Console still has 15%.
 - **Console list** (handed over 22 Oct; status from the user 25 Oct). Done in Dev: branding colour
   #2457C5, listing thumbnail aspect 4:3 (Design → Layout), localization locale English, marketplace
   texts (Inbox → Messages, "Post a new listing" → "Lend an item", Owner/Renter keys). Confirmed:
@@ -168,7 +173,7 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
   (`docs/CONSOLE-SETUP.md` section 9). Analytics loads only after cookie consent
   (`src/util/cookieConsent.js`); no analytics ID is set yet.
 - **Test logins** for headless screenshots go in `.env.test-accounts` (git-ignored):
-  `RENTER_EMAIL`, `RENTER_PASSWORD`, `OWNER_EMAIL`, `OWNER_PASSWORD`. Not created yet; the wizard,
+  `RENTER_EMAIL`, `RENTER_PASSWORD`, `OWNER_EMAIL`, `OWNER_PASSWORD`. Created 25 Oct; the wizard,
   checkout, booking and Messages pages haven't been checked in a browser.
 
 ## Console and hosted assets
