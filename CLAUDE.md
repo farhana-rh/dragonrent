@@ -142,11 +142,17 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
   discounted rental shows "€15 × 3 days = €45" then "Total €30". Fix = add a
   `line-item/duration-discount` row to those templates, which is a transaction process change: needs
   the user's approval, then a push with the Sharetribe CLI. Not approved yet.
-- **Console list** (handed over 22 Oct): branding colour #2457C5, image aspect 4:3, localization
-  locale (currently `fi`, so English pages format dates and prices in Finnish), footer, marketplace
-  texts (Inbox → Messages, "Post a new listing" → "Lend an item", Provider/Customer → Owner/Renter
-  keys) and booking email texts. Found in the 23 Oct test run: set the first section title of each
-  `/p/…` Console page as H1, and label the sign-up phone field "(optional)".
+- **Console list** (handed over 22 Oct; status from the user 25 Oct). Done in Dev: branding colour
+  #2457C5, listing thumbnail aspect 4:3 (Design → Layout), localization locale English, marketplace
+  texts (Inbox → Messages, "Post a new listing" → "Lend an item", Owner/Renter keys). Confirmed:
+  the "Included accessories" field id is `includedAccessories`. Still to do:
+  - **Sign-up phone "(optional)":** the phone isn't a user field (User fields is empty); it's a
+    built-in field set under User types. Change its label with the marketplace texts
+    `SignupForm.phoneNumberLabel` and `ConfirmSignupForm.phoneNumberLabel`.
+  - **Pages (not confirmed yet):** legal and help texts aren't approved, so they aren't pasted;
+    first section title of each `/p/…` page as H1 when they are.
+  - **Later:** footer links (Cancellation policy, Damage policy, FAQ) and booking email texts
+    (Owner/Renter wording).
 - **Test data** (in the app as the owner): close "aaa"/"aaaa"; drill 3-day €30 / 7-day €60; drill
   availability time zone is `Asia/Dhaka` and only Mondays are open: set Europe/Helsinki and open
   more days.
