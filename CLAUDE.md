@@ -109,8 +109,17 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
   push to that branch updates what the client sees. Uses the Dev marketplace and Stripe test keys.
 - **Day 9:** 9a cookie banner, 9b Sentry, 9c legal drafts done. 9d test run: signed-out pages done
   (no overflow, Geist everywhere; fixed 36px phone inputs → 48px and added a Show/Hide password
-  button in `FieldTextInput`). **Signed-in flows not tested yet**: waiting for
-  `.env.test-accounts`. Do this first when it exists.
+  button in `FieldTextInput`). **Signed-in run (25 Oct, local, headless Chrome):** all pages load
+  at 375 and 1280 px with no overflow or console errors. Passed: dashboard, listings, Messages,
+  account pages; Lend an item steps 1–5 (price validation and hints, Finland-only address, schedule)
+  up to Publish, which asks for payouts (the +owner account has no Stripe yet; a draft "TEST – Bosch
+  hammer drill" is left on it); renter books the drill (dates → checkout → 4242 card → "Request
+  sent!" → message), order `6addcc38`, waiting for farhana04 to answer. Not yet tested: Stripe
+  payout onboarding, accept/decline screens, 3-D Secure card, reviews, a 3+ day booking (discount).
+  Found: availability schedule defaults to the browser time zone with no days ticked (cause of the
+  drill's Asia/Dhaka/Mondays); Messages tab titles in Console hold both texts ("As a renter /
+  Messages: As a renter"); footer placeholder slogan and "© Your marketplace"; logo PNG has a
+  checkerboard baked in.
 - **Day 10:** prep only (`docs/LAUNCH.md`, `docs/PHASE2.md`, server-rendering fix). Live plan,
   live Stripe, production Render service, domain and the real-card smoke test are the user's.
   DragonRent is not live.
