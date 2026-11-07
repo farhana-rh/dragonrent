@@ -104,8 +104,8 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
 ## Status (7 Nov)
 
 - **Not live.** The planned launch (28 Oct) has passed. Stripe live account verified (6 Nov).
-  Fees and cancellation rule decided (7 Nov, see above). Uncommitted on `feature/redesign`
-  (7 Nov): fix for the phone hydration warning React #418 (`SearchPageWithMap.js` renders the map
+  Fees and cancellation rule decided (7 Nov, see above). Pushed to `feature/redesign` on 8 Nov
+  (so staging has it): fix for the phone hydration warning React #418 (`SearchPageWithMap.js` renders the map
   only after mount; `Topbar.js` renders as signed out until mounted; tests in
   `SearchPage.test.js` and the new `Topbar.test.js`), plus the 10% and cancellation doc updates.
   All tests pass (server 196, client 1,203).

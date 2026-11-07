@@ -25,9 +25,10 @@ Don't switch to Live until all of these are ticked. Each one is also listed in `
 
 ## 1. Code: put the release on `main` (30 min)
 
-All work is on the branch `feature/redesign`, 10+ commits ahead of GitHub.
+All work is on the branch `feature/redesign`, pushed to GitHub (8 Nov) and running on staging.
+`main` is still the original template.
 
-1. **You:** say "push", and the branch goes to GitHub.
+1. Check staging (https://dragonrent.onrender.com) after the last push.
 2. Open a pull request from `feature/redesign` to `main`, check the staging deploy, then merge.
 3. Production deploys from `main`. Tag the release after the smoke test (step 7).
 
