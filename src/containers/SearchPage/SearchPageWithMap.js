@@ -63,6 +63,9 @@ export class SearchPageComponent extends Component {
       isMobileModalOpen: false,
       currentQueryParams: validUrlQueryParamsFromProps(props),
       isSecondaryFiltersOpen: false,
+      // The server can't know the viewport width, so the first render in the browser must not
+      // depend on it either (otherwise hydration fails on phones). See componentDidMount.
+      isMounted: false,
     };
 
     this.onMapMoveEnd = debounce(this.onMapMoveEnd.bind(this), SEARCH_WITH_MAP_DEBOUNCE);
@@ -78,6 +81,10 @@ export class SearchPageComponent extends Component {
 
     // SortBy
     this.handleSortBy = this.handleSortBy.bind(this);
+  }
+
+  componentDidMount() {
+    this.setState({ isMounted: true });
   }
 
   // Callback to determine if new search is needed
@@ -278,10 +285,11 @@ export class SearchPageComponent extends Component {
       currentUser,
     });
 
-    const isWindowDefined = typeof window !== 'undefined';
-    const isMobileLayout = isWindowDefined && window.innerWidth < MODAL_BREAKPOINT;
+    // The map is browser-only, so it's rendered after mount, once the viewport width is known.
+    const isMounted = this.state.isMounted;
+    const isMobileLayout = isMounted && window.innerWidth < MODAL_BREAKPOINT;
     const shouldShowSearchMap =
-      !isMobileLayout || (isMobileLayout && this.state.isSearchMapOpenOnMobile);
+      isMounted && (!isMobileLayout || this.state.isSearchMapOpenOnMobile);
 
     const isSecondaryFiltersOpen = !!hasSecondaryFilters && this.state.isSecondaryFiltersOpen;
     const propsForSecondaryFiltersToggle = hasSecondaryFilters

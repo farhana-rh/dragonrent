@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 
 import appSettings from '../../../config/settings';
@@ -239,7 +239,16 @@ const TopbarComponent = props => {
   const customLinks = getResolvedCustomLinks(sortedCustomLinks, routeConfiguration);
   const resolvedCurrentPage = currentPage || getResolvedCurrentPage(location, routeConfiguration);
 
-  const notificationDot = notificationCount > 0 ? <div className={css.notificationDot} /> : null;
+  // The server renders every page signed out, but the browser loads the signed-in user before
+  // hydrating. Until mounted, render as the server did (same approach as TopbarDesktop).
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  const isAuthenticatedOrJustHydrated = isAuthenticated || !mounted;
+
+  const notificationDot =
+    mounted && notificationCount > 0 ? <div className={css.notificationDot} /> : null;
 
   const hasMatchMedia = typeof window !== 'undefined' && window?.matchMedia;
   const isMobileLayout = hasMatchMedia
@@ -357,7 +366,7 @@ const TopbarComponent = props => {
         />
         <div className={css.mobileActions}>
           {mobileSearchButtonMaybe}
-          {isAuthenticated ? null : (
+          {isAuthenticatedOrJustHydrated ? null : (
             <NamedLink name="LoginPage" className={css.mobileLoginLink}>
               <FormattedMessage id="Topbar.logIn" />
             </NamedLink>

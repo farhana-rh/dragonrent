@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { act } from 'react';
+import { renderToString } from 'react-dom/server';
+import { hydrateRoot } from 'react-dom/client';
 import '@testing-library/jest-dom';
 
 import { createImageVariantConfig } from '../../util/sdkLoader';
@@ -8,6 +10,7 @@ import {
   testingLibrary,
   getRouteConfiguration,
   getHostedConfiguration,
+  TestProvider,
   createFakeDispatch,
   dispatchedActions,
 } from '../../util/testHelpers';
@@ -519,6 +522,58 @@ describe('SearchPage', () => {
     expect(getByText('Fish')).toBeInTheDocument();
     expect(getByText('Freshwater')).toBeInTheDocument();
     expect(getByText('Saltwater')).toBeInTheDocument();
+  });
+
+  // The top bar is a loadable chunk, which renderToString leaves empty here: its signed-in
+  // hydration is tested in Topbar.test.js.
+  it('Map variant hydrates on phones without a mismatch (React #418)', async () => {
+    const config = getConfig('map');
+    const routeConfiguration = getRouteConfiguration(config.layout);
+    const SearchPage = getConnectedSearchPageForTests(config.layout);
+    const page = () => (
+      <TestProvider
+        initialState={initialState}
+        config={config}
+        routeConfiguration={routeConfiguration}
+        initialEntries={['/s']}
+      >
+        <SearchPage {...commonProps} />
+      </TestProvider>
+    );
+    const setWidth = width =>
+      Object.defineProperty(window, 'innerWidth', { configurable: true, value: width });
+    const originalWidth = window.innerWidth;
+
+    // The server has no viewport, so its HTML must not depend on the width: render it wide,
+    // then hydrate it on a phone.
+    // react-redux sees jsdom's window and warns about useLayoutEffect on the "server"
+    const consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
+    setWidth(1280);
+    const serverHtml = renderToString(page());
+    consoleError.mockClear();
+    setWidth(375);
+    const container = document.createElement('div');
+    container.innerHTML = serverHtml;
+    document.body.appendChild(container);
+
+    const onRecoverableError = jest.fn();
+    let root;
+    await act(async () => {
+      root = hydrateRoot(container, page(), { onRecoverableError });
+    });
+
+    expect(onRecoverableError).not.toHaveBeenCalled();
+    const hydrationWarnings = consoleError.mock.calls.filter(args =>
+      /hydrat|did not match/i.test(String(args[0]))
+    );
+    expect(hydrationWarnings).toEqual([]);
+    consoleError.mockRestore();
+    // The map container is there; the map itself opens from the Map button on phones
+    expect(container.querySelector('[data-testid="searchMapContainer"]')).not.toBeNull();
+
+    act(() => root.unmount());
+    container.remove();
+    setWidth(originalWidth);
   });
 
   it('Check that Cat filters is revealed in grid variant', async () => {
