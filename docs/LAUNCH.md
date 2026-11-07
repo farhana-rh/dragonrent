@@ -13,11 +13,13 @@ Don't switch to Live until all of these are ticked. Each one is also listed in `
   lend an item, payouts, booking with a 3-D Secure test card, accept, decline, expiry, messages,
   reviews. Needs `.env.test-accounts`.
 - [ ] **Legal pages reviewed by a lawyer** and pasted into Console (`docs/legal/README.md`).
-- [ ] **Fees decided** (owner 15% / renter 0% today) and the commission set the same in Live.
-- [ ] **Cancellation rule decided** and written in the Cancellation policy.
+- [x] **Fees decided:** owner 10% (minimum €1), renter 0%, set in Dev Console (7 Nov). Set the
+  same in Live.
+- [x] **Cancellation rule decided** (7 Nov): free within 24 hours of the request, no refund
+  after; written in the Cancellation policy draft. Lawyer to confirm "no refund".
 - [ ] **Booking email discount line:** approve the template change, or accept that discounted
   rentals show "€45 … Total €30" in emails (`CLAUDE.md`).
-- [ ] **Stripe live account verified** for the company (this can take days: start early).
+- [x] **Stripe live account verified** for the company (done, reported 6 Nov).
 - [ ] **Console list done in Dev** (branding colour, image 4:3, footer, texts, emails), so it can be
   copied to Live.
 

@@ -95,8 +95,8 @@ card; DragonRent can't, so late days are agreed between renter and owner, with o
 6.2 **Renters pay no service fee.** **[Decision]** Hygglo adds a booking fee for renters and
 Airbnb a guest service fee; if DragonRent adds one, it is shown before the request is sent.
 
-6.3 Owners pay DragonRent a commission of [15]% of the rental price (at least €[1]), taken before
-payout. **[Decision: fee level.]**
+6.3 Owners pay DragonRent a commission of 10% of the rental price (at least €1), taken before
+payout.
 
 6.4 Payments are handled by Stripe. DragonRent never sees full card numbers.
 
@@ -112,13 +112,13 @@ DragonRent is not allowed and can lead to account closure.
 
 7.2 Before the owner accepts, the renter pays nothing (section 4.3).
 
-7.3 After the owner accepts, a booking can be cancelled by contacting us. When DragonRent cancels
-a booking, the renter gets a full refund to the card used.
+7.3 A renter can cancel for free within 24 hours of sending the booking request, by contacting
+us. When DragonRent cancels a booking, the renter gets a full refund to the card used.
 
-7.4 **[Decision]** Hygglo and Airbnb let each owner choose a cancellation policy (for example free
-cancellation until a set time before pick-up) and let users cancel in the app. DragonRent
-currently can't do this without a change to its booking system; until then the rule in 7.3
-applies.
+7.4 After those 24 hours, a booking can't be cancelled by the renter and the rental price isn't
+refunded, in full or in part. This doesn't apply if the owner cancels or doesn't hand over the
+item: the renter then gets a full refund. Users can't cancel in the app; DragonRent applies these
+rules.
 
 7.5 **Right of withdrawal:** by sending a booking request, the renter asks for the rental to start
 on the chosen day and accepts that the 14-day right of withdrawal for distance contracts doesn't

@@ -28,7 +28,7 @@ gets paid. It runs on production hosting.
 | Info and legal pages | Console pages (`/p/...`); legal copy marked for legal review | 8 Oct |
 | Analytics | Loaded only after cookie consent | 8 Oct |
 | Checkout | No terms checkbox until rental terms and damage policy pages exist; simplified top bar | 17 Oct |
-| Commission | Owner pays 15% (minimum €1); renters pay no service fee, so the listed price is the price | 20 Oct |
+| Commission | Owner pays 10% (minimum €1); renters pay no service fee, so the listed price is the price | 7 Nov |
 | Duration pricing cap | A shorter rental never costs more than the next longer package | 21 Oct |
 | Location search | Suggestions limited to Finland | 21 Oct |
 | Design system | "Arctic Blue + Geist" from `dragonrent-design/docs/DESIGN.md` replaces the orange/Inter design: cobalt #2457C5, Geist via `@fontsource/geist`, plain wording ("Send request", "Owner/Renter", "Messages") | 21 Oct |
@@ -40,8 +40,8 @@ gets paid. It runs on production hosting.
 | Search sorting | Newest first with keywords; no distance sort | 21 Oct |
 | Distance | Not on the item page; only on search results after a place search | 21 Oct |
 | Approximate location | Fuzzy location on, with the item page work | 21 Oct |
-| Fees shown in the UI | **Open**: mockups say renter fee + owner 10%; Console is owner 15% / renter 0% | 21 Oct |
-| Cancellation rule | **Open**: placeholder in the mockup; must match the default booking process | 21 Oct |
+| Fees shown in the UI | Decided: owner 10% (minimum €1), renter 0%, set in Dev Console; no renter service-fee line | 7 Nov |
+| Cancellation rule | Free within 24 hours of sending the request; no refund after. Applied by hand by DragonRent (operator decline / cancel); booking process unchanged | 7 Nov |
 
 ## In scope
 
@@ -54,7 +54,7 @@ Status: ✅ done · 🟡 partly done · ⬜ not started
 | Popular/newest listings on home | Console "Featured listings" section + restyled section | 2, 5 | 🟡 needs the Console section and listings |
 | Duration pricing (1, 3, 7 days) | Two optional price fields, server-side line items (discount line, commission on the discounted total), price table on listing page, price range on cards | 6 | 🟡 done in the app (cards show "From €X / day", 22 Oct); booking emails don't show the discount line yet (needs a template change, waiting for approval) |
 | Booking request, owner accepts | Console listing type, default booking process | 2 | 🟡 listing type exists; no test booking yet |
-| Card payment, payouts, commission | Stripe Connect (test mode now), Console commission | 2 | 🟡 Stripe test keys set; commission not set |
+| Card payment, payouts, commission | Stripe Connect (test mode now), Console commission | 2 | 🟡 Stripe test keys set; commission set in Dev (10%, 7 Nov) |
 | Messaging | Built-in inbox, restyled | 8 | ✅ rows restyled 22 Oct; "Messages" wording is a Console text |
 | Two-way reviews, rating on listing page | Built-in, restyled | 7 | ✅ listing page |
 | Approximate location until booked | Fuzzy location setting in the template | 7 | ✅ (UI only) |
@@ -80,7 +80,7 @@ Status: ✅ done · 🟡 partly done · ⬜ not started
   Included accessories, Delivery possible (Yes/No; filter), Delivery details (text).
 - Search: location as main search; filters for category, dates (full days), price (0–500 €),
   keywords, condition, delivery.
-- Commission: owner 15% (minimum €1), renter 0%. Minimum listing price €5.
+- Commission: owner 10% (minimum €1), renter 0% (changed from 15% on 7 Nov). Minimum listing price €5.
 - Branding: colours #c2410c; temporary square logo.
 - Pages: landing-page with a "newest listings" section; how-it-works, faq, cancellation-policy,
   damage-policy (placeholders); terms-of-service and privacy-policy marked "needs legal review".

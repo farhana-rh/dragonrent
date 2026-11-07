@@ -89,18 +89,26 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
 
 ### Open (revisit before launch; don't build a final version yet)
 
-- **Fees (25 Oct: owner pays, renter pays nothing; percentage to confirm, Console has 15%).**
-  The mockups show a renter service fee (€30 → €33) and "after our 10% fee" for owners
-  (€30 → you get €27). Console is currently owner 15% (min €1), renter 0%. Until decided, never
-  hard-code a fee percentage or a service-fee line in the UI: show what the line items actually
-  contain, and keep fee wording in translation keys so it can change in one place.
-- **Cancellation rule.** The item page mockup has a placeholder ("free until 2 days before
-  pick-up"). The default booking process only lets the operator cancel, and transaction processes
-  must not change, so the final text must describe what really happens. Keep the placeholder out
-  of the live UI until the user decides.
+- **Fees: decided (7 Nov).** Owner pays 10% (minimum €1), renter pays nothing; set in Dev
+  Console (checked 7 Nov), Live must match. The mockups' renter service fee (€30 → €33) is not
+  used. Still never hard-code the percentage or a service-fee line in the UI: show what the line
+  items actually contain, and keep fee wording in translation keys so it can change in one place.
+- **Cancellation rule: decided (client, 7 Nov).** Free cancellation within 24 hours of sending
+  the request; after that no cancellation and no refund, not even in part. Applied by hand: the
+  renter emails DragonRent, which uses `operator-decline` (not yet accepted) or `cancel` (accepted,
+  always a full refund); after 24 hours it doesn't cancel. The owner cancelling or not handing
+  over the item still means a full refund. No transaction process change. The mockup's "free until
+  2 days before pick-up" placeholder stays out of the UI. Open: the lawyer must confirm "no
+  refund", and whether the window ends at pick-up if that is sooner.
 
-## Status (23 Oct)
+## Status (7 Nov)
 
+- **Not live.** The planned launch (28 Oct) has passed. Stripe live account verified (6 Nov).
+  Fees and cancellation rule decided (7 Nov, see above). Uncommitted on `feature/redesign`
+  (7 Nov): fix for the phone hydration warning React #418 (`SearchPageWithMap.js` renders the map
+  only after mount; `Topbar.js` renders as signed out until mounted; tests in
+  `SearchPage.test.js` and the new `Topbar.test.js`), plus the 10% and cancellation doc updates.
+  All tests pass (server 196, client 1,203).
 - **Days 0–9 code done**, all on `feature/redesign`, pushed to GitHub 23 Oct (not merged to `main`;
   production deploys from `main`, so merge by pull request after the signed-in test run, with the
   user's approval).
@@ -134,7 +142,8 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
   postcode, area); a city's bounds centre is too far off. No area name: listings don't store one.
 - **Lend-an-item order:** Details → Photos → Prices → Location → Availability (Details first: the
   draft needs a title). Availability publishes. Step frame only for the booking process.
-- **No "What you earn" box** on the Prices step until fees are decided (commission is server-only).
+- **No "What you earn" box** on the Prices step (commission is server-only). Fees are now
+  decided (7 Nov), so it can be built if the user asks.
 - **Booking calendar** is inline (`FieldDateRangeController`) with 44px cells (48px doesn't fit the
   392px panel); "Continue" goes to checkout, "Send request" is only on checkout.
 - **"Request sent!"** (renter, preauthorized) and the owner's request view (waiting/accepted/
@@ -146,9 +155,18 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
 
 ### Waiting for the user before launch (go/no-go list in `docs/LAUNCH.md`)
 
-- **Decisions still open:** fees, cancellation rule (see "Open" above), booking-email discount
-  line (below), and whether to use analytics at all (if not, remove the cookie banner's "count
-  visits" line).
+- **Decisions still open:**
+  - Analytics tool (Plausible or Google Analytics), below.
+  - Legal **[Decision]** notes in `docs/legal/terms-of-service.md`: 3.5 banned items list, 5.4
+    late return (can't be charged automatically), 8.4 who bears accidental damage (no insurance or
+    deposit), 8.5 item not returned (no deposit to charge). Matching `[Rule to decide]` and
+    `[Lawyer: …]` notes in `damage-policy.md`; summary table in `docs/legal/README.md`.
+  - Cancellation: does the 24-hour window end at pick-up if that is sooner
+    (`cancellation-policy.md`); lawyer to confirm "no refund".
+  - Finnish legal pages at launch: ask the lawyer (`docs/legal/README.md` step 4). Console pages
+    hold one language, so Finnish versions need their own page ids and links.
+  - Show the cancellation rule at checkout (and maybe the item page) before booking: proposed
+    7 Nov, waiting for the user (new en/fi keys; check the mockups first).
 
 - **Booking emails don't show the duration discount.** `ext/transaction-processes/default-booking/
   templates` (new-request, accepted-request, money-paid) only render known line items, so a
@@ -158,18 +176,26 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
   to do: pull the Dev process, check it matches the repo, push it with the Sharetribe CLI and move
   the `release-1` alias (then the same in Live).
 - **Analytics (25 Oct): yes**, tool to pick (Plausible or Google Analytics; both supported by env
-  variables). Commission: the user leans to 10% (owner only); Console still has 15%.
-- **Console list** (handed over 22 Oct; status from the user 25 Oct). Done in Dev: branding colour
-  #2457C5, listing thumbnail aspect 4:3 (Design → Layout), localization locale English, marketplace
-  texts (Inbox → Messages, "Post a new listing" → "Lend an item", Owner/Renter keys). Confirmed:
-  the "Included accessories" field id is `includedAccessories`. Still to do:
-  - **Sign-up phone "(optional)":** the phone isn't a user field (User fields is empty); it's a
-    built-in field set under User types. Change its label with the marketplace texts
-    `SignupForm.phoneNumberLabel` and `ConfirmSignupForm.phoneNumberLabel`.
-  - **Pages (not confirmed yet):** legal and help texts aren't approved, so they aren't pasted;
-    first section title of each `/p/…` page as H1 when they are.
-  - **Later:** footer links (Cancellation policy, Damage policy, FAQ) and booking email texts
-    (Owner/Renter wording).
+  variables). Commission: 10% owner (minimum €1), renter 0%, set in Dev Console (7 Nov).
+- **Console list** (handed over 22 Oct; Dev's hosted assets read 7 Nov). Done in Dev: branding
+  colour #2457C5, listing image 4:3, search layout `map`, EUR, commission 10% owner (min €1) /
+  0% renter, minimum listing price €5, only the `daily-rental` listing type
+  (`default-booking/release-1`), one user type with both roles, phone shown at sign-up but not
+  required, marketplace texts (Inbox → Messages, "Lend an item"). Still to do (7 Nov):
+  - **Sign-up phone "(optional)":** `SignupForm.phoneNumberLabel` and
+    `ConfirmSignupForm.phoneNumberLabel` still say "Phone number".
+  - **Messages tab titles:** `InboxPage.ordersTabTitle`/`ordersTitle` and
+    `salesTabTitle`/`salesTitle` hold both texts ("As a renter / Messages: As a renter").
+  - **Footer:** placeholder slogan, "© 2026 Your marketplace", Sharetribe's own social links; only
+    Terms and Privacy linked (add Cancellation policy, Damage policy, FAQ).
+  - **Pages:** all five legal/help pages exist with short placeholders; paste the reviewed texts
+    (first section title as H1). `/p/about` still has the template's text (not linked).
+  - **Locale** is `en-US` (US dates); `en-GB` suits Finland better. Optional.
+  - **Not readable from code:** logo (checkerboard in the PNG?), booking email texts
+    (Owner/Renter wording), Live environment.
+  - How to check: read the hosted assets with the SDK and the `.env` keys
+    (`sdk.assetByAlias`, alias `latest`); `transactions/commission.json` needs the client
+    secret (`assetsByAlias` after `exchangeToken`, as in `server/api-util/sdk.js`).
 - **Test data** (in the app as the owner): close "aaa"/"aaaa"; drill 3-day €30 / 7-day €60; drill
   availability time zone is `Asia/Dhaka` and only Mondays are open: set Europe/Helsinki and open
   more days.
@@ -192,9 +218,8 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
   `"LandingPage.heroTitle"`.
 - Hosted branding (colour, logo) overrides `src/config/configBranding.js`. The brand colour is cobalt
   `#2457C5` (DESIGN.md, 21 Oct); Console → Branding must be set to it for the design to show.
-- Current Console state (Dev, checked 20 Oct) is summarised in `docs/SCOPE.md` and the setup steps
-  in `docs/CONSOLE-SETUP.md`: one user type with both roles, daily rental only, delivery fields,
-  15% owner commission, orange branding, placeholder policy pages.
+- Current Console state (Dev, checked 7 Nov) is in "Console list" above; the setup steps are in
+  `docs/CONSOLE-SETUP.md`.
 - The local `.env` points at the **Dev** environment ("DragonRent.com Dev"), which starts without
   users or listings.
 

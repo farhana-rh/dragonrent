@@ -49,12 +49,12 @@ Add two fields (Console → **Build → Listings → Listing fields → Add**):
   commission rates")
 Decided 20 Oct: the owner pays everything, so renters pay exactly the listed price.
 
-- [x] Provider commission: **15 %** (taken from the owner's payout)
+- [x] Provider commission: **10 %** (was 15 %; changed 7 Nov) (taken from the owner's payout)
 - [x] Provider minimum commission: **100** (entered in **cents**: 100 = €1). The marketplace takes
   whichever is higher, the percentage or the minimum; the minimum covers Stripe's fees on small
   rentals.
 - [x] Customer service fee: **0 %**, minimum **0**
-- [x] Ask an accountant whether the 15% should include Finnish VAT.
+- [x] Ask an accountant whether the 10% should include Finnish VAT.
 
 Decide the numbers before this step. Stripe's card fees come out of the marketplace's commission,
 so the minimum should cover them on small rentals.

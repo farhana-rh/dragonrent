@@ -20,7 +20,8 @@ Owners can set lower prices for 3 and 7 days. The price for your dates is worked
 automatically and shown before you send the request.
 
 **Can I cancel?**
-Contact us. See the [Cancellation policy](/p/cancellation-policy).
+For free within 24 hours of sending your request: email us. After that, bookings can't be
+cancelled or refunded. See the [Cancellation policy](/p/cancellation-policy).
 
 ## Lending
 
@@ -33,7 +34,8 @@ Two days after the return day, the money is sent to your Stripe account. Stripe 
 working days to move it to your bank.
 
 **How much does DragonRent take?**
-[Open decision: commission. Currently 15% of the rental price, at least €1.]
+10% of the rental price, at least €1, taken from your payout. Renters pay no service fee: the
+price you see is the price they pay.
 
 **What if my item gets damaged?**
 See the [Damage policy](/p/damage-policy).

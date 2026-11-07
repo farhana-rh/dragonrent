@@ -33,9 +33,8 @@ Facts the drafts rely on (check if anything changes):
   in full. Owners and renters can't cancel in the app.
 - Owners are paid through Stripe two days after the return day (Stripe then needs a few working
   days to reach the bank account).
-- Commission: the owner pays 15% of the rental price (at least €1); renters pay no service fee.
-  Fees are still an open decision (docs/SCOPE.md), so the drafts point to the price shown at
-  checkout instead of naming a percentage where possible.
+- Commission: the owner pays 10% of the rental price (at least €1); renters pay no service fee
+  (decided 7 Nov).
 - Both sides can review each other for 7 days after the return day.
 - No deposits, no insurance, no delivery fee in this version.
 
@@ -51,8 +50,8 @@ terms say what DragonRent really does and mark a **[Decision]**:
 | --- | --- | --- | --- | --- |
 | Who the rental is between | Renter and owner; Hygglo is an intermediary | Host and guest; Airbnb isn't a party | Same: renter and owner | No |
 | When the renter pays | Charged at booking, held until the rental ends | Charged at booking | Card held at request, charged when the owner accepts | No |
-| Fees | 20% from owners + a booking fee from renters | Service fees for guests and hosts | 15% from owners, none from renters | Yes: fee level |
-| Cancellation | Each listing has its own policy; users cancel themselves | Each host picks a policy; guests cancel in the app | Only DragonRent can cancel, with a full refund | Yes: rule now; self-service needs a booking-system change |
+| Fees | 20% from owners + a booking fee from renters | Service fees for guests and hosts | 10% from owners, none from renters | No (decided 7 Nov) |
+| Cancellation | Each listing has its own policy; users cancel themselves | Each host picks a policy; guests cancel in the app | Free within 24 h of the request, no refund after; DragonRent cancels by hand | Lawyer: is "no refund" allowed? Self-service needs a booking-system change |
 | Damage | Insurance in many categories; renter pays a deductible | Host damage protection | No insurance, no deposit | Yes: who pays accidental damage |
 | Late return | A day's rent per late day, charged automatically | Handled through the Resolution Centre | Agreed between renter and owner, with DragonRent's help | Yes: rule and how it's collected |
 | Item not returned | Deposit up to the item's value charged to the card | Damage claim process | Details shared with the owner and police | Yes |
