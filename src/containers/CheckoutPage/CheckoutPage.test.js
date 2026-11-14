@@ -231,6 +231,8 @@ describe('CheckoutPage', () => {
     expect(
       screen.getByRole('button', { name: 'StripePaymentForm.sendRequest' })
     ).toBeInTheDocument();
+    // The 24-hour cancellation rule is shown before sending
+    expect(screen.getByText('StripePaymentForm.cancellationRule')).toBeInTheDocument();
     // Sending the request means agreeing to the terms and the cancellation policy
     expect(screen.getByText('StripePaymentForm.agreeToTerms')).toBeInTheDocument();
   });

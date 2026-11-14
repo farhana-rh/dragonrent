@@ -1407,6 +1407,7 @@
   "StripePaymentForm.billingDetailsNamePlaceholder": "Enter your name…",
   "StripePaymentForm.bookingFinePrint": "Your card is only charged if {name} says yes. If they say no or don't answer in time, you pay nothing.",
   "StripePaymentForm.cancellationLinkText": "Cancellation policy",
+  "StripePaymentForm.cancellationRule": "Free cancellation within 24 hours of sending your request. After that, you can't cancel and you won't get a refund.",
   "StripePaymentForm.confirmCardPaymentError": "Unable to authenticate your payment method. Please check your authentication details and try again.",
   "StripePaymentForm.confirmPaymentError": "A payment has been made but we are unable to confirm the order. Please try to confirm the request again. If the order isn't confirmed in time, the payment will be fully refunded.",
   "StripePaymentForm.genericError": "Couldn't handle payment data. Please try again.",

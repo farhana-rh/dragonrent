@@ -758,6 +758,10 @@ class StripePaymentForm extends Component {
                   values={{ name: providerDisplayName }}
                 />
               </p>
+              {/* Cancellation rule (decided 7 Nov): shown before the renter sends the request */}
+              <p className={css.cancellationInfo}>
+                <FormattedMessage id="StripePaymentForm.cancellationRule" />
+              </p>
               {/* No checkbox: sending the request is the agreement (docs/SCOPE.md, 17 Oct) */}
               <p className={css.termsInfo}>
                 <FormattedMessage

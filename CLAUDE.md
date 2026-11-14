@@ -8,7 +8,8 @@ AGENTS.md above. This file adds what is specific to DragonRent.
 # Project: DragonRent
 
 DragonRent is a rental marketplace MVP for Finland, built on Sharetribe Web Template v12.4.0, on a
-10-day build plan ending with launch on 28 Oct 2026. Scope, flows and a code map are in `docs/`:
+10-day build plan. Launch was planned for 28 Oct 2026 but hasn't happened yet (see Status). Scope,
+flows and a code map are in `docs/`:
 
 - `docs/SCOPE.md`: frozen MVP scope, decisions and the duration pricing rule. Read it first.
 - `docs/FLOWS.md`: renter and owner flows, sitemap
@@ -87,7 +88,7 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
   only the area and a circle on the map; the address is shown on the booking page after the owner
   accepts. This is UI-level only: the address is in listing public data.
 
-### Open (revisit before launch; don't build a final version yet)
+### Fees and cancellation (decided 7 Nov)
 
 - **Fees: decided (7 Nov).** Owner pays 10% (minimum €1), renter pays nothing; set in Dev
   Console (checked 7 Nov), Live must match. The mockups' renter service fee (€30 → €33) is not
@@ -101,14 +102,18 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
   2 days before pick-up" placeholder stays out of the UI. Open: the lawyer must confirm "no
   refund", and whether the window ends at pick-up if that is sooner.
 
-## Status (7 Nov)
+## Status (10 Nov)
 
 - **Not live.** The planned launch (28 Oct) has passed. Stripe live account verified (6 Nov).
   Fees and cancellation rule decided (7 Nov, see above). Pushed to `feature/redesign` on 8 Nov
-  (so staging has it): fix for the phone hydration warning React #418 (`SearchPageWithMap.js` renders the map
-  only after mount; `Topbar.js` renders as signed out until mounted; tests in
+  (so staging has it): fix for the phone hydration warning React #418 (`SearchPageWithMap.js`
+  renders the map only after mount; `Topbar.js` renders as signed out until mounted; tests in
   `SearchPage.test.js` and the new `Topbar.test.js`), plus the 10% and cancellation doc updates.
-  All tests pass (server 196, client 1,203).
+- **10 Nov, not committed yet:** checkout shows the 24-hour cancellation rule
+  (`StripePaymentForm.cancellationRule`, en/fi, test in `CheckoutPage.test.js`). All tests pass
+  (server 196, client 1,203). Not checked in a browser.
+- **Remaining work** (estimate 9 Nov): about 7–11 h of code and testing, 9–12 h of Console, Live
+  and hosting setup by the user, plus waiting for the lawyer, the Finnish review and DNS.
 - **Days 0–9 code done**, all on `feature/redesign`, pushed to GitHub 23 Oct (not merged to `main`;
   production deploys from `main`, so merge by pull request after the signed-in test run, with the
   user's approval).
@@ -165,8 +170,9 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
     (`cancellation-policy.md`); lawyer to confirm "no refund".
   - Finnish legal pages at launch: ask the lawyer (`docs/legal/README.md` step 4). Console pages
     hold one language, so Finnish versions need their own page ids and links.
-  - Show the cancellation rule at checkout (and maybe the item page) before booking: proposed
-    7 Nov, waiting for the user (new en/fi keys; check the mockups first).
+  - Cancellation rule on the item page (the Listing mockup has a slot for it): not built. At
+    checkout it's done (10 Nov): `StripePaymentForm.cancellationRule` (en/fi) under the "only
+    charged if … says yes" note. If the window changes (e.g. ends at pick-up), update that key.
 
 - **Booking emails don't show the duration discount.** `ext/transaction-processes/default-booking/
   templates` (new-request, accepted-request, money-paid) only render known line items, so a
@@ -208,8 +214,8 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
   (`docs/CONSOLE-SETUP.md` section 9). Analytics loads only after cookie consent
   (`src/util/cookieConsent.js`); no analytics ID is set yet.
 - **Test logins** for headless screenshots go in `.env.test-accounts` (git-ignored):
-  `RENTER_EMAIL`, `RENTER_PASSWORD`, `OWNER_EMAIL`, `OWNER_PASSWORD`. Created 25 Oct; the wizard,
-  checkout, booking and Messages pages haven't been checked in a browser.
+  `RENTER_EMAIL`, `RENTER_PASSWORD`, `OWNER_EMAIL`, `OWNER_PASSWORD`. Created 25 Oct and used
+  for the signed-in run that day (see Status).
 
 ## Console and hosted assets
 
