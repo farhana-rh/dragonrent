@@ -17,8 +17,9 @@ Don't switch to Live until all of these are ticked. Each one is also listed in `
   same in Live.
 - [x] **Cancellation rule decided** (7 Nov): free within 24 hours of the request, no refund
   after; written in the Cancellation policy draft. Lawyer to confirm "no refund".
-- [ ] **Booking email discount line:** approve the template change, or accept that discounted
-  rentals show "€45 … Total €30" in emails (`CLAUDE.md`).
+- [ ] **Booking email discount line:** the templates in the repo have the row (approved 25 Oct,
+  guarded by `server/api-util/emailTemplates.test.js`), but Sharetribe still runs the old
+  version. Push the process (section 1b) so emails stop showing "€45 … Total €30".
 - [x] **Stripe live account verified** for the company (done, reported 6 Nov).
 - [ ] **Console list done in Dev** (branding colour, image 4:3, footer, texts, emails), so it can be
   copied to Live.
@@ -31,6 +32,43 @@ All work is on the branch `feature/redesign`, pushed to GitHub (8 Nov) and runni
 1. Check staging (https://dragonrent.onrender.com) after the last push.
 2. Open a pull request from `feature/redesign` to `main`, check the staging deploy, then merge.
 3. Production deploys from `main`. Tag the release after the smoke test (step 7).
+
+## 1b. Push the transaction process (30 min, needs your Sharetribe login)
+
+The repo's `ext/transaction-processes/default-booking` differs from what Sharetribe runs: the
+three booking emails have a "Longer rental discount" row (and, once the address-privacy work
+lands, `transition/accept` carries `:action/update-protected-data`). Nothing in the app changes
+until the process is pushed. **Do this in Dev first, test a booking, then repeat in Live.** Pushing
+is not reversible by itself, but the alias can be moved back to the previous version.
+
+1. Install the CLI once: `yarn global add flex-cli` (or `npm i -g flex-cli`), then
+   `flex-cli login` with your Sharetribe account.
+2. See what Sharetribe has and compare it with the repo (`-m` is the marketplace ID from Console →
+   Build → General; Dev and Live have different IDs):
+
+   ```shell
+   flex-cli process list -m <marketplace-id>
+   flex-cli process pull --process default-booking --alias release-1 --path tmp/default-booking-live -m <marketplace-id>
+   git diff --no-index tmp/default-booking-live ext/transaction-processes/default-booking
+   ```
+
+   Expected differences: only the three `*-html.html` templates (and `process.edn` after the
+   address-privacy change). Anything else means Console was edited by hand; stop and check.
+3. Push and move the alias (the CLI validates the templates and refuses a broken one):
+
+   ```shell
+   flex-cli process push --process default-booking --path ext/transaction-processes/default-booking -m <marketplace-id>
+   flex-cli process list --process default-booking -m <marketplace-id>   # note the new version number
+   flex-cli process update-alias --process default-booking --alias release-1 --version <new> -m <marketplace-id>
+   ```
+
+   Transactions that already exist stay on their old version; new bookings use the new one.
+4. Email wording: the templates fall back to English ("Longer rental discount"). If the
+   marketplace emails are in Finnish, add `BookingNewRequest.DurationDiscountLabel`,
+   `BookingAcceptedRequest.DurationDiscountLabel` and `BookingMoneyPaid.DurationDiscountLabel`
+   in Console → Build → Content → Email texts (one language per marketplace, like the pages).
+5. Check: book 3 days with the test card as a renter; the "new request" email shows
+   "€15.00 × 3 days", "Longer rental discount −€15.00" and the right total.
 
 ## 2. Sharetribe Live (1 h)
 

@@ -180,9 +180,11 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
   templates` (new-request, accepted-request, money-paid) only render known line items, so a
   discounted rental shows "€15 × 3 days = €45" then "Total €30". Fix = add a
   `line-item/duration-discount` row to those templates, which is a transaction process change.
-  **Approved 25 Oct; rows added** ("Longer rental discount", keys `*.DurationDiscountLabel`). Still
-  to do: pull the Dev process, check it matches the repo, push it with the Sharetribe CLI and move
-  the `release-1` alias (then the same in Live).
+  **Approved 25 Oct; rows added** ("Longer rental discount", keys `*.DurationDiscountLabel`);
+  `server/api-util/emailTemplates.test.js` (15 Nov) fails if the server emits a booking line item
+  the emails don't show. Still to do: push the process with the Sharetribe CLI and move the
+  `release-1` alias, Dev first, then Live (`docs/LAUNCH.md` section 1b). Needs the user's
+  approval and login; not done yet.
 - **Analytics (25 Oct): yes**, tool to pick (Plausible or Google Analytics; both supported by env
   variables). Commission: 10% owner (minimum €1), renter 0%, set in Dev Console (7 Nov).
 - **Console list** (handed over 22 Oct; Dev's hosted assets read 7 Nov). Done in Dev: branding
