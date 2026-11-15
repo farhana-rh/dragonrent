@@ -511,3 +511,9 @@
     margin-top: 16px;
   }
 }
+
+/* "Ask the owner for the exact address": shown when the booking has no pick-up address yet */
+.bookingLocationAsk {
+  composes: h5 from global;
+  margin: 0;
+}

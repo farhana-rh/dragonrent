@@ -84,9 +84,15 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
 - **Search sorting:** newest first, with keyword search. No "Closest first": Sharetribe can't sort
   by distance and search by keyword at the same time.
 - **Distance ("1.2 km away"):** not on the item page; only on search results after a place search.
-- **Approximate location:** fuzzy location is on (`src/config/configMaps.js`). The item page shows
-  only the area and a circle on the map; the address is shown on the booking page after the owner
-  accepts. This is UI-level only: the address is in listing public data.
+- **Approximate location (data-level since 15 Nov):** the exact address and point are saved in
+  the listing's `privateData.pickup` (owner only); public data holds the area name and the
+  `geolocation` attribute is a point 100–400 m off (`src/util/listingLocation.js`, seeded with the
+  listing id). The item page draws a 500 m circle around that point. On `transition/accept` the
+  owner's client copies `pickup` into the transaction's `protectedData`
+  (`TransactionPage.duck.js`), which is what the booking page shows the renter; the process has
+  `:action/update-protected-data` on accept (push pending, `docs/LAUNCH.md` 1b). Listings saved
+  before this keep a public address until their Location step is saved again (Dev: drill + the
+  QA draft).
 
 ### Fees and cancellation (decided 7 Nov)
 

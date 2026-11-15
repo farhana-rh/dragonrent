@@ -57,7 +57,7 @@ Status: ✅ done · 🟡 partly done · ⬜ not started
 | Card payment, payouts, commission | Stripe Connect (test mode now), Console commission | 2 | 🟡 Stripe test keys set; commission set in Dev (10%, 7 Nov) |
 | Messaging | Built-in inbox, restyled | 8 | ✅ rows restyled 22 Oct; "Messages" wording is a Console text |
 | Two-way reviews, rating on listing page | Built-in, restyled | 7 | ✅ listing page |
-| Approximate location until booked | Fuzzy location setting in the template | 7 | ✅ (UI only) |
+| Approximate location until booked | Exact address in listing privateData, offset public point, copied to the transaction on accept (15 Nov) | 7 | ✅ |
 | Owner dashboard | `/dashboard` (requests waiting, active rentals, listings) | — | ✅ added 17 Oct |
 | Restyled checkout | Presentation only | 8 | ✅ |
 | Restyled search | Filter chips, cards | 8 | ✅ |

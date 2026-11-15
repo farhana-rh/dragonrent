@@ -53,9 +53,12 @@ export const search = {
 // When fuzzy locations are enabled, coordinates on maps are
 // obfuscated randomly around the actual location.
 //
-// NOTE: This only hides the locations in the UI level, the actual
-// coordinates are still accessible in the HTTP requests and the
-// Redux store.
+// NOTE: On its own this only hides the locations in the UI level.
+// DragonRent therefore also stores an offset point (100–400 m) as the
+// listing's public geolocation and keeps the exact address in the
+// listing's privateData (src/util/listingLocation.js). The item page
+// draws the `offset` circle around the stored point without moving it
+// again, so the real point is always inside the circle.
 export const fuzzy = {
   enabled: true,
 

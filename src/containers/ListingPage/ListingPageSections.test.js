@@ -97,6 +97,10 @@ describe('getListingArea', () => {
     expect(getListingArea({})).toEqual(null);
     expect(area('Fleminginkatu 1')).toEqual(null);
   });
+
+  it('prefers the saved area of listings whose address is private', () => {
+    expect(getListingArea({ location: { area: 'Kallio', address: null } })).toEqual('Kallio');
+  });
 });
 
 describe('splitIncludedItems', () => {

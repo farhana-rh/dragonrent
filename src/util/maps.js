@@ -32,24 +32,18 @@ const radToDegrees = latlngInRadians => {
  * https://gis.stackexchange.com/questions/25877/generating-random-locations-nearby#answer-213898
  */
 
-const obfuscatedCoordinatesImpl = (latlng, fuzzyOffset, cacheKey) => {
+/**
+ * The point at the given distance and bearing from the start point (great-circle).
+ *
+ * @param {LatLng} latlng start point
+ * @param {number} distance in meters
+ * @param {number} bearing in radians, clockwise from north
+ * @return {LatLng} destination point
+ */
+export const destinationPoint = (latlng, distance, bearing) => {
   const { lat, lng } = degToRadians(latlng);
   const sinLat = Math.sin(lat);
   const cosLat = Math.cos(lat);
-
-  const randomizeBearing = cacheKey ? seedrandom(cacheKey)() : Math.random();
-  const randomizeDistance = cacheKey
-    ? seedrandom(
-        cacheKey
-          .split('')
-          .reverse()
-          .join('')
-      )()
-    : Math.random();
-
-  // Randomize distance and bearing
-  const distance = randomizeDistance * fuzzyOffset;
-  const bearing = randomizeBearing * TWO_PI;
   const theta = distance / EARTH_RADIUS;
   const sinBearing = Math.sin(bearing);
   const cosBearing = Math.cos(bearing);
@@ -65,6 +59,23 @@ const obfuscatedCoordinatesImpl = (latlng, fuzzyOffset, cacheKey) => {
 
   const result = radToDegrees({ lat: newLat, lng: newLngNormalized });
   return new LatLng(result.lat, result.lng);
+};
+
+const obfuscatedCoordinatesImpl = (latlng, fuzzyOffset, cacheKey) => {
+  const randomizeBearing = cacheKey ? seedrandom(cacheKey)() : Math.random();
+  const randomizeDistance = cacheKey
+    ? seedrandom(
+        cacheKey
+          .split('')
+          .reverse()
+          .join('')
+      )()
+    : Math.random();
+
+  // Randomize distance and bearing
+  const distance = randomizeDistance * fuzzyOffset;
+  const bearing = randomizeBearing * TWO_PI;
+  return destinationPoint(latlng, distance, bearing);
 };
 
 const obfuscationKeyGetter = (latlng, fuzzyOffset, cacheKey) => cacheKey;

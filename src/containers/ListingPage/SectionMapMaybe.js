@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import { FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { propTypes } from '../../util/types';
-import { obfuscatedCoordinates } from '../../util/maps';
 import { Heading, Map } from '../../components';
 
 import css from './ListingPage.module.css';
 
 /**
  * Pick-up and return: where to pick the item up and a map of the rough area. With fuzzy
- * location on (configMaps.js), the map shows an area around an offset point, not the address.
+ * location on (configMaps.js), the map shows a circle around the listing's public point. That
+ * point is already 100–400 m off the real one (util/listingLocation.js), so it isn't moved
+ * again here: the real point then always lies inside the 500 m circle.
  *
  * @component
  * @param {Object} props
@@ -45,10 +46,9 @@ class SectionMapMaybe extends Component {
 
     const address = publicData && publicData.location ? publicData.location.address : '';
     const classes = classNames(rootClassName || css.sectionMap, className);
-    const cacheKey = listingId ? `${listingId.uuid}_${geolocation.lat}_${geolocation.lng}` : null;
 
     const mapProps = mapsConfig.fuzzy.enabled
-      ? { obfuscatedCenter: obfuscatedCoordinates(geolocation, mapsConfig.fuzzy.offset, cacheKey) }
+      ? { obfuscatedCenter: geolocation }
       : { address, center: geolocation };
     const map = <Map {...mapProps} useStaticMap={this.state.isStatic} />;
 

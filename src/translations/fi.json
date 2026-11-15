@@ -1750,6 +1750,8 @@
   "TransactionPage.schemaTitle": "Myynnin tiedot: {title} | {h1}",
   "TransactionPage.unknownTransactionProcess": "Hups, näyttää siltä, että markkinapaikan prosessit eivät ole ajan tasalla. Ota yhteyttä markkinapaikan ylläpitäjään.",
   "TransactionPanel.activityHeading": "Toiminta",
+  "TransactionPanel.bookingLocationAsk": "Kysy tarkka nouto-osoite käyttäjältä {name} alla olevissa viesteissä.",
+  "TransactionPanel.bookingLocationAskWithArea": "Nouto alueella {area}. Kysy tarkka osoite käyttäjältä {name} alla olevissa viesteissä.",
   "TransactionPanel.bookingLocationHeading": "Sijainti",
   "TransactionPanel.conversationHeading": "Keskustelu",
   "TransactionPanel.customerBannedStatus": "Käyttäjä estettiin otettuaan sinuun yhteyttä.",

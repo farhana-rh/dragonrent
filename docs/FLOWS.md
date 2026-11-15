@@ -11,14 +11,14 @@ Everyone has one account and can both rent and lend (see `SCOPE.md`).
 | --- | --- | --- | --- |
 | 1 | Search by what, where and when | Home `/` | Hero search; Where needs the Mapbox token |
 | 2 | Browse and filter results | Search `/s` | Filters: category, dates, price, condition, keywords |
-| 3 | Open an item | Listing `/l/:slug/:id` | Photos, details, price tiers (Day 6), owner, reviews, map. The map shows the exact location until fuzzy location is turned on (Day 7) |
+| 3 | Open an item | Listing `/l/:slug/:id` | Photos, details, price tiers (Day 6), owner, reviews, map. The map shows a 500 m circle around a point 100–400 m off the real one; the exact address is private (15 Nov) |
 | 4 | Ask a question (optional) | Listing → inquiry form | Starts a conversation without booking |
 | 5 | Pick dates, see the price for the period | Listing → booking panel | Price comes from the server (duration pricing) |
 | 6 | Sign up or log in, if needed | `/signup`, `/login` | Email verification link |
 | 7 | Request to book and enter card | Checkout `/l/:slug/:id/checkout` | Card is held, not charged yet |
 | 8 | Wait for the owner | Inbox `/inbox/orders` → order `/order/:id` | Owner has up to 6 days, or until 1 day after the start if sooner, before the request expires |
 | 9 | Request accepted, card charged | Order page + email | If declined or expired, the hold is released |
-| 10 | Agree pickup in messages | Order page messages | With fuzzy location on, the exact address is shared here |
+| 10 | Agree pickup in messages | Order page messages | After the owner accepts, the booking page shows the exact address (copied from the listing when accepting); details are agreed here |
 | 11 | Pick up, use, return | — (offline) | |
 | 12 | Rental completes | Automatic, 2 days after the booking ends | The owner's payout is created at the same moment |
 | 13 | Leave a review | Order page | Both sides review; 7-day review window |

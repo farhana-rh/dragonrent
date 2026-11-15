@@ -279,6 +279,8 @@ export class TransactionPanelComponent extends Component {
                 <BookingLocationMaybe
                   className={css.deliveryInfoSection}
                   listing={listing}
+                  protectedData={protectedData}
+                  providerName={authorDisplayName}
                   showBookingLocation={showBookingLocation}
                 />
               </div>

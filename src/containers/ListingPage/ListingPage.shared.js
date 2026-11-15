@@ -8,6 +8,7 @@ import { timestampToDate } from '../../util/dates';
 import { requireListingImage } from '../../util/configHelpers';
 import { richText } from '../../util/richText';
 import { hasPermissionToInitiateTransactions, isUserAuthorized } from '../../util/userHelpers';
+import { getPublicArea } from '../../util/listingLocation';
 import {
   ensureListing,
   ensureOwnListing,
@@ -127,19 +128,7 @@ export const getReviewsSummary = reviews => {
  * @param {Object} publicData listing's public data
  * @returns {string|null} area name
  */
-export const getListingArea = publicData => {
-  const address = publicData?.location?.address;
-  if (typeof address !== 'string') {
-    return null;
-  }
-  const parts = address
-    .split(',')
-    .map(part => part.trim().replace(/^\d{5}\s+/, ''))
-    .filter(part => part.length > 0);
-  // The last part is the country
-  const candidates = parts.length > 1 ? parts.slice(0, -1) : parts;
-  return candidates.find(part => !/\d/.test(part)) || null;
-};
+export const getListingArea = publicData => getPublicArea(publicData);
 
 export const listingImages = (listing, variantName) =>
   (listing.images || [])

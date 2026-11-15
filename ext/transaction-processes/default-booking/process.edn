@@ -44,7 +44,10 @@
   {:name :transition/accept,
    :actor :actor.role/provider,
    :actions
-   [{:name :action/accept-booking}
+   ;; DragonRent: the owner's client copies the exact pick-up address (listing privateData)
+   ;; into protectedData here, so the renter sees it only after acceptance.
+   [{:name :action/update-protected-data}
+    {:name :action/accept-booking}
     {:name :action/stripe-capture-payment-intent}],
    :from :state/preauthorized,
    :to :state/accepted}

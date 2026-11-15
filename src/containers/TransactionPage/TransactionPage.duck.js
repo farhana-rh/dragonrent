@@ -26,7 +26,7 @@ import {
 } from '../../transactions/transaction';
 import { messageHasPendingFiles, executeFileUpload } from '../../util/fileHelpers';
 
-import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
+import { addMarketplaceEntities, getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { fetchCurrentUserNotifications } from '../../ducks/user.duck';
 
 const { UUID } = sdkTypes;
@@ -350,6 +350,48 @@ const makeTransitionPayloadCreator = (
     });
   const normalTransition = () =>
     sdk.transactions.transition({ id: txId, transition: transitionName, params }, { expand: true });
+
+  // DragonRent: when the owner accepts a booking, the exact pick-up address (kept in the
+  // listing's privateData, which only the owner can read) is copied into the transaction's
+  // protectedData, so the renter sees it from now on (util/listingLocation.js). The process
+  // has :action/update-protected-data on transition/accept. Acceptance must never fail
+  // because of this: if the address can't be read, or the process version in use doesn't
+  // take protectedData yet, the plain transition is made and the problem is logged.
+  const acceptBookingWithPickupAddress = () => {
+    const [tx] = getMarketplaceEntities(getState(), [{ id: txId, type: 'transaction' }]);
+    const listingId = tx?.listing?.id;
+    const readPickup = listingId
+      ? sdk.ownListings
+          .show({ id: listingId })
+          .then(response => response.data.data.attributes?.privateData?.pickup || null)
+          .catch(e => {
+            log.error(e, 'accept-read-pickup-address-failed', { txId, listingId });
+            return null;
+          })
+      : Promise.resolve(null);
+
+    return readPickup.then(pickup => {
+      if (!pickup?.address) {
+        return normalTransition();
+      }
+      const paramsWithPickup = {
+        ...params,
+        protectedData: { ...(params?.protectedData || {}), pickup },
+      };
+      return sdk.transactions
+        .transition(
+          { id: txId, transition: transitionName, params: paramsWithPickup },
+          { expand: true }
+        )
+        .catch(e => {
+          log.error(e, 'accept-with-pickup-address-failed', { txId, listingId });
+          return normalTransition();
+        });
+    });
+  };
+  const isBookingAccept =
+    isBookingProcess(processName) && transitionName === process?.transitions?.ACCEPT;
+
   // Negotiation process / accept update: check if payin total has changed
   const acceptUpdateTransition = () =>
     sdk.transactions.show({ id: txId }, { expand: true }).then(response => {
@@ -369,6 +411,8 @@ const makeTransitionPayloadCreator = (
 
   const makeCall = process?.isPrivileged(transitionName)
     ? privilegedTransition
+    : isBookingAccept
+    ? acceptBookingWithPickupAddress
     : isNegotiationProcess(processName) && transitionName === process.transitions.ACCEPT_UPDATE
     ? acceptUpdateTransition
     : normalTransition;

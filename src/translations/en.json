@@ -1765,6 +1765,8 @@
   "TransactionPage.schemaTitle": "Sale details: {title} | {h1}",
   "TransactionPage.unknownTransactionProcess": "Oops, it looks like the marketplace processes aren't up to date. Please contact the marketplace operator.",
   "TransactionPanel.activityHeading": "Activity",
+  "TransactionPanel.bookingLocationAsk": "Ask {name} for the exact pick-up address in the messages below.",
+  "TransactionPanel.bookingLocationAskWithArea": "Pick-up in {area}. Ask {name} for the exact address in the messages below.",
   "TransactionPanel.bookingLocationHeading": "Location",
   "TransactionPanel.conversationHeading": "Conversation",
   "TransactionPanel.customerBannedStatus": "The user was banned after contacting you.",
