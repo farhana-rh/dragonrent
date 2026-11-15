@@ -115,9 +115,13 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
   (so staging has it): fix for the phone hydration warning React #418 (`SearchPageWithMap.js`
   renders the map only after mount; `Topbar.js` renders as signed out until mounted; tests in
   `SearchPage.test.js` and the new `Topbar.test.js`), plus the 10% and cancellation doc updates.
-- **10 Nov, not committed yet:** checkout shows the 24-hour cancellation rule
-  (`StripePaymentForm.cancellationRule`, en/fi, test in `CheckoutPage.test.js`). All tests pass
-  (server 196, client 1,203). Not checked in a browser.
+- **15 Nov (committed on `feature/redesign`, not pushed):** the five audit fixes the user
+  approved on 14 Nov: checkout cancellation rule (`7d1916959`), dependency resolutions
+  (`7198036fd`, runtime audit clean), availability defaults (`2cea56a81`), email-template guard
+  test and process-push steps (`fa826c2cd`), address privacy (`40cb1bf94`). Tests: server 203,
+  client 1,237. **Gated on the user:** push to staging, process push (Dev then Live, `docs/LAUNCH.md`
+  1b), re-saving the Dev listings' Location step, PR to `main`, Live setup. Audit report:
+  https://claude.ai/artifact/PMLcdR5YPDBuT7DcV5F7c7
 - **Remaining work** (estimate 9 Nov): about 7–11 h of code and testing, 9–12 h of Console, Live
   and hosting setup by the user, plus waiting for the lawyer, the Finnish review and DNS.
 - **Days 0–9 code done**, all on `feature/redesign`, pushed to GitHub 23 Oct (not merged to `main`;
