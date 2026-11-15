@@ -103,3 +103,9 @@
 .error {
   color: var(--colorFail);
 }
+
+/* "No days are ticked yet": a rule the owner has to act on, shown instead of the intro text */
+.noOpenDays {
+  margin: 0 0 12px 0;
+  color: var(--colorFail);
+}

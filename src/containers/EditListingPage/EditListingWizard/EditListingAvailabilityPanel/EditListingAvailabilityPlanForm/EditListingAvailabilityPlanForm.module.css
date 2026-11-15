@@ -77,3 +77,9 @@
     padding-bottom: unset;
   }
 }
+
+/* "Tick at least one day": shown above the Save button until a day is ticked */
+.noDaysSelected {
+  margin: 0 0 12px 0;
+  color: var(--colorTextSecondary);
+}

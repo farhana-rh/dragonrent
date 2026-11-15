@@ -8,7 +8,9 @@ import {
   LISTING_UNIT_TYPES,
 } from './types';
 
-const DEFAULT_TIME_ZONE = 'Etc/UTC';
+// Used only when the listing (and its availability plan) isn't included with the transaction.
+// DragonRent's listings are in Finland, so Finnish time keeps the dates right in that case too.
+const DEFAULT_TIME_ZONE = 'Europe/Helsinki';
 
 /**
  * The line item that carries the booked unit (day, night, hour, …) of a transaction.

@@ -102,13 +102,14 @@ const EditListingAvailabilityPlanForm = props => {
 
         const concatDayEntriesReducer = (entries, day) =>
           values[day] ? entries.concat(values[day]) : entries;
-        const hasUnfinishedEntries = !!weekdays
-          .reduce(concatDayEntriesReducer, [])
-          .find(e => !e.startTime || !e.endTime);
+        const allEntries = weekdays.reduce(concatDayEntriesReducer, []);
+        const hasUnfinishedEntries = !!allEntries.find(e => !e.startTime || !e.endTime);
+        // DragonRent: a schedule needs at least one day, or nobody could book the listing
+        const hasNoDays = allEntries.length === 0;
 
         const { updateListingError } = fetchErrors || {};
 
-        const submitDisabled = submitInProgress || hasUnfinishedEntries;
+        const submitDisabled = submitInProgress || hasUnfinishedEntries || hasNoDays;
 
         return (
           <Form id={formId} className={classes} onSubmit={handleSubmit}>
@@ -150,6 +151,11 @@ const EditListingAvailabilityPlanForm = props => {
             </div>
 
             <div className={css.submitButton}>
+              {hasNoDays ? (
+                <p className={css.noDaysSelected}>
+                  <FormattedMessage id="EditListingAvailabilityPlanForm.noDaysSelected" />
+                </p>
+              ) : null}
               {updateListingError ? (
                 <p className={css.error}>
                   <FormattedMessage id="EditListingAvailabilityPlanForm.updateFailed" />

@@ -129,8 +129,10 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
   hammer drill" is left on it); renter books the drill (dates → checkout → 4242 card → "Request
   sent!" → message), order `6addcc38`, waiting for farhana04 to answer. Not yet tested: Stripe
   payout onboarding, accept/decline screens, 3-D Secure card, reviews, a 3+ day booking (discount).
-  Found: availability schedule defaults to the browser time zone with no days ticked (cause of the
-  drill's Asia/Dhaka/Mondays); Messages tab titles in Console hold both texts ("As a renter /
+  Found: availability schedule defaulted to the browser time zone with no days ticked (cause of the
+  drill's Asia/Dhaka/Mondays; fixed 15 Nov: new schedules start in Europe/Helsinki, no day is
+  pre-ticked, and Save/Publish wait until at least one day is ticked); Messages tab titles in
+  Console hold both texts ("As a renter /
   Messages: As a renter"); footer placeholder slogan and "© Your marketplace"; logo PNG has a
   checkerboard baked in.
 - **Day 10:** prep only (`docs/LAUNCH.md`, `docs/PHASE2.md`, server-rendering fix). Live plan,

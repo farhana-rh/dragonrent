@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 // Import configs and util modules
 import { FormattedMessage } from '../../../../util/reactIntl';
-import { getDefaultTimeZoneOnBrowser, timestampToDate } from '../../../../util/dates';
+import { timestampToDate } from '../../../../util/dates';
 import { AVAILABILITY_MULTIPLE_SEATS, LISTING_STATE_DRAFT } from '../../../../util/types';
 import { DAY, isFullDay } from '../../../../transactions/transaction';
 
@@ -30,8 +30,11 @@ const rotateDays = (days, startOfWeek) => {
   return startOfWeek === 0 ? days : days.slice(startOfWeek).concat(days.slice(0, startOfWeek));
 };
 
-const defaultTimeZone = () =>
-  typeof window !== 'undefined' ? getDefaultTimeZoneOnBrowser() : 'Etc/UTC';
+// DragonRent lends in Finland: a new schedule starts in Finnish time instead of the browser's
+// time zone (an owner travelling abroad used to get e.g. Asia/Dhaka). The time zone picker in
+// the schedule form stays, so it can still be changed.
+const DEFAULT_TIME_ZONE = 'Europe/Helsinki';
+const defaultTimeZone = () => DEFAULT_TIME_ZONE;
 
 ///////////////////////////////////////////////////
 // EditListingAvailabilityExceptionPanel - utils //
@@ -195,6 +198,9 @@ const EditListingAvailabilityPanel = props => {
   const useMultipleSeats = listingTypeConfig?.availabilityType === AVAILABILITY_MULTIPLE_SEATS;
 
   const hasAvailabilityPlan = !!listingAttributes?.availabilityPlan;
+  // A schedule with no days ticked could be saved before; nobody could book such a listing.
+  // The owner has to tick at least one day before the listing goes any further.
+  const hasOpenDays = (listingAttributes?.availabilityPlan?.entries || []).length > 0;
   const isPublished = listing?.id && listingAttributes?.state !== LISTING_STATE_DRAFT;
   const defaultAvailabilityPlan = {
     type: 'availability-plan/time',
@@ -293,6 +299,10 @@ const EditListingAvailabilityPanel = props => {
           <p>
             <FormattedMessage id="EditListingAvailabilityPanel.availabilityPlanInfo" />
           </p>
+        ) : !hasOpenDays ? (
+          <p className={css.noOpenDays}>
+            <FormattedMessage id="EditListingAvailabilityPanel.noOpenDays" />
+          </p>
         ) : null}
 
         <InlineTextButton
@@ -359,7 +369,7 @@ const EditListingAvailabilityPanel = props => {
         <Button
           className={css.goToNextTabButton}
           onClick={onNextTab}
-          disabled={!hasAvailabilityPlan || disabled}
+          disabled={!hasAvailabilityPlan || !hasOpenDays || disabled}
           ready={ready}
         >
           {submitButtonText}
