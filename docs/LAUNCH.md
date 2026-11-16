@@ -82,29 +82,51 @@ is not reversible by itself, but the alias can be moved back to the previous ver
    - **Localization:** locale and currency EUR.
    - **Marketplace URL** (Build → Advanced): `https://<your domain>`. Email links use it.
 4. Note the Live **client ID** and **client secret** (Advanced → Applications). The secret goes
-   only into Render, never into chat or Git.
+   only into Railway, never into chat or Git.
 
 ## 3. Stripe live (1 h)
 
 1. **You:** in the live Stripe account, finish business verification and Connect settings
    (platform name, branding, payout schedule).
-2. Live **secret key** (`sk_live_…`) → Sharetribe Live Console → Payments. Never in Render, Git or
-   chat.
-3. Live **publishable key** (`pk_live_…`) → Render (step 4).
+2. Live **secret key** (`sk_live_…`) → Sharetribe Live Console → Payments. Never in Railway, Git
+   or chat.
+3. Live **publishable key** (`pk_live_…`) → Railway (step 4).
 
-## 4. Production service on Render (1.5 h)
+## 4. Production service on Railway (1.5 h)
 
-Create a new web service (don't reuse staging) from the GitHub repo, branch `main`.
+Production runs on Railway (decided 17 Nov). Staging stays on Render until you decide otherwise.
+The app needs no code change for Railway: it listens on the `PORT` Railway gives it, builds with
+`yarn build` and starts with `yarn start`.
 
-- **Build command:** `yarn install --frozen-lockfile && yarn build`
-- **Start command:** `yarn start`
-- **Node version:** 22 or 24 (`package.json` engines), e.g. environment variable
-  `NODE_VERSION=22.22.0`
+1. **You:** create a Railway account and take the **Hobby** plan ($5 a month, which includes $5
+   of usage). The trial credit runs out after 30 days, so don't run production on it.
+2. **You:** New Project → Deploy from GitHub repo → allow Railway's GitHub app to read
+   `farhana-rh/dragonrent` → pick the repo. Railway creates a service and starts a first build;
+   it fails until the variables below are in, which is fine.
+3. Service → Settings:
+   - **Source → Branch:** `main` (after the pull request in step 1 is merged). For a test run
+     before that, see "Try it first" below.
+   - **Build → Custom build command:**
+     `yarn install --frozen-lockfile --production=false && yarn build`. Railway's builder
+     (Railpack) finds Yarn 1 from `yarn.lock` and installs on its own, but with
+     `NODE_ENV=production` set Yarn may skip the dev dependencies, and webpack and Babel are dev
+     dependencies. `--production=false` makes sure they're there (checked 17 Nov on a clean
+     clone with `NODE_ENV=production`: install and build pass, the server answers on the given
+     port).
+   - **Deploy → Custom start command:** `yarn start`.
+   - **Deploy → Healthcheck path:** `/robots.txt` (cheap, and only answers once the server is up).
+   - **Deploy → Region:** EU West (Amsterdam), the closest to Finland.
+   - **Serverless / app sleeping:** off. A sleeping site loses the first visitor's request.
+4. Service → Variables: add the table below, then deploy. Don't add `PORT`; Railway sets it.
+5. Service → Settings → Networking → **Generate Domain** gives a `….up.railway.app` address for a
+   first check. While you test on it, `REACT_APP_MARKETPLACE_ROOT_URL` must be that address;
+   change it to your own domain in step 5.
 
-Environment variables (Render → Environment):
+Environment variables (Railway → service → Variables, "Raw Editor" takes them all at once):
 
 | Name | Value |
 | --- | --- |
+| `RAILPACK_NODE_VERSION` | `24` (the version the build and tests were checked with) |
 | `NODE_ENV` | `production` |
 | `REACT_APP_ENV` | `production` |
 | `REACT_APP_SHARETRIBE_SDK_CLIENT_ID` | Live client ID |
@@ -123,18 +145,41 @@ Not on production: `BASIC_AUTH_USERNAME` / `BASIC_AUTH_PASSWORD` (they put a pas
 Analytics (`REACT_APP_GOOGLE_ANALYTICS_ID` or Plausible) only if you decided to use it; it loads
 after cookie consent either way.
 
-`REACT_APP_*` values are built into the site, so after changing one, redeploy (Render → Manual
-deploy → Clear build cache & deploy).
+`REACT_APP_*` values are built into the site when it builds, so after changing one, deploy again
+(Railway offers "Deploy" after a variable change; otherwise Deployments → ⋮ → Redeploy).
+
+**Try it first (optional, recommended):** in the same Railway project add an environment
+`staging` (top bar → Environments → New), point its service at `feature/redesign` and give it the
+**Dev** values from `.env` (Dev client ID and secret, Stripe test key `pk_test_…`,
+`REACT_APP_SENTRY_ENVIRONMENT=staging`). It proves the Railway build before any Live key exists,
+and unlike Render's free instance it doesn't sleep. Use the Dev values only there.
 
 ## 5. Domain and email (1 h + DNS waiting)
 
-1. **You:** Render → the production service → Settings → Custom domains: add `dragonrent.fi` (and
-   `www`). Add the DNS records Render shows at your domain registrar. HTTPS is set up by Render.
-2. When the domain works, check `https://<domain>/robots.txt` lists
+GoDaddy can't point the bare domain (`dragonrent.fi`, no `www`) at Railway: Railway needs a CNAME
+on the root, and GoDaddy's DNS doesn't allow one there. Pick one:
+
+- **A. Keep GoDaddy DNS, use `www` (simplest).** The site lives at `https://www.dragonrent.fi`;
+  GoDaddy forwards the bare domain to it.
+- **B. Move DNS to Cloudflare (free).** The bare domain works too. You keep the domain at
+  GoDaddy and only change its nameservers to the two Cloudflare gives you.
+
+1. **You:** Railway → production service → Settings → Networking → **Custom Domain**: add
+   `www.dragonrent.fi` (B: also `dragonrent.fi`). Railway shows a **CNAME** and a **TXT**
+   (`_railway-verify…`) record for each. Add both where your DNS is (A: GoDaddy → Domain → DNS;
+   B: Cloudflare, records set to "DNS only", grey cloud). Without the TXT record Railway answers
+   404 even when the CNAME works. HTTPS is set up by Railway once the records are seen.
+2. A only: GoDaddy → Domain → Forwarding: forward `dragonrent.fi` to `https://www.dragonrent.fi`,
+   permanent (301).
+3. Set `REACT_APP_MARKETPLACE_ROOT_URL` to the address the site lives at (A:
+   `https://www.dragonrent.fi`), deploy again, and put the same address in Sharetribe Live
+   Console → Marketplace URL. The three must match, or email links and sign-in break.
+4. When the domain works, check `https://<domain>/robots.txt` lists
    `Sitemap: https://<domain>/sitemap-index.xml`.
-3. **You:** Sharetribe Live Console → Email settings: sender name "DragonRent" and a sender address
-   on your domain; add the DNS records it shows (SPF/DKIM) so emails don't land in spam.
-4. Mapbox: restrict the production token to `https://<domain>/*`.
+5. **You:** Sharetribe Live Console → Email settings: sender name "DragonRent" and a sender address
+   on your domain; add the DNS records it shows (SPF/DKIM) where your DNS is, so emails don't land
+   in spam.
+6. Mapbox: restrict the production token to `https://<domain>/*`.
 
 ## 6. Clean data
 
@@ -160,6 +205,8 @@ Use real cards and small amounts.
 
 ## If something goes wrong
 
-- Site shows an error page: Render → Logs, and Sentry → Issues.
-- A deploy broke the site: Render → Deploys → roll back to the previous deploy.
+- Site shows an error page: Railway → service → Deployments → View logs, and Sentry → Issues.
+- Build fails: the build log in the same place. "Missing key assets" or a blank page usually
+  means a wrong client ID or secret.
+- A deploy broke the site: Railway → Deployments → an earlier deploy → ⋮ → Rollback.
 - Payments failing: Stripe dashboard → Developers → Logs (live mode).

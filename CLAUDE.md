@@ -14,7 +14,8 @@ flows and a code map are in `docs/`:
 - `docs/SCOPE.md`: frozen MVP scope, decisions and the duration pricing rule. Read it first.
 - `docs/FLOWS.md`: renter and owner flows, sitemap
 - `docs/MAP.md`: where each page, component and the pricing code live
-- `docs/LAUNCH.md`: Day 10 runbook (go/no-go list, Live setup, Render variables, smoke test)
+- `docs/LAUNCH.md`: Day 10 runbook (go/no-go list, Live setup, Railway service and variables,
+  GoDaddy domain, smoke test)
 - `docs/PHASE2.md`: everything cut or found during the build
 
 ## Design source of truth
@@ -122,6 +123,11 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
   client 1,237. **Gated on the user:** push to staging, process push (Dev then Live, `docs/LAUNCH.md`
   1b), re-saving the Dev listings' Location step, PR to `main`, Live setup. Audit report:
   https://claude.ai/artifact/PMLcdR5YPDBuT7DcV5F7c7
+- **Production host: Railway (user, 17 Nov),** not Render; staging stays on Render. Steps in
+  `docs/LAUNCH.md` sections 4–5. The build command must install dev dependencies
+  (`yarn install --frozen-lockfile --production=false && yarn build`): webpack and Babel are dev
+  dependencies. GoDaddy DNS can't hold a root CNAME, so the site goes on `www` or DNS moves to
+  Cloudflare.
 - **Remaining work** (estimate 9 Nov): about 7–11 h of code and testing, 9–12 h of Console, Live
   and hosting setup by the user, plus waiting for the lawyer, the Finnish review and DNS.
 - **Days 0–9 code done**, all on `feature/redesign`, pushed to GitHub 23 Oct (not merged to `main`;
@@ -146,7 +152,7 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
   Messages: As a renter"); footer placeholder slogan and "© Your marketplace"; logo PNG has a
   checkerboard baked in.
 - **Day 10:** prep only (`docs/LAUNCH.md`, `docs/PHASE2.md`, server-rendering fix). Live plan,
-  live Stripe, production Render service, domain and the real-card smoke test are the user's.
+  live Stripe, production Railway service, domain and the real-card smoke test are the user's.
   DragonRent is not live.
 
 ## Day 8 decisions (22 Oct)
@@ -225,7 +231,7 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
   adds Cancellation policy, Damage policy and FAQ to the footer links. Checkout shows "By sending a
   request, you agree to the Terms of Service and the Cancellation policy" (no checkbox).
 - **Sentry:** built in; needs `REACT_APP_SENTRY_DSN` and `REACT_APP_SENTRY_ENVIRONMENT` in Render
-  (`docs/CONSOLE-SETUP.md` section 9). Analytics loads only after cookie consent
+  (staging) and Railway (production) (`docs/CONSOLE-SETUP.md` section 9). Analytics loads only after cookie consent
   (`src/util/cookieConsent.js`); no analytics ID is set yet.
 - **Test logins** for headless screenshots go in `.env.test-accounts` (git-ignored):
   `RENTER_EMAIL`, `RENTER_PASSWORD`, `OWNER_EMAIL`, `OWNER_PASSWORD`. Created 25 Oct and used
@@ -277,7 +283,7 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
 
 - Windows dev machine. Git warns about LF/CRLF line endings, which is harmless.
 - `.env` has a Stripe **test** publishable key and a Mapbox token. Never paste Stripe secret keys or
-  the Sharetribe client secret into chat; they go in `.env`/Console/Render only.
+  the Sharetribe client secret into chat; they go in `.env`/Console/Render/Railway only.
 - Staging runs on Render; its environment variables are set in the Render dashboard.
 - `build/` is generated output. Rebuild it rather than editing it.
 - Check server-side rendering after adding packages: `yarn build`, then
