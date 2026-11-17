@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="56" viewBox="0 1 64 55" role="img" aria-label="DragonRent">
+      <path d="M16 25 C14 17 10.5 10 5 4.5 C13 6.5 21 12 27.5 19 Z" fill="#FF5733" stroke="#111" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M48 25 C50 17 53.5 10 59 4.5 C51 6.5 43 12 36.5 19 Z" fill="#FF5733" stroke="#111" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M4 34 C14 20 23 15.5 32 15.5 C41 15.5 50 20 60 34 C50 48 41 52.5 32 52.5 C23 52.5 14 48 4 34 Z" fill="#FF5733" stroke="#111" stroke-width="3" stroke-linejoin="round"/>
+      <circle cx="32" cy="34" r="13" fill="#FFC300" stroke="#111" stroke-width="3"/>
+      <circle cx="32" cy="30.5" r="4" fill="#111"/>
+      <path d="M30 32 L34 32 L35.6 42 L28.4 42 Z" fill="#111" stroke="#111" stroke-width="1" stroke-linejoin="round"/>
+    </svg>

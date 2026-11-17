@@ -1,0 +1,884 @@
+<title>DragonRent Home Concept</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          cream: '#FAF8F5',
+          ink: '#111111',
+          coral: '#FF5733',
+          marigold: '#FFC300',
+          mint: '#00C896',
+          electric: '#2457C5',
+          muted: '#4A4743',
+        },
+        fontFamily: {
+          sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+        },
+        boxShadow: {
+          hard: '4px 4px 0 #111111',
+          'hard-sm': '2px 2px 0 #111111',
+          'hard-lg': '6px 6px 0 #111111',
+        },
+      },
+    },
+  };
+</script>
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+<style>
+  /* Layout: one centred 1200px column; playful bands (hero, cards, how-it-works) carry thick ink
+     borders and hard shadows, trust bands (guarantee, lender path, footer) go calm: thin lines, white. */
+  :root {
+    --cream: #FAF8F5;
+    --paper: #FFFFFF;
+    --ink: #111111;
+    --muted: #4A4743;
+    --line: rgba(17, 17, 17, 0.12);
+    --coral: #FF5733;
+    --marigold: #FFC300;
+    --mint: #00C896;
+    --electric: #2457C5;
+    --sea: #CFE0F7;
+    --font: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    color-scheme: light;
+  }
+  body {
+    background-color: var(--cream);
+    background-image: radial-gradient(rgba(17, 17, 17, 0.045) 1px, transparent 1px);
+    background-size: 18px 18px;
+    color: var(--ink);
+    font-family: var(--font);
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0 0 auto;
+    height: env(safe-area-inset-top, 0px);
+    z-index: 60;
+    background: var(--cream);
+  }
+  .wrap {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  h1, h2, h3 { text-wrap: balance; letter-spacing: -0.02em; }
+  .tnum { font-variant-numeric: tabular-nums; }
+  .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .site-header { top: env(safe-area-inset-top, 0px); }
+
+  /* Primary (playful) objects */
+  .brut { border: 2px solid var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+  .brut-btn {
+    border: 2px solid var(--ink);
+    box-shadow: 4px 4px 0 var(--ink);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .brut-btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink); }
+  .brut-btn:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--ink); }
+  .card {
+    transition: transform 0.18s cubic-bezier(.34, 1.56, .64, 1), box-shadow 0.18s ease;
+  }
+  .card:hover { transform: translate(-3px, -4px) rotate(-0.6deg); box-shadow: 7px 8px 0 var(--ink); }
+  .sticker { border: 2px solid var(--ink); border-radius: 999px; box-shadow: 2px 2px 0 var(--ink); }
+
+  /* Secondary (calm) objects */
+  .calm { border: 1px solid var(--line); }
+
+  :focus-visible { outline: 3px solid var(--electric); outline-offset: 3px; border-radius: 10px; }
+
+  .chip[aria-pressed="true"] { background: var(--ink); color: var(--cream); }
+  .tab[aria-selected="true"] { background: var(--ink); color: var(--cream); }
+
+  @keyframes spinPick {
+    0% { transform: rotate(0) scale(1); }
+    30% { transform: rotate(-4deg) scale(1.04); }
+    60% { transform: rotate(3deg) scale(1.03); }
+    100% { transform: rotate(0) scale(1); }
+  }
+  .picked { animation: spinPick 0.7s cubic-bezier(.34, 1.56, .64, 1); outline: 4px solid var(--marigold); outline-offset: 4px; }
+  @keyframes floaty { 0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); } 50% { transform: translateY(-6px) rotate(var(--r, 0deg)); } }
+  .floaty { animation: floaty 5s ease-in-out infinite; }
+  .placeholder-fade { transition: opacity 0.25s ease; }
+
+  .deck-card { touch-action: none; transition: transform 0.25s ease; }
+  .deck-card.dragging { transition: none; }
+
+  .drawer-panel { transition: transform 0.25s ease; }
+  .modal-panel { transition: transform 0.2s ease, opacity 0.2s ease; }
+
+  input[type=range] { accent-color: var(--ink); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+
+<!-- Concept notice -->
+<div class="bg-ink text-cream">
+  <div class="wrap flex flex-wrap items-center justify-between gap-2" style="padding-block: 8px">
+    <p class="text-[13px] font-medium">Design concept for DragonRent. Items, ratings and protection terms are samples, not live offers.</p>
+    <a href="#trust" class="text-[13px] font-semibold underline underline-offset-4">What's real today</a>
+  </div>
+</div>
+
+<!-- 1. Navigation -->
+<header class="site-header sticky z-50 bg-cream/95 backdrop-blur border-b-2 border-ink">
+  <div class="wrap flex items-center justify-between gap-4" style="padding-block: 12px">
+    <a href="#top" class="flex items-center gap-2 font-extrabold text-xl tracking-tight" aria-label="DragonRent home">
+      <span class="grid place-items-center w-10 h-10 rounded-xl bg-coral brut" style="box-shadow: 2px 2px 0 #111">
+        <svg viewBox="0 0 32 32" width="24" height="24" aria-hidden="true">
+          <path d="M6 22c2-9 8-14 16-14l-2 4 6-1-3 5 3 1c-4 6-10 9-20 5z" fill="#111"/>
+          <circle cx="19" cy="13" r="1.6" fill="#FFC300"/>
+        </svg>
+      </span>
+      DragonRent
+    </a>
+    <nav class="hidden md:flex items-center gap-1 text-[15px] font-semibold" aria-label="Main">
+      <a href="#explore" class="px-3 py-2 rounded-lg hover:bg-ink/5">Explore</a>
+      <a href="#how" class="px-3 py-2 rounded-lg hover:bg-ink/5">How it works</a>
+      <a href="#trust" class="px-3 py-2 rounded-lg hover:bg-ink/5">Trust &amp; Safety</a>
+    </nav>
+    <div class="flex items-center gap-2">
+      <a href="#lend" class="hidden sm:inline-flex brut-btn items-center gap-2 rounded-xl bg-electric text-white font-bold px-4 py-2.5">
+        <i data-lucide="plus" class="w-4 h-4"></i> List an item
+      </a>
+      <button id="menuBtn" class="md:hidden grid place-items-center w-11 h-11 rounded-xl border-2 border-ink bg-white" aria-expanded="false" aria-controls="mobileNav" aria-label="Open menu">
+        <i data-lucide="menu" class="w-5 h-5"></i>
+      </button>
+    </div>
+  </div>
+  <div id="mobileNav" class="md:hidden border-t border-ink/10 bg-cream" hidden>
+    <div class="wrap flex flex-col gap-1" style="padding-block: 12px">
+      <a href="#explore" class="px-3 py-3 rounded-lg font-semibold hover:bg-ink/5">Explore</a>
+      <a href="#how" class="px-3 py-3 rounded-lg font-semibold hover:bg-ink/5">How it works</a>
+      <a href="#trust" class="px-3 py-3 rounded-lg font-semibold hover:bg-ink/5">Trust &amp; Safety</a>
+      <a href="#lend" class="brut-btn mt-2 inline-flex items-center justify-center gap-2 rounded-xl bg-electric text-white font-bold px-4 py-3">
+        <i data-lucide="plus" class="w-4 h-4"></i> List an item
+      </a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <!-- 2. Hero -->
+  <section class="relative overflow-hidden">
+    <div class="wrap grid lg:grid-cols-[1.15fr_0.85fr] gap-10 items-center" style="padding-block: 48px 56px">
+      <div class="min-w-0">
+        <span class="sticker inline-flex items-center gap-2 bg-mint px-3 py-1 text-[13px] font-bold" style="transform: rotate(-2deg)">
+          <i data-lucide="map-pin" class="w-4 h-4"></i> Helsinki, Espoo &amp; Vantaa
+        </span>
+        <h1 class="mt-5 text-[40px] leading-[1.02] sm:text-6xl lg:text-[68px] font-extrabold">
+          Your neighbour has
+          <span class="relative inline-block">
+            <span class="relative z-10">the thing.</span>
+            <span class="absolute left-0 right-0 bottom-1 h-4 sm:h-5 bg-marigold -z-0 rounded" aria-hidden="true"></span>
+          </span>
+          Rent it for the day.
+        </h1>
+        <p class="mt-5 max-w-[34rem] text-lg text-muted">
+          Pressure washers, sauna tents, a T-rex costume for Saturday. Borrow from people a few streets away, pick it up, bring it back.
+        </p>
+
+        <form id="heroSearch" class="mt-7 brut bg-white rounded-2xl p-2 flex flex-col sm:flex-row gap-2" role="search">
+          <label for="q" class="sr-only">What do you need?</label>
+          <div class="flex items-center gap-3 flex-1 min-w-0 px-3">
+            <i data-lucide="search" class="w-5 h-5 shrink-0"></i>
+            <input id="q" name="q" type="search" autocomplete="off"
+              class="w-full min-w-0 bg-transparent py-3 text-[17px] font-medium placeholder:text-muted/80 focus:outline-none placeholder-fade"
+              placeholder="Try “dino costume”">
+          </div>
+          <label for="area" class="sr-only">Area</label>
+          <select id="area" class="sm:w-44 rounded-xl border border-ink/15 bg-cream px-3 py-3 text-[15px] font-semibold">
+            <option value="">All areas</option>
+          </select>
+          <button type="submit" class="brut-btn rounded-xl bg-ink text-cream font-bold px-6 py-3" style="box-shadow: 3px 3px 0 #FF5733">
+            Find it
+          </button>
+        </form>
+
+        <div class="mt-5 flex flex-wrap items-center gap-3">
+          <button id="spinBtn" type="button" class="sticker inline-flex items-center gap-2 bg-marigold px-4 py-2 font-bold text-[15px] hover:-rotate-2 transition-transform">
+            <i data-lucide="shuffle" class="w-4 h-4"></i> Spin the block
+          </button>
+          <span class="text-[14px] text-muted">Can't decide? We'll pick something nearby.</span>
+        </div>
+      </div>
+
+      <!-- Fanned sample cards -->
+      <div class="relative h-[340px] sm:h-[380px] hidden sm:block" aria-hidden="true">
+        <div class="absolute left-[6%] top-[12%] w-56 rounded-2xl brut bg-white overflow-hidden floaty" style="--r: -8deg; transform: rotate(-8deg)">
+          <div class="h-28 bg-mint grid place-items-center border-b-2 border-ink"><i data-lucide="tent" class="w-14 h-14"></i></div>
+          <div class="p-3"><p class="font-bold">Mobile sauna tent</p><p class="text-[13px] text-muted">Lauttasaari</p></div>
+        </div>
+        <div class="absolute right-[4%] top-[2%] w-56 rounded-2xl brut bg-white overflow-hidden floaty" style="--r: 7deg; transform: rotate(7deg); animation-delay: -1.5s">
+          <div class="h-28 bg-coral grid place-items-center border-b-2 border-ink"><i data-lucide="party-popper" class="w-14 h-14"></i></div>
+          <div class="p-3"><p class="font-bold">Inflatable T-rex</p><p class="text-[13px] text-muted">Vallila</p></div>
+        </div>
+        <div class="absolute left-[24%] bottom-[2%] w-60 rounded-2xl brut bg-white overflow-hidden floaty" style="--r: -1deg; animation-delay: -3s">
+          <div class="h-28 bg-marigold grid place-items-center border-b-2 border-ink"><i data-lucide="spray-can" class="w-14 h-14"></i></div>
+          <div class="p-3 flex items-center justify-between"><p class="font-bold">Pressure washer</p><span class="sticker bg-white px-2 text-[13px] font-bold tnum">€14/day</span></div>
+        </div>
+        <span class="absolute right-[10%] bottom-[16%] sticker bg-electric text-white px-3 py-1 text-[13px] font-bold" style="transform: rotate(-6deg)">Kallio favourite</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Guarantee strip (high-trust zone) -->
+  <section class="bg-white border-y border-ink/10" aria-labelledby="guaranteeTitle">
+    <div class="wrap flex flex-col md:flex-row md:items-center justify-between gap-4" style="padding-block: 20px">
+      <div class="flex items-start gap-4 min-w-0">
+        <span class="grid place-items-center w-11 h-11 rounded-full bg-electric/10 text-electric shrink-0">
+          <i data-lucide="shield-check" class="w-6 h-6"></i>
+        </span>
+        <div class="min-w-0">
+          <h2 id="guaranteeTitle" class="text-[17px] font-bold">Neighbour Protection, up to €2,500 per rental</h2>
+          <p class="text-[15px] text-muted">If an item is damaged or not returned, the lender is compensated after a documented review. Renters pay nothing extra for it.</p>
+        </div>
+      </div>
+      <button id="openGuarantee" type="button" class="shrink-0 inline-flex items-center gap-2 rounded-lg border border-ink/20 bg-white px-4 py-2.5 text-[15px] font-semibold hover:border-ink">
+        See coverage details <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </button>
+    </div>
+  </section>
+
+  <!-- 4 + 5. Filter bar and collectible cards -->
+  <section id="explore" class="scroll-mt-24" aria-labelledby="exploreTitle">
+    <div class="wrap" style="padding-block: 48px 24px">
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p class="eyebrow text-coral">Explore</p>
+          <h2 id="exploreTitle" class="text-3xl sm:text-4xl font-extrabold mt-1">Near you this week</h2>
+        </div>
+        <p id="resultCount" class="text-[15px] font-semibold text-muted tnum" aria-live="polite"></p>
+      </div>
+
+      <div class="mt-6 flex flex-col gap-3">
+        <div class="flex flex-wrap items-center gap-2" role="group" aria-label="Tier">
+          <button class="chip sticker bg-white px-3.5 py-1.5 text-[14px] font-bold" data-tier="all" aria-pressed="true">All tiers</button>
+          <button class="chip sticker bg-white px-3.5 py-1.5 text-[14px] font-bold" data-tier="everyday" aria-pressed="false">Everyday</button>
+          <button class="chip sticker bg-white px-3.5 py-1.5 text-[14px] font-bold" data-tier="weekend" aria-pressed="false">Weekend</button>
+          <button class="chip sticker bg-white px-3.5 py-1.5 text-[14px] font-bold" data-tier="pro" aria-pressed="false">Pro gear</button>
+        </div>
+        <div class="flex flex-wrap items-center justify-between gap-3 border-t border-ink/10 pt-3">
+          <div class="flex flex-wrap items-center gap-2" role="group" aria-label="Safety filters">
+            <button class="safety inline-flex items-center gap-1.5 rounded-full border border-ink/20 bg-white px-3 py-1.5 text-[14px] font-semibold" data-badge="nodeposit" aria-pressed="false"><i data-lucide="wallet" class="w-4 h-4"></i> No deposit</button>
+            <button class="safety inline-flex items-center gap-1.5 rounded-full border border-ink/20 bg-white px-3 py-1.5 text-[14px] font-semibold" data-badge="photo" aria-pressed="false"><i data-lucide="camera" class="w-4 h-4"></i> Photo check</button>
+            <button class="safety inline-flex items-center gap-1.5 rounded-full border border-ink/20 bg-white px-3 py-1.5 text-[14px] font-semibold" data-badge="idfull" aria-pressed="false"><i data-lucide="badge-check" class="w-4 h-4"></i> ID verified + full coverage</button>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="hidden sm:flex rounded-xl border-2 border-ink bg-white p-1" role="tablist" aria-label="View">
+              <button class="tab view-tab inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-[14px] font-bold" role="tab" data-view="grid" aria-selected="true"><i data-lucide="layout-grid" class="w-4 h-4"></i> Grid</button>
+              <button class="tab view-tab inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-[14px] font-bold" role="tab" data-view="map" aria-selected="false"><i data-lucide="map" class="w-4 h-4"></i> Map</button>
+              <button class="tab view-tab inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-[14px] font-bold" role="tab" data-view="deck" aria-selected="false"><i data-lucide="layers" class="w-4 h-4"></i> Swipe deck</button>
+            </div>
+            <button id="openDrawer" type="button" class="inline-flex items-center gap-2 rounded-xl border-2 border-ink bg-white px-3.5 py-2 text-[14px] font-bold" aria-expanded="false" aria-controls="drawer">
+              <i data-lucide="sliders-horizontal" class="w-4 h-4"></i> Filters &amp; view
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Views -->
+      <div id="gridView" class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"></div>
+
+      <div id="mapView" class="mt-8 grid lg:grid-cols-[1.6fr_1fr] gap-6" hidden>
+        <div class="brut rounded-2xl overflow-hidden bg-[#CFE0F7] min-w-0">
+          <svg id="mapSvg" viewBox="0 0 600 400" class="w-full h-auto block" role="img" aria-label="Sample map of Helsinki with item pins">
+            <rect width="600" height="400" fill="#CFE0F7"/>
+            <path d="M0 0H600V150C540 170 520 210 470 205C430 200 420 240 380 245C340 250 330 290 290 300C250 310 230 280 190 290C150 300 120 270 80 280C50 288 20 260 0 270Z" fill="#F3EEE4" stroke="#111" stroke-width="2"/>
+            <path d="M300 300C320 330 360 335 380 315C395 300 370 280 345 282C325 284 300 285 300 300Z" fill="#F3EEE4" stroke="#111" stroke-width="2"/>
+            <path d="M120 320C140 340 175 338 185 322C192 310 170 300 150 302C132 304 115 308 120 320Z" fill="#F3EEE4" stroke="#111" stroke-width="2"/>
+            <g font-family="Plus Jakarta Sans, system-ui, sans-serif" font-size="13" font-weight="700" fill="#4A4743">
+              <text x="250" y="150">Kallio</text><text x="150" y="190">Töölö</text><text x="210" y="250">Kamppi</text>
+              <text x="320" y="110">Vallila</text><text x="430" y="170">Herttoniemi</text><text x="40" y="230">Espoo</text>
+              <text x="140" y="80">Pasila</text><text x="318" y="345">Suomenlinna</text>
+            </g>
+            <g id="pins"></g>
+          </svg>
+        </div>
+        <div id="mapDetail" class="min-w-0"></div>
+      </div>
+
+      <div id="deckView" class="mt-8" hidden>
+        <div class="mx-auto max-w-sm">
+          <div id="deck" class="relative h-[460px]" aria-live="polite"></div>
+          <div class="mt-6 flex items-center justify-center gap-4">
+            <button id="deckPass" type="button" class="brut-btn inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 font-bold"><i data-lucide="x" class="w-5 h-5"></i> Pass</button>
+            <button id="deckDates" type="button" class="brut-btn inline-flex items-center gap-2 rounded-xl bg-mint px-5 py-3 font-bold"><i data-lucide="calendar-days" class="w-5 h-5"></i> Check dates</button>
+          </div>
+          <p class="mt-3 text-center text-[13px] text-muted">Drag the card or use the arrow keys.</p>
+        </div>
+      </div>
+
+      <div id="emptyState" class="mt-8 brut rounded-2xl bg-white p-8 text-center" hidden>
+        <p class="text-2xl font-extrabold">Nothing on this block yet.</p>
+        <p class="mt-2 text-muted">Try a different word or clear the filters. New items are listed every day.</p>
+        <button id="clearAll" type="button" class="brut-btn mt-5 rounded-xl bg-marigold px-5 py-2.5 font-bold">Clear filters</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works (playful, a real sequence) -->
+  <section id="how" class="scroll-mt-24" aria-labelledby="howTitle">
+    <div class="wrap" style="padding-block: 48px">
+      <p class="eyebrow text-electric">How it works</p>
+      <h2 id="howTitle" class="text-3xl sm:text-4xl font-extrabold mt-1">Three steps, one weekend project</h2>
+      <ol class="mt-8 grid gap-6 md:grid-cols-3">
+        <li class="brut rounded-2xl bg-white p-6">
+          <span class="sticker inline-grid place-items-center w-10 h-10 bg-marigold font-extrabold">1</span>
+          <h3 class="mt-4 text-xl font-bold">Find it nearby</h3>
+          <p class="mt-2 text-muted">Search by what you need. Prices are per day, and longer rentals get cheaper per day.</p>
+        </li>
+        <li class="brut rounded-2xl bg-white p-6">
+          <span class="sticker inline-grid place-items-center w-10 h-10 bg-mint font-extrabold">2</span>
+          <h3 class="mt-4 text-xl font-bold">Request your dates</h3>
+          <p class="mt-2 text-muted">Your card is only charged when the lender says yes. You'll see the pick-up address then.</p>
+        </li>
+        <li class="brut rounded-2xl bg-white p-6">
+          <span class="sticker inline-grid place-items-center w-10 h-10 bg-coral font-extrabold">3</span>
+          <h3 class="mt-4 text-xl font-bold">Pick up, use, return</h3>
+          <p class="mt-2 text-muted">Meet, check the item together, bring it back on the last day. Leave a review for each other.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 6. Lender protection path (professional) -->
+  <section id="lend" class="bg-white border-y border-ink/10 scroll-mt-24" aria-labelledby="lendTitle">
+    <div class="wrap grid lg:grid-cols-[0.9fr_1.1fr] gap-10" style="padding-block: 56px">
+      <div class="min-w-0">
+        <p class="eyebrow text-muted">For lenders</p>
+        <h2 id="lendTitle" class="text-3xl sm:text-4xl font-extrabold mt-1">What if something breaks?</h2>
+        <p class="mt-4 text-[17px] text-muted max-w-[32rem]">
+          Lending to a stranger is a reasonable thing to worry about. This is the process that applies to every rental, start to finish.
+        </p>
+        <a href="#" id="lendCta" class="brut-btn mt-6 inline-flex items-center gap-2 rounded-xl bg-electric text-white font-bold px-5 py-3">
+          <i data-lucide="plus" class="w-4 h-4"></i> List an item
+        </a>
+        <p class="mt-3 text-[13px] text-muted">Listing is free. DragonRent keeps 10% of each rental, minimum €1.</p>
+      </div>
+      <ol class="min-w-0 flex flex-col">
+        <li class="flex gap-4 py-5 border-b border-ink/10">
+          <span class="grid place-items-center w-10 h-10 rounded-full bg-electric/10 text-electric shrink-0"><i data-lucide="id-card" class="w-5 h-5"></i></span>
+          <div>
+            <h3 class="font-bold text-[17px]">Verified borrower ID and a card hold</h3>
+            <p class="text-[15px] text-muted">Borrowers verify their identity before their first rental. The rental amount is held on their card when they request.</p>
+          </div>
+        </li>
+        <li class="flex gap-4 py-5 border-b border-ink/10">
+          <span class="grid place-items-center w-10 h-10 rounded-full bg-electric/10 text-electric shrink-0"><i data-lucide="camera" class="w-5 h-5"></i></span>
+          <div>
+            <h3 class="font-bold text-[17px]">Timestamped handoff photos</h3>
+            <p class="text-[15px] text-muted">Both of you photograph the item at pick-up and return. The photos are stored with the booking and used if there is a claim.</p>
+          </div>
+        </li>
+        <li class="flex gap-4 py-5 border-b border-ink/10">
+          <span class="grid place-items-center w-10 h-10 rounded-full bg-electric/10 text-electric shrink-0"><i data-lucide="clock" class="w-5 h-5"></i></span>
+          <div>
+            <h3 class="font-bold text-[17px]">Payout within 48 hours of the return</h3>
+            <p class="text-[15px] text-muted">Your earnings go to your bank account through Stripe once the item is back and the rental is complete.</p>
+          </div>
+        </li>
+        <li class="flex gap-4 py-5">
+          <span class="grid place-items-center w-10 h-10 rounded-full bg-electric/10 text-electric shrink-0"><i data-lucide="shield-check" class="w-5 h-5"></i></span>
+          <div>
+            <h3 class="font-bold text-[17px]">Damage review within 5 working days</h3>
+            <p class="text-[15px] text-muted">Report a problem within 24 hours of the return. We compare the handoff photos, and approved claims are paid up to €2,500.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- What's real today (honest note for reviewers of the concept) -->
+  <section id="trust" class="scroll-mt-24" aria-labelledby="trustTitle">
+    <div class="wrap" style="padding-block: 48px">
+      <div class="calm rounded-2xl bg-white p-6 sm:p-8 grid md:grid-cols-2 gap-8">
+        <div class="min-w-0">
+          <p class="eyebrow text-muted">Trust &amp; Safety</p>
+          <h2 id="trustTitle" class="text-2xl font-extrabold mt-1">What DragonRent does today</h2>
+          <ul class="mt-4 flex flex-col gap-2 text-[15px]">
+            <li class="flex gap-2"><i data-lucide="check" class="w-5 h-5 text-mint shrink-0"></i> Card payments through Stripe, charged only when the lender accepts</li>
+            <li class="flex gap-2"><i data-lucide="check" class="w-5 h-5 text-mint shrink-0"></i> Lenders verified by Stripe before they get paid</li>
+            <li class="flex gap-2"><i data-lucide="check" class="w-5 h-5 text-mint shrink-0"></i> Exact pick-up address shared only after acceptance</li>
+            <li class="flex gap-2"><i data-lucide="check" class="w-5 h-5 text-mint shrink-0"></i> Free cancellation within 24 hours of the request</li>
+          </ul>
+        </div>
+        <div class="min-w-0">
+          <p class="eyebrow text-coral">Concept only</p>
+          <h3 class="text-2xl font-extrabold mt-1">Shown on this page, not built</h3>
+          <ul class="mt-4 flex flex-col gap-2 text-[15px] text-muted">
+            <li class="flex gap-2"><i data-lucide="info" class="w-5 h-5 shrink-0"></i> €2,500 Neighbour Protection: needs an insurance partner</li>
+            <li class="flex gap-2"><i data-lucide="info" class="w-5 h-5 shrink-0"></i> Deposits, borrower ID checks and handoff photos</li>
+            <li class="flex gap-2"><i data-lucide="info" class="w-5 h-5 shrink-0"></i> 48-hour payouts: Stripe's payout schedule decides this</li>
+            <li class="flex gap-2"><i data-lucide="info" class="w-5 h-5 shrink-0"></i> Ratings on cards, map view and swipe deck</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- 7. Footer -->
+<footer class="bg-ink text-cream">
+  <div class="wrap grid gap-10 md:grid-cols-[1.3fr_1fr_1fr_1fr]" style="padding-block: 48px 32px">
+    <div class="min-w-0">
+      <p class="text-xl font-extrabold">DragonRent</p>
+      <p class="mt-2 text-[15px] text-cream/75 max-w-xs">Rent what you need from people nearby. Helsinki, Espoo and Vantaa.</p>
+      <form id="digestForm" class="mt-6" novalidate>
+        <p class="font-bold">The neighbourhood digest</p>
+        <p class="text-[13px] text-cream/75">New items in your area, every Friday.</p>
+        <div class="mt-3 flex flex-col sm:flex-row gap-2">
+          <label for="digestEmail" class="sr-only">Email</label>
+          <input id="digestEmail" type="email" autocomplete="email" placeholder="you@example.fi"
+            class="min-w-0 flex-1 rounded-xl border-2 border-cream/30 bg-ink px-3 py-2.5 text-[15px] text-cream placeholder:text-cream/50 focus:border-marigold focus:outline-none" aria-describedby="digestMsg">
+          <label for="digestArea" class="sr-only">Area</label>
+          <select id="digestArea" class="rounded-xl border-2 border-cream/30 bg-ink px-3 py-2.5 text-[15px] text-cream"></select>
+          <button type="submit" class="rounded-xl bg-marigold text-ink font-bold px-4 py-2.5 border-2 border-marigold hover:bg-cream hover:border-cream">Subscribe</button>
+        </div>
+        <p id="digestMsg" class="mt-2 text-[13px] min-h-[20px]" aria-live="polite"></p>
+      </form>
+    </div>
+    <div>
+      <p class="eyebrow text-cream/60">Explore</p>
+      <ul class="mt-3 flex flex-col gap-2 text-[15px]">
+        <li><a href="#explore" class="hover:underline">Tools</a></li>
+        <li><a href="#explore" class="hover:underline">Party &amp; events</a></li>
+        <li><a href="#explore" class="hover:underline">Outdoors</a></li>
+        <li><a href="#explore" class="hover:underline">Cameras</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="eyebrow text-cream/60">Lend</p>
+      <ul class="mt-3 flex flex-col gap-2 text-[15px]">
+        <li><a href="#lend" class="hover:underline">List an item</a></li>
+        <li><a href="#lend" class="hover:underline">Lender protection</a></li>
+        <li><a href="#how" class="hover:underline">How it works</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="eyebrow text-cream/60">Help</p>
+      <ul class="mt-3 flex flex-col gap-2 text-[15px]">
+        <li><a href="#" class="hover:underline">FAQ</a></li>
+        <li><a href="#" class="hover:underline">Cancellation policy</a></li>
+        <li><a href="#" class="hover:underline">Damage policy</a></li>
+        <li><a href="#" class="hover:underline">Terms of Service</a></li>
+        <li><a href="#" class="hover:underline">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap border-t border-cream/15 flex flex-wrap justify-between gap-2 text-[13px] text-cream/70" style="padding-block: 16px 28px">
+    <p>© 2026 DragonRent. Prices in euros, per day.</p>
+    <p>Payments by Stripe. Legal texts pending legal review.</p>
+  </div>
+</footer>
+
+<!-- Filters & view drawer -->
+<div id="drawer" class="fixed inset-0 z-[70]" hidden>
+  <div class="absolute inset-0 bg-ink/40" data-close-drawer></div>
+  <aside class="drawer-panel absolute right-0 top-0 h-full w-full max-w-sm bg-cream border-l-2 border-ink flex flex-col"
+    style="padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); padding-right: env(safe-area-inset-right, 0px)"
+    role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+    <div class="flex items-center justify-between p-5 border-b-2 border-ink">
+      <h2 id="drawerTitle" class="text-xl font-extrabold">Filters &amp; view</h2>
+      <button type="button" class="grid place-items-center w-10 h-10 rounded-xl border-2 border-ink bg-white" data-close-drawer aria-label="Close filters"><i data-lucide="x" class="w-5 h-5"></i></button>
+    </div>
+    <div class="flex-1 overflow-y-auto p-5 flex flex-col gap-6">
+      <div>
+        <p class="font-bold">View</p>
+        <div class="mt-2 grid grid-cols-3 gap-2" role="tablist" aria-label="View">
+          <button class="tab view-tab rounded-xl border-2 border-ink bg-white px-2 py-2 text-[14px] font-bold" role="tab" data-view="grid" aria-selected="true">Grid</button>
+          <button class="tab view-tab rounded-xl border-2 border-ink bg-white px-2 py-2 text-[14px] font-bold" role="tab" data-view="map" aria-selected="false">Map</button>
+          <button class="tab view-tab rounded-xl border-2 border-ink bg-white px-2 py-2 text-[14px] font-bold" role="tab" data-view="deck" aria-selected="false">Deck</button>
+        </div>
+      </div>
+      <div>
+        <label for="maxPrice" class="font-bold flex justify-between"><span>Max price per day</span><span id="maxPriceOut" class="tnum"></span></label>
+        <input id="maxPrice" type="range" min="5" max="60" step="1" value="60" class="mt-3 w-full">
+      </div>
+      <div>
+        <label for="drawerArea" class="font-bold">Area</label>
+        <select id="drawerArea" class="mt-2 w-full rounded-xl border-2 border-ink bg-white px-3 py-2.5 font-semibold"></select>
+      </div>
+      <div>
+        <label for="sortBy" class="font-bold">Sort</label>
+        <select id="sortBy" class="mt-2 w-full rounded-xl border-2 border-ink bg-white px-3 py-2.5 font-semibold">
+          <option value="new">Newest first</option>
+          <option value="price">Lowest price</option>
+          <option value="rating">Highest rated</option>
+        </select>
+      </div>
+    </div>
+    <div class="p-5 border-t-2 border-ink flex gap-3">
+      <button id="drawerReset" type="button" class="flex-1 rounded-xl border-2 border-ink bg-white py-3 font-bold">Reset</button>
+      <button type="button" class="flex-1 brut-btn rounded-xl bg-ink text-cream py-3 font-bold" data-close-drawer>Show results</button>
+    </div>
+  </aside>
+</div>
+
+<!-- Coverage modal -->
+<div id="modal" class="fixed inset-0 z-[80] grid place-items-center p-4" hidden>
+  <div class="absolute inset-0 bg-ink/50" data-close-modal></div>
+  <div class="modal-panel relative w-full max-w-lg max-h-[88vh] overflow-y-auto rounded-2xl bg-white border border-ink/15 shadow-2xl"
+    role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="sticky top-0 bg-white flex items-start justify-between gap-4 p-6 border-b border-ink/10">
+      <div>
+        <p class="eyebrow text-electric">Coverage details</p>
+        <h2 id="modalTitle" class="text-2xl font-extrabold mt-1">Neighbour Protection</h2>
+      </div>
+      <button type="button" class="grid place-items-center w-10 h-10 rounded-lg border border-ink/20 shrink-0" data-close-modal aria-label="Close coverage details"><i data-lucide="x" class="w-5 h-5"></i></button>
+    </div>
+    <div class="p-6 flex flex-col gap-5 text-[15px]">
+      <div class="rounded-xl bg-marigold/25 border border-marigold p-4 text-[14px]">
+        <strong>Concept text.</strong> DragonRent does not offer this protection today. It needs an insurance partner and legal review before it can be shown to customers.
+      </div>
+      <dl class="grid grid-cols-[auto_1fr] gap-x-6 gap-y-3">
+        <dt class="font-bold">Limit</dt><dd class="tnum">Up to €2,500 per rental</dd>
+        <dt class="font-bold">Who it protects</dt><dd>The lender</dd>
+        <dt class="font-bold">Cost to renters</dt><dd>Included, no extra fee</dd>
+        <dt class="font-bold">Report within</dt><dd class="tnum">24 hours of the return</dd>
+        <dt class="font-bold">Decision within</dt><dd class="tnum">5 working days</dd>
+      </dl>
+      <div>
+        <h3 class="font-bold">Covered</h3>
+        <ul class="mt-2 flex flex-col gap-1.5 text-muted">
+          <li class="flex gap-2"><i data-lucide="check" class="w-5 h-5 text-mint shrink-0"></i> Accidental damage during the rental period</li>
+          <li class="flex gap-2"><i data-lucide="check" class="w-5 h-5 text-mint shrink-0"></i> Theft while the item is with the renter, with a police report</li>
+          <li class="flex gap-2"><i data-lucide="check" class="w-5 h-5 text-mint shrink-0"></i> An item that is not returned</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-bold">Not covered</h3>
+        <ul class="mt-2 flex flex-col gap-1.5 text-muted">
+          <li class="flex gap-2"><i data-lucide="minus" class="w-5 h-5 shrink-0"></i> Normal wear and tear</li>
+          <li class="flex gap-2"><i data-lucide="minus" class="w-5 h-5 shrink-0"></i> Damage that the handoff photos already show</li>
+          <li class="flex gap-2"><i data-lucide="minus" class="w-5 h-5 shrink-0"></i> Items on the banned list</li>
+        </ul>
+      </div>
+    </div>
+    <div class="p-6 pt-0">
+      <button type="button" class="w-full rounded-xl bg-ink text-cream py-3 font-bold" data-close-modal>Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="fixed left-1/2 -translate-x-1/2 z-[90] sticker bg-ink text-cream px-4 py-2 text-[14px] font-semibold"
+  style="bottom: calc(20px + env(safe-area-inset-bottom, 0px))" role="status" hidden></div>
+
+<script>
+  // ---------- Sample data (concept only) ----------
+  const AREAS = ['Kallio', 'Vallila', 'Töölö', 'Kamppi', 'Sörnäinen', 'Pasila', 'Punavuori', 'Herttoniemi', 'Lauttasaari', 'Kulosaari', 'Tapiola (Espoo)'];
+  const COLORS = { coral: '#FF5733', marigold: '#FFC300', mint: '#00C896', electric: '#2457C5' };
+  const TIERS = { everyday: 'Everyday', weekend: 'Weekend', pro: 'Pro gear' };
+  const BADGES = { nodeposit: ['wallet', 'No deposit'], photo: ['camera', 'Photo check'], idfull: ['badge-check', 'ID verified + full coverage'] };
+  const ITEMS = [
+    { id: 1, title: 'Pressure washer, Kärcher K5', cat: 'Tools', tier: 'everyday', area: 'Kallio', km: 0.8, price: 14, rating: 4.9, reviews: 38, badges: ['photo', 'nodeposit'], color: 'marigold', icon: 'spray-can', x: 262, y: 128 },
+    { id: 2, title: 'Inflatable T-rex costume', cat: 'Party', tier: 'weekend', area: 'Vallila', km: 1.6, price: 9, rating: 4.8, reviews: 21, badges: ['nodeposit'], color: 'coral', icon: 'party-popper', x: 334, y: 92 },
+    { id: 3, title: 'Cotton candy machine', cat: 'Party', tier: 'weekend', area: 'Töölö', km: 2.1, price: 18, rating: 5.0, reviews: 12, badges: ['photo'], color: 'mint', icon: 'candy', x: 168, y: 170 },
+    { id: 4, title: 'Mobile sauna tent with stove', cat: 'Outdoors', tier: 'pro', area: 'Lauttasaari', km: 4.3, price: 45, rating: 4.9, reviews: 17, badges: ['idfull', 'photo'], color: 'electric', icon: 'tent', x: 92, y: 262 },
+    { id: 5, title: 'Sea kayak with paddle and vest', cat: 'Outdoors', tier: 'pro', area: 'Kulosaari', km: 3.8, price: 32, rating: 4.7, reviews: 29, badges: ['idfull'], color: 'mint', icon: 'sailboat', x: 470, y: 140 },
+    { id: 6, title: 'Projector and 100" screen', cat: 'Electronics', tier: 'weekend', area: 'Kamppi', km: 1.2, price: 16, rating: 4.8, reviews: 44, badges: ['photo', 'nodeposit'], color: 'coral', icon: 'projector', x: 222, y: 232 },
+    { id: 7, title: 'Cordless drill and driver set', cat: 'Tools', tier: 'everyday', area: 'Sörnäinen', km: 1.0, price: 12, rating: 4.9, reviews: 63, badges: ['nodeposit'], color: 'marigold', icon: 'drill', x: 300, y: 160 },
+    { id: 8, title: 'Snowshoes, one pair', cat: 'Outdoors', tier: 'everyday', area: 'Pasila', km: 2.4, price: 7, rating: 4.6, reviews: 15, badges: ['nodeposit'], color: 'electric', icon: 'snowflake', x: 170, y: 62 },
+    { id: 9, title: 'Sony a7 III with 28–70 mm lens', cat: 'Cameras', tier: 'pro', area: 'Punavuori', km: 1.9, price: 38, rating: 5.0, reviews: 9, badges: ['idfull', 'photo'], color: 'coral', icon: 'camera', x: 236, y: 272 },
+    { id: 10, title: 'Carpet and upholstery cleaner', cat: 'Home', tier: 'everyday', area: 'Herttoniemi', km: 5.2, price: 15, rating: 4.7, reviews: 52, badges: ['photo'], color: 'mint', icon: 'sparkles', x: 446, y: 188 },
+    { id: 11, title: 'Cargo bike, Bullitt', cat: 'Transport', tier: 'weekend', area: 'Kallio', km: 0.6, price: 29, rating: 4.9, reviews: 33, badges: ['idfull', 'photo'], color: 'marigold', icon: 'bike', x: 282, y: 146 },
+    { id: 12, title: 'Karaoke machine with two mics', cat: 'Party', tier: 'weekend', area: 'Tapiola (Espoo)', km: 9.4, price: 11, rating: 4.5, reviews: 18, badges: ['nodeposit'], color: 'electric', icon: 'mic', x: 46, y: 214 },
+  ];
+  const PROMPTS = ['dino costume', 'cotton candy machine', 'pressure washer', 'sauna tent', 'cargo bike', 'projector for movie night', 'snowshoes'];
+
+  // ---------- State ----------
+  const state = { q: '', area: '', tier: 'all', badges: new Set(), maxPrice: 60, sort: 'new', view: 'grid', mapSel: null, deckIndex: 0 };
+  const $ = s => document.querySelector(s);
+  const $$ = s => [...document.querySelectorAll(s)];
+  const euro = n => '€' + n;
+  const icons = () => window.lucide && window.lucide.createIcons();
+
+  function filtered() {
+    const q = state.q.trim().toLowerCase();
+    let list = ITEMS.filter(it =>
+      (!q || (it.title + ' ' + it.cat + ' ' + it.area).toLowerCase().includes(q)) &&
+      (!state.area || it.area === state.area) &&
+      (state.tier === 'all' || it.tier === state.tier) &&
+      [...state.badges].every(b => it.badges.includes(b)) &&
+      it.price <= state.maxPrice
+    );
+    if (state.sort === 'price') list = [...list].sort((a, b) => a.price - b.price);
+    else if (state.sort === 'rating') list = [...list].sort((a, b) => b.rating - a.rating || b.reviews - a.reviews);
+    else list = [...list].sort((a, b) => b.id - a.id);
+    return list;
+  }
+
+  function stars(r) {
+    const full = Math.round(r);
+    return Array.from({ length: 5 }, (_, i) =>
+      `<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4L2.8 9.5l6.4-.8z" fill="${i < full ? '#111' : 'none'}" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg>`
+    ).join('');
+  }
+
+  function cardHTML(it, extra = '') {
+    const bg = COLORS[it.color];
+    const onDark = it.color === 'electric';
+    return `
+      <article class="card brut rounded-2xl bg-white overflow-hidden flex flex-col ${extra}" data-id="${it.id}">
+        <div class="relative h-36 border-b-2 border-ink grid place-items-center" style="background:${bg};color:${onDark ? '#fff' : '#111'}">
+          <span class="absolute left-3 top-3 sticker bg-white text-ink px-2.5 py-0.5 text-[13px] font-bold">${TIERS[it.tier]}</span>
+          <span class="absolute right-3 top-3 text-[13px] font-extrabold tnum opacity-80">No. ${String(it.id).padStart(3, '0')}</span>
+          <i data-lucide="${it.icon}" class="w-16 h-16" stroke-width="1.6"></i>
+          <span class="absolute right-3 -bottom-4 sticker bg-white text-ink px-3 py-1 font-extrabold tnum" style="transform:rotate(-3deg)">${euro(it.price)}<span class="text-[13px] font-semibold">/day</span></span>
+        </div>
+        <div class="p-4 pt-5 flex flex-col gap-2 flex-1">
+          <p class="text-[13px] font-semibold text-muted">${it.cat} · ${it.area} · <span class="tnum">${it.km.toLocaleString('fi-FI')} km</span></p>
+          <h3 class="font-bold text-[17px] leading-snug">${it.title}</h3>
+          <div class="flex items-center gap-1.5 text-[13px] font-semibold"><span class="flex">${stars(it.rating)}</span><span class="tnum">${it.rating.toFixed(1)}</span><span class="text-muted tnum">(${it.reviews})</span></div>
+          <ul class="mt-auto pt-2 flex flex-wrap gap-1.5">
+            ${it.badges.map(b => `<li class="inline-flex items-center gap-1 rounded-full border border-ink/15 px-2 py-0.5 text-[13px] font-medium"><i data-lucide="${BADGES[b][0]}" class="w-3.5 h-3.5"></i>${BADGES[b][1]}</li>`).join('')}
+          </ul>
+        </div>
+      </article>`;
+  }
+
+  // ---------- Rendering ----------
+  function render() {
+    const list = filtered();
+    $('#resultCount').textContent = `${list.length} ${list.length === 1 ? 'item' : 'items'}`;
+    const empty = list.length === 0;
+    $('#emptyState').hidden = !empty;
+    $('#gridView').hidden = empty || state.view !== 'grid';
+    $('#mapView').hidden = empty || state.view !== 'map';
+    $('#deckView').hidden = empty || state.view !== 'deck';
+    if (!empty) {
+      if (state.view === 'grid') $('#gridView').innerHTML = list.map(it => cardHTML(it)).join('');
+      if (state.view === 'map') renderMap(list);
+      if (state.view === 'deck') renderDeck(list);
+    }
+    $$('.chip').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.tier === state.tier)));
+    $$('.safety').forEach(b => {
+      const on = state.badges.has(b.dataset.badge);
+      b.setAttribute('aria-pressed', String(on));
+      b.classList.toggle('bg-ink', on); b.classList.toggle('text-cream', on); b.classList.toggle('bg-white', !on);
+    });
+    $$('.view-tab').forEach(b => b.setAttribute('aria-selected', String(b.dataset.view === state.view)));
+    icons();
+  }
+
+  function renderMap(list) {
+    if (!list.find(it => it.id === state.mapSel)) state.mapSel = list[0].id;
+    $('#pins').innerHTML = list.map(it => {
+      const sel = it.id === state.mapSel;
+      return `<g class="pin" data-id="${it.id}" tabindex="0" role="button" aria-label="${it.title}, ${euro(it.price)} per day" style="cursor:pointer">
+        <rect x="${it.x - 28}" y="${it.y - 15}" width="56" height="26" rx="13" fill="${sel ? '#111' : COLORS[it.color]}" stroke="#111" stroke-width="2"/>
+        <text x="${it.x}" y="${it.y + 3}" text-anchor="middle" font-family="Plus Jakarta Sans, system-ui, sans-serif" font-size="13" font-weight="800" fill="${sel || it.color === 'electric' ? '#fff' : '#111'}">${euro(it.price)}</text>
+      </g>`;
+    }).join('');
+    const it = ITEMS.find(i => i.id === state.mapSel);
+    $('#mapDetail').innerHTML = `<p class="text-[13px] font-semibold text-muted mb-3">Tap a price on the map. Pins show the neighbourhood, never the exact address.</p>` + cardHTML(it);
+  }
+
+  function renderDeck(list) {
+    if (state.deckIndex >= list.length) state.deckIndex = 0;
+    const visible = list.slice(state.deckIndex, state.deckIndex + 3);
+    $('#deck').innerHTML = visible.map((it, i) => `
+      <div class="deck-card absolute inset-0 ${i === 0 ? 'z-30' : i === 1 ? 'z-20' : 'z-10'}" data-id="${it.id}"
+        style="transform: translate(${i * 8}px, ${i * 10}px) rotate(${[0, 3, -3][i]}deg)">${cardHTML(it, 'h-full')}</div>`).join('');
+    $('#deck').insertAdjacentHTML('beforeend', `<p class="absolute -bottom-7 left-0 right-0 text-center text-[13px] font-semibold text-muted tnum">${state.deckIndex + 1} of ${list.length}</p>`);
+    attachDrag();
+  }
+
+  // ---------- Swipe deck ----------
+  function nextCard(dir) {
+    const top = $('#deck .deck-card');
+    if (!top) return;
+    top.style.transform = `translate(${dir * 520}px, -20px) rotate(${dir * 18}deg)`;
+    top.style.opacity = '0';
+    const it = ITEMS.find(i => i.id === Number(top.dataset.id));
+    if (dir > 0) toast(`Dates for “${it.title}” open on the item page`);
+    setTimeout(() => { state.deckIndex++; render(); }, 220);
+  }
+  function attachDrag() {
+    const card = $('#deck .deck-card');
+    if (!card) return;
+    let startX = 0, dx = 0, dragging = false;
+    card.addEventListener('pointerdown', e => { dragging = true; startX = e.clientX; card.setPointerCapture(e.pointerId); card.classList.add('dragging'); });
+    card.addEventListener('pointermove', e => {
+      if (!dragging) return;
+      dx = e.clientX - startX;
+      card.style.transform = `translate(${dx}px, 0) rotate(${dx / 18}deg)`;
+    });
+    const end = () => {
+      if (!dragging) return;
+      dragging = false; card.classList.remove('dragging');
+      if (Math.abs(dx) > 110) nextCard(dx > 0 ? 1 : -1);
+      else card.style.transform = 'translate(0,0) rotate(0deg)';
+      dx = 0;
+    };
+    card.addEventListener('pointerup', end);
+    card.addEventListener('pointercancel', end);
+  }
+
+  // ---------- Toast ----------
+  let toastTimer;
+  function toast(msg) {
+    const t = $('#toast');
+    t.textContent = msg; t.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { t.hidden = true; }, 2600);
+  }
+
+  // ---------- Overlays ----------
+  let lastFocus = null;
+  function openOverlay(el, opener) {
+    lastFocus = opener || document.activeElement;
+    el.hidden = false;
+    document.body.style.overflow = 'hidden';
+    const focusable = el.querySelector('button, [href], input, select');
+    focusable && focusable.focus();
+  }
+  function closeOverlay(el) {
+    el.hidden = true;
+    document.body.style.overflow = '';
+    $('#openDrawer').setAttribute('aria-expanded', 'false');
+    lastFocus && lastFocus.focus && lastFocus.focus();
+  }
+  function trapFocus(el, e) {
+    if (e.key !== 'Tab' || el.hidden) return;
+    const f = [...el.querySelectorAll('button, [href], input, select')].filter(x => !x.disabled && x.offsetParent !== null);
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+
+  // ---------- Wiring ----------
+  function fillAreas(select, label) {
+    select.innerHTML = `<option value="">${label}</option>` + AREAS.map(a => `<option value="${a}">${a}</option>`).join('');
+  }
+  fillAreas($('#area'), 'All areas');
+  fillAreas($('#drawerArea'), 'All areas');
+  fillAreas($('#digestArea'), 'Pick your area');
+
+  function setArea(v) { state.area = v; $('#area').value = v; $('#drawerArea').value = v; render(); }
+
+  $('#heroSearch').addEventListener('submit', e => {
+    e.preventDefault();
+    state.q = $('#q').value;
+    render();
+    $('#explore').scrollIntoView({ behavior: 'smooth' });
+  });
+  $('#q').addEventListener('input', e => { state.q = e.target.value; render(); });
+  $('#area').addEventListener('change', e => setArea(e.target.value));
+  $('#drawerArea').addEventListener('change', e => setArea(e.target.value));
+
+  $$('.chip').forEach(b => b.addEventListener('click', () => { state.tier = b.dataset.tier; render(); }));
+  $$('.safety').forEach(b => b.addEventListener('click', () => {
+    const k = b.dataset.badge;
+    state.badges.has(k) ? state.badges.delete(k) : state.badges.add(k);
+    render();
+  }));
+  $$('.view-tab').forEach(b => b.addEventListener('click', () => { state.view = b.dataset.view; state.deckIndex = 0; render(); }));
+
+  $('#maxPrice').addEventListener('input', e => {
+    state.maxPrice = Number(e.target.value);
+    $('#maxPriceOut').textContent = euro(state.maxPrice);
+    render();
+  });
+  $('#maxPriceOut').textContent = euro(state.maxPrice);
+  $('#sortBy').addEventListener('change', e => { state.sort = e.target.value; render(); });
+
+  function resetFilters() {
+    Object.assign(state, { q: '', area: '', tier: 'all', maxPrice: 60, sort: 'new', deckIndex: 0 });
+    state.badges.clear();
+    $('#q').value = ''; $('#area').value = ''; $('#drawerArea').value = '';
+    $('#maxPrice').value = 60; $('#maxPriceOut').textContent = euro(60); $('#sortBy').value = 'new';
+    render();
+  }
+  $('#drawerReset').addEventListener('click', resetFilters);
+  $('#clearAll').addEventListener('click', resetFilters);
+
+  $('#openDrawer').addEventListener('click', e => { $('#openDrawer').setAttribute('aria-expanded', 'true'); openOverlay($('#drawer'), e.currentTarget); });
+  $$('[data-close-drawer]').forEach(b => b.addEventListener('click', () => closeOverlay($('#drawer'))));
+  $('#openGuarantee').addEventListener('click', e => openOverlay($('#modal'), e.currentTarget));
+  $$('[data-close-modal]').forEach(b => b.addEventListener('click', () => closeOverlay($('#modal'))));
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { if (!$('#modal').hidden) closeOverlay($('#modal')); if (!$('#drawer').hidden) closeOverlay($('#drawer')); }
+    trapFocus($('#modal'), e); trapFocus($('#drawer'), e);
+    if (state.view === 'deck' && !$('#deckView').hidden && $('#modal').hidden && $('#drawer').hidden) {
+      if (e.key === 'ArrowLeft') nextCard(-1);
+      if (e.key === 'ArrowRight') nextCard(1);
+    }
+  });
+
+  $('#deckPass').addEventListener('click', () => nextCard(-1));
+  $('#deckDates').addEventListener('click', () => nextCard(1));
+
+  $('#pins').addEventListener('click', e => {
+    const g = e.target.closest('.pin'); if (!g) return;
+    state.mapSel = Number(g.dataset.id); render();
+  });
+  $('#pins').addEventListener('keydown', e => {
+    const g = e.target.closest('.pin'); if (!g || (e.key !== 'Enter' && e.key !== ' ')) return;
+    e.preventDefault(); state.mapSel = Number(g.dataset.id); render();
+    const again = document.querySelector(`.pin[data-id="${g.dataset.id}"]`); again && again.focus();
+  });
+
+  $('#spinBtn').addEventListener('click', () => {
+    if (state.view !== 'grid') { state.view = 'grid'; }
+    let list = filtered();
+    if (!list.length) { resetFilters(); list = filtered(); }
+    render();
+    const pick = list[Math.floor(Math.random() * list.length)];
+    const el = document.querySelector(`#gridView [data-id="${pick.id}"]`);
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    el.classList.remove('picked'); void el.offsetWidth; el.classList.add('picked');
+    toast(`Picked for you: ${pick.title}, ${pick.area}`);
+  });
+
+  $('#menuBtn').addEventListener('click', () => {
+    const nav = $('#mobileNav'); const open = nav.hidden;
+    nav.hidden = !open; $('#menuBtn').setAttribute('aria-expanded', String(open));
+  });
+  $$('#mobileNav a').forEach(a => a.addEventListener('click', () => { $('#mobileNav').hidden = true; $('#menuBtn').setAttribute('aria-expanded', 'false'); }));
+
+  $('#lendCta').addEventListener('click', e => { e.preventDefault(); toast('Listing opens the “Lend an item” steps in the real app'); });
+
+  $('#digestForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const email = $('#digestEmail').value.trim();
+    const area = $('#digestArea').value;
+    const msg = $('#digestMsg');
+    const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    $('#digestEmail').classList.toggle('border-coral', !ok);
+    if (!ok) { msg.textContent = 'Enter an email address like name@example.fi.'; msg.className = 'mt-2 text-[13px] min-h-[20px] text-coral font-semibold'; return; }
+    if (!area) { msg.textContent = 'Pick the area you want news from.'; msg.className = 'mt-2 text-[13px] min-h-[20px] text-coral font-semibold'; return; }
+    msg.textContent = `Subscribed to the ${area} digest. In this concept nothing is sent.`;
+    msg.className = 'mt-2 text-[13px] min-h-[20px] text-mint font-semibold';
+    e.target.reset();
+  });
+
+  // Rotating search prompts
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let p = 0;
+  setInterval(() => {
+    const input = $('#q');
+    if (document.activeElement === input || input.value) return;
+    p = (p + 1) % PROMPTS.length;
+    if (reduceMotion) { input.placeholder = `Try “${PROMPTS[p]}”`; return; }
+    input.style.setProperty('--ph', '0');
+    input.classList.add('opacity-60');
+    setTimeout(() => { input.placeholder = `Try “${PROMPTS[p]}”`; input.classList.remove('opacity-60'); }, 200);
+  }, 2600);
+
+  render();
+</script>

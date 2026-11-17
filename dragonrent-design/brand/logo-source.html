@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face {
+    font-family: 'PJS';
+    font-weight: 800;
+    src: url('file:///g:/dragonrent/node_modules/@fontsource/plus-jakarta-sans/files/plus-jakarta-sans-latin-800-normal.woff2') format('woff2');
+  }
+  html, body { margin: 0; background: transparent; }
+  body { padding: 40px; display: flex; flex-direction: column; gap: 40px; align-items: flex-start; }
+  .wm { font-family: 'PJS', sans-serif; font-weight: 800; letter-spacing: -0.035em; fill: #111111; }
+  .rent { fill: #C2361A; }
+  .light { fill: #FAF8F5; }
+  .lightRent { fill: #FFC300; }
+</style>
+</head>
+<body>
+<!-- The mark: dragon eye with a keyhole pupil (from the client's "Eye Key" sketch), sticker style -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <g id="mark">
+      <path d="M16 25 C14 17 10.5 10 5 4.5 C13 6.5 21 12 27.5 19 Z" fill="#FF5733" stroke="#111" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M48 25 C50 17 53.5 10 59 4.5 C51 6.5 43 12 36.5 19 Z" fill="#FF5733" stroke="#111" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M4 34 C14 20 23 15.5 32 15.5 C41 15.5 50 20 60 34 C50 48 41 52.5 32 52.5 C23 52.5 14 48 4 34 Z" fill="#FF5733" stroke="#111" stroke-width="3" stroke-linejoin="round"/>
+      <circle cx="32" cy="34" r="13" fill="#FFC300" stroke="#111" stroke-width="3"/>
+      <circle cx="32" cy="30.5" r="4" fill="#111"/>
+      <path d="M30 32 L34 32 L35.6 42 L28.4 42 Z" fill="#111" stroke="#111" stroke-width="1" stroke-linejoin="round"/>
+    </g>
+    <g id="markOnInk">
+      <path d="M16 25 C14 17 10.5 10 5 4.5 C13 6.5 21 12 27.5 19 Z" fill="#FF5733" stroke="#FAF8F5" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M48 25 C50 17 53.5 10 59 4.5 C51 6.5 43 12 36.5 19 Z" fill="#FF5733" stroke="#FAF8F5" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M4 34 C14 20 23 15.5 32 15.5 C41 15.5 50 20 60 34 C50 48 41 52.5 32 52.5 C23 52.5 14 48 4 34 Z" fill="#FF5733" stroke="#FAF8F5" stroke-width="3" stroke-linejoin="round"/>
+      <circle cx="32" cy="34" r="13" fill="#FFC300" stroke="#FAF8F5" stroke-width="3"/>
+      <circle cx="32" cy="30.5" r="4" fill="#111"/>
+      <path d="M30 32 L34 32 L35.6 42 L28.4 42 Z" fill="#111" stroke="#111" stroke-width="1" stroke-linejoin="round"/>
+    </g>
+  </defs>
+</svg>
+
+<!-- 1. Horizontal logo, ink wordmark with coral "Rent" (top bar on light) -->
+<svg id="logoLight" width="270" height="56" viewBox="0 0 270 56">
+  <use href="#mark" transform="translate(1,1) scale(0.9)"/>
+  <text x="70" y="40" font-size="34" class="wm">Dragon<tspan class="rent">Rent</tspan></text>
+</svg>
+
+<!-- 2. Horizontal logo on ink (footer, dark backgrounds) -->
+<svg id="logoDark" width="270" height="56" viewBox="0 0 270 56" style="background:#111111">
+  <use href="#markOnInk" transform="translate(1,1) scale(0.9)"/>
+  <text x="70" y="40" font-size="34" class="wm light">Dragon<tspan class="lightRent">Rent</tspan></text>
+</svg>
+
+<!-- 3. App icon / favicon: the mark on a marigold sticker tile -->
+<svg id="icon" width="64" height="64" viewBox="0 0 64 64">
+  <rect x="0" y="0" width="64" height="64" rx="14" fill="#FAF8F5"/>
+  <use href="#mark" transform="translate(6.4,4.4) scale(0.8)"/>
+</svg>
+
+<!-- 4. Bare mark, transparent -->
+<svg id="markOnly" width="64" height="56" viewBox="0 1 64 55">
+  <use href="#mark"/>
+</svg>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Home on desktop</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F7FAFC}
+b,strong{font-weight:600}
+*{box-sizing:border-box}
+h1,h2,h3,p,ol,ul{margin:0}
+h1,h2,h3{font-family:'Geist',system-ui,sans-serif}
+input,button,textarea{font:inherit;color:inherit}
+a{color:#2457C5}a:hover{color:#1B46A3}
+::placeholder{color:#66768F;opacity:1}
+:focus-visible{outline:3px solid #2457C5;outline-offset:3px}
+.field:focus-within{outline:3px solid #2457C5;outline-offset:2px}
+.i{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+</style>
+</helmet>
+<div style="background:#F7FAFC;color:#172B4D;font-family:'Geist',system-ui,sans-serif;font-size:16px;line-height:1.5">
+
+<header style="background:#FFFFFF;border-bottom:1px solid #E7EBF0">
+<div style="max-width:1240px;margin:0 auto;padding:14px 24px;display:flex;flex-wrap:wrap;align-items:center;gap:12px 28px">
+<a href="HomeDesktop.dc.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:#172B4D">
+<span style="width:44px;height:44px;border-radius:10px;background:#2457C5;color:#FFFFFF;display:flex;align-items:center;justify-content:center"><svg class="i" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M8 16H3v5"></path></svg></span>
+<span style="font-family:'Geist',system-ui,sans-serif;font-weight:700;font-size:20px;letter-spacing:-0.3px">DragonRent</span>
+</a>
+<nav aria-label="Main" style="display:flex;flex-wrap:wrap;gap:4px 8px">
+<a href="#how" style="display:flex;align-items:center;height:48px;padding:0 12px;color:#172B4D;text-decoration:none;font-weight:500;font-size:15px">How it works</a>
+<a href="#" style="display:flex;align-items:center;height:48px;padding:0 12px;color:#172B4D;text-decoration:none;font-weight:500;font-size:15px">Help</a>
+</nav>
+<div style="margin-left:auto;display:flex;flex-wrap:wrap;gap:10px">
+<a href="ListPhotos.dc.html" style="display:flex;align-items:center;gap:8px;height:52px;padding:0 22px;border:1.5px solid #172B4D;border-radius:10px;color:#172B4D;text-decoration:none;font-weight:600"><svg class="i" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>Lend an item</a>
+<a href="#" style="display:flex;align-items:center;height:52px;padding:0 18px;color:#172B4D;text-decoration:none;font-weight:600">Log in</a>
+</div>
+</div>
+</header>
+
+<section style="max-width:1240px;margin:0 auto;padding:48px 24px 56px;display:grid;grid-template-columns:repeat(auto-fit, minmax(min(480px, 100%), 1fr));gap:48px;align-items:center">
+<div style="display:flex;flex-direction:column;gap:20px">
+<h1 style="font-size:clamp(36px, 4.4vw, 56px);line-height:1.06;font-weight:700;letter-spacing:-0.6px;text-wrap:balance">Rent what you need from people nearby</h1>
+<p style="font-size:18px;color:#4A5B78;max-width:520px;text-wrap:pretty">Tools, party gear, camping kit and more. Cheaper than buying, and kinder to the planet.</p>
+<div style="margin-top:12px;background:#FFFFFF;border:1px solid #E7EBF0;border-radius:12px;box-shadow:0 14px 40px rgba(23,43,77,0.08);padding:20px;display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end">
+<div style="flex:1 1 200px;display:flex;flex-direction:column;gap:8px">
+<label for="d-what" style="font-weight:600;font-size:15px">What do you need?</label>
+<div class="field" style="display:flex;align-items:center;gap:10px;height:52px;padding:0 16px;border:1px solid #E7EBF0;border-radius:10px;background:#FFFFFF"><svg class="i" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" style="color:#4A5B78"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg><input id="d-what" type="text" placeholder="Drill, tent, speaker…" style="border:0;outline:0;flex:1;min-width:0;font-size:16px;background:transparent"></div>
+</div>
+<div style="flex:1 1 170px;display:flex;flex-direction:column;gap:8px">
+<label for="d-where" style="font-weight:600;font-size:15px">Where?</label>
+<div class="field" style="display:flex;align-items:center;gap:10px;height:52px;padding:0 16px;border:1px solid #E7EBF0;border-radius:10px;background:#FFFFFF"><svg class="i" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" style="color:#4A5B78"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg><input id="d-where" type="text" value="Helsinki" style="border:0;outline:0;flex:1;min-width:0;font-size:16px;background:transparent"></div>
+</div>
+<a href="Search.dc.html" style="flex:0 0 auto;display:flex;align-items:center;justify-content:center;gap:10px;height:52px;padding:0 30px;border-radius:10px;background:#2457C5;color:#FFFFFF;text-decoration:none;font-weight:600;font-size:16px"><svg class="i" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width:2.4"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>Search</a>
+</div>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));grid-template-rows:212px 212px;gap:16px">
+<div style="position:relative;grid-row:span 2;border-radius:12px;overflow:hidden"><div style="height:440px;background:#E4EBF4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#7A8AA3;height:100%"><svg class="i" width="44" height="44" viewBox="0 0 24 24" role="img" aria-label="Photo placeholder: camping tent" style="stroke-width:1.5"><rect width="18" height="18" x="3" y="3" rx="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path></svg><span style="font-size:13px;color:#4A5B78">Photo: camping tent</span></div><span style="position:absolute;left:12px;bottom:12px;display:flex;align-items:center;gap:8px;height:36px;padding:0 12px;border-radius:8px;background:#FFFFFF;box-shadow:0 4px 14px rgba(23,43,77,0.12);font-size:13px;font-weight:500;color:#172B4D">Camping tent<b style="font-size:15px">€12</b><span style="color:#4A5B78">/ day</span></span></div>
+<div style="position:relative;border-radius:12px;overflow:hidden"><div style="height:212px;background:#E8EEF7;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#7A8AA3;height:100%"><svg class="i" width="36" height="36" viewBox="0 0 24 24" role="img" aria-label="Photo placeholder: party speaker" style="stroke-width:1.5"><rect width="18" height="18" x="3" y="3" rx="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path></svg><span style="font-size:13px;color:#4A5B78">Photo: party speaker</span></div><span style="position:absolute;left:12px;bottom:12px;display:flex;align-items:center;gap:8px;height:36px;padding:0 12px;border-radius:8px;background:#FFFFFF;box-shadow:0 4px 14px rgba(23,43,77,0.12);font-size:13px;font-weight:500;color:#172B4D">Speaker<b style="font-size:15px">€12</b><span style="color:#4A5B78">/ day</span></span></div>
+<div style="position:relative;border-radius:12px;overflow:hidden"><div style="height:212px;background:#EEF2F7;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#7A8AA3;height:100%"><svg class="i" width="36" height="36" viewBox="0 0 24 24" role="img" aria-label="Photo placeholder: cordless drill" style="stroke-width:1.5"><rect width="18" height="18" x="3" y="3" rx="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path></svg><span style="font-size:13px;color:#4A5B78">Photo: cordless drill</span></div><span style="position:absolute;left:12px;bottom:12px;display:flex;align-items:center;gap:8px;height:36px;padding:0 12px;border-radius:8px;background:#FFFFFF;box-shadow:0 4px 14px rgba(23,43,77,0.12);font-size:13px;font-weight:500;color:#172B4D">Drill<b style="font-size:15px">€8</b><span style="color:#4A5B78">/ day</span></span></div>
+</div>
+</section>
+
+<section style="max-width:1240px;margin:0 auto;padding:0 24px;display:flex;flex-direction:column;gap:20px">
+<div style="display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:12px">
+<h2 style="font-size:24px;line-height:1.2;font-weight:600;letter-spacing:-0.3px">Popular near you</h2>
+<a href="Search.dc.html" style="display:flex;align-items:center;gap:6px;min-height:44px;font-weight:600;color:#2457C5">See all rentals<svg class="i" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></a>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(min(260px, 100%), 1fr));gap:20px">
+<a href="ListingDesktop.dc.html" style="display:flex;flex-direction:column;background:#FFFFFF;border:1px solid #E7EBF0;border-radius:12px;overflow:hidden;text-decoration:none;color:#172B4D;box-shadow:0 4px 14px rgba(23,43,77,0.06)"><div style="height:180px;background:#E4EBF4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#7A8AA3"><svg class="i" width="36" height="36" viewBox="0 0 24 24" role="img" aria-label="Photo placeholder: cordless drill" style="stroke-width:1.5"><rect width="18" height="18" x="3" y="3" rx="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path></svg><span style="font-size:13px;color:#4A5B78">Photo: cordless drill</span></div><div style="padding:14px 16px 16px;display:flex;flex-direction:column;gap:4px"><h3 style="font-size:18px;line-height:1.3;font-weight:600">Cordless drill with 2 batteries</h3><p style="line-height:1.3"><span style="font-size:13px;color:#4A5B78">From </span><span style="font-size:20px;font-weight:700">€8</span><span style="font-size:13px;color:#4A5B78"> / day</span></p><p style="display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;font-size:13px;color:#4A5B78"><span style="display:flex;align-items:center;gap:4px"><svg class="i" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>1.2 km · Kallio</span><span style="display:flex;align-items:center;gap:4px"><svg class="i" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" style="fill:#F59E0B;stroke:#B45309"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>4.8</span></p><p style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:#0B6B65"><svg class="i" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path><path d="m9 16 2 2 4-4"></path></svg>Free this weekend</p></div></a>
+<a href="ListingDesktop.dc.html" style="display:flex;flex-direction:column;background:#FFFFFF;border:1px solid #E7EBF0;border-radius:12px;overflow:hidden;text-decoration:none;color:#172B4D;box-shadow:0 4px 14px rgba(23,43,77,0.06)"><div style="height:180px;background:#E8EEF7;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#7A8AA3"><svg class="i" width="36" height="36" viewBox="0 0 24 24" role="img" aria-label="Photo placeholder: camping tent" style="stroke-width:1.5"><rect width="18" height="18" x="3" y="3" rx="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path></svg><span style="font-size:13px;color:#4A5B78">Photo: camping tent</span></div><div style="padding:14px 16px 16px;display:flex;flex-direction:column;gap:4px"><h3 style="font-size:18px;line-height:1.3;font-weight:600">Camping tent for 4</h3><p style="line-height:1.3"><span style="font-size:13px;color:#4A5B78">From </span><span style="font-size:20px;font-weight:700">€12</span><span style="font-size:13px;color:#4A5B78"> / day</span></p><p style="display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;font-size:13px;color:#4A5B78"><span style="display:flex;align-items:center;gap:4px"><svg class="i" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>2.0 km · Töölö</span><span style="display:flex;align-items:center;gap:4px"><svg class="i" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" style="fill:#F59E0B;stroke:#B45309"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>4.9</span></p><p style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:#0B6B65"><svg class="i" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path><path d="m9 16 2 2 4-4"></path></svg>Free from Mon 26 Oct</p></div></a>
+<a href="ListingDesktop.dc.html" style="display:flex;flex-direction:column;background:#FFFFFF;border:1px solid #E7EBF0;border-radius:12px;overflow:hidden;text-decoration:none;color:#172B4D;box-shadow:0 4px 14px rgba(23,43,77,0.06)"><div style="height:180px;background:#EEF2F7;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#7A8AA3"><svg class="i" width="36" height="36" viewBox="0 0 24 24" role="img" aria-label="Photo placeholder: party speaker" style="stroke-width:1.5"><rect width="18" height="18" x="3" y="3" rx="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path></svg><span style="font-size:13px;color:#4A5B78">Photo: party speaker</span></div><div style="padding:14px 16px 16px;display:flex;flex-direction:column;gap:4px"><h3 style="font-size:18px;line-height:1.3;font-weight:600">Party speaker with 2 mics</h3><p style="line-height:1.3"><span style="font-size:13px;color:#4A5B78">From </span><span style="font-size:20px;font-weight:700">€12</span><span style="font-size:13px;color:#4A5B78"> / day</span></p><p style="display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;font-size:13px;color:#4A5B78"><span style="display:flex;align-items:center;gap:4px"><svg class="i" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>2.5 km · Vallila</span><span style="display:flex;align-items:center;gap:4px"><svg class="i" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" style="fill:#F59E0B;stroke:#B45309"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>4.9</span></p><p style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:#0B6B65"><svg class="i" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path><path d="m9 16 2 2 4-4"></path></svg>Free this weekend</p></div></a>
+<a href="ListingDesktop.dc.html" style="display:flex;flex-direction:column;background:#FFFFFF;border:1px solid #E7EBF0;border-radius:12px;overflow:hidden;text-decoration:none;color:#172B4D;box-shadow:0 4px 14px rgba(23,43,77,0.06)"><div style="height:180px;background:#E4EBF4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#7A8AA3"><svg class="i" width="36" height="36" viewBox="0 0 24 24" role="img" aria-label="Photo placeholder: carpet cleaner" style="stroke-width:1.5"><rect width="18" height="18" x="3" y="3" rx="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path></svg><span style="font-size:13px;color:#4A5B78">Photo: carpet cleaner</span></div><div style="padding:14px 16px 16px;display:flex;flex-direction:column;gap:4px"><h3 style="font-size:18px;line-height:1.3;font-weight:600">Carpet and sofa cleaner</h3><p style="line-height:1.3"><span style="font-size:13px;color:#4A5B78">From </span><span style="font-size:20px;font-weight:700">€15</span><span style="font-size:13px;color:#4A5B78"> / day</span></p><p style="display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;font-size:13px;color:#4A5B78"><span style="display:flex;align-items:center;gap:4px"><svg class="i" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>3.1 km · Sörnäinen</span><span style="display:flex;align-items:center;gap:4px"><svg class="i" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" style="fill:#F59E0B;stroke:#B45309"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>5.0</span></p><p style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:#0B6B65"><svg class="i" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path><path d="m9 16 2 2 4-4"></path></svg>Free today</p></div></a>
+</div>
+</section>
+
+<section style="max-width:1240px;margin:0 auto;padding:56px 24px 0;display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:12px">
+<h2 style="font-size:24px;line-height:1.2;font-weight:600;letter-spacing:-0.3px">Popular categories</h2>
+<a href="#" style="display:flex;align-items:center;gap:6px;min-height:48px;font-weight:600;color:#2457C5">See all categories<svg class="i" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></a>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(min(250px, 100%), 1fr));gap:16px">
+<a href="Search.dc.html" style="display:flex;align-items:center;gap:16px;padding:18px;background:#FFFFFF;border:1px solid #E7EBF0;border-radius:12px;text-decoration:none;color:#172B4D;font-weight:600;font-size:16px"><span style="width:52px;height:52px;border-radius:10px;background:#DCE8FA;color:#2457C5;display:flex;align-items:center;justify-content:center"><svg class="i" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg></span>Tools</a>
+<a href="Search.dc.html" style="display:flex;align-items:center;gap:16px;padding:18px;background:#FFFFFF;border:1px solid #E7EBF0;border-radius:12px;text-decoration:none;color:#172B4D;font-weight:600;font-size:16px"><span style="width:52px;height:52px;border-radius:10px;background:#DCE8FA;color:#2457C5;display:flex;align-items:center;justify-content:center"><svg class="i" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path></svg></span>Cleaning</a>
+<a href="Search.dc.html" style="display:flex;align-items:center;gap:16px;padding:18px;background:#FFFFFF;border:1px solid #E7EBF0;border-radius:12px;text-decoration:none;color:#172B4D;font-weight:600;font-size:16px"><span style="width:52px;height:52px;border-radius:10px;background:#DCE8FA;color:#2457C5;display:flex;align-items:center;justify-content:center"><svg class="i" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg></span>Party and sound</a>
+<a href="Search.dc.html" style="display:flex;align-items:center;gap:16px;padding:18px;background:#FFFFFF;border:1px solid #E7EBF0;border-radius:12px;text-decoration:none;color:#172B4D;font-weight:600;font-size:16px"><span style="width:52px;height:52px;border-radius:10px;background:#DCE8FA;color:#2457C5;display:flex;align-items:center;justify-content:center"><svg class="i" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path><path d="M15 18H9"></path><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path><circle cx="17" cy="18" r="2"></circle><circle cx="7" cy="18" r="2"></circle></svg></span>Trailers</a>
+<a href="Search.dc.html" style="display:flex;align-items:center;gap:16px;padding:18px;background:#FFFFFF;border:1px solid #E7EBF0;border-radius:12px;text-decoration:none;color:#172B4D;font-weight:600;font-size:16px"><span style="width:52px;height:52px;border-radius:10px;background:#DCE8FA;color:#2457C5;display:flex;align-items:center;justify-content:center"><svg class="i" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 21 14 3"></path><path d="M20.5 21 10 3"></path><path d="M15.5 21 12 15l-3.5 6"></path><path d="M2 21h20"></path></svg></span>Camping</a>
+<a href="Search.dc.html" style="display:flex;align-items:center;gap:16px;padding:18px;background:#FFFFFF;border:1px solid #E7EBF0;border-radius:12px;text-decoration:none;color:#172B4D;font-weight:600;font-size:16px"><span style="width:52px;height:52px;border-radius:10px;background:#DCE8FA;color:#2457C5;display:flex;align-items:center;justify-content:center"><svg class="i" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path><circle cx="12" cy="13" r="3"></circle></svg></span>Photo and video</a>
+<a href="Search.dc.html" style="display:flex;align-items:center;gap:16px;padding:18px;background:#FFFFFF;border:1px solid #E7EBF0;border-radius:12px;text-decoration:none;color:#172B4D;font-weight:600;font-size:16px"><span style="width:52px;height:52px;border-radius:10px;background:#DCE8FA;color:#2457C5;display:flex;align-items:center;justify-content:center"><svg class="i" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 20h10"></path><path d="M10 20c5.5-2.5.8-6.4 3-10"></path><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"></path><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"></path></svg></span>Garden</a>
+<a href="Search.dc.html" style="display:flex;align-items:center;gap:16px;padding:18px;background:#FFFFFF;border:1px solid #E7EBF0;border-radius:12px;text-decoration:none;color:#172B4D;font-weight:600;font-size:16px"><span style="width:52px;height:52px;border-radius:10px;background:#DCE8FA;color:#2457C5;display:flex;align-items:center;justify-content:center"><svg class="i" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 12h.01"></path><path d="M15 12h.01"></path><path d="M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5"></path><path d="M19 6.3a9 9 0 0 1 1.8 3.9 2 2 0 0 1 0 3.6 9 9 0 0 1-17.6 0 2 2 0 0 1 0-3.6A9 9 0 0 1 12 3c2 0 3.5 1.1 3.5 2.5s-.9 2.5-2 2.5c-.8 0-1.5-.4-1.5-1"></path></svg></span>Kids and baby</a>
+</div>
+</section>
+
+<section id="how" style="max-width:1240px;margin:0 auto;padding:64px 24px 0;display:flex;flex-direction:column;gap:24px">
+<h2 style="font-size:24px;line-height:1.2;font-weight:600;letter-spacing:-0.3px">How it works</h2>
+<ol style="list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fit, minmax(min(300px, 100%), 1fr));gap:20px">
+<li style="background:#FFFFFF;border:1px solid #E7EBF0;border-radius:12px;padding:28px;display:flex;flex-direction:column;gap:12px"><span aria-hidden="true" style="width:52px;height:52px;border-radius:999px;background:#DCE8FA;color:#2457C5;font-family:'Geist',system-ui,sans-serif;font-weight:600;font-size:20px;display:flex;align-items:center;justify-content:center">1</span><h3 style="font-size:18px;font-weight:600">Find it</h3><p style="color:#4A5B78">Search for what you need near you and compare prices.</p></li>
+<li style="background:#FFFFFF;border:1px solid #E7EBF0;border-radius:12px;padding:28px;display:flex;flex-direction:column;gap:12px"><span aria-hidden="true" style="width:52px;height:52px;border-radius:999px;background:#DCE8FA;color:#2457C5;font-family:'Geist',system-ui,sans-serif;font-weight:600;font-size:20px;display:flex;align-items:center;justify-content:center">2</span><h3 style="font-size:18px;font-weight:600">Send a request</h3><p style="color:#4A5B78">Pick your days. You only pay if the owner says yes.</p></li>
+<li style="background:#FFFFFF;border:1px solid #E7EBF0;border-radius:12px;padding:28px;display:flex;flex-direction:column;gap:12px"><span aria-hidden="true" style="width:52px;height:52px;border-radius:999px;background:#DCE8FA;color:#2457C5;font-family:'Geist',system-ui,sans-serif;font-weight:600;font-size:20px;display:flex;align-items:center;justify-content:center">3</span><h3 style="font-size:18px;font-weight:600">Pick it up, bring it back</h3><p style="color:#4A5B78">Meet the owner, use it, and return it on time.</p></li>
+</ol>
+<div style="display:flex;flex-wrap:wrap;gap:16px 40px;padding:8px 4px 0">
+<p style="display:flex;gap:12px;align-items:center"><span style="color:#2457C5"><svg class="i" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></span>Pay safely by card. No cash needed.</p>
+<p style="display:flex;gap:12px;align-items:center"><span style="color:#2457C5"><svg class="i" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>Reviews from real renters</p>
+<p style="display:flex;gap:12px;align-items:center"><span style="color:#2457C5"><svg class="i" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg></span>Owners verify their identity</p>
+</div>
+</section>
+
+<section style="max-width:1240px;margin:0 auto;padding:64px 24px 72px">
+<div style="background:#DCE8FA;border-radius:12px;padding:clamp(28px, 4vw, 56px);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px">
+<div style="display:flex;flex-direction:column;gap:10px;max-width:620px">
+<h2 style="font-size:24px;line-height:1.2;font-weight:600;letter-spacing:-0.3px">Have things you rarely use?</h2>
+<p style="font-size:18px">Lend them to people nearby and earn money.</p>
+</div>
+<a href="ListPhotos.dc.html" style="display:flex;align-items:center;justify-content:center;height:52px;padding:0 32px;border-radius:10px;border:1.5px solid #172B4D;background:#FFFFFF;color:#172B4D;text-decoration:none;font-weight:600;font-size:16px">Start lending</a>
+</div>
+</section>
+
+<footer style="background:#172B4D;color:#F7FAFC">
+<div style="max-width:1240px;margin:0 auto;padding:56px 24px 48px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:32px">
+<div style="display:flex;flex-direction:column;gap:10px;max-width:320px">
+<span style="font-family:'Geist',system-ui,sans-serif;font-weight:700;font-size:20px">DragonRent</span>
+<p style="color:#C3CEDD;font-size:15px">Rent from people nearby. Lend what you don't use.</p>
+</div>
+<nav aria-label="Footer" style="flex:1 1 420px;max-width:640px;display:grid;grid-template-columns:repeat(auto-fit, minmax(min(170px, 100%), 1fr));gap:4px 32px">
+<a href="#" style="color:#F7FAFC;min-height:44px;display:flex;align-items:center">How it works</a>
+<a href="#" style="color:#F7FAFC;min-height:44px;display:flex;align-items:center">Help and FAQ</a>
+<a href="#" style="color:#F7FAFC;min-height:44px;display:flex;align-items:center">Terms</a>
+<a href="#" style="color:#F7FAFC;min-height:44px;display:flex;align-items:center">Lend an item</a>
+<a href="#" style="color:#F7FAFC;min-height:44px;display:flex;align-items:center">Contact us</a>
+<a href="#" style="color:#F7FAFC;min-height:44px;display:flex;align-items:center">Privacy</a>
+<a href="#" style="color:#F7FAFC;min-height:44px;display:flex;align-items:center">All categories</a>
+<a href="#" style="color:#F7FAFC;min-height:44px;display:flex;align-items:center">Damage policy</a>
+<a href="#" style="color:#F7FAFC;min-height:44px;display:flex;align-items:center">Cookies</a>
+</nav>
+</div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2700}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const brand = '#2457C5';
+    const tint = '#DCE8FA';
+    return { brand: brand, brandTint: tint };
+  }
+}
+</script>
+</body>
+</html>

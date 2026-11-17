@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Request sent on a phone</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F7FAFC}
+b,strong{font-weight:600}
+*{box-sizing:border-box}
+h1,h2,h3,p,ol,ul{margin:0}
+h1,h2,h3{font-family:'Geist',system-ui,sans-serif}
+input,button,textarea{font:inherit;color:inherit}
+a{color:#2457C5}a:hover{color:#1B46A3}
+:focus-visible{outline:3px solid #2457C5;outline-offset:3px}
+.i{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+</style>
+</helmet>
+<div style="width:390px;height:844px;background:#F7FAFC;color:#172B4D;font-family:'Geist',system-ui,sans-serif;font-size:16px;line-height:1.5;display:flex;flex-direction:column;overflow:hidden">
+
+<header style="display:flex;align-items:center;padding:12px 20px;height:72px;background:#FFFFFF;border-bottom:1px solid #E7EBF0">
+<a href="Main.dc.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:#172B4D">
+<span style="width:40px;height:40px;border-radius:10px;background:#2457C5;color:#FFFFFF;display:flex;align-items:center;justify-content:center"><svg class="i" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M8 16H3v5"></path></svg></span>
+<span style="font-family:'Geist',system-ui,sans-serif;font-weight:700;font-size:20px;letter-spacing:-0.3px">DragonRent</span>
+</a>
+</header>
+
+<div style="flex:1;padding:28px 20px 24px;display:flex;flex-direction:column;gap:20px">
+<div style="display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center">
+<span style="width:84px;height:84px;border-radius:999px;background:#DCE8FA;color:#2457C5;display:flex;align-items:center;justify-content:center"><svg class="i" width="44" height="44" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width:2.6"><path d="M20 6 9 17l-5-5"></path></svg></span>
+<h1 style="font-size:32px;line-height:1.15;font-weight:700">Request sent!</h1>
+<p style="color:#4A5B78;text-wrap:balance">We've told Anna. We'll email you as soon as she answers.</p>
+</div>
+
+<section style="background:#FFFFFF;border:1px solid #E7EBF0;border-radius:12px;padding:18px 20px;display:flex;flex-direction:column;gap:12px">
+<h2 style="font-size:22px;font-weight:600">What happens next</h2>
+<ol style="list-style:none;padding:0;display:flex;flex-direction:column;gap:12px">
+<li style="display:flex;gap:12px;align-items:flex-start"><span aria-hidden="true" style="flex:none;width:34px;height:34px;border-radius:999px;background:#DCE8FA;color:#2457C5;font-family:'Geist',system-ui,sans-serif;font-weight:600;font-size:16px;display:flex;align-items:center;justify-content:center">1</span><p>Anna says yes. Then your card is charged €33.</p></li>
+<li style="display:flex;gap:12px;align-items:flex-start"><span aria-hidden="true" style="flex:none;width:34px;height:34px;border-radius:999px;background:#DCE8FA;color:#2457C5;font-family:'Geist',system-ui,sans-serif;font-weight:600;font-size:16px;display:flex;align-items:center;justify-content:center">2</span><p>You agree on a pick-up time in Messages.</p></li>
+<li style="display:flex;gap:12px;align-items:flex-start"><span aria-hidden="true" style="flex:none;width:34px;height:34px;border-radius:999px;background:#DCE8FA;color:#2457C5;font-family:'Geist',system-ui,sans-serif;font-weight:600;font-size:16px;display:flex;align-items:center;justify-content:center">3</span><p>Pick it up Fri 23 Oct. Bring it back Sun 25 Oct.</p></li>
+</ol>
+</section>
+<p style="font-size:13px;color:#4A5B78;text-align:center">If Anna can't lend it, you pay nothing.</p>
+
+<div style="margin-top:auto;display:flex;flex-direction:column;gap:12px">
+<a href="#" style="display:flex;align-items:center;justify-content:center;gap:10px;height:52px;border-radius:10px;background:#2457C5;color:#FFFFFF;text-decoration:none;font-weight:600;font-size:16px"><svg class="i" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg>Message Anna</a>
+<a href="Main.dc.html" style="display:flex;align-items:center;justify-content:center;height:48px;border-radius:10px;border:1.5px solid #172B4D;background:#FFFFFF;color:#172B4D;text-decoration:none;font-weight:600;font-size:16px">Back to home</a>
+</div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const brand = '#2457C5';
+    const tint = '#DCE8FA';
+    return { brand: brand, brandTint: tint };
+  }
+}
+</script>
+</body>
+</html>

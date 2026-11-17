@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>DragonRent design system</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F7FAFC}
+b,strong{font-weight:600}
+*{box-sizing:border-box}
+h1,h2,h3,p,ol,ul{margin:0}
+h1,h2,h3{font-family:'Geist',system-ui,sans-serif}
+input,button,textarea{font:inherit;color:inherit}
+a{color:#2457C5}a:hover{color:#1B46A3}
+::placeholder{color:#66768F;opacity:1}
+:focus-visible{outline:3px solid #2457C5;outline-offset:3px}
+.i{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+</style>
+</helmet>
+<div style="width:1280px;height:2200px;background:#F7FAFC;color:#172B4D;font-family:'Geist',system-ui,sans-serif;font-size:16px;line-height:1.5;padding:64px;display:flex;flex-direction:column;gap:40px;overflow:hidden">
+
+<div style="display:flex;align-items:center;gap:20px">
+<span style="width:64px;height:64px;border-radius:12px;background:#2457C5;color:#FFFFFF;display:flex;align-items:center;justify-content:center"><svg class="i" width="34" height="34" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M8 16H3v5"></path></svg></span>
+<div style="display:flex;flex-direction:column;gap:6px">
+<h1 style="font-size:48px;line-height:1.05;font-weight:700;letter-spacing:-1px">DragonRent design system</h1>
+<p style="font-size:18px;color:#4A5B78">Arctic Blue and Geist. Clean Nordic layouts and clear, simple booking for every age.</p>
+</div>
+</div>
+
+<section style="background:#FFFFFF;border:1px solid #E7EBF0;border-radius:12px;padding:32px;display:flex;flex-direction:column;gap:24px">
+<h2 style="font-size:24px;line-height:1.2;font-weight:600">Color · Arctic Blue</h2>
+<div style="display:grid;grid-template-columns:repeat(6, minmax(0, 1fr));gap:16px">
+<div style="display:flex;flex-direction:column;gap:6px"><span style="display:block;height:88px;border-radius:12px;background:#F7FAFC;border:1px solid #E7EBF0"></span><p style="font-weight:600">Snow</p><p style="font-size:13px;color:#4A5B78">#F7FAFC · page background</p></div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="display:block;height:88px;border-radius:12px;background:#DCE8FA"></span><p style="font-weight:600">Ice</p><p style="font-size:13px;color:#4A5B78">#DCE8FA · subtle surfaces, icon tiles, selected days</p></div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="display:block;height:88px;border-radius:12px;background:#2457C5"></span><p style="font-weight:600">Cobalt Blue</p><p style="font-size:13px;color:#4A5B78">#2457C5 · brand, main buttons, links · white text 6.5:1</p></div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="display:block;height:88px;border-radius:12px;background:#172B4D"></span><p style="font-weight:600">Navy</p><p style="font-size:13px;color:#4A5B78">#172B4D · headings and main text · 13.5:1</p></div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="display:block;height:88px;border-radius:12px;background:#E7EBF0"></span><p style="font-weight:600">Mist</p><p style="font-size:13px;color:#4A5B78">#E7EBF0 · borders and dividers</p></div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="display:block;height:88px;border-radius:12px;background:#FFFFFF;border:1px solid #E7EBF0"></span><p style="font-weight:600">White</p><p style="font-size:13px;color:#4A5B78">#FFFFFF · cards and form fields</p></div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:32px;padding-top:8px;border-top:1px solid #E7EBF0">
+<div style="display:flex;flex-direction:column;gap:12px;padding-top:16px">
+<h3 style="font-size:18px;font-weight:600">Semantic</h3>
+<div style="display:flex;gap:12px;align-items:center"><span style="flex:none;width:44px;height:44px;border-radius:10px;background:#108981"></span><p><b>Success #108981</b> <span style="color:#4A5B78">· icons, tints, confirmed states</span></p></div>
+<div style="display:flex;gap:12px;align-items:center"><span style="flex:none;width:44px;height:44px;border-radius:10px;background:#F59E0B"></span><p><b>Warning #F59E0B</b> <span style="color:#4A5B78">· star ratings, “waiting” states</span></p></div>
+<div style="display:flex;gap:12px;align-items:center"><span style="flex:none;width:44px;height:44px;border-radius:10px;background:#EF4444"></span><p><b>Error #EF4444</b> <span style="color:#4A5B78">· field borders and icons</span></p></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;padding-top:16px">
+<h3 style="font-size:18px;font-weight:600">Added shades for readable text</h3>
+<div style="display:flex;gap:12px;align-items:center"><span style="flex:none;width:44px;height:44px;border-radius:10px;background:#4A5B78"></span><p><b>Slate #4A5B78</b> <span style="color:#4A5B78">· second-level text, 6.5:1 on Snow</span></p></div>
+<div style="display:flex;gap:12px;align-items:center"><span style="flex:none;width:44px;height:44px;border-radius:10px;background:#DDF3F1;color:#0B6B65;display:flex;align-items:center;justify-content:center;font-weight:600">Aa</span><p><b>Success tint #DDF3F1</b> <span style="color:#4A5B78">· with #0B6B65 text, because white on Success is only 4.3:1</span></p></div>
+<div style="display:flex;gap:12px;align-items:center"><span style="flex:none;width:44px;height:44px;border-radius:10px;background:#FEF3C7;color:#172B4D;display:flex;align-items:center;justify-content:center;font-weight:600">Aa</span><p><b>Warning tint #FEF3C7</b> <span style="color:#4A5B78">· with Navy text, because Warning text on white is 2.2:1</span></p></div>
+</div>
+</div>
+</section>
+
+<div style="display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:24px">
+<section style="background:#FFFFFF;border:1px solid #E7EBF0;border-radius:12px;padding:32px;display:flex;flex-direction:column;gap:16px">
+<h2 style="font-size:24px;line-height:1.2;font-weight:600">Type · Geist</h2>
+<p style="color:#4A5B78">One family everywhere. Load weights 400, 500, 600 and 700.</p>
+<div style="display:flex;flex-direction:column;border-top:1px solid #E7EBF0">
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:12px 0;border-bottom:1px solid #E7EBF0"><span style="font-size:48px;font-weight:700;line-height:1.1;letter-spacing:-1px">Hero</span><span style="font-size:13px;color:#4A5B78;text-align:right">700 · 48–56 px</span></div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:12px 0;border-bottom:1px solid #E7EBF0"><span style="font-size:32px;font-weight:700;line-height:1.2;letter-spacing:-0.6px">Page heading</span><span style="font-size:13px;color:#4A5B78">700 · 32 px</span></div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:12px 0;border-bottom:1px solid #E7EBF0"><span style="font-size:24px;font-weight:600">Section heading</span><span style="font-size:13px;color:#4A5B78">600 · 22–24 px</span></div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:12px 0;border-bottom:1px solid #E7EBF0"><span style="font-size:18px;font-weight:600">Cordless drill with 2 batteries</span><span style="font-size:13px;color:#4A5B78">Listing title · 600 · 18 px</span></div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:12px 0;border-bottom:1px solid #E7EBF0"><span style="font-size:24px;font-weight:700">€30</span><span style="font-size:13px;color:#4A5B78">Prices · 600–700 · 20–24 px</span></div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:12px 0;border-bottom:1px solid #E7EBF0"><span style="font-size:16px">Body text for descriptions</span><span style="font-size:13px;color:#4A5B78">400 · 16 px</span></div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:12px 0;border-bottom:1px solid #E7EBF0"><span style="font-size:16px;font-weight:600">Send request</span><span style="font-size:13px;color:#4A5B78">Buttons · 600 · 14–16 px</span></div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:12px 0;border-bottom:1px solid #E7EBF0"><span style="font-size:15px;font-weight:500">How it works</span><span style="font-size:13px;color:#4A5B78">Navigation · 500 · 14–15 px</span></div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:12px 0"><span style="font-size:13px;font-weight:500;color:#4A5B78">1.2 km · Kallio</span><span style="font-size:13px;color:#4A5B78">Captions · 400–500 · 12–13 px</span></div>
+</div>
+</section>
+
+<section style="background:#FFFFFF;border:1px solid #E7EBF0;border-radius:12px;padding:32px;display:flex;flex-direction:column;gap:20px">
+<h2 style="font-size:24px;line-height:1.2;font-weight:600">Components</h2>
+<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+<button type="button" style="height:48px;padding:0 24px;border:0;border-radius:10px;background:#2457C5;color:#FFFFFF;font-weight:600;font-size:16px;cursor:pointer">Send request</button>
+<button type="button" style="height:48px;padding:0 20px;border:1.5px solid #172B4D;border-radius:10px;background:#FFFFFF;color:#172B4D;font-weight:600;font-size:16px;cursor:pointer">Ask a question</button>
+<a href="#" style="display:flex;align-items:center;min-height:44px;padding:0 4px;font-weight:600;color:#2457C5">Read more</a>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px">
+<button type="button" style="display:flex;align-items:center;gap:6px;height:44px;padding:0 16px;border:1px solid #2457C5;border-radius:10px;background:#2457C5;color:#FFFFFF;font-weight:600;font-size:15px;cursor:pointer"><svg class="i" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width:2.6"><path d="M20 6 9 17l-5-5"></path></svg>Tools</button>
+<button type="button" style="height:44px;padding:0 16px;border:1px solid #E7EBF0;border-radius:10px;background:#FFFFFF;font-weight:500;font-size:15px;cursor:pointer">Garden</button>
+<button type="button" style="height:44px;padding:0 16px;border:1px solid #E7EBF0;border-radius:10px;background:#FFFFFF;font-weight:500;font-size:15px;cursor:pointer">Camping</button>
+</div>
+<p style="font-size:13px;color:#4A5B78">Selected filter: Cobalt with white text and a check mark. Others: White with a Mist border.</p>
+<div style="display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:16px">
+<div style="display:flex;flex-direction:column;gap:6px">
+<label for="ds-price" style="font-weight:600;font-size:15px">Price for 1 day</label>
+<div style="display:flex;align-items:center;gap:8px;height:48px;padding:0 14px;border:1px solid #E7EBF0;border-radius:10px;background:#FFFFFF;outline:3px solid #2457C5;outline-offset:2px"><span style="font-weight:600;color:#4A5B78">€</span><input id="ds-price" type="text" value="15" style="border:0;outline:0;flex:1;min-width:0;font-size:16px;background:transparent"></div>
+<p style="font-size:13px;color:#4A5B78">Focused: 3 px Cobalt ring.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px">
+<label for="ds-name" style="font-weight:600;font-size:15px">Item name</label>
+<div style="display:flex;align-items:center;height:48px;padding:0 14px;border:1.5px solid #EF4444;border-radius:10px;background:#FFFFFF"><input id="ds-name" type="text" value="" style="border:0;outline:0;flex:1;min-width:0;font-size:16px;background:transparent"></div>
+<p style="display:flex;gap:6px;align-items:center;font-size:13px;font-weight:600"><svg class="i" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" style="color:#EF4444"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4M12 16h.01"></path></svg>Please give your item a name.</p>
+</div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px">
+<span style="display:flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:8px;background:#FEF3C7;font-weight:600;font-size:13px"><svg class="i" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" style="color:#B45309"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>Waiting for you</span>
+<span style="display:flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:8px;background:#DDF3F1;color:#0B6B65;font-weight:600;font-size:13px"><svg class="i" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Accepted</span>
+<span style="display:flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:8px;background:#E7EBF0;font-weight:600;font-size:13px"><svg class="i" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg>Declined</span>
+</div>
+<div style="display:flex;gap:16px;align-items:stretch">
+<div style="flex:1;background:#FFFFFF;border:1px solid #E7EBF0;border-radius:12px;box-shadow:0 4px 14px rgba(23,43,77,0.06);overflow:hidden">
+<div style="height:96px;background:#E8EEF7"></div>
+<div style="padding:12px 14px;display:flex;flex-direction:column;gap:2px"><p style="font-size:18px;font-weight:600;line-height:1.3">Cordless drill</p><p><span style="font-size:20px;font-weight:700">From €8</span> a day</p><p style="font-size:13px;color:#4A5B78">1.2 km · Kallio</p></div>
+</div>
+<p style="flex:1;font-size:13px;color:#4A5B78;align-self:center">Cards: White, Mist border, 12 px corners, a soft shadow only on things you can tap. Controls: 8–10 px corners and at least 44 px tall.</p>
+</div>
+</section>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:24px">
+<section style="background:#FFFFFF;border:1px solid #E7EBF0;border-radius:12px;padding:32px;display:flex;flex-direction:column;gap:14px">
+<h2 style="font-size:24px;line-height:1.2;font-weight:600">Easy for ages 8 to 80</h2>
+<ol style="padding-left:22px;display:flex;flex-direction:column;gap:10px">
+<li><b>One main button per screen.</b> Cobalt, full width on phones. Everything else is quieter.</li>
+<li><b>Easy to tap.</b> Buttons 48–52 px tall; every tap area at least 44 px.</li>
+<li><b>Words with icons.</b> The menu button says “Menu”; status tags have an icon and a word, never color alone.</li>
+<li><b>Plain words.</b> Short sentences a 9-year-old understands.</li>
+<li><b>No price surprises.</b> The full total shows before any button that costs money.</li>
+<li><b>Step by step.</b> Long tasks become short steps marked “Step 2 of 5”.</li>
+<li><b>Easy to undo.</b> Back on every step; a check screen before sending; a confirm before anything final.</li>
+<li><b>Visible focus.</b> A 3 px Cobalt ring on whatever the keyboard is on.</li>
+</ol>
+</section>
+
+<section style="background:#FFFFFF;border:1px solid #E7EBF0;border-radius:12px;padding:32px;display:flex;flex-direction:column;gap:14px">
+<h2 style="font-size:24px;line-height:1.2;font-weight:600">Words we use</h2>
+<p style="color:#4A5B78">Change these in Console under marketplace texts.</p>
+<div style="display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));border-top:1px solid #E7EBF0">
+<p style="padding:10px 12px 10px 0;font-weight:600;font-size:13px;color:#4A5B78;border-bottom:1px solid #E7EBF0">Say</p><p style="padding:10px 0;font-weight:600;font-size:13px;color:#4A5B78;border-bottom:1px solid #E7EBF0">Not</p>
+<p style="padding:10px 12px 10px 0;font-weight:600;border-bottom:1px solid #E7EBF0">Send request</p><p style="padding:10px 0;color:#4A5B78;border-bottom:1px solid #E7EBF0">Request to book</p>
+<p style="padding:10px 12px 10px 0;font-weight:600;border-bottom:1px solid #E7EBF0">Pick up · Return</p><p style="padding:10px 0;color:#4A5B78;border-bottom:1px solid #E7EBF0">Start date · End date</p>
+<p style="padding:10px 12px 10px 0;font-weight:600;border-bottom:1px solid #E7EBF0">Lend an item</p><p style="padding:10px 0;color:#4A5B78;border-bottom:1px solid #E7EBF0">Create a listing</p>
+<p style="padding:10px 12px 10px 0;font-weight:600;border-bottom:1px solid #E7EBF0">Owner · Renter</p><p style="padding:10px 0;color:#4A5B78;border-bottom:1px solid #E7EBF0">Provider · Customer</p>
+<p style="padding:10px 12px 10px 0;font-weight:600;border-bottom:1px solid #E7EBF0">Messages</p><p style="padding:10px 0;color:#4A5B78;border-bottom:1px solid #E7EBF0">Inbox</p>
+<p style="padding:10px 12px 10px 0;font-weight:600;border-bottom:1px solid #E7EBF0">Your card is only charged if they say yes</p><p style="padding:10px 0;color:#4A5B78;border-bottom:1px solid #E7EBF0">Payment is captured on acceptance</p>
+<p style="padding:10px 12px 10px 0;font-weight:600">Something went wrong. Please try again.</p><p style="padding:10px 0;color:#4A5B78">Error 500: request failed</p>
+</div>
+</section>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":2200}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

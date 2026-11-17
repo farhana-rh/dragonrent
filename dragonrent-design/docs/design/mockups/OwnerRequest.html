@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Owner sees a new request</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F7FAFC}
+b,strong{font-weight:600}
+*{box-sizing:border-box}
+h1,h2,h3,p,ol,ul{margin:0}
+h1,h2,h3{font-family:'Geist',system-ui,sans-serif}
+input,button,textarea{font:inherit;color:inherit}
+a{color:#2457C5}a:hover{color:#1B46A3}
+::placeholder{color:#66768F;opacity:1}
+:focus-visible{outline:3px solid #2457C5;outline-offset:3px}
+.field:focus-within{outline:3px solid #2457C5;outline-offset:2px}
+.i{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+</style>
+</helmet>
+<div style="width:390px;height:1180px;position:relative;background:#F7FAFC;color:#172B4D;font-family:'Geist',system-ui,sans-serif;font-size:16px;line-height:1.5;display:flex;flex-direction:column;overflow:hidden">
+
+<header style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#FFFFFF;border-bottom:1px solid #E7EBF0">
+<a href="#" style="display:flex;align-items:center;gap:6px;height:48px;padding:0 10px 0 4px;color:#172B4D;text-decoration:none;font-weight:600;font-size:15px"><svg class="i" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>Messages</a>
+</header>
+
+<div style="padding:20px 20px 120px;display:flex;flex-direction:column;gap:18px">
+
+<div style="display:flex;flex-direction:column;align-items:flex-start;gap:12px">
+<sc-if value="{{waiting}}" hint-placeholder-val="{{true}}"><span style="display:flex;align-items:center;gap:8px;height:40px;padding:0 14px;border-radius:8px;background:#FEF3C7;font-weight:600;font-size:13px"><svg class="i" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>Waiting for you</span></sc-if>
+<sc-if value="{{accepted}}" hint-placeholder-val="{{false}}"><span style="display:flex;align-items:center;gap:8px;height:40px;padding:0 14px;border-radius:8px;background:#DDF3F1;color:#0B6B65;font-weight:600;font-size:13px"><svg class="i" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Accepted</span></sc-if>
+<sc-if value="{{declined}}" hint-placeholder-val="{{false}}"><span style="display:flex;align-items:center;gap:8px;height:40px;padding:0 14px;border-radius:8px;background:#E7EBF0;font-weight:600;font-size:13px"><svg class="i" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg>Declined</span></sc-if>
+<h1 style="font-size:32px;line-height:1.18;font-weight:700;letter-spacing:-0.6px">Mikko wants to rent your drill</h1>
+</div>
+
+<section style="background:#FFFFFF;border:1px solid #E7EBF0;border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;gap:14px;align-items:center">
+<div style="flex:none;width:64px;height:64px;border-radius:10px;background:#E8EEF7;display:flex;align-items:center;justify-content:center;color:#7A8AA3"><svg class="i" width="36" height="36" viewBox="0 0 24 24" role="img" aria-label="Photo placeholder: cordless drill" style="stroke-width:1.4"><rect x="3" y="5" width="12" height="6" rx="2"></rect><path d="M15 8h3M18 7v2M18 8h3"></path><path d="M6 11l-1 6a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1l1-6"></path><rect x="4" y="18" width="7" height="3" rx="1"></rect></svg></div>
+<p style="font-weight:600;line-height:1.35">Cordless drill with 2 batteries</p>
+</div>
+<div style="height:1px;background:#E7EBF0"></div>
+<div style="display:flex;justify-content:space-between;gap:12px"><span style="color:#4A5B78">Pick up</span><span style="font-weight:600">Fri 23 Oct</span></div>
+<div style="display:flex;justify-content:space-between;gap:12px"><span style="color:#4A5B78">Return</span><span style="font-weight:600">Sun 25 Oct · 3 days</span></div>
+<div style="height:1px;background:#E7EBF0"></div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px"><span style="font-weight:600;font-size:16px">You get</span><span style="font-weight:600;font-size:24px">€27</span></div>
+</section>
+
+<section style="display:flex;gap:14px;align-items:center">
+<span aria-hidden="true" style="flex:none;width:52px;height:52px;border-radius:999px;background:#DCE8FA;color:#2457C5;display:flex;align-items:center;justify-content:center;font-family:'Geist',system-ui,sans-serif;font-weight:600;font-size:16px">MV</span>
+<div style="display:flex;flex-direction:column;line-height:1.35">
+<p style="font-weight:600">Mikko V.</p>
+<p style="font-size:13px;color:#4A5B78">5.0 from 3 owners · Member since 2026</p>
+</div>
+</section>
+
+<div style="align-self:flex-start;max-width:310px;background:#FFFFFF;border:1px solid #E7EBF0;border-radius:12px 12px 12px 4px;padding:14px 16px;display:flex;flex-direction:column;gap:4px">
+<p>Hi Anna! Could I pick it up on Friday after 17:00?</p>
+<p style="font-size:13px;color:#4A5B78">Mikko · today 10:42</p>
+</div>
+
+<sc-if value="{{waiting}}" hint-placeholder-val="{{true}}">
+<div style="display:flex;flex-direction:column;gap:12px">
+<button type="button" onClick="{{accept}}" style="display:flex;align-items:center;justify-content:center;gap:10px;height:52px;border:0;border-radius:10px;background:#2457C5;color:#FFFFFF;font-weight:600;font-size:16px;cursor:pointer"><svg class="i" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width:2.6"><path d="M20 6 9 17l-5-5"></path></svg>Accept</button>
+<button type="button" onClick="{{decline}}" style="height:48px;border:1.5px solid #172B4D;border-radius:10px;background:#FFFFFF;font-weight:600;font-size:16px;cursor:pointer">Decline</button>
+<p style="font-size:13px;color:#4A5B78">If you don't answer, the request ends by itself and Mikko isn't charged.</p>
+</div>
+</sc-if>
+<sc-if value="{{accepted}}" hint-placeholder-val="{{false}}">
+<div style="background:#DCE8FA;border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:4px">
+<p style="font-weight:600">You said yes.</p>
+<p>Mikko has paid. Agree on a pick-up time below.</p>
+</div>
+</sc-if>
+<sc-if value="{{declined}}" hint-placeholder-val="{{false}}">
+<div style="background:#E7EBF0;border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:4px">
+<p style="font-weight:600">You said no.</p>
+<p>Mikko won't be charged. We've let him know.</p>
+</div>
+</sc-if>
+<sc-if value="{{confirming}}" hint-placeholder-val="{{false}}">
+<div style="background:#FFFFFF;border:1.5px solid #172B4D;border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:12px">
+<p style="font-weight:600;font-size:16px">Say no to Mikko?</p>
+<p style="color:#4A5B78">He won't be charged. You can't undo this.</p>
+<button type="button" onClick="{{confirmDecline}}" style="height:48px;border:0;border-radius:10px;background:#172B4D;color:#FFFFFF;font-weight:600;font-size:16px;cursor:pointer">Yes, decline</button>
+<button type="button" onClick="{{undo}}" style="height:48px;border:1.5px solid #172B4D;border-radius:10px;background:#FFFFFF;font-weight:600;font-size:16px;cursor:pointer">Go back</button>
+</div>
+</sc-if>
+</div>
+
+<div style="position:absolute;left:0;right:0;bottom:0;background:#FFFFFF;border-top:1px solid #E7EBF0;padding:12px 16px 20px;display:flex;gap:10px;align-items:center">
+<label for="reply" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Write a message to Mikko</label>
+<div class="field" style="flex:1;min-width:0;display:flex;align-items:center;height:48px;padding:0 16px;border:1px solid #E7EBF0;border-radius:10px;background:#FFFFFF"><input id="reply" type="text" placeholder="Write a message" style="border:0;outline:0;flex:1;min-width:0;font-size:16px;background:transparent"></div>
+<button type="button" style="display:flex;align-items:center;gap:6px;height:48px;padding:0 18px;border:0;border-radius:10px;background:#172B4D;color:#FFFFFF;font-weight:600;font-size:15px;cursor:pointer"><svg class="i" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"></path><path d="m21.854 2.147-10.94 10.939"></path></svg>Send</button>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1180}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const brand = '#2457C5';
+    const tint = '#DCE8FA';
+    const st = this.state || {};
+    const status = st.status || 'waiting';
+    return {
+      brand: brand,
+      brandTint: tint,
+      waiting: status === 'waiting',
+      accepted: status === 'accepted',
+      declined: status === 'declined',
+      confirming: status === 'confirm',
+      accept: () => this.setState({ status: 'accepted' }),
+      decline: () => this.setState({ status: 'confirm' }),
+      confirmDecline: () => this.setState({ status: 'declined' }),
+      undo: () => this.setState({ status: 'waiting' })
+    };
+  }
+}
+</script>
+</body>
+</html>
