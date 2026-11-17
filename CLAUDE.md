@@ -149,6 +149,12 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
   rotating search prompts, and `SectionHostCta` became "What if something breaks?" (id
   `trust-and-safety`, the top bar's "Trust & Safety"). Phase 2 = search, cards, item page; Phase 3
   = booking, checkout, wizard, account. Other pages keep Arctic Blue until rebuilt.
+- **Sticker redesign, Phase 2 (17 Nov, committed locally):** search page, ListingCard (sticker
+  card with a marigold price tag, used everywhere) and the item page. Both pages put the global
+  class `dr-sticker-page` on `<Page>`, which remaps the Arctic neutrals to ink/cream for every
+  shared component inside; sticker shapes are added per component (filter pills, chips, map
+  price labels, empty state, photo tiles, price tiles). The booking panel stays calm (money zone).
+  A "New" sticker on cards needs `createdAt` in the search query: a search-data change, ask first.
 - **Remaining work** (estimate 9 Nov): about 7–11 h of code and testing, 9–12 h of Console, Live
   and hosting setup by the user, plus waiting for the lawyer, the Finnish review and DNS.
 - **Days 0–9 code done**, all on `feature/redesign`, pushed to GitHub 23 Oct (not merged to `main`;

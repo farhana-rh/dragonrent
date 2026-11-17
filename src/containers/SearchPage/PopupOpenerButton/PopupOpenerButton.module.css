@@ -1,8 +1,8 @@
 @import '../../../styles/customMediaQueries.css';
 
 /*
- * Filter chip (dragonrent-design/docs/DESIGN.md → Components → Filter chip): 44px tall.
- * Unselected is white with a Mist border; selected is Cobalt with white text and a check icon.
+ * Filter pill, sticker design (Phase 2): 44px tall, fully rounded, 2px ink border with a small
+ * hard shadow. Selected is ink with cream text and a check icon (HomeSticker.html tier chips).
  */
 .label,
 .labelSelected {
@@ -21,7 +21,7 @@
 
   /* Font */
   font-family: var(--fontFamily);
-  font-weight: var(--fontWeightSemiBold);
+  font-weight: var(--fontWeightBold);
   font-size: 15px;
   line-height: 20px;
 
@@ -29,7 +29,8 @@
   text-decoration: none;
   white-space: nowrap;
 
-  border-radius: var(--borderRadius);
+  border-radius: 999px;
+  box-shadow: var(--shadowHardSmall);
 
   &:focus,
   &:hover {
@@ -38,7 +39,8 @@
   }
 
   &:focus-visible {
-    box-shadow: var(--focusRing);
+    outline: 3px solid var(--colorElectric);
+    outline-offset: 3px;
   }
 
   &:disabled {
@@ -48,13 +50,13 @@
 }
 
 .label {
-  border: 1px solid var(--colorBorder);
-  background-color: var(--colorSurface);
-  color: var(--colorText);
+  border: var(--borderInk);
+  background-color: var(--colorWhite);
+  color: var(--colorInk);
 
   &:hover,
   &:focus {
-    border-color: var(--colorText);
+    background-color: var(--colorCream);
   }
   &:disabled {
     color: var(--colorTextSecondary);
@@ -62,14 +64,13 @@
 }
 
 .labelSelected {
-  border: 1px solid var(--marketplaceColor);
-  background-color: var(--marketplaceColor);
-  color: var(--colorWhite);
+  border: var(--borderInk);
+  background-color: var(--colorInk);
+  color: var(--colorCream);
 
   &:hover,
   &:focus {
-    border-color: var(--marketplaceColorDark);
-    background-color: var(--marketplaceColorDark);
+    background-color: var(--colorInk);
   }
   &:disabled {
     background-color: var(--colorBorder);

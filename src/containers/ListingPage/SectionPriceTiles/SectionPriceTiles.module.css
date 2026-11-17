@@ -35,9 +35,10 @@
   padding: 12px 6px;
   text-align: center;
 
-  background-color: var(--colorSurface);
-  border: 2px solid var(--colorBorder);
-  border-radius: var(--borderRadiusLarge);
+  background-color: var(--colorWhite);
+  border: var(--borderInk);
+  border-radius: var(--borderRadiusSticker);
+  box-shadow: var(--shadowHardSmall);
 
   @media (--viewportMedium) {
     padding: 16px 12px;
@@ -45,7 +46,8 @@
 }
 
 .bestTile {
-  border-color: var(--marketplaceColor);
+  background-color: var(--colorMarigold);
+  box-shadow: var(--shadowHard);
 }
 
 .bestPrice {
@@ -60,10 +62,11 @@
   white-space: nowrap;
 
   font-size: 13px;
-  font-weight: var(--fontWeightSemiBold);
-  color: var(--colorSuccessDark);
-  background-color: var(--colorSuccessSubtle);
-  border-radius: var(--borderRadius);
+  font-weight: var(--fontWeightBold);
+  color: var(--colorInk);
+  background-color: var(--colorMint);
+  border: var(--borderInk);
+  border-radius: 999px;
 }
 
 .days {
@@ -79,8 +82,8 @@
 .total {
   font-size: 20px;
   line-height: 30px;
-  font-weight: var(--fontWeightSemiBold);
-  color: var(--colorText);
+  font-weight: var(--fontWeightHeavy);
+  color: var(--colorInk);
   white-space: nowrap;
 
   @media (--viewportMedium) {

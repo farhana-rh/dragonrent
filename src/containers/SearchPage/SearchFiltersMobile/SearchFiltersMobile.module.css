@@ -106,7 +106,8 @@
   font-weight: var(--fontWeightSemiBold);
   white-space: nowrap;
 
-  border-radius: var(--borderRadiusMedium);
+  font-weight: var(--fontWeightBold);
+  border-radius: 999px;
   cursor: pointer;
   transition: all var(--transitionStyleButton);
 
@@ -119,24 +120,24 @@
   }
 }
 
+/* Sticker pills, as on desktop: 2px ink border; selected is ink with cream text */
 .button {
-  color: var(--colorText);
-  background-color: var(--colorSurface);
-  border: 1.5px solid var(--colorBorderStrong);
+  color: var(--colorInk);
+  background-color: var(--colorWhite);
+  border: var(--borderInk);
 
   &:hover {
-    background-color: var(--colorBackground);
+    background-color: var(--colorCream);
   }
 }
 
 .buttonSelected {
-  color: var(--colorWhite);
-  background-color: var(--marketplaceColor);
-  border: 1.5px solid var(--marketplaceColor);
+  color: var(--colorCream);
+  background-color: var(--colorInk);
+  border: var(--borderInk);
 
   &:hover {
-    background-color: var(--marketplaceColorDark);
-    border-color: var(--marketplaceColorDark);
+    background-color: var(--colorInk);
   }
 }
 

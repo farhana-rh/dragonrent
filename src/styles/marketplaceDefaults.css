@@ -264,6 +264,36 @@
   --carouselWidth: 100vw;
 }
 
+/*
+ * Pages rebuilt in the sticker design (Phase 2, 17 Nov: search and item pages) put this class on
+ * their <Page>. It maps the Arctic Blue neutrals onto the sticker palette for everything inside,
+ * so shared components (filters, booking panel, reviews) follow without their own changes:
+ * Navy text → Ink, Slate → warm grey, Mist lines → ink hairlines, Snow → cream paper.
+ * Electric Blue (Cobalt) stays the action colour. Sticker shapes are added per component.
+ */
+.dr-sticker-page {
+  --colorText: var(--colorInk);
+  --colorTextSecondary: var(--colorInkSecondary);
+  --colorTextMuted: var(--colorInkSecondary);
+  --colorGrey50: var(--colorCream);
+  --colorGrey100: var(--colorInkLine);
+  --colorGrey200: var(--colorInkLine);
+  --colorGrey300: var(--colorInkSecondary);
+  --colorGrey400: var(--colorInkSecondary);
+  --colorGrey500: var(--colorInkSecondary);
+  --colorGrey600: var(--colorInkSecondary);
+  --colorGrey700: var(--colorInk);
+  --colorGrey800: var(--colorInk);
+  --colorGrey900: var(--colorInk);
+  --colorBorder: var(--colorInkLine);
+  --colorBorderStrong: var(--colorInk);
+  --colorBackground: var(--colorCream);
+  --colorSurfaceSubtle: var(--colorCream);
+  --colorStatusNormal: var(--colorInk);
+
+  background-color: var(--colorCream);
+}
+
 /* ================ Global element styles ================ */
 /**
  * Here are the global styles: for elements as well as some

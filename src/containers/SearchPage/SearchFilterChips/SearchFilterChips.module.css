@@ -24,12 +24,12 @@
   font-family: var(--fontFamily);
   font-size: 15px;
   line-height: 18px;
-  font-weight: var(--fontWeightMedium);
-  color: var(--colorText);
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorInk);
 
-  background-color: var(--colorSurface);
-  border: 1px solid var(--colorBorderStrong);
-  border-radius: var(--borderRadius);
+  background-color: var(--colorWhite);
+  border: 1.5px solid var(--colorInk);
+  border-radius: 999px;
   cursor: pointer;
   transition: border-color var(--transitionStyleButton);
 
@@ -56,17 +56,18 @@
   font-family: var(--fontFamily);
   font-size: 15px;
   line-height: 20px;
-  font-weight: var(--fontWeightSemiBold);
-  color: var(--marketplaceColor);
+  font-weight: var(--fontWeightBold);
+  color: var(--colorInk);
   text-decoration: underline;
-  text-underline-offset: 3px;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
 
   background: none;
   border: none;
   cursor: pointer;
 
   &:hover {
-    color: var(--marketplaceColorDark);
+    color: var(--colorElectric);
   }
 
   &:focus-visible {

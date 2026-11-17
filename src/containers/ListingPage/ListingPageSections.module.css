@@ -20,11 +20,11 @@
 .listingSectionTitle {
   margin: 0;
   padding: 0;
-  font-size: 20px;
+  font-size: 21px;
   line-height: 28px;
-  font-weight: var(--fontWeightSemiBold);
-  letter-spacing: -0.01em;
-  color: var(--colorText);
+  font-weight: var(--fontWeightHeavy);
+  letter-spacing: -0.02em;
+  color: var(--colorInk);
 
   @media (--viewportMedium) {
     font-size: 24px;

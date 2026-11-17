@@ -17,9 +17,10 @@
   margin: 0;
   padding: 0;
   font-size: 32px;
-  line-height: 1.2;
-  font-weight: var(--fontWeightBold);
-  color: var(--colorText);
+  line-height: 1.15;
+  font-weight: var(--fontWeightHeavy);
+  letter-spacing: -0.02em;
+  color: var(--colorInk);
   overflow-wrap: anywhere;
 }
 

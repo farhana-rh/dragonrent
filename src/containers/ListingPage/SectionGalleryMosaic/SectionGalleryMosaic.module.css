@@ -42,9 +42,10 @@
   padding: 0;
   overflow: hidden;
 
-  background-color: var(--colorAccentSubtle);
-  border: none;
-  border-radius: var(--borderRadiusLarge);
+  background-color: var(--colorCream);
+  border: var(--borderInk);
+  border-radius: var(--borderRadiusSticker);
+  box-shadow: var(--shadowHard);
   cursor: pointer;
 
   &:hover .image {
@@ -92,9 +93,10 @@
   font-weight: var(--fontWeightSemiBold);
   color: var(--colorText);
 
-  background-color: var(--colorSurface);
-  border: none;
-  border-radius: var(--borderRadiusMedium);
+  background-color: var(--colorWhite);
+  border: var(--borderInk);
+  border-radius: 999px;
+  box-shadow: var(--shadowHardSmall);
   box-shadow: var(--boxShadowRaised);
   cursor: pointer;
 

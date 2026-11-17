@@ -1,6 +1,6 @@
 @import '../../../styles/customMediaQueries.css';
 
-/* Empty state: a white card (not clickable, so no shadow) with one clear next step */
+/* Empty state: a white sticker card with one clear next step */
 .noSearchResults {
   display: flex;
   flex-direction: column;
@@ -9,9 +9,10 @@
   margin: 12px 0 24px 0;
   padding: 24px 18px;
 
-  background-color: var(--colorSurface);
-  border: 1px solid var(--colorBorder);
-  border-radius: var(--borderRadiusLarge);
+  background-color: var(--colorWhite);
+  border: var(--borderInk);
+  border-radius: var(--borderRadiusSticker);
+  box-shadow: var(--shadowHard);
 
   @media (--viewportMedium) {
     margin: 8px 0 32px 0;
@@ -22,9 +23,10 @@
 .title {
   margin: 0;
   padding: 0;
-  font-size: 22px;
+  font-size: 24px;
   line-height: 1.2;
-  font-weight: var(--fontWeightSemiBold);
+  font-weight: var(--fontWeightHeavy);
+  letter-spacing: -0.02em;
   color: var(--colorText);
 }
 
@@ -37,7 +39,7 @@
   color: var(--colorTextSecondary);
 }
 
-/* Secondary button: white, 1.5px Navy border, Navy text */
+/* Sticker button: white, 2px ink border, small hard shadow */
 .resetAllFiltersButton {
   display: inline-flex;
   align-items: center;
@@ -51,13 +53,14 @@
   font-weight: var(--fontWeightSemiBold);
   color: var(--colorText);
 
-  background-color: var(--colorSurface);
-  border: 1.5px solid var(--colorBorderStrong);
-  border-radius: var(--borderRadiusMedium);
+  background-color: var(--colorWhite);
+  border: var(--borderInk);
+  border-radius: var(--borderRadiusStickerSmall);
+  box-shadow: var(--shadowHardSmall);
   cursor: pointer;
 
   &:hover {
-    background-color: var(--colorBackground);
+    background-color: var(--colorCream);
   }
 
   &:focus {

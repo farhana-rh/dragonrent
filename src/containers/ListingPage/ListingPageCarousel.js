@@ -226,6 +226,7 @@ export const ListingPageComponent = props => {
 
   return (
     <Page
+      className="dr-sticker-page"
       title={schemaTitle}
       scrollingDisabled={scrollingDisabled}
       author={authorDisplayName}

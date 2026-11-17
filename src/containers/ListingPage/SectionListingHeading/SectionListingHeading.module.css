@@ -28,15 +28,15 @@
 .title {
   margin: 0;
   padding: 0;
-  font-size: 28px;
-  line-height: 34px;
-  font-weight: var(--fontWeightBold);
-  letter-spacing: -0.02em;
-  color: var(--colorText);
+  font-size: 30px;
+  line-height: 1.12;
+  font-weight: var(--fontWeightHeavy);
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+  color: var(--colorInk);
 
   @media (--viewportMedium) {
-    font-size: 32px;
-    line-height: 36px;
+    font-size: 38px;
   }
 }
 
