@@ -131,6 +131,13 @@ if (cspEnabled) {
   });
 }
 
+// DragonRent: health check for the hosting platform. Railway probes it over plain HTTP from
+// its own hostname while a deploy starts and needs a 200, so it must answer before the HTTPS
+// redirect and basic auth below. It returns no data.
+app.get('/healthz', (req, res) => {
+  res.status(200).send({ status: 'ok' });
+});
+
 // Redirect HTTP to HTTPS if REDIRECT_SSL is `true`.
 // This also works behind reverse proxies (load balancers) as they are for example used by Heroku.
 // In such cases, however, the TRUST_PROXY parameter has to be set (see below)
