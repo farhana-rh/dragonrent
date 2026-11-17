@@ -7,6 +7,7 @@
  * (CLAUDE.md), no made-up badges.
  */
 .root {
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -37,6 +38,25 @@
       transform: none;
     }
   }
+}
+
+/* "New" sticker on the photo for listings published in the last 30 days (isNewListing) */
+.newSticker {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 1;
+  padding: 2px 10px;
+
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: var(--fontWeightBold);
+  color: var(--colorInk);
+  background-color: var(--colorMint);
+  border: var(--borderInk);
+  border-radius: 999px;
+  box-shadow: var(--shadowHardSmall);
+  transform: rotate(-3deg);
 }
 
 .aspectRatioWrapper {

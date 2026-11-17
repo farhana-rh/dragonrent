@@ -439,6 +439,8 @@ export const loadData = (params, search, config) => (dispatch, getState, sdk) =>
         'price',
         'deleted',
         'state',
+        // DragonRent: the "New" sticker on cards (listings published in the last 30 days)
+        'createdAt',
         'publicData.listingType',
         'publicData.transactionProcessAlias',
         'publicData.unitType',

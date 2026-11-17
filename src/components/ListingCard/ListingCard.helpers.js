@@ -38,6 +38,28 @@ const priceData = (price, currency, intl) => {
  * @param {Object} intl
  * @returns {string|null} distance text, or null without an origin or listing location
  */
+// A listing counts as "New" for this many days after it was published (created)
+export const NEW_LISTING_DAYS = 30;
+
+/**
+ * Whether the card shows the "New" sticker: the listing was created in the last
+ * NEW_LISTING_DAYS days. Needs `createdAt` in the query's 'fields.listing'; listings loaded
+ * without it never show the sticker. A real fact, used instead of ratings on cards.
+ *
+ * @param {Object} listing listing entity
+ * @param {number} now current time in ms (Date.now() by default; tests pass a fixed value)
+ * @returns {boolean} true if the listing is new
+ */
+export const isNewListing = (listing, now = Date.now()) => {
+  const createdAt = listing?.attributes?.createdAt;
+  const created = createdAt instanceof Date ? createdAt.getTime() : Date.parse(createdAt);
+  if (!createdAt || Number.isNaN(created)) {
+    return false;
+  }
+  const age = now - created;
+  return age >= 0 && age < NEW_LISTING_DAYS * 24 * 60 * 60 * 1000;
+};
+
 export const getDistanceText = (listing, origin, intl) => {
   const km = distanceInKm(origin, listing?.attributes?.geolocation);
   if (km == null) {

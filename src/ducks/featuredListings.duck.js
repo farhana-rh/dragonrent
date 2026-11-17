@@ -59,6 +59,8 @@ const fetchFeaturedListingsPayloadCreator = async (arg, thunkAPI) => {
           'price',
           'deleted',
           'state',
+          // DragonRent: the "New" sticker on cards
+          'createdAt',
           'publicData.listingType',
           'publicData.transactionProcessAlias',
           'publicData.unitType',

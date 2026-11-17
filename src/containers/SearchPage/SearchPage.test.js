@@ -289,6 +289,7 @@ const getSearchParams = config => {
       'price',
       'deleted',
       'state',
+      'createdAt',
       'publicData.listingType',
       'publicData.transactionProcessAlias',
       'publicData.unitType',

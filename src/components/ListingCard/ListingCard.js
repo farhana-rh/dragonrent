@@ -18,7 +18,7 @@ import {
   ListingCardThumbnail,
 } from '../../components';
 
-import { getDistanceText, getListingCardTranslations } from './ListingCard.helpers';
+import { getDistanceText, getListingCardTranslations, isNewListing } from './ListingCard.helpers';
 
 import css from './ListingCard.module.css';
 
@@ -125,6 +125,7 @@ export const ListingCard = props => {
     authorName,
   } = translations;
   const distanceText = distanceOrigin ? getDistanceText(listing, distanceOrigin, intl) : null;
+  const isNew = isNewListing(listing);
 
   const classes = classNames(rootClassName || css.root, className);
 
@@ -159,6 +160,11 @@ export const ListingCard = props => {
       params={{ id, slug }}
       ariaLabel={cardAriaLabel}
     >
+      {isNew && showListingImage ? (
+        <span className={css.newSticker}>
+          {intl.formatMessage({ id: 'ListingCard.newSticker' })}
+        </span>
+      ) : null}
       {showListingImage ? (
         <ListingCardImage
           renderSizes={renderSizes}

@@ -1837,6 +1837,7 @@
   "LandingPage.trustStrip.termsLink": "käyttöehdot",
   "LandingPage.trustStrip.text": "Korttiasi veloitetaan vain, jos omistaja hyväksyy pyyntösi. Voit perua maksutta 24 tunnin sisällä.",
   "LandingPage.trustStrip.title": "Maksat vain, jos omistaja hyväksyy",
+  "ListingCard.newSticker": "Uusi",
   "ListingImage.screenreader.currentPosition": "{index}/{count}",
   "ListingImage.screenreader.dragToReorderImage": "Järjestä uudelleen vetämällä",
   "ListingImage.screenreader.moveImageDown": "Siirrä kuvaa alaspäin – nykyinen sijainti {currentPosition}.",

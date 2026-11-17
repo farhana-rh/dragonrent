@@ -793,6 +793,7 @@
   "ListingCard.distanceKm": "{km, number} km away",
   "ListingCard.distanceUnderOneKm": "Under 1 km away",
   "ListingCard.fromPrice": "From {price}",
+  "ListingCard.newSticker": "New",
   "ListingCard.perUnit": "{unitType, select, day {per day} night {per night} hour {per hour} other {}}",
   "ListingCard.perUnitShort": "{unitType, select, day {/ day} night {/ night} hour {/ hour} other {}}",
   "ListingCard.price": "{priceValue} {pricePerUnit}",

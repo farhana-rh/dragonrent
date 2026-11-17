@@ -3,7 +3,7 @@ import { createIntl } from 'react-intl';
 import { types as sdkTypes } from '../../util/sdkLoader';
 import messages from '../../translations/en.json';
 
-import { getDistanceText, getListingCardTranslations } from './ListingCard.helpers';
+import { getDistanceText, getListingCardTranslations, isNewListing } from './ListingCard.helpers';
 
 const { LatLng, Money } = sdkTypes;
 
@@ -71,5 +71,23 @@ describe('getDistanceText', () => {
 
   it('is null without an origin', () => {
     expect(getDistanceText(listing, null, intl)).toBeNull();
+  });
+});
+
+describe('isNewListing', () => {
+  const now = Date.UTC(2026, 10, 17, 12, 0, 0);
+  const day = 24 * 60 * 60 * 1000;
+  const withCreatedAt = createdAt => ({ attributes: { createdAt } });
+
+  it('is true for listings created in the last 30 days', () => {
+    expect(isNewListing(withCreatedAt(new Date(now - 2 * day)), now)).toBe(true);
+    expect(isNewListing(withCreatedAt(new Date(now - 29 * day)), now)).toBe(true);
+  });
+
+  it('is false for older listings, future dates and listings loaded without createdAt', () => {
+    expect(isNewListing(withCreatedAt(new Date(now - 31 * day)), now)).toBe(false);
+    expect(isNewListing(withCreatedAt(new Date(now + day)), now)).toBe(false);
+    expect(isNewListing({ attributes: {} }, now)).toBe(false);
+    expect(isNewListing(undefined, now)).toBe(false);
   });
 });
