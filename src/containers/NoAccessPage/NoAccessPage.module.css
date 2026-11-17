@@ -71,3 +71,15 @@
 .modalSpacer {
   height: 80px;
 }
+
+/*
+ * Sticker design (Phase 3): cream paper instead of the Console brand photo, so the sticker card
+ * reads clearly. The photo and its overlay are the container's first child, the content the second.
+ */
+.root {
+  background-color: var(--colorCream);
+
+  & > div:not(.contentContainer) {
+    display: none;
+  }
+}

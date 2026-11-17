@@ -265,12 +265,13 @@
 }
 
 /*
- * Pages rebuilt in the sticker design (Phase 2, 17 Nov: search and item pages) put this class on
- * their <Page>. It maps the Arctic Blue neutrals onto the sticker palette for everything inside,
- * so shared components (filters, booking panel, reviews) follow without their own changes:
+ * Sticker palette for the whole site (Phase 3, 17 Nov). Maps the Arctic Blue neutrals above onto
+ * the sticker palette, so every shared component follows without its own changes:
  * Navy text → Ink, Slate → warm grey, Mist lines → ink hairlines, Snow → cream paper.
  * Electric Blue (Cobalt) stays the action colour. Sticker shapes are added per component.
+ * .dr-sticker-page (on the search and item pages since Phase 2) keeps the same values.
  */
+:root,
 .dr-sticker-page {
   --colorText: var(--colorInk);
   --colorTextSecondary: var(--colorInkSecondary);
@@ -290,7 +291,9 @@
   --colorBackground: var(--colorCream);
   --colorSurfaceSubtle: var(--colorCream);
   --colorStatusNormal: var(--colorInk);
+}
 
+.dr-sticker-page {
   background-color: var(--colorCream);
 }
 
@@ -360,8 +363,8 @@ a:hover {
 h1 {
   font-size: 32px;
   line-height: 36px;
-  font-weight: var(--fontWeightBold);
-  letter-spacing: -0.02em;
+  font-weight: var(--fontWeightHeavy);
+  letter-spacing: -0.03em;
   color: var(--colorText);
   padding: 0;
   /* margin-top + n * line-height + margin-bottom => x * 6px */
@@ -381,9 +384,9 @@ h1 {
 h2 {
   font-size: 24px;
   line-height: 30px;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
   color: var(--colorText);
-  font-weight: var(--fontWeightBold);
+  font-weight: var(--fontWeightHeavy);
 
   padding: 0;
   /* x * 6px */
@@ -586,7 +589,7 @@ select {
 
   /* Borders */
   border-radius: var(--borderRadiusMedium);
-  border: 1px solid var(--colorBorder);
+  border: 1px solid var(--colorInkSecondary);
   color: var(--colorText);
   outline: none;
 
@@ -616,7 +619,7 @@ select {
 }
 /* Effects */
 select:hover {
-  border: 1px solid var(--colorGrey500);
+  border: 1px solid var(--colorInk);
   transition: all ease-in-out 100ms;
 }
 select:focus {
@@ -649,7 +652,7 @@ textarea {
 
   /* Borders */
   border-radius: var(--borderRadiusMedium);
-  border: 1px solid var(--colorBorder);
+  border: 1px solid var(--colorInkSecondary);
   color: var(--colorText);
   outline: none;
 
@@ -669,7 +672,7 @@ textarea {
 /* Effects */
 input:hover,
 textarea:hover {
-  border: 1px solid var(--colorGrey500);
+  border: 1px solid var(--colorInk);
   transition: all ease-in-out 100ms;
 }
 input:focus,
@@ -727,7 +730,7 @@ textarea {
 }
 
 .h1 {
-  font-weight: var(--fontWeightBold);
+  font-weight: var(--fontWeightHeavy);
   font-size: 32px;
   line-height: 36px;
   letter-spacing: -0.02em;
@@ -749,7 +752,7 @@ textarea {
 }
 
 .h2 {
-  font-weight: var(--fontWeightBold);
+  font-weight: var(--fontWeightHeavy);
   font-size: 24px;
   line-height: 30px;
   letter-spacing: -0.01em;
@@ -1008,7 +1011,7 @@ textarea {
 
   /* Borders */
   border-radius: var(--borderRadiusMedium);
-  border: 1px solid var(--colorBorder);
+  border: 1px solid var(--colorInkSecondary);
   color: var(--colorText);
   outline: none;
 
@@ -1027,7 +1030,7 @@ textarea {
 }
 /* Effects */
 .marketplaceInputStyles:hover {
-  border: 1px solid var(--colorGrey500);
+  border: 1px solid var(--colorInk);
   transition: all ease-in-out 100ms;
 }
 .marketplaceInputStyles:focus {
@@ -1118,10 +1121,10 @@ textarea {
   text-align: center;
   text-decoration: none;
 
-  /* Button borders */
-  /* Default button has no borders */
-  border: none;
-  border-radius: var(--borderRadiusMedium);
+  /* Button borders: sticker design (Phase 3), 2px ink border and a hard shadow */
+  border: var(--borderInk);
+  border-radius: var(--borderRadiusStickerSmall);
+  box-shadow: var(--shadowHard);
 
   /* Button colors */
   /* Default button uses marketplace color */
@@ -1133,13 +1136,24 @@ textarea {
   outline: none;
   background-color: var(--marketplaceColorDark);
 }
+.buttonDefault:hover {
+  box-shadow: var(--shadowHardLarge);
+  transform: translate(-1px, -1px);
+}
+.buttonDefault:active {
+  box-shadow: 1px 1px 0 var(--colorInk);
+  transform: translate(2px, 2px);
+}
 .buttonDefault:focus-visible {
-  box-shadow: var(--focusRing);
+  outline: 3px solid var(--colorElectric);
+  outline-offset: 3px;
 }
 .buttonDefault:disabled {
   box-shadow: none;
+  transform: none;
   cursor: not-allowed;
   text-decoration: none;
+  border-color: var(--colorInkLine);
   background-color: var(--colorGrey100);
   color: var(--colorGrey700);
 }
@@ -1164,17 +1178,17 @@ textarea {
   /*
    * Font: most font styles are defined earlier in this file
    */
-  font-weight: var(--fontWeightSemiBold);
+  font-weight: var(--fontWeightBold);
 
   /* Button text styles */
   /* Primary button text is centered without decorations */
   text-align: center;
   text-decoration: none;
 
-  /* Button borders */
-  /* Primary button has no borders */
-  border: none;
-  border-radius: var(--borderRadiusMedium);
+  /* Button borders: sticker design (Phase 3), 2px ink border and a hard shadow */
+  border: var(--borderInk);
+  border-radius: var(--borderRadiusStickerSmall);
+  box-shadow: var(--shadowHard);
 
   /* Button colors */
   /* Primary button uses success color */
@@ -1192,14 +1206,23 @@ textarea {
   color: var(--colorWhite);
 }
 .buttonPrimary:focus-visible {
-  box-shadow: var(--focusRing);
+  outline: 3px solid var(--colorElectric);
+  outline-offset: 3px;
 }
 .buttonPrimary:hover {
   text-decoration: none;
+  box-shadow: var(--shadowHardLarge);
+  transform: translate(-1px, -1px);
+}
+.buttonPrimary:active {
+  box-shadow: 1px 1px 0 var(--colorInk);
+  transform: translate(2px, 2px);
 }
 .buttonPrimary:disabled {
   box-shadow: none;
+  transform: none;
   cursor: not-allowed;
+  border-color: var(--colorInkLine);
   background-color: var(--colorGrey100);
   color: var(--colorGrey700);
 }
@@ -1224,9 +1247,9 @@ textarea {
   text-align: center;
   text-decoration: none;
 
-  /* Button borders */
-  border: none;
-  border-radius: var(--borderRadiusMedium);
+  /* Button borders: sticker design (Phase 3) */
+  border: var(--borderInk);
+  border-radius: var(--borderRadiusStickerSmall);
 
   background-color: var(--colorPrimaryButton);
   color: var(--colorWhite);
@@ -1276,11 +1299,12 @@ textarea {
   text-align: center;
   text-decoration: none;
 
-  /* Secondary button has clear borders */
-  border-width: 1px;
+  /* Secondary button: white sticker (Phase 3), 2px ink border and a small hard shadow */
+  border-width: 2px;
   border-style: solid;
-  border-color: var(--colorBorderStrong);
-  border-radius: var(--borderRadiusMedium);
+  border-color: var(--colorInk);
+  border-radius: var(--borderRadiusStickerSmall);
+  box-shadow: var(--shadowHardSmall);
 
   /* Button colors: secondary */
   background-color: var(--colorSecondaryButton);
@@ -1297,10 +1321,12 @@ textarea {
   background-color: var(--colorSecondaryButton);
 }
 .buttonSecondary:focus-visible {
-  box-shadow: var(--focusRing);
+  outline: 3px solid var(--colorElectric);
+  outline-offset: 3px;
 }
 .buttonSecondary:hover {
   text-decoration: none;
+  background-color: var(--colorCream);
 }
 .buttonSecondary:disabled {
   box-shadow: none;
@@ -1341,11 +1367,12 @@ textarea {
   text-align: center;
   text-decoration: none;
 
-  /* Secondary button has clear borders */
-  border-width: 1px;
+  /* Secondary button: white sticker (Phase 3), 2px ink border and a small hard shadow */
+  border-width: 2px;
   border-style: solid;
-  border-color: var(--colorBorderStrong);
-  border-radius: var(--borderRadiusMedium);
+  border-color: var(--colorInk);
+  border-radius: var(--borderRadiusStickerSmall);
+  box-shadow: var(--shadowHardSmall);
 
   /* Button colors: secondary */
   background-color: var(--colorSecondaryButton);
@@ -1448,6 +1475,7 @@ textarea {
   border-radius: var(--borderRadius);
   border-bottom: none;
 
+  /* Sticker frame from tablet up (Phase 3): sign-in, password pages and desktop modals */
   @media (--viewportMedium) {
     flex-basis: 480px;
     flex-grow: 0;
@@ -1455,7 +1483,9 @@ textarea {
     padding: var(--modalPaddingMedium);
     margin-top: 12.5vh;
     margin-bottom: 12.5vh;
-    border-bottom: 8px solid var(--marketplaceColor);
+    border: var(--borderInk);
+    border-radius: var(--borderRadiusSticker);
+    box-shadow: var(--shadowHardLarge);
   }
 }
 
@@ -1681,5 +1711,15 @@ textarea {
 
   @media (--viewportMedium) {
     margin-top: 32px;
+  }
+}
+
+/* Sticker buttons lift on hover; keep them still for people who ask for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .buttonDefault:hover,
+  .buttonDefault:active,
+  .buttonPrimary:hover,
+  .buttonPrimary:active {
+    transform: none;
   }
 }

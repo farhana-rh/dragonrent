@@ -154,7 +154,15 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
   class `dr-sticker-page` on `<Page>`, which remaps the Arctic neutrals to ink/cream for every
   shared component inside; sticker shapes are added per component (filter pills, chips, map
   price labels, empty state, photo tiles, price tiles). The booking panel stays calm (money zone).
-  A "New" sticker on cards needs `createdAt` in the search query: a search-data change, ask first.
+  "New" sticker on cards (approved 17 Nov): `createdAt` added to the search, featured and similar
+  listing queries; `isNewListing` (30 days) in `ListingCard.helpers.js`.
+- **Sticker redesign, Phase 3 (17 Nov, committed locally):** the ink/cream palette is global
+  (`:root` remap in `marketplaceDefaults.css`), headings 800, inputs with a 1px warm-grey outline,
+  primary/secondary buttons as stickers (2px ink, hard shadow), desktop modals and the sign-in card
+  in a sticker frame, checkout's own top bar cream. Sign-in, password, email-verification and
+  no-access pages hide the Console brand photo and show cream. New logo (17 Nov): dragon eye with a
+  keyhole pupil, files in `dragonrent-design/brand/`; live only after the Console upload
+  (Build → Branding: logo 36px, favicon, app icon). Page: https://claude.ai/artifact/P9vRyUw5Ns84PpzMLr1PJF
 - **Remaining work** (estimate 9 Nov): about 7–11 h of code and testing, 9–12 h of Console, Live
   and hosting setup by the user, plus waiting for the lawyer, the Finnish review and DNS.
 - **Days 0–9 code done**, all on `feature/redesign`, pushed to GitHub 23 Oct (not merged to `main`;

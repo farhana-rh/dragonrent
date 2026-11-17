@@ -12,11 +12,9 @@
   align-items: center;
   justify-content: center;
 
-  /* fill */
-  background-color: var(--colorWhite);
-
-  /* shadows */
-  box-shadow: var(--boxShadow);
+  /* fill: cream with a 2px ink rule, like the main top bar (sticker design) */
+  background-color: var(--colorCream);
+  border-bottom: var(--borderInk);
 
   @media (--viewportMedium) {
     height: var(--topbarHeightDesktop);
