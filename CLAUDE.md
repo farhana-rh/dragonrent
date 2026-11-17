@@ -163,6 +163,10 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
   no-access pages hide the Console brand photo and show cream. New logo (17 Nov): dragon eye with a
   keyhole pupil, files in `dragonrent-design/brand/`; live only after the Console upload
   (Build → Branding: logo 36px, favicon, app icon). Page: https://claude.ai/artifact/P9vRyUw5Ns84PpzMLr1PJF
+- **dragonrent.com is the tester site (17 Nov):** the old AWS site was unused; the user pointed
+  `@` and `www` (Cloudflare CNAMEs, DNS only) at dragonrent-qikn, Let's Encrypt cert, www → apex 301,
+  root URL and Dev Console Marketplace URL = https://dragonrent.com; live journey check passes.
+  Still Dev marketplace + Stripe test: at launch the same domain switches to Live keys.
 - **Tester preview live (17 Nov):** https://dragonrent-qikn.onrender.com (Render, paid instance, branch
   `feature/redesign`, Dev marketplace, Stripe test). Variables fixed by the user 17 Nov (https root URL,
   USING_SSL + TRUST_PROXY, CSP block, NODE_VERSION 24): sign-in cookie Secure, CSP header on. New logo
