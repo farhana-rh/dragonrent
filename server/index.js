@@ -131,8 +131,8 @@ if (cspEnabled) {
   });
 }
 
-// DragonRent: health check for the hosting platform. Railway probes it over plain HTTP from
-// its own hostname while a deploy starts and needs a 200, so it must answer before the HTTPS
+// DragonRent: health check path for the hosting platform (Render: Settings → Health Checks).
+// Platform probes call it over plain HTTP and need a 2xx, so it answers before the HTTPS
 // redirect and basic auth below. It returns no data.
 app.get('/healthz', (req, res) => {
   res.status(200).send({ status: 'ok' });

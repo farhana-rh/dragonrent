@@ -82,61 +82,47 @@ is not reversible by itself, but the alias can be moved back to the previous ver
    - **Localization:** locale and currency EUR.
    - **Marketplace URL** (Build → Advanced): `https://<your domain>`. Email links use it.
 4. Note the Live **client ID** and **client secret** (Advanced → Applications). The secret goes
-   only into Railway, never into chat or Git.
+   only into Render, never into chat or Git.
 
 ## 3. Stripe live (1 h)
 
 1. **You:** in the live Stripe account, finish business verification and Connect settings
    (platform name, branding, payout schedule).
-2. Live **secret key** (`sk_live_…`) → Sharetribe Live Console → Payments. Never in Railway, Git
+2. Live **secret key** (`sk_live_…`) → Sharetribe Live Console → Payments. Never in Render, Git
    or chat.
-3. Live **publishable key** (`pk_live_…`) → Railway (step 4).
+3. Live **publishable key** (`pk_live_…`) → Render (step 4).
 
-## 4. Production service on Railway (1.5 h)
+## 4. Production service on Render (1.5 h)
 
-Production runs on Railway (decided 17 Nov). Staging stays on Render until you decide otherwise.
-The app needs no code change for Railway: it listens on the `PORT` Railway gives it, builds with
-`yarn build` and starts with `yarn start`.
+Production runs on **Render**: the client has Render Pro (decided 17 Nov; Railway is dropped).
+Create a **new** web service for production. Don't reuse the staging service, which runs the Dev
+keys from `feature/redesign`.
 
-1. **You:** create a Railway account and take the **Hobby** plan ($5 a month, which includes $5
-   of usage). The trial credit runs out after 30 days, so don't run production on it.
-2. **You:** New Project → Deploy from GitHub repo → allow Railway's GitHub app to read
-   `farhana-rh/dragonrent` → pick the repo. Railway creates a service and starts a first build;
-   it fails until the variables below are in, which is fine.
-3. Service → Settings:
-   - **Source → Branch:** `main` (after the pull request in step 1 is merged). For a test run
-     before that, see "Try it first" below.
-   - **Build → Custom build command:**
-     `yarn install --frozen-lockfile --production=false && yarn build`. Railway's builder
-     (Railpack) finds Yarn 1 from `yarn.lock` and installs on its own, but with
-     `NODE_ENV=production` set Yarn may skip the dev dependencies, and webpack and Babel are dev
-     dependencies. `--production=false` makes sure they're there (checked 17 Nov on a clean
-     clone with `NODE_ENV=production`: install and build pass, the server answers on the given
-     port).
-   - **Deploy → Custom start command:** `yarn start`.
-   - **Deploy → Healthcheck path:** `/healthz`. Railway probes it over plain HTTP from
-     `healthcheck.railway.app` and needs a 200. Other paths answer that probe with a 301 to HTTPS
-     (`REACT_APP_SHARETRIBE_USING_SSL=true` turns the redirect on) or a 401 behind basic auth, so
-     the deploy would fail. `/healthz` answers before both (added 17 Nov, `server/index.js`).
-   - **Deploy → Region:** EU West (Amsterdam), the closest to Finland.
-   - **Serverless / app sleeping:** off. A sleeping site loses the first visitor's request.
-4. Service → Variables: add the table below, then deploy. Don't add `PORT`; Railway sets it.
-5. Service → Settings → Networking → **Generate Domain** gives a `….up.railway.app` address for a
-   first check. While you test on it, `REACT_APP_MARKETPLACE_ROOT_URL` must be that address;
-   change it to your own domain in step 5.
-
-Environment variables (Railway → service → Variables, "Raw Editor" takes them all at once):
+1. **You:** Render → New → Web Service → GitHub → `farhana-rh/dragonrent`, branch `main` (after
+   the merge in step 1). Language Node. Region **Frankfurt (EU Central)**, the closest to Finland.
+   Instance type **Starter or higher**: Free instances sleep after 15 minutes without visitors and
+   take about a minute to wake. The workspace plan (Pro) doesn't change that; the instance type
+   does.
+2. Settings → Build & Deploy:
+   - **Build command:** `yarn install --frozen-lockfile --production=false && yarn build`.
+     Render sets `NODE_ENV=production` only at runtime, so the build tools (webpack, Babel: dev
+     dependencies) install anyway; `--production=false` keeps the build working if someone adds
+     `NODE_ENV` as a variable, which Render also passes to the build.
+   - **Start command:** `yarn start`
+   - **Auto-Deploy:** On Commit.
+3. Settings → Health Checks → **Health Check Path:** `/healthz`. It answers 200 before the HTTPS
+   redirect and basic auth (added 17 Nov, `server/index.js`).
+4. Environment → Environment Variables:
 
 | Name | Value |
 | --- | --- |
-| `RAILPACK_NODE_VERSION` | `24` (the version the build and tests were checked with) |
-| `NODE_ENV` | `production` |
+| `NODE_VERSION` | `24` (`package.json` allows `>=24.0.0`, which Render resolves to the newest Node release; the build and tests were checked on 24) |
 | `REACT_APP_ENV` | `production` |
 | `REACT_APP_SHARETRIBE_SDK_CLIENT_ID` | Live client ID |
-| `SHARETRIBE_SDK_CLIENT_SECRET` | Live client secret |
+| `SHARETRIBE_SDK_CLIENT_SECRET` | Live client secret (**secret**) |
 | `REACT_APP_STRIPE_PUBLISHABLE_KEY` | `pk_live_…` |
 | `REACT_APP_MAPBOX_ACCESS_TOKEN` | Mapbox token (make a production token restricted to your domain) |
-| `REACT_APP_MARKETPLACE_ROOT_URL` | `https://<your domain>` (no trailing slash) |
+| `REACT_APP_MARKETPLACE_ROOT_URL` | `https://<your domain>` (https, no trailing slash) |
 | `REACT_APP_MARKETPLACE_NAME` | `DragonRent` |
 | `REACT_APP_SHARETRIBE_USING_SSL` | `true` |
 | `SERVER_SHARETRIBE_TRUST_PROXY` | `true` |
@@ -144,15 +130,18 @@ Environment variables (Railway → service → Variables, "Raw Editor" takes the
 | `REACT_APP_SENTRY_DSN` | Sentry DSN (`docs/CONSOLE-SETUP.md` section 9) |
 | `REACT_APP_SENTRY_ENVIRONMENT` | `live` |
 
+`NODE_ENV` is not needed: Render sets it to `production` at runtime. **Set
+`REACT_APP_SHARETRIBE_USING_SSL=true` and `SERVER_SHARETRIBE_TRUST_PROXY=true` together.** Render
+passes requests to the app over plain HTTP with an `X-Forwarded-Proto: https` header; without
+trust-proxy the app redirects every page to itself forever.
+
 Not on production: `BASIC_AUTH_USERNAME` / `BASIC_AUTH_PASSWORD` (they put a password on the site).
 Analytics (`REACT_APP_GOOGLE_ANALYTICS_ID` or Plausible) only if you decided to use it; it loads
 after cookie consent either way.
 
-`REACT_APP_*` values are built into the site when it builds, so after changing one, deploy again
-(Railway offers "Deploy" after a variable change; otherwise Deployments → ⋮ → Redeploy).
-
-The tester preview (section "Tester preview on Railway" at the end) runs in its own Railway
-environment with the Dev values; production gets this section's Live values.
+`REACT_APP_*` values are built into the site. After changing one, save with **"Save, rebuild, and
+deploy"**. "Save and deploy" reuses the old build, so the site keeps the old value; a restart
+doesn't pick up changes at all.
 
 ## 5. Domain and email (1 h + DNS waiting)
 
@@ -160,17 +149,16 @@ environment with the Dev values; production gets this section's Live values.
 DNS is on **Cloudflare** (nameservers `clayton.ns.cloudflare.com`, `vivienne.ns.cloudflare.com`),
 so records are added in Cloudflare, not in GoDaddy. `www.dragonrent.com` already serves another
 site, "Dragonrent - Rent Anything" (Next.js on AWS CloudFront), and `dragonrent.com` redirects to
-it. **Pointing the domain at Railway replaces that site.** Decide that first, and find out who has
-the Cloudflare login. Cloudflare can point the bare domain at Railway (CNAME flattening), so both
+it. **Pointing the domain at Render replaces that site.** Decide that first, and find out who has
+the Cloudflare login. Cloudflare can point the bare domain at Render (CNAME flattening), so both
 `dragonrent.com` and `www` work.
 
-1. **You:** Railway → production service → Settings → Networking → **Custom Domain**: add
-   `dragonrent.com` and `www.dragonrent.com`. Railway shows a **CNAME** and a **TXT**
-   (`_railway-verify…`) record for each. Copy the exact values from Railway.
-2. **You:** Cloudflare → dragonrent.com → DNS → Records: replace the current `www` CNAME (and the
-   root record) with Railway's CNAMEs, and add the TXT records. Set the CNAMEs to **DNS only**
-   (grey cloud) so Railway can issue the HTTPS certificate. Without the TXT record Railway answers
-   404 even when the CNAME works.
+1. **You:** Render → production service → Settings → Custom Domains: add `dragonrent.com` and
+   `www.dragonrent.com`. Render shows the DNS records each one needs; copy the exact values.
+2. **You:** Cloudflare → dragonrent.com → DNS → Records: replace the current `www` record (and
+   the root record) with the records Render shows. Set them to **DNS only** (grey cloud) while
+   Render verifies the domain and issues the HTTPS certificate. Then Render → Custom Domains →
+   Verify.
 3. Set `REACT_APP_MARKETPLACE_ROOT_URL` to `https://www.dragonrent.com` (or the bare domain if you
    prefer it as the main address), deploy again, and put the same address in Sharetribe Live
    Console → Marketplace URL. The three must match, or email links and sign-in break.
@@ -205,58 +193,61 @@ Use real cards and small amounts.
 
 ## If something goes wrong
 
-- Site shows an error page: Railway → service → Deployments → View logs, and Sentry → Issues.
-- Build fails: the build log in the same place. "Missing key assets" or a blank page usually
-  means a wrong client ID or secret.
-- A deploy broke the site: Railway → Deployments → an earlier deploy → ⋮ → Rollback.
+- Site shows an error page: Render → service → Logs, and Sentry → Issues.
+- Build fails: Render → service → Events → the failed deploy's log. "Missing key assets" or a
+  blank page usually means a wrong client ID or secret.
+- A deploy broke the site: Render → service → Events → an earlier deploy → Rollback.
 - Payments failing: Stripe dashboard → Developers → Logs (live mode).
 
-## Tester preview on Railway (Dev marketplace, test payments)
+## Tester preview on Render (Dev marketplace, test payments)
 
-For the client and invited testers before Live (added 17 Nov). It uses the Sharetribe **Dev**
-marketplace and Stripe **test** mode, so nobody can pay real money: Stripe refuses real cards in
-test mode. It doesn't touch `www.dragonrent.com`, Live, or `main`.
+For the client and invited testers before Live (17 Nov). It reuses the existing staging service
+**"dragonrent"** (https://dragonrent.onrender.com, auto-deploys from `feature/redesign`) with the
+Sharetribe **Dev** marketplace and Stripe **test** mode, so nobody can pay real money: Stripe
+refuses real cards in test mode. It doesn't touch `www.dragonrent.com`, Live, or `main`.
 
-1. **You:** Railway (Hobby plan, section 4 step 1) → New Project → Deploy from GitHub repo →
-   `farhana-rh/dragonrent`. Rename the service `preview`.
-2. Service → Settings:
-   - **Branch:** `feature/redesign`.
-   - **Custom build command:** `yarn install --frozen-lockfile --production=false && yarn build`
-   - **Custom start command:** `yarn start`
-   - **Healthcheck path:** `/healthz`, once the commit that adds it is on GitHub. Before that,
-     leave it empty (the deploy then goes live as soon as the server starts).
-   - **Region:** EU West. **App sleeping:** off.
-3. Service → Variables (Raw Editor). The Dev values are the ones in your local `.env`; copy them
-   from there, never into chat or Git:
+**Checked from outside on 17 Nov:** it serves the latest pushed code (`7c7dfe4b4`); the first
+request after a pause took 27 s (Free instance asleep); the robots file lists an `http://` root
+URL; the sign-in cookie isn't marked Secure (`REACT_APP_SHARETRIBE_USING_SSL` isn't `true`); no
+Content-Security-Policy header (`REACT_APP_CSP` unset). The steps below fix all four.
+
+1. **You:** Render → dragonrent → Settings → **Instance Type**: Starter or higher, so testers
+   don't wait a minute for a sleeping site.
+2. Settings → **Build & Deploy**: Branch `feature/redesign`; Build command
+   `yarn install --frozen-lockfile --production=false && yarn build`; Start command `yarn start`;
+   Auto-Deploy On Commit.
+3. **Environment** (the Dev values are the ones in your local `.env`; copy them from there, never
+   into chat or Git):
 
    | Name | Value | Notes |
    | --- | --- | --- |
-   | `RAILPACK_NODE_VERSION` | `24` | |
-   | `NODE_ENV` | `production` | |
+   | `NODE_VERSION` | `24` | pins Node; otherwise Render picks the newest release |
    | `REACT_APP_ENV` | `production` | `development` would switch off basic auth |
    | `REACT_APP_SHARETRIBE_SDK_CLIENT_ID` | Dev client ID | public, built into the site |
    | `SHARETRIBE_SDK_CLIENT_SECRET` | Dev client secret | **secret**, server only |
    | `REACT_APP_STRIPE_PUBLISHABLE_KEY` | `pk_test_…` | public; must start with `pk_test_` |
    | `REACT_APP_MAPBOX_ACCESS_TOKEN` | Mapbox token | public |
-   | `REACT_APP_MARKETPLACE_ROOT_URL` | `https://<preview address>` | no trailing slash |
+   | `REACT_APP_MARKETPLACE_ROOT_URL` | `https://dragonrent.onrender.com` | https, no trailing slash |
    | `REACT_APP_MARKETPLACE_NAME` | `DragonRent` | |
-   | `REACT_APP_SHARETRIBE_USING_SSL` | `true` | |
-   | `SERVER_SHARETRIBE_TRUST_PROXY` | `true` | |
+   | `REACT_APP_SHARETRIBE_USING_SSL` | `true` | only together with the next one |
+   | `SERVER_SHARETRIBE_TRUST_PROXY` | `true` | without it, `USING_SSL` causes a redirect loop |
    | `REACT_APP_CSP` | `block` | checked 17 Nov: no blocked content on any tester page |
-   | `BASIC_AUTH_USERNAME`, `BASIC_AUTH_PASSWORD` | a shared tester login | recommended: keeps search engines and strangers off the test data |
+   | `BASIC_AUTH_USERNAME`, `BASIC_AUTH_PASSWORD` | optional shared tester login | keeps search engines and strangers off the test data |
    | `REACT_APP_SENTRY_DSN`, `REACT_APP_SENTRY_ENVIRONMENT` | optional, environment `preview` | |
 
-   Every `REACT_APP_*` value is public once built into the site. The only secrets are the client
-   secret and the basic-auth password. No volume, database or other service is needed.
-4. Service → Settings → Networking → **Generate Domain** gives `https://<name>.up.railway.app`.
-   Put that address in `REACT_APP_MARKETPLACE_ROOT_URL` and deploy again. To use
-   `preview.dragonrent.com` instead: Networking → Custom Domain → `preview.dragonrent.com`, then
-   add Railway's CNAME and TXT records in **Cloudflare** (DNS only), set the root URL to it and
-   deploy again. That adds one record and leaves `www` alone.
-5. **You:** Sharetribe **Dev** Console → Marketplace URL (Build → Advanced): the preview address,
-   so verification and password-reset emails link to it instead of the old address.
-6. Check: `https://<preview address>/healthz` shows `{"status":"ok"}`; the homepage, sign-up, log
-   in, search, an item page and checkout open.
+   Save with **"Save, rebuild, and deploy"**. Every `REACT_APP_*` value is public once built in;
+   the only secrets are the client secret and the basic-auth password. No disk, database or other
+   service is needed.
+4. Push `feature/redesign` (it adds `/healthz`); auto-deploy builds it. Watch Render → dragonrent
+   → Events and Logs until the deploy shows "Live" and the log says
+   `Listening to port … in production mode`.
+5. Only now: Settings → **Health Checks** → Health Check Path `/healthz`. Setting it before the
+   deploy that adds it makes Render treat the running site as unhealthy.
+6. **You:** Sharetribe **Dev** Console → Marketplace URL (Build → Advanced):
+   `https://dragonrent.onrender.com`, so verification and password-reset emails link to it.
+7. Check: `https://dragonrent.onrender.com/healthz` shows `{"status":"ok"}`;
+   `http://dragonrent.onrender.com` redirects to `https://`; homepage, sign-up, log in, search, an
+   item page and checkout open; after logging in, the browser's `st-…-token` cookie is Secure.
 
 **For testers:** card `4242 4242 4242 4242`, any future expiry date, any CVC. Owners who publish
 must connect payouts in Stripe's test mode: use Stripe's test values
