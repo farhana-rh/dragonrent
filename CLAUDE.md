@@ -163,6 +163,12 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
   no-access pages hide the Console brand photo and show cream. New logo (17 Nov): dragon eye with a
   keyhole pupil, files in `dragonrent-design/brand/`; live only after the Console upload
   (Build → Branding: logo 36px, favicon, app icon). Page: https://claude.ai/artifact/P9vRyUw5Ns84PpzMLr1PJF
+- **Tester preview live (17 Nov):** https://dragonrent-qikn.onrender.com (Render, paid instance, branch
+  `feature/redesign`, Dev marketplace, Stripe test). Variables fixed by the user 17 Nov (https root URL,
+  USING_SSL + TRUST_PROXY, CSP block, NODE_VERSION 24): sign-in cookie Secure, CSP header on. New logo
+  uploaded in Dev Console (Build → Branding, 36px). Live journey check passes. The old free service
+  dragonrent.onrender.com is obsolete. Still open: Console categories (52, incl. junk), drill
+  re-save + availability, more listings, Dev Console Marketplace URL, process push, legal review.
 - **Remaining work** (estimate 9 Nov): about 7–11 h of code and testing, 9–12 h of Console, Live
   and hosting setup by the user, plus waiting for the lawyer, the Finnish review and DNS.
 - **Days 0–9 code done**, all on `feature/redesign`, pushed to GitHub 23 Oct (not merged to `main`;
