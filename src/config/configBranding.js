@@ -1,6 +1,8 @@
 // NOTE: these are temporary DragonRent placeholders. Upload the final logo and
 // social sharing images in Console (Build > Branding), which overrides these.
-import logoImage from '../assets/dragonrent-logo.svg';
+// Sticker logo (17 Nov): dragon eye with a keyhole pupil. Source and Console upload files are in
+// dragonrent-design/brand/.
+import logoImage from '../assets/brand/dragonrent-logo.png';
 import brandImage from '../assets/dragonrent-brandImage-1500.jpg';
 import facebookImage from '../assets/dragonrent-facebook-sharing-1200x630.jpg';
 import twitterImage from '../assets/dragonrent-twitter-sharing-600x314.jpg';
@@ -35,7 +37,7 @@ export const logoImageMobileURL = logoImage;
 // Note: logo image is always scaled and the limiting factor is height. However, there's also maximum width,
 //       which is 370px in the Topbar. If the logo is wider than that, browser will scale it down.
 export const logoSettings = {
-  height: 24, // Hosted asset supports: 24, 36, 48
+  height: 36, // Hosted asset supports: 24, 36, 48
   format: 'image',
 };
 
