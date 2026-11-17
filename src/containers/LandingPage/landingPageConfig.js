@@ -67,6 +67,34 @@ export const categoryVisuals = {
   'cameras-and-photography': { icon: 'camera', tone: 'sand', image: null },
   'home-and-appliances': { icon: 'home', tone: 'stone', image: null },
   'furniture-and-events': { icon: 'event', tone: 'slate', image: null },
+  // Category ids in Dev Console (checked 17 Nov). Ids without a fitting icon use the default box.
+  Sports: { icon: 'sports', tone: 'sage', image: null },
+  Home: { icon: 'home', tone: 'stone', image: null },
+  Tools: { icon: 'tools', tone: 'blush', image: null },
+  Cameras: { icon: 'camera', tone: 'sand', image: null },
+  Furniture: { icon: 'home', tone: 'slate', image: null },
+  Electronics: { icon: 'electronics', tone: 'slate', image: null },
+  Transportation: { icon: 'vehicle', tone: 'slate', image: null },
+  Parking: { icon: 'vehicle', tone: 'stone', image: null },
+  'Party-Event': { icon: 'party', tone: 'blush', image: null },
+  Entertainment: { icon: 'event', tone: 'blush', image: null },
+  Podcast: { icon: 'music', tone: 'sand', image: null },
+  'Media-NewsStudio': { icon: 'camera', tone: 'sand', image: null },
+  Gallery: { icon: 'camera', tone: 'sand', image: null },
+  'Drones-Aerial': { icon: 'camera', tone: 'slate', image: null },
+  Gaming: { icon: 'electronics', tone: 'slate', image: null },
+  'Digital-Display': { icon: 'electronics', tone: 'slate', image: null },
+  Robot: { icon: 'electronics', tone: 'slate', image: null },
+  Gym: { icon: 'sports', tone: 'sage', image: null },
+  Stadium: { icon: 'sports', tone: 'sage', image: null },
+  Playground: { icon: 'sports', tone: 'sage', image: null },
+  Beach: { icon: 'camping', tone: 'sage', image: null },
+  'Travel-Services': { icon: 'camping', tone: 'sage', image: null },
+  Construction: { icon: 'tools', tone: 'blush', image: null },
+  Workshop: { icon: 'tools', tone: 'blush', image: null },
+  Factory: { icon: 'tools', tone: 'blush', image: null },
+  'Kitchen-Restaurant': { icon: 'home', tone: 'stone', image: null },
+  Cleaning: { icon: 'home', tone: 'stone', image: null },
   // Other common categories, in case they are added later
   bikes: { icon: 'bike', tone: 'sage', image: null },
   cameras: { icon: 'camera', tone: 'sand', image: null },
@@ -80,7 +108,7 @@ export const categoryVisuals = {
   party: { icon: 'party', tone: 'blush', image: null },
 };
 
-// Maximum number of category tiles in "Explore rentals"
+// Category tiles shown in "Explore rentals" before "Show all categories" opens the rest
 export const MAX_CATEGORY_TILES = 8;
 
 /**

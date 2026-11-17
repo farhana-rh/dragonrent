@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames';
 
 import { useConfiguration } from '../../../context/configurationContext';
@@ -34,8 +34,10 @@ const ArrowIcon = () => (
 
 /**
  * "Or pick a category" tiles as sticker tiles: icon squares cycle through the accent colours
- * (HomeSticker.html). Categories come from
- * Console (Listings → Categories); the section is not rendered when there are none.
+ * (HomeSticker.html). Categories come from Console (Listings → Categories); the section is not
+ * rendered when there are none. All top-level categories are in the page; after the first
+ * MAX_CATEGORY_TILES, the rest open with "Show all categories" (they stay in the HTML, hidden,
+ * so search engines and the server render still see every link).
  *
  * @component
  * @param {Object} props
@@ -47,14 +49,16 @@ const SectionExploreRentals = props => {
   const { sectionId } = props;
   const config = useConfiguration();
   // props.categories allows examples and tests to provide categories directly
-  const allCategories = props.categories || config.categoryConfiguration?.categories || [];
-  const categories = allCategories.slice(0, MAX_CATEGORY_TILES);
+  const categories = props.categories || config.categoryConfiguration?.categories || [];
+  const [showAll, setShowAll] = useState(false);
 
   if (categories.length === 0) {
     return null;
   }
 
   const titleId = `${sectionId}-title`;
+  const listId = `${sectionId}-list`;
+  const hasMore = categories.length > MAX_CATEGORY_TILES;
 
   return (
     <section id={sectionId} className={css.root} aria-labelledby={titleId}>
@@ -74,9 +78,13 @@ const SectionExploreRentals = props => {
           </NamedLink>
         </div>
 
-        <ul className={css.list}>
+        <ul id={listId} className={css.list}>
           {categories.map((category, i) => (
-            <li key={category.id} className={css.item}>
+            <li
+              key={category.id}
+              className={css.item}
+              hidden={!showAll && i >= MAX_CATEGORY_TILES ? true : undefined}
+            >
               <NamedLink className={css.tile} name="SearchPage" to={categorySearchTo(category.id)}>
                 <span
                   className={classNames(
@@ -91,6 +99,25 @@ const SectionExploreRentals = props => {
             </li>
           ))}
         </ul>
+
+        {hasMore ? (
+          <button
+            type="button"
+            className={css.showAllButton}
+            aria-expanded={showAll}
+            aria-controls={listId}
+            onClick={() => setShowAll(v => !v)}
+          >
+            {showAll ? (
+              <FormattedMessage id="LandingPage.categories.showFewer" />
+            ) : (
+              <FormattedMessage
+                id="LandingPage.categories.showAll"
+                values={{ count: categories.length }}
+              />
+            )}
+          </button>
+        ) : null}
 
         <NamedLink className={css.buttonMobile} name="SearchPage">
           <FormattedMessage id="LandingPage.categories.seeAll" />

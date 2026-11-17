@@ -170,6 +170,26 @@ describe('Category-driven sections', () => {
     seeAll.forEach(el => expect(el.closest('a')).toHaveAttribute('href', '/s'));
   });
 
+  it('shows eight tiles and opens the rest with "Show all categories"', () => {
+    const many = [...Array(12).keys()].map(i => ({ id: `cat${i}`, name: `Category ${i}` }));
+    render(<SectionExploreRentals sectionId="explore" categories={many} />);
+
+    // Every category link is in the page; the ninth onwards wait behind the button
+    expect(screen.getByText('Category 11').closest('li')).not.toBeVisible();
+    expect(screen.getByText('Category 0').closest('li')).toBeVisible();
+    const button = screen.getByText('LandingPage.categories.showAll').closest('button');
+    expect(button).toHaveAttribute('aria-expanded', 'false');
+
+    fireEvent.click(button);
+    expect(screen.getByText('Category 11').closest('li')).toBeVisible();
+    expect(screen.getByText('LandingPage.categories.showFewer')).toBeInTheDocument();
+  });
+
+  it('has no "Show all categories" button with eight or fewer categories', () => {
+    render(<SectionExploreRentals sectionId="explore" categories={categories} />);
+    expect(screen.queryByText('LandingPage.categories.showAll')).not.toBeInTheDocument();
+  });
+
   it('renders a category with no configured icon', () => {
     render(
       <SectionExploreRentals sectionId="explore" categories={[{ id: 'misc', name: 'Misc' }]} />

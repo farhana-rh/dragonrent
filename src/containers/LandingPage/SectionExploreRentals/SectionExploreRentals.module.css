@@ -48,6 +48,18 @@
   min-width: 0;
 }
 
+/* Tiles after the first eight wait for "Show all categories" */
+.item[hidden] {
+  display: none;
+}
+
+/* "Show all 52 categories" / "Show fewer": sticker button under the tiles */
+.showAllButton {
+  composes: stickerButton from '../LandingPage.module.css';
+  margin-top: 24px;
+  font-family: var(--fontFamily);
+}
+
 /* Sticker tile: icon square and name side by side */
 .tile {
   display: flex;

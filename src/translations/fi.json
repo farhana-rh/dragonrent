@@ -1795,6 +1795,8 @@
   "FileAttachments.fileVerifying": "Tarkistetaan tiedostoa…",
   "InboxSearchForm.screenreader.label": "Viestien järjestysvaihtoehdot. Näkymä päivittyy automaattisesti, kun valitset vaihtoehdon.",
   "LandingPage.categories.eyebrow": "Kategoriat",
+  "LandingPage.categories.showAll": "Näytä kaikki {count} kategoriaa",
+  "LandingPage.categories.showFewer": "Näytä vähemmän",
   "LandingPage.hero.areaSticker": "Helsinki ja Uusimaa",
   "LandingPage.hero.descriptionSticker": "Työkaluja, juhlatarvikkeita, retkivarusteita ja paljon muuta. Vuokraa muutaman korttelin päästä, nouda ja palauta.",
   "LandingPage.hero.prompt.1": "Kokeile ”painepesuri”",
