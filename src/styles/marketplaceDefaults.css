@@ -99,6 +99,7 @@
   --colorMint: #00c896; /* accent; Ink text on it */
   --colorElectric: #2457c5; /* Electric Blue = Cobalt; white text on it */
   --colorCreamMuted: rgba(250, 248, 245, 0.75); /* secondary text on Ink (11:1) */
+  --colorCreamLine: rgba(250, 248, 245, 0.18); /* hairlines on Ink */
   --borderInk: 2px solid var(--colorInk);
   --shadowHard: 4px 4px 0 var(--colorInk);
   --shadowHardSmall: 2px 2px 0 var(--colorInk);

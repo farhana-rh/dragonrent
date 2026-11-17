@@ -335,7 +335,7 @@ describe('SectionPopularRentals', () => {
     expect(container).toBeEmptyDOMElement();
   });
 
-  it('stays hidden until there are enough listings', () => {
+  it('stays hidden without listings', () => {
     const listings = createListings(MIN_LISTINGS_TO_SHOW - 1);
     const { container } = render(
       <SectionPopularRentals

@@ -5,53 +5,55 @@ import { renderWithProviders as render, testingLibrary } from '../../../../util/
 
 import SectionFooter from './SectionFooter';
 
-const { screen, waitFor } = testingLibrary;
-
-const markdownBlock = (blockId, content) => ({
-  blockId,
-  blockType: 'footerBlock',
-  text: { fieldType: 'markdown', content },
-});
+const { screen } = testingLibrary;
 
 describe('SectionFooter', () => {
-  const props = {
-    sectionId: 'footer',
-    sectionType: 'footer',
-    numberOfColumns: 2,
-    slogan: { fieldType: 'text', content: "Rent from people nearby. Lend what you don't use." },
-    copyright: { fieldType: 'text', content: '© 2026 DragonRent' },
-    blocks: [
-      markdownBlock('company', '- [How it works](/p/how-it-works)\n- [Help and FAQ](/p/faq)'),
-      markdownBlock('legal', '- [Terms](/terms-of-service)'),
-    ],
-  };
+  const props = { sectionId: 'footer', sectionType: 'footer' };
 
-  it('renders the marketplace name, slogan, links from every block and copyright', async () => {
+  it('shows the lend call to action, four link columns and the trust line', () => {
     render(<SectionFooter {...props} />);
 
-    await waitFor(() => {
-      expect(screen.getByText('© 2026 DragonRent')).toBeInTheDocument();
-    });
-    expect(
-      screen.getByText("Rent from people nearby. Lend what you don't use.")
-    ).toBeInTheDocument();
+    expect(screen.getByText('SectionFooter.cta.title')).toBeInTheDocument();
+    expect(screen.getByText('SectionFooter.cta.button').closest('a')).toHaveAttribute(
+      'href',
+      '/l/new'
+    );
 
     const nav = screen.getByRole('navigation', { name: 'SectionFooter.linksLabel' });
-    expect(nav).toHaveTextContent('How it works');
-    expect(nav).toHaveTextContent('Help and FAQ');
-    expect(nav).toHaveTextContent('Terms');
-    expect(screen.getByText('Terms').closest('a')).toHaveAttribute('href', '/terms-of-service');
+    ['explore', 'lend', 'help', 'legal'].forEach(column =>
+      expect(nav).toHaveTextContent(`SectionFooter.column.${column}`)
+    );
+    expect(screen.getByText('SectionFooter.link.browse').closest('a')).toHaveAttribute(
+      'href',
+      '/s'
+    );
+    expect(screen.getByText('SectionFooter.link.damagePolicy').closest('a')).toHaveAttribute(
+      'href',
+      '/p/damage-policy'
+    );
+    expect(screen.getByText('SectionFooter.link.trustAndSafety').closest('a')).toHaveAttribute(
+      'href',
+      '/#trust-and-safety'
+    );
+    ['stripePayments', 'stripeVerified', 'euros'].forEach(item =>
+      expect(screen.getByText(`SectionFooter.trust.${item}`)).toBeInTheDocument()
+    );
   });
 
-  it('has no collapsible groups or locale labels', async () => {
-    render(<SectionFooter {...props} />);
+  it('ignores the Console footer placeholders and keeps one Cookie settings button', () => {
+    render(
+      <SectionFooter
+        {...props}
+        slogan={{ fieldType: 'text', content: 'In Console, go to Content → Footer' }}
+        copyright={{ fieldType: 'text', content: '© 2026 Your marketplace' }}
+      />
+    );
 
-    await screen.findByText('Terms');
-    // The only button is "Cookie settings", which reopens the cookie banner
+    expect(screen.queryByText('In Console, go to Content → Footer')).not.toBeInTheDocument();
+    expect(screen.queryByText('© 2026 Your marketplace')).not.toBeInTheDocument();
     expect(screen.getAllByRole('button')).toHaveLength(1);
     expect(
-      screen.getByRole('button', { name: 'SectionFooter.cookieSettings' })
+      screen.getByRole('button', { name: 'SectionFooter.link.cookieSettings' })
     ).toBeInTheDocument();
-    expect(screen.queryByText('SectionFooter.marketplaceCountry')).not.toBeInTheDocument();
   });
 });

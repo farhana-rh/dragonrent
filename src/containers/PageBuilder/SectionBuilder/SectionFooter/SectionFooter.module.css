@@ -1,6 +1,6 @@
 @import '../../../../styles/customMediaQueries.css';
 
-/* Ink footer band with cream text (sticker design, HomeSticker.html) */
+/* Ink footer band with cream text (sticker design). Fun on top, professional below. */
 .root {
   color: var(--colorCream);
   background-color: var(--colorInk);
@@ -9,45 +9,156 @@
   --focusRing: 0 0 0 3px var(--colorMarigold);
 }
 
-/* Brand on the left, links on the right from tablet up; stacked on phones */
-.footer {
+/* Negative margins cancel SectionContainer's vertical padding (32px / 64px) so the footer
+   controls its own spacing */
+.inner {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 32px;
   max-width: 1240px;
-  /* Negative margins cancel SectionContainer's vertical padding (32px / 64px) so the footer
-     controls its own spacing */
   margin: -32px auto;
-  padding: 36px 18px 42px 18px;
+  padding: 36px 18px 32px 18px;
 
   @media (--viewportMedium) {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 32px;
+    gap: 40px;
     margin: -64px auto;
-    padding: 56px 24px 48px 24px;
+    padding: 56px 24px 36px 24px;
+  }
+}
+
+/* ===== Playful: "lend your things" sticker card ===== */
+.cta {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 14px 18px;
+  padding: 20px;
+  color: var(--colorInk);
+  background-color: var(--colorMarigold);
+  border: 2px solid var(--colorCream);
+  border-radius: var(--borderRadiusSticker);
+  box-shadow: 6px 6px 0 var(--colorCoral);
+  transform: rotate(-0.6deg);
+
+  @media (--viewportMedium) {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 24px;
+    padding: 24px 28px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transform: none;
+  }
+}
+
+/* The mark sits on marigold here, so it needs its ink outline back */
+.ctaMark {
+  width: 54px;
+  height: 47px;
+
+  & path:not(:last-child),
+  & circle:first-of-type {
+    stroke: var(--colorInk);
+  }
+}
+
+.ctaText {
+  min-width: 0;
+}
+
+.ctaTitle {
+  margin: 0;
+  padding: 0;
+  font-size: 22px;
+  line-height: 1.2;
+  font-weight: var(--fontWeightHeavy);
+  letter-spacing: -0.02em;
+  color: var(--colorInk);
+
+  @media (--viewportMedium) {
+    font-size: 26px;
+  }
+}
+
+.ctaBody {
+  margin: 4px 0 0 0;
+  padding: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--colorInk);
+}
+
+.ctaButton {
+  grid-column: 1 / -1;
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 22px;
+
+  font-size: 16px;
+  font-weight: var(--fontWeightBold);
+  color: var(--colorWhite);
+  text-decoration: none;
+  white-space: nowrap;
+  background-color: var(--colorElectric);
+  border: var(--borderInk);
+  border-radius: var(--borderRadiusStickerSmall);
+  box-shadow: var(--shadowHard);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+
+  &:hover {
+    color: var(--colorWhite);
+    text-decoration: none;
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadowHardLarge);
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--colorInk);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+
+  @media (--viewportMedium) {
+    grid-column: auto;
+  }
+}
+
+/* ===== Professional: brand and link columns ===== */
+.main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 32px;
+
+  @media (--viewportLarge) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2.2fr);
+    gap: 48px;
   }
 }
 
 .brand {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  max-width: 320px;
+  align-items: flex-start;
+  gap: 12px;
+  max-width: 340px;
 }
 
-.brandName {
-  align-self: flex-start;
-  font-size: 22px;
-  line-height: 1.2;
-  font-weight: var(--fontWeightHeavy);
-  letter-spacing: -0.02em;
-  color: var(--colorCream);
+.brandLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   border-radius: var(--borderRadius);
 
   &:hover {
-    color: var(--colorCream);
     text-decoration: none;
   }
 
@@ -57,118 +168,100 @@
   }
 }
 
-.slogan {
+.brandMark {
+  flex-shrink: 0;
+}
+
+.brandName {
+  font-size: 26px;
+  line-height: 1;
+  font-weight: var(--fontWeightHeavy);
+  letter-spacing: -0.035em;
+  color: var(--colorCream);
+}
+
+.brandNameAccent {
+  color: var(--colorMarigold);
+}
+
+.tagline {
   margin: 0;
   padding: 0;
   font-size: 15px;
-  line-height: 1.5;
+  line-height: 1.55;
   color: var(--colorCreamMuted);
 }
 
-.icons {
-  display: flex;
-  gap: 16px;
-  margin-top: 8px;
-}
-
-/*
- * All footer links in one grid: 2 columns on phones, as many 170px+ columns as fit on desktop
- * (3 in the mockup). The links come from Console markdown, so the block wrappers are flattened
- * with display: contents and the markdown elements are styled directly.
- */
-.links {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 4px 16px;
-
-  @media (--viewportMedium) {
-    flex: 1 1 420px;
-    max-width: 640px;
-    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-    gap: 4px 32px;
-  }
-
-  & > div,
-  & > div > div,
-  & ul,
-  & ol {
-    display: contents;
-  }
-
-  & li,
-  & p {
-    display: flex;
-    align-items: center;
-    min-height: 44px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  /* A heading in a Console block spans the full row, as a small label */
-  & h1,
-  & h2,
-  & h3,
-  & h4,
-  & h5,
-  & h6 {
-    grid-column: 1 / -1;
-    margin: 8px 0 0 0;
-    padding: 0;
-    font-size: 13px;
-    line-height: 1.4;
-    font-weight: var(--fontWeightBold);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--colorCreamMuted);
-  }
-
-  & a {
-    font-size: 16px;
-    line-height: 1.5;
-    color: var(--colorCream);
-    text-decoration: underline;
-    text-decoration-color: var(--colorCreamMuted);
-    text-underline-offset: 3px;
-    border-radius: var(--borderRadius);
-
-    &:hover {
-      color: var(--colorMarigold);
-      text-decoration-color: var(--colorMarigold);
-    }
-
-    &:focus-visible {
-      outline: none;
-      box-shadow: var(--focusRing);
-    }
-  }
-}
-
-/* Copyright and "Cookie settings" */
-.bottomRow {
-  flex-basis: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px 24px;
-}
-
-/* Reopens the cookie banner, so visitors can change their choice */
-.cookieSettings {
+.areaSticker {
   display: inline-flex;
   align-items: center;
-  min-height: 44px;
+  padding: 3px 12px;
+
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: var(--fontWeightBold);
+  color: var(--colorInk);
+  background-color: var(--colorMint);
+  border: 2px solid var(--colorCream);
+  border-radius: 999px;
+  transform: rotate(-2deg);
+}
+
+/* Four columns on desktop, two on phones */
+.columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px 20px;
+
+  @media (--viewportMedium) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+  }
+}
+
+.column {
+  min-width: 0;
+}
+
+.columnTitle {
+  margin: 0 0 10px 0;
+  padding: 0;
+  font-size: 13px;
+  line-height: 1.4;
+  font-weight: var(--fontWeightBold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--colorCreamMuted);
+}
+
+.linkList {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  & li {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.link,
+.linkButton {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
   padding: 0;
   margin: 0;
 
   font-family: var(--fontFamily);
-  font-size: 13px;
-  font-weight: var(--fontWeightSemiBold);
-  color: var(--colorCreamMuted);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-
+  font-size: 15px;
+  line-height: 1.4;
+  font-weight: var(--fontWeightMedium);
+  color: var(--colorCream);
+  text-align: left;
+  text-decoration: none;
   background: none;
   border: none;
   border-radius: var(--borderRadius);
@@ -176,6 +269,8 @@
 
   &:hover {
     color: var(--colorMarigold);
+    text-decoration: underline;
+    text-underline-offset: 4px;
   }
 
   &:focus {
@@ -187,7 +282,41 @@
   }
 }
 
-.copyright {
+/* ===== Trust line and copyright ===== */
+.trustRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 28px;
+  margin: 0;
+  padding: 18px 0 0 0;
+  list-style: none;
+  border-top: 1px solid var(--colorCreamLine);
+}
+
+.trustItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--colorCreamMuted);
+}
+
+.trustIcon {
+  flex-shrink: 0;
+  color: var(--colorMint);
+}
+
+.bottomRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 24px;
+}
+
+.copyright,
+.madeFor {
   margin: 0;
   padding: 0;
   font-size: 13px;

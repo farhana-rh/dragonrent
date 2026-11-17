@@ -7,9 +7,10 @@ import { ListingCard, NamedLink } from '../../../components';
 
 import css from './SectionPopularRentals.module.css';
 
-// DESIGN.md: hide the section until the marketplace has at least 8 real listings,
-// then show the first 4 (one row on desktop, 2 × 2 on phones).
-export const MIN_LISTINGS_TO_SHOW = 8;
+// Shown as soon as there is one listing (user, 17 Nov: the tester preview should show the
+// cards; DESIGN.md first said to wait for 8). The first 4 are shown (one row on desktop,
+// 2 × 2 on phones).
+export const MIN_LISTINGS_TO_SHOW = 1;
 const LISTINGS_SHOWN = 4;
 
 // Title depends on how the listings were selected in Console, so the heading stays accurate:
