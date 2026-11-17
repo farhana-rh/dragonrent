@@ -16,7 +16,7 @@
   padding: 0;
 }
 
-/* Navigation: 15px/500, 48px tap area (DESIGN.md) */
+/* Navigation: 15px/600 ink, 48px tap area, a 2px underline on hover */
 .navLink {
   display: flex;
   align-items: center;
@@ -25,17 +25,18 @@
   margin: 0;
 
   font-family: var(--fontFamily);
-  font-weight: var(--fontWeightMedium);
+  font-weight: var(--fontWeightSemiBold);
   font-size: 15px;
   line-height: 24px;
-  color: var(--colorText);
+  color: var(--colorInk);
   white-space: nowrap;
   border-radius: var(--borderRadiusMedium);
-  transition: color var(--transitionStyleButton);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
 
   &:hover {
-    color: var(--marketplaceColor);
-    text-decoration: none;
+    color: var(--colorInk);
+    text-decoration: underline;
   }
 
   &:focus-visible {
@@ -45,5 +46,6 @@
 }
 
 .active {
-  color: var(--marketplaceColor);
+  text-decoration: underline;
+  text-decoration-color: var(--colorElectric);
 }

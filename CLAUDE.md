@@ -142,6 +142,13 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
   CloudFront); pointing the domain at Render replaces it, so that needs the user's decision. The
   tester preview stays on `dragonrent.onrender.com`. Dev Console holds 178 listing categories (court rooms, patents, "Erotic"…), all
   shown in the Lend-an-item step and the search filter: a Console decision for the user.
+- **Sticker redesign, Phase 1 (17 Nov, committed locally, not pushed):** homepage, shared top bar
+  and footer, Plus Jakarta Sans via `@fontsource/plus-jakarta-sans` (Geist removed), sticker tokens
+  in `marketplaceDefaults.css` (`--colorCream`, `--colorInk`, `--shadowHard`…). Homepage adds
+  `SectionTrustStrip` (real payment facts + `<dialog>`), "Spin the block" (random loaded listing),
+  rotating search prompts, and `SectionHostCta` became "What if something breaks?" (id
+  `trust-and-safety`, the top bar's "Trust & Safety"). Phase 2 = search, cards, item page; Phase 3
+  = booking, checkout, wizard, account. Other pages keep Arctic Blue until rebuilt.
 - **Remaining work** (estimate 9 Nov): about 7–11 h of code and testing, 9–12 h of Console, Live
   and hosting setup by the user, plus waiting for the lawyer, the Finnish review and DNS.
 - **Days 0–9 code done**, all on `feature/redesign`, pushed to GitHub 23 Oct (not merged to `main`;

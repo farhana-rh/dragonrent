@@ -3,6 +3,7 @@ import { types as sdkTypes } from '../../util/sdkLoader';
 import { createListing, createUser } from '../../util/testData';
 
 import SectionHomeHero from './SectionHomeHero/SectionHomeHero';
+import SectionTrustStrip from './SectionTrustStrip/SectionTrustStrip';
 import SectionExploreRentals from './SectionExploreRentals/SectionExploreRentals';
 import SectionPopularRentals from './SectionPopularRentals/SectionPopularRentals';
 import SectionUseCases from './SectionUseCases/SectionUseCases';
@@ -63,6 +64,7 @@ const popularRentalsSection = (sectionData, listings = []) => {
 const HomePageSections = () => (
   <>
     <SectionHomeHero sectionId="hero" categories={categories} />
+    <SectionTrustStrip sectionId="how-paying-works" />
     <SectionExploreRentals sectionId="explore-rentals" categories={categories} />
     <SectionPopularRentals
       {...popularRentalsSection(
@@ -72,7 +74,7 @@ const HomePageSections = () => (
     />
     <SectionUseCases sectionId="use-cases" categories={categories} />
     <SectionHowItWorks sectionId="how-dragonrent-works" />
-    <SectionHostCta sectionId="list-an-item" />
+    <SectionHostCta sectionId="trust-and-safety" />
   </>
 );
 

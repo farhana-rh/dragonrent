@@ -1,17 +1,17 @@
 @import '../../../styles/customMediaQueries.css';
 
-/* Raised white card (DESIGN.md: search box uses the raised shadow) */
+/* Sticker search card: white, 2px ink border, hard shadow (HomeSticker.html) */
 .root {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 16px;
   width: 100%;
-  padding: 18px;
+  padding: 16px;
 
   background-color: var(--colorWhite);
-  border: 1px solid var(--colorBorder);
-  border-radius: var(--borderRadiusLarge);
-  box-shadow: var(--boxShadowRaised);
+  border: var(--borderInk);
+  border-radius: var(--borderRadiusSticker);
+  box-shadow: var(--shadowHard);
 
   /* Fields and the button in one row, wrapping when space runs out */
   @media (--viewportMedium) {
@@ -19,7 +19,7 @@
     flex-wrap: wrap;
     align-items: flex-end;
     gap: 14px;
-    padding: 20px;
+    padding: 18px;
   }
 }
 
@@ -32,7 +32,7 @@
 
 .whatField {
   @media (--viewportMedium) {
-    flex: 1 1 180px;
+    flex: 1 1 200px;
   }
 }
 
@@ -51,15 +51,16 @@
   }
 }
 
-/* Field label: 15px/600 above the field */
+/* Field label: 15px/700 above the field */
 .fieldLabel {
   font-size: 15px;
   line-height: 1.4;
-  font-weight: var(--fontWeightSemiBold);
-  color: var(--colorText);
+  font-weight: var(--fontWeightBold);
+  color: var(--colorInk);
 }
 
-/* Input box: white, 1px Mist border, 10px corners, 52px tall, focus ring around the whole box */
+/* Input box: white, 1.5px ink line, focus ring around the whole box. White, not cream, because
+   the shared location field paints its pin icon on white. */
 .fieldBox {
   position: relative;
   display: flex;
@@ -69,8 +70,8 @@
   padding: 0 0 0 16px;
 
   background-color: var(--colorWhite);
-  border: 1px solid var(--colorBorder);
-  border-radius: var(--borderRadiusMedium);
+  border: 1.5px solid var(--colorInk);
+  border-radius: var(--borderRadiusStickerSmall);
 
   &:focus-within {
     box-shadow: var(--focusRing);
@@ -80,7 +81,7 @@
 .fieldIcon {
   display: inline-flex;
   flex-shrink: 0;
-  color: var(--colorTextSecondary);
+  color: var(--colorInk);
 }
 
 .inputIcon {
@@ -108,7 +109,8 @@
     height: 100%;
     padding: 0 16px 0 0;
     font-size: 16px;
-    color: var(--colorText);
+    font-weight: var(--fontWeightMedium);
+    color: var(--colorInk);
     background-color: transparent;
     border: none;
     box-shadow: none;
@@ -119,12 +121,13 @@
   }
 
   & input::placeholder {
-    color: var(--colorTextSecondary);
+    color: var(--colorInkSecondary);
   }
 }
 
-/* Primary button: Cobalt, 52px, full width on phones */
-.submitButton {
+/* Ink button with a coral offset shadow; full width on phones. Two classes so it wins over the
+   shared PrimaryButton colours in every state. */
+.root .submitButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -134,11 +137,46 @@
   padding: 0 30px;
 
   font-size: 16px;
-  font-weight: var(--fontWeightSemiBold);
-  border-radius: var(--borderRadiusMedium);
+  font-weight: var(--fontWeightBold);
+  color: var(--colorCream);
+  background-color: var(--colorInk);
+  border: var(--borderInk);
+  border-radius: var(--borderRadiusStickerSmall);
+  box-shadow: 3px 3px 0 var(--colorCoral);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+
+  &:hover {
+    color: var(--colorCream);
+    background-color: var(--colorInk);
+    transform: translate(-1px, -1px);
+    box-shadow: 5px 5px 0 var(--colorCoral);
+  }
+
+  &:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 var(--colorCoral);
+  }
 
   &:focus-visible {
-    box-shadow: var(--focusRing);
+    outline: 3px solid var(--colorElectric);
+    outline-offset: 3px;
+  }
+
+  &:disabled {
+    color: var(--colorCream);
+    background-color: var(--colorInkSecondary);
+    border-color: var(--colorInkSecondary);
+    box-shadow: none;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &:hover,
+    &:active {
+      transform: none;
+    }
   }
 
   @media (--viewportMedium) {

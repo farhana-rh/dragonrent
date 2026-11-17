@@ -15,11 +15,12 @@ import { getListingsById } from '../../ducks/marketplaceData.duck';
 import { getFeaturedListingsProps } from '../../util/data';
 
 import SectionHomeHero from './SectionHomeHero/SectionHomeHero';
+import SectionTrustStrip from './SectionTrustStrip/SectionTrustStrip';
 import SectionExploreRentals from './SectionExploreRentals/SectionExploreRentals';
 import SectionPopularRentals from './SectionPopularRentals/SectionPopularRentals';
 import SectionHowItWorks from './SectionHowItWorks/SectionHowItWorks';
 import SectionHostCta from './SectionHostCta/SectionHostCta';
-import { HOW_IT_WORKS_SECTION_ID } from './landingPageConfig';
+import { HOW_IT_WORKS_SECTION_ID, TRUST_SECTION_ID } from './landingPageConfig';
 
 const PageBuilder = loadable(() =>
   import(/* webpackChunkName: "PageBuilder" */ '../PageBuilder/PageBuilder')
@@ -30,6 +31,7 @@ const PageBuilder = loadable(() =>
 // featured listings data flow.
 const sectionComponents = {
   homeHero: { component: SectionHomeHero },
+  homeTrustStrip: { component: SectionTrustStrip },
   homeExploreRentals: { component: SectionExploreRentals },
   // Keeps the 'listings' section type: the featuredListings duck identifies listing sections
   // by this type when it stores fetched listings.
@@ -66,15 +68,18 @@ export const buildLandingPageData = (hostedPageData, formatMessage) => {
     : [];
 
   const sections = [
-    // Order follows the Main and HomeDesktop mockups (dragonrent-design/docs/design/mockups)
+    // Order follows the sticker mockup (dragonrent-design/docs/design/mockups/HomeSticker.html):
+    // hero, then the payments trust strip right under it
     { sectionType: 'homeHero', sectionId: 'hero' },
+    { sectionType: 'homeTrustStrip', sectionId: 'how-paying-works' },
     ...popularRentalsMaybe,
     { sectionType: 'homeExploreRentals', sectionId: 'explore-rentals' },
     // "Browse by use case" (SectionUseCases) is not on the page at the moment. To bring it back,
     // add it to sectionComponents and here: { sectionType: 'homeUseCases', sectionId: 'use-cases' }
     // How it works also shows the trust points ("Safe and simple")
     { sectionType: 'homeHowItWorks', sectionId: HOW_IT_WORKS_SECTION_ID },
-    { sectionType: 'homeHostCta', sectionId: 'list-an-item' },
+    // "What if something breaks?" for lenders; the top bar's "Trust & Safety" links here
+    { sectionType: 'homeHostCta', sectionId: TRUST_SECTION_ID },
   ];
 
   // Use Console metadata when it exists; otherwise fall back to local translations

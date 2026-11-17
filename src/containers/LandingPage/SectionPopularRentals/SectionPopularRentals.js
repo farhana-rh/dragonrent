@@ -33,8 +33,8 @@ const ArrowIcon = () => (
 );
 
 /**
- * Listings section on the landing page, styled after "Popular near you" in the Main and
- * HomeDesktop mockups. It is driven by a "Featured listings" section in Console
+ * Listings section on the landing page. Each card sits in a sticker frame (2px ink border, hard
+ * shadow; HomeSticker.html); the card itself is the shared ListingCard. It is driven by a "Featured listings" section in Console
  * (Content → Pages → landing-page): the listing selection (newest or a search query) is
  * configured there and fetched with the shared featuredListings duck. Nothing is shown while
  * loading, on errors or with fewer than MIN_LISTINGS_TO_SHOW listings.
@@ -76,9 +76,14 @@ const SectionPopularRentals = props => {
     <section id={sectionId} className={css.root} aria-labelledby={titleId}>
       <div className={css.content}>
         <div className={css.header}>
-          <h2 id={titleId} className={css.title}>
-            <FormattedMessage id={TITLE_IDS[listingSelection] || TITLE_IDS.queryString} />
-          </h2>
+          <div>
+            <span className={css.eyebrow}>
+              <FormattedMessage id="LandingPage.popularRentals.eyebrow" />
+            </span>
+            <h2 id={titleId} className={css.title}>
+              <FormattedMessage id={TITLE_IDS[listingSelection] || TITLE_IDS.queryString} />
+            </h2>
+          </div>
           <NamedLink className={css.link} name="SearchPage">
             <FormattedMessage id="LandingPage.popularRentals.seeAllRentals" />
             <ArrowIcon />

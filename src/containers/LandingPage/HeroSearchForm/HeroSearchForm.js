@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { Form as FinalForm } from 'react-final-form';
 import { useHistory } from 'react-router-dom';
@@ -20,6 +20,8 @@ import { getSearchQueryParams } from '../../PageBuilder/Primitives/SearchCTA/Sea
 import FilterKeyword from '../../PageBuilder/Primitives/SearchCTA/FilterKeyword/FilterKeyword';
 import FilterLocation from '../../PageBuilder/Primitives/SearchCTA/FilterLocation/FilterLocation';
 
+import { HERO_PROMPT_COUNT } from '../landingPageConfig';
+
 import css from './HeroSearchForm.module.css';
 
 /**
@@ -37,6 +39,32 @@ export const getAvailableSearchFields = config => {
 };
 
 // A labelled field: the label sits above the input (DESIGN.md: labels above fields)
+// How long each example search stays in the keyword placeholder
+const PROMPT_INTERVAL_MS = 2800;
+
+/**
+ * Index of the example search shown in the keyword placeholder. It starts at 0 on the server
+ * and the first client render (no hydration mismatch), then rotates. People who ask for reduced
+ * motion keep the first prompt.
+ *
+ * @returns {number} prompt index, 0-based
+ */
+const useRotatingPrompt = () => {
+  const [index, setIndex] = useState(0);
+  useEffect(() => {
+    const reduceMotion =
+      typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) {
+      return undefined;
+    }
+    const timer = setInterval(() => setIndex(i => (i + 1) % HERO_PROMPT_COUNT), PROMPT_INTERVAL_MS);
+    return () => clearInterval(timer);
+  }, []);
+  return index;
+};
+
 const SearchField = props => {
   const { id, label, icon, className, children } = props;
   const labelId = `${id}-label`;
@@ -54,8 +82,8 @@ const SearchField = props => {
 };
 
 /**
- * Search card for the landing page hero: "What do you need?" (keywords) and "Where?" (location),
- * as in the Main and HomeDesktop mockups. Submits to the SearchPage with the same query parameters
+ * Search card for the landing page hero: "What do you need?" (keywords, with rotating example
+ * searches as the placeholder) and "Where?" (location), styled as a sticker card (HomeSticker.html). Submits to the SearchPage with the same query parameters
  * as the PageBuilder's SearchCTA. Dates are picked later, on the search and listing pages.
  *
  * @component
@@ -70,6 +98,7 @@ const HeroSearchForm = props => {
   const history = useHistory();
   const intl = useIntl();
   const [submitDisabled, setSubmitDisabled] = useState(false);
+  const promptIndex = useRotatingPrompt();
 
   const fields = getAvailableSearchFields(config);
 
@@ -94,7 +123,12 @@ const HeroSearchForm = props => {
             label={<FormattedMessage id="LandingPage.hero.whatLabel" />}
             icon={<IconSearch rootClassName={css.inputIcon} />}
           >
-            <FilterKeyword className={css.filter} />
+            <FilterKeyword
+              className={css.filter}
+              placeholder={intl.formatMessage({
+                id: `LandingPage.hero.prompt.${promptIndex + 1}`,
+              })}
+            />
           </SearchField>
 
           {fields.location ? (

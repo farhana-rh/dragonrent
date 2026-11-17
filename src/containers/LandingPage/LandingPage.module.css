@@ -2,32 +2,50 @@
 
 /*
  * Shared layout classes for the landing page sections. Compose these in section styles.
- * Layout follows dragonrent-design/docs/design/mockups/Main.html (phone) and HomeDesktop.html.
+ * Sticker design (17 Nov): dragonrent-design/docs/design/mockups/HomeSticker.html.
+ * Playful zones (hero, cards, steps) use 2px ink borders and hard shadows; trust zones (payments,
+ * lenders) are white with 1px lines.
  */
 
 /*
  * Every section is a grid item of PageBuilder's <main>. min-width: 0 lets it shrink to the
- * viewport; otherwise wide content inside it widens the whole page on mobile.
+ * viewport; otherwise wide content inside it widens the whole page on mobile. Each section paints
+ * the cream paper itself, so the page reads as one sheet between the top bar and the footer.
  */
 .sectionRoot {
   min-width: 0;
+  background-color: var(--colorCream);
+  /* In-page links (top bar "Trust & Safety") land below the sticky top bar */
+  scroll-margin-top: var(--topbarHeight);
+
+  @media (--viewportMedium) {
+    scroll-margin-top: var(--topbarHeightDesktop);
+  }
 }
 
 /* Space above each section: 6px baseline on mobile, 8px from tablet up */
 .section {
   composes: sectionRoot;
-  padding: 36px 0 0 0;
+  padding: 42px 0 0 0;
 
   @media (--viewportMedium) {
-    padding: 56px 0 0 0;
+    padding: 64px 0 0 0;
   }
 
   @media (--viewportLarge) {
-    padding: 64px 0 0 0;
+    padding: 72px 0 0 0;
   }
 }
 
-/* Content column, the same width as the top bar and footer in the mockups */
+/* Calm trust band: white, hairlines above and below, no stickers */
+.trustBand {
+  min-width: 0;
+  background-color: var(--colorWhite);
+  border-top: 1px solid var(--colorInkLine);
+  border-bottom: 1px solid var(--colorInkLine);
+}
+
+/* Content column, the same width as the top bar and footer */
 .sectionContent {
   max-width: 1240px;
   margin: 0 auto;
@@ -38,28 +56,55 @@
   }
 }
 
-/* Section heading row: title on the left, a "See all" link on the right from tablet up */
+/* Section heading row: eyebrow and title on the left, a "See all" link on the right */
 .sectionHeader {
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 18px;
+  margin-bottom: 24px;
 
   @media (--viewportMedium) {
-    margin-bottom: 24px;
+    margin-bottom: 32px;
   }
+}
+
+/* Small uppercase label above a section title */
+.eyebrow {
+  display: block;
+  margin: 0 0 6px 0;
+  font-size: 13px;
+  line-height: 1.4;
+  font-weight: var(--fontWeightBold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--colorInkSecondary);
+}
+
+.eyebrowCoral {
+  composes: eyebrow;
+  color: var(--colorCoralText);
+}
+
+.eyebrowElectric {
+  composes: eyebrow;
+  color: var(--colorElectric);
 }
 
 .sectionTitle {
   margin: 0;
   padding: 0;
-  font-size: 24px;
-  line-height: 1.2;
-  font-weight: var(--fontWeightSemiBold);
-  letter-spacing: -0.3px;
-  color: var(--colorText);
+  font-size: 30px;
+  line-height: 1.1;
+  font-weight: var(--fontWeightHeavy);
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  color: var(--colorInk);
+
+  @media (--viewportMedium) {
+    font-size: 38px;
+  }
 }
 
 /* "See all …" text link next to a section title (hidden on phones, which get a button) */
@@ -71,57 +116,93 @@
     align-items: center;
     gap: 6px;
     min-height: 44px;
-    font-weight: var(--fontWeightSemiBold);
-    color: var(--marketplaceColor);
+    font-weight: var(--fontWeightBold);
+    color: var(--colorInk);
     text-decoration: underline;
-    text-underline-offset: 3px;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
 
     &:hover {
-      color: var(--marketplaceColorDark);
+      color: var(--colorElectric);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: var(--focusRing);
+      border-radius: var(--borderRadius);
     }
   }
 }
 
-/* Secondary button: white, 1.5px Navy border, Navy text (DESIGN.md components) */
-.buttonSecondaryHome {
+/* Sticker button: ink border and hard shadow that lifts on hover and presses on click */
+.stickerButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   min-height: 48px;
-  padding: 0 24px;
+  padding: 0 22px;
 
   font-size: 16px;
   line-height: 24px;
-  font-weight: var(--fontWeightSemiBold);
-  color: var(--colorText);
+  font-weight: var(--fontWeightBold);
+  color: var(--colorInk);
   text-decoration: none;
   background-color: var(--colorWhite);
-  border: 1.5px solid var(--colorBorderStrong);
-  border-radius: var(--borderRadiusMedium);
+  border: var(--borderInk);
+  border-radius: var(--borderRadiusStickerSmall);
+  box-shadow: var(--shadowHard);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
 
   &:hover {
-    color: var(--colorText);
+    color: var(--colorInk);
     text-decoration: none;
-    background-color: var(--colorBackground);
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadowHardLarge);
+  }
+
+  &:active {
+    transform: translate(3px, 3px);
+    box-shadow: 1px 1px 0 var(--colorInk);
   }
 
   &:focus-visible {
-    outline: none;
-    box-shadow: var(--focusRing);
+    outline: 3px solid var(--colorElectric);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &:hover,
+    &:active {
+      transform: none;
+    }
   }
 
   @media (--viewportMedium) {
     min-height: 52px;
-    padding: 0 32px;
+    padding: 0 26px;
   }
 }
 
-/* Full-width secondary button under a list on phones ("See all rentals") */
+/* Primary sticker button: Electric Blue with white text */
+.stickerButtonPrimary {
+  composes: stickerButton;
+  color: var(--colorWhite);
+  background-color: var(--colorElectric);
+
+  &:hover {
+    color: var(--colorWhite);
+  }
+}
+
+/* Full-width sticker button under a list on phones ("See all rentals") */
 .sectionButtonMobile {
-  composes: buttonSecondaryHome;
+  composes: stickerButton;
   width: 100%;
-  margin-top: 18px;
+  margin-top: 24px;
 
   @media (--viewportMedium) {
     display: none;

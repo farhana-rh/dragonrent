@@ -51,9 +51,9 @@
   gap: 12px;
   padding: 0 18px;
 
-  /* fill */
-  background-color: var(--colorWhite);
-  border-bottom: 1px solid var(--colorBorder);
+  /* fill: cream paper with a 2px ink rule (sticker design) */
+  background-color: var(--colorCream);
+  border-bottom: var(--borderInk);
 
   @media (--viewportMedium) {
     height: var(--topbarHeightDesktop);
@@ -95,12 +95,13 @@
   height: 48px;
   padding: 0 14px;
   font-size: 15px;
-  font-weight: var(--fontWeightSemiBold);
-  color: var(--colorText);
+  font-weight: var(--fontWeightBold);
+  color: var(--colorInk);
+  white-space: nowrap;
   border-radius: var(--borderRadiusMedium);
 
   &:hover {
-    color: var(--colorText);
+    color: var(--colorInk);
     text-decoration: none;
   }
 
@@ -149,21 +150,25 @@
   }
 }
 
-/* "Menu": icon plus word, secondary button style (1.5px Navy border) */
+/* "Menu": icon plus word, small sticker button (2px ink border, hard shadow) */
 .menu {
   position: relative;
   gap: 6px;
   width: auto;
   padding: 0 14px;
   font-size: 15px;
-  font-weight: var(--fontWeightSemiBold);
+  font-weight: var(--fontWeightBold);
   line-height: 24px;
+  color: var(--colorInk);
   background-color: var(--colorWhite);
-  border: 1.5px solid var(--colorBorderStrong);
+  border: var(--borderInk);
+  border-radius: var(--borderRadiusStickerSmall);
+  box-shadow: var(--shadowHardSmall);
 
   &:enabled:hover,
   &:enabled:active {
-    background-color: var(--colorBackground);
+    background-color: var(--colorWhite);
+    box-shadow: var(--shadowHardSmall);
   }
 }
 

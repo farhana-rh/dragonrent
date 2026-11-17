@@ -88,8 +88,8 @@ const applySharetribeConfigs = (config, options) => {
     // Add custom externals as server doesn't need to bundle everything
     newConfig.externals = [
       '@loadable/component',
-      // Ignore all modules in node_modules folder, except CSS (e.g. @fontsource/geist): the
-      // server can't require a .css file at runtime, so CSS imports are bundled like our own
+      // Ignore all modules in node_modules folder, except CSS (e.g. the @fontsource font files):
+      // the server can't require a .css file at runtime, so CSS imports are bundled like our own
       nodeExternals({ allowlist: [/\.css$/] }),
     ];
 

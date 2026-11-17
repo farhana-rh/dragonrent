@@ -16,11 +16,13 @@ import React from 'react';
 import ReactDOMClient from 'react-dom/client';
 import { loadableReady } from '@loadable/component';
 
-// Geist font (DragonRent design system), self-hosted through @fontsource
-import '@fontsource/geist/400.css';
-import '@fontsource/geist/500.css';
-import '@fontsource/geist/600.css';
-import '@fontsource/geist/700.css';
+// Plus Jakarta Sans (DragonRent sticker design, 17 Nov), self-hosted through @fontsource so no
+// visitor data goes to a font CDN. 800 is the display weight for headlines.
+import '@fontsource/plus-jakarta-sans/400.css';
+import '@fontsource/plus-jakarta-sans/500.css';
+import '@fontsource/plus-jakarta-sans/600.css';
+import '@fontsource/plus-jakarta-sans/700.css';
+import '@fontsource/plus-jakarta-sans/800.css';
 
 // Import default styles before other CSS-related modules are imported
 // This ensures that the styles in marketplaceDefaults.css are included

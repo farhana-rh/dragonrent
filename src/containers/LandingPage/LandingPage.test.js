@@ -13,12 +13,15 @@ import { getAvailableSearchFields } from './HeroSearchForm/HeroSearchForm';
 import SectionExploreRentals from './SectionExploreRentals/SectionExploreRentals';
 import SectionHostCta from './SectionHostCta/SectionHostCta';
 import SectionHowItWorks from './SectionHowItWorks/SectionHowItWorks';
+import SectionTrustStrip from './SectionTrustStrip/SectionTrustStrip';
+import { SpinTheBlock, getLoadedListings } from './SectionHomeHero/SectionHomeHero';
+import HeroSearchForm from './HeroSearchForm/HeroSearchForm';
 import SectionPopularRentals, {
   MIN_LISTINGS_TO_SHOW,
 } from './SectionPopularRentals/SectionPopularRentals';
 import SectionUseCases, { getAvailableUseCases } from './SectionUseCases/SectionUseCases';
 
-const { screen, waitFor } = testingLibrary;
+const { screen, waitFor, fireEvent } = testingLibrary;
 
 const categories = [
   { id: 'bikes', name: 'Bikes' },
@@ -33,15 +36,20 @@ describe('LandingPage', () => {
     // PageBuilder is loaded lazily, which can take longer than the default 1s on a busy machine
     await waitFor(
       () => {
-        expect(screen.getByText('LandingPage.hero.titleV2')).toBeInTheDocument();
+        expect(screen.getByText('LandingPage.hero.titleSticker')).toBeInTheDocument();
       },
       { timeout: 5000 }
     );
     expect(screen.getByRole('search')).toBeInTheDocument();
+    expect(screen.getByText('LandingPage.trustStrip.title')).toBeInTheDocument();
     expect(screen.getByText('LandingPage.hero.whatLabel')).toBeInTheDocument();
     expect(screen.getByText('LandingPage.howItWorks.titleV2')).toBeInTheDocument();
     expect(screen.getByText('LandingPage.trustPoints.title')).toBeInTheDocument();
-    expect(screen.getByText('LandingPage.lendBanner.title')).toBeInTheDocument();
+    expect(screen.getByText('LandingPage.lenderPath.title')).toBeInTheDocument();
+    // "Trust & Safety" in the top bar links to the lender section
+    expect(document.getElementById('trust-and-safety')).toBeInTheDocument();
+    // No listings loaded: no "Spin the block"
+    expect(screen.queryByText('LandingPage.hero.spin')).not.toBeInTheDocument();
     // "Browse by use case" is not on the page
     expect(screen.queryByText('LandingPage.useCases.title')).not.toBeInTheDocument();
     // No featured listings section in Console: no listings section
@@ -55,7 +63,7 @@ describe('LandingPage', () => {
     // PageBuilder is loaded lazily, which can take longer than the default 1s on a busy machine
     await waitFor(
       () => {
-        expect(screen.getByText('LandingPage.hero.titleV2')).toBeInTheDocument();
+        expect(screen.getByText('LandingPage.hero.titleSticker')).toBeInTheDocument();
       },
       { timeout: 5000 }
     );
@@ -70,6 +78,7 @@ describe('buildLandingPageData', () => {
 
     expect(sections.map(s => s.sectionType)).toEqual([
       'homeHero',
+      'homeTrustStrip',
       'homeExploreRentals',
       'homeHowItWorks',
       'homeHostCta',
@@ -98,9 +107,10 @@ describe('buildLandingPageData', () => {
         listingSearchQuery: { a: 1 },
       },
     ]);
-    // Listings come right after the hero, before the category tiles (as in the mockups)
+    // Listings come after the hero and its trust strip, before the category tiles
     expect(sections.map(s => s.sectionType)).toEqual([
       'homeHero',
+      'homeTrustStrip',
       'listings',
       'homeExploreRentals',
       'homeHowItWorks',
@@ -185,14 +195,73 @@ describe('Category-driven sections', () => {
 });
 
 describe('SectionHostCta', () => {
-  it('has one secondary button to start lending', () => {
-    render(<SectionHostCta sectionId="list-an-item" />);
+  it('has one call to action to start lending and links the damage policy', () => {
+    render(<SectionHostCta sectionId="trust-and-safety" />);
 
-    expect(screen.getByText('LandingPage.lendBanner.button').closest('a')).toHaveAttribute(
+    expect(screen.getByText('LandingPage.lenderPath.button').closest('a')).toHaveAttribute(
       'href',
       '/l/new'
     );
+    // The damage policy link sits inside a translated message, which the test intl renders as
+    // its id only, so the call to action is the one link here
     expect(screen.getAllByRole('link')).toHaveLength(1);
+    // The four lender points, each a real behaviour of the marketplace
+    ['choose', 'paid', 'address', 'breaks'].forEach(id =>
+      expect(screen.getByText(`LandingPage.lenderPath.${id}.title`)).toBeInTheDocument()
+    );
+    expect(screen.getByText('LandingPage.lenderPath.feeNote')).toBeInTheDocument();
+  });
+});
+
+describe('SectionTrustStrip', () => {
+  it('opens and closes the payments dialog', () => {
+    render(<SectionTrustStrip sectionId="how-paying-works" />);
+
+    expect(screen.getByText('LandingPage.trustStrip.title')).toBeInTheDocument();
+    const dialog = document.querySelector('dialog');
+    expect(dialog).not.toHaveAttribute('open');
+
+    fireEvent.click(screen.getByText('LandingPage.trustStrip.button'));
+    expect(dialog).toHaveAttribute('open');
+    ['request', 'accept', 'decline', 'cancel', 'stripe', 'lenders'].forEach(id =>
+      expect(screen.getByText(`LandingPage.trustStrip.fact.${id}`)).toBeInTheDocument()
+    );
+
+    // The "Close" button at the bottom of the dialog
+    fireEvent.click(screen.getByText('LandingPage.trustStrip.close'));
+    expect(dialog).not.toHaveAttribute('open');
+  });
+});
+
+describe('HeroSearchForm', () => {
+  it('shows the first example search as the keyword placeholder', () => {
+    render(<HeroSearchForm />);
+
+    expect(screen.getByPlaceholderText('LandingPage.hero.prompt.1')).toBeInTheDocument();
+  });
+});
+
+describe('SpinTheBlock', () => {
+  const listing = createListing('drill', { title: 'Cordless drill' }, { author: createUser('u1') });
+  const featuredListings = listings => ({
+    featuredListingData: { 'popular-rentals': { listingIds: listings.map(l => l.id) } },
+    getListingEntitiesById: () => listings,
+  });
+
+  it('reads the listings the page already loaded', () => {
+    expect(getLoadedListings(undefined)).toEqual([]);
+    expect(getLoadedListings({ featuredListingData: {} })).toEqual([]);
+    expect(getLoadedListings(featuredListings([listing]))).toEqual([listing]);
+  });
+
+  it('is hidden without loaded listings and shown with them', () => {
+    const { container, rerender } = render(
+      <SpinTheBlock featuredListings={featuredListings([])} />
+    );
+    expect(container).toBeEmptyDOMElement();
+
+    rerender(<SpinTheBlock featuredListings={featuredListings([listing])} random={() => 0} />);
+    expect(screen.getByText('LandingPage.hero.spin')).toBeInTheDocument();
   });
 });
 

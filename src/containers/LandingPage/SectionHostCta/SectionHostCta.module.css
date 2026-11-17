@@ -1,47 +1,51 @@
 @import '../../../styles/customMediaQueries.css';
 
-/* Last section on the page: extra space before the footer */
+/* Last section on the page: cream space above, then a full-width white trust band */
 .root {
-  composes: section from '../LandingPage.module.css';
+  composes: sectionRoot from '../LandingPage.module.css';
+  padding-top: 48px;
+
+  @media (--viewportMedium) {
+    padding-top: 72px;
+  }
+}
+
+.band {
+  composes: trustBand from '../LandingPage.module.css';
+  border-bottom: none;
+}
+
+/* Intro and call to action on the left, the four points on the right from desktop up */
+.content {
+  composes: sectionContent from '../LandingPage.module.css';
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 30px;
+  padding-top: 42px;
   padding-bottom: 48px;
 
   @media (--viewportMedium) {
-    padding-bottom: 72px;
-  }
-}
-
-.content {
-  composes: sectionContent from '../LandingPage.module.css';
-}
-
-/* Ice banner: text and button stacked on phones, side by side from tablet up */
-.banner {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  padding: 30px 18px;
-  background-color: var(--colorAccentSubtle);
-  border-radius: var(--borderRadiusLarge);
-
-  @media (--viewportMedium) {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-    padding: 40px;
+    padding-top: 56px;
+    padding-bottom: 64px;
   }
 
   @media (--viewportLarge) {
-    padding: 56px;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 56px;
   }
 }
 
-.text {
+.intro {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  max-width: 620px;
+  align-items: flex-start;
+  gap: 14px;
+  min-width: 0;
+}
+
+.eyebrow {
+  composes: eyebrow from '../LandingPage.module.css';
+  margin: 0;
 }
 
 .title {
@@ -49,22 +53,95 @@
 }
 
 .description {
+  max-width: 480px;
   margin: 0;
   padding: 0;
-  font-size: 16px;
-  line-height: 1.5;
-  color: var(--colorText);
-
-  @media (--viewportMedium) {
-    font-size: 18px;
-  }
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--colorInkSecondary);
 }
 
 .button {
-  composes: buttonSecondaryHome from '../LandingPage.module.css';
-  width: 100%;
+  composes: stickerButtonPrimary from '../LandingPage.module.css';
+  margin-top: 8px;
+}
 
-  @media (--viewportMedium) {
-    width: auto;
+.feeNote {
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--colorInkSecondary);
+}
+
+/* Points: rows separated by hairlines */
+.points {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.point {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--colorInkLine);
+
+  &:first-child {
+    padding-top: 0;
+  }
+
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+}
+
+.pointIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  color: var(--colorElectric);
+  background-color: var(--colorAccentSubtle);
+  border-radius: 50%;
+}
+
+.pointText {
+  min-width: 0;
+}
+
+.pointTitle {
+  margin: 0;
+  padding: 0;
+  font-size: 17px;
+  line-height: 1.35;
+  font-weight: var(--fontWeightBold);
+  color: var(--colorInk);
+}
+
+.pointDescription {
+  margin: 4px 0 0 0;
+  padding: 0;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--colorInkSecondary);
+}
+
+.inlineLink {
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorElectric);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--focusRing);
+    border-radius: var(--borderRadius);
   }
 }

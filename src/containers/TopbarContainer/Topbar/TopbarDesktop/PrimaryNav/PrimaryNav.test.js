@@ -9,14 +9,18 @@ import PrimaryNav from './PrimaryNav';
 const { screen } = testingLibrary;
 
 describe('PrimaryNav', () => {
-  it('links to the How it works and Help pages', () => {
+  it('links to search, the How it works page and the Trust & Safety section', () => {
     render(<PrimaryNav currentPage="LandingPage" />);
 
+    expect(screen.getByText('TopbarDesktop.explore').closest('a')).toHaveAttribute('href', '/s');
     expect(screen.getByText('TopbarDesktop.howItWorks').closest('a')).toHaveAttribute(
       'href',
       '/p/how-it-works'
     );
-    expect(screen.getByText('TopbarDesktop.help').closest('a')).toHaveAttribute('href', '/p/faq');
+    expect(screen.getByText('TopbarDesktop.trustAndSafety').closest('a')).toHaveAttribute(
+      'href',
+      '#trust-and-safety'
+    );
   });
 });
 

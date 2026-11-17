@@ -1,0 +1,217 @@
+@import '../../../styles/customMediaQueries.css';
+
+/* Calm trust band: white, hairlines, no stickers or shadows */
+.root {
+  composes: trustBand from '../LandingPage.module.css';
+}
+
+.content {
+  composes: sectionContent from '../LandingPage.module.css';
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 14px 16px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+
+  @media (--viewportMedium) {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 20px;
+    padding-top: 22px;
+    padding-bottom: 22px;
+  }
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  color: var(--colorElectric);
+  background-color: var(--colorAccentSubtle);
+  border-radius: 50%;
+}
+
+.text {
+  min-width: 0;
+}
+
+.title {
+  margin: 0;
+  padding: 0;
+  font-size: 17px;
+  line-height: 1.35;
+  font-weight: var(--fontWeightBold);
+  color: var(--colorInk);
+}
+
+.description {
+  margin: 2px 0 0 0;
+  padding: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--colorInkSecondary);
+}
+
+/* Plain secondary button: thin line, no shadow (trust zone) */
+.detailsButton {
+  grid-column: 1 / -1;
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 16px;
+
+  font-family: var(--fontFamily);
+  font-size: 15px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorInk);
+  background-color: var(--colorWhite);
+  border: 1px solid var(--colorInkLineStrong);
+  border-radius: 10px;
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--colorInk);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--focusRing);
+  }
+
+  @media (--viewportMedium) {
+    grid-column: auto;
+  }
+}
+
+/* Payments dialog: calm white panel over a dimmed page */
+.dialog {
+  width: min(560px, calc(100vw - 32px));
+  max-height: min(88vh, 720px);
+  padding: 0;
+  overflow-y: auto;
+
+  font-family: var(--fontFamily);
+  color: var(--colorInk);
+  background-color: var(--colorWhite);
+  border: 1px solid var(--colorInkLine);
+  border-radius: var(--borderRadiusSticker);
+  box-shadow: var(--shadowDialog);
+
+  /* Older browsers don't pass custom properties to ::backdrop, so the literal comes first */
+  &::backdrop {
+    background-color: rgba(17, 17, 17, 0.5);
+    background-color: var(--colorInkBackdrop, rgba(17, 17, 17, 0.5));
+  }
+}
+
+.dialogHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px 24px 16px 24px;
+  border-bottom: 1px solid var(--colorInkLine);
+}
+
+.dialogEyebrow {
+  composes: eyebrowElectric from '../LandingPage.module.css';
+}
+
+.dialogTitle {
+  margin: 0;
+  padding: 0;
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: var(--fontWeightHeavy);
+  letter-spacing: -0.02em;
+  color: var(--colorInk);
+}
+
+.closeIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  color: var(--colorInk);
+  background-color: var(--colorWhite);
+  border: 1px solid var(--colorInkLineStrong);
+  border-radius: 10px;
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--colorInk);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--focusRing);
+  }
+}
+
+.facts {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 20px 24px 8px 24px;
+  list-style: none;
+}
+
+.fact {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--colorInk);
+}
+
+.checkIcon {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--colorSuccess);
+}
+
+.policies {
+  margin: 0;
+  padding: 8px 24px 0 24px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--colorInkSecondary);
+
+  & a {
+    font-weight: var(--fontWeightSemiBold);
+    color: var(--colorElectric);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+.closeButton {
+  display: block;
+  width: calc(100% - 48px);
+  min-height: 48px;
+  margin: 20px 24px 24px 24px;
+
+  font-family: var(--fontFamily);
+  font-size: 16px;
+  font-weight: var(--fontWeightBold);
+  color: var(--colorCream);
+  background-color: var(--colorInk);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--focusRing);
+  }
+}

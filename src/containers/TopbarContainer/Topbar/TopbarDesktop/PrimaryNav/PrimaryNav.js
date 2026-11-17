@@ -10,14 +10,14 @@ import css from './PrimaryNav.module.css';
 export const HOW_IT_WORKS_PAGE_ID = 'how-it-works';
 export const HELP_PAGE_ID = 'faq';
 
-const NAV_LINKS = [
-  { id: 'howItWorks', pageId: HOW_IT_WORKS_PAGE_ID, messageId: 'TopbarDesktop.howItWorks' },
-  { id: 'help', pageId: HELP_PAGE_ID, messageId: 'TopbarDesktop.help' },
-];
+// Section on the homepage with "What if something breaks?" (LandingPage TRUST_SECTION_ID).
+// PrimaryNav only shows on the homepage, so a plain in-page anchor is enough.
+export const TRUST_ANCHOR = '#trust-and-safety';
 
 /**
- * Primary navigation next to the logo on the desktop homepage: "How it works" and "Help"
- * (HomeDesktop mockup). Both link to Console pages.
+ * Primary navigation next to the logo on the desktop homepage (sticker design, HomeSticker.html):
+ * "Explore" (search), "How it works" (Console page) and "Trust & Safety" (homepage section).
+ * "Help" stays in the footer and the mobile menu.
  *
  * @component
  * @param {Object} props
@@ -26,23 +26,29 @@ const NAV_LINKS = [
  */
 const PrimaryNav = props => {
   const { currentPage } = props;
+  const isHowItWorks = currentPage === `CMSPage:${HOW_IT_WORKS_PAGE_ID}`;
 
   return (
     <ul className={css.root}>
-      {NAV_LINKS.map(link => {
-        const isCurrent = currentPage === `CMSPage:${link.pageId}`;
-        return (
-          <li key={link.id} className={css.navItem}>
-            <NamedLink
-              name="CMSPage"
-              params={{ pageId: link.pageId }}
-              className={classNames(css.navLink, { [css.active]: isCurrent })}
-            >
-              <FormattedMessage id={link.messageId} />
-            </NamedLink>
-          </li>
-        );
-      })}
+      <li className={css.navItem}>
+        <NamedLink name="SearchPage" className={css.navLink}>
+          <FormattedMessage id="TopbarDesktop.explore" />
+        </NamedLink>
+      </li>
+      <li className={css.navItem}>
+        <NamedLink
+          name="CMSPage"
+          params={{ pageId: HOW_IT_WORKS_PAGE_ID }}
+          className={classNames(css.navLink, { [css.active]: isHowItWorks })}
+        >
+          <FormattedMessage id="TopbarDesktop.howItWorks" />
+        </NamedLink>
+      </li>
+      <li className={css.navItem}>
+        <a href={TRUST_ANCHOR} className={css.navLink}>
+          <FormattedMessage id="TopbarDesktop.trustAndSafety" />
+        </a>
+      </li>
     </ul>
   );
 };

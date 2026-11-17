@@ -1,10 +1,14 @@
 import React from 'react';
+import classNames from 'classnames';
 
 import { FormattedMessage } from '../../../util/reactIntl';
 
 import { howItWorksSteps, trustPoints } from '../landingPageConfig';
 
 import css from './SectionHowItWorks.module.css';
+
+// Step number stickers: one accent per step, in order
+const STEP_ACCENTS = [css.accentMarigold, css.accentMint, css.accentCoral];
 
 // 24px line icons with a 2px stroke (DESIGN.md: Lucide-style), always next to a word
 const TRUST_ICON_PATHS = {
@@ -37,9 +41,8 @@ const TrustIcon = props => {
 };
 
 /**
- * "How it works" in three steps, followed by the trust points. On desktop the steps are cards
- * and the trust points a row; on phones the steps are a list and the trust points a
- * "Safe and simple" card. Matches the Main and HomeDesktop mockups.
+ * "How it works" in three steps (sticker cards with coloured number stickers), followed by the
+ * trust points in a calm row: playful for the steps, plain for the promises (HomeSticker.html).
  *
  * @component
  * @param {Object} props
@@ -54,14 +57,22 @@ const SectionHowItWorks = props => {
   return (
     <section id={sectionId} className={css.root} aria-labelledby={titleId}>
       <div className={css.content}>
-        <h2 id={titleId} className={css.title}>
-          <FormattedMessage id="LandingPage.howItWorks.titleV2" />
-        </h2>
+        <div className={css.header}>
+          <span className={css.eyebrow}>
+            <FormattedMessage id="LandingPage.howItWorks.titleV2" />
+          </span>
+          <h2 id={titleId} className={css.title}>
+            <FormattedMessage id="LandingPage.howItWorks.titleSticker" />
+          </h2>
+        </div>
 
         <ol className={css.steps}>
           {howItWorksSteps.map((step, i) => (
             <li key={step} className={css.step}>
-              <span className={css.stepNumber} aria-hidden="true">
+              <span
+                className={classNames(css.stepNumber, STEP_ACCENTS[i % STEP_ACCENTS.length])}
+                aria-hidden="true"
+              >
                 {i + 1}
               </span>
               <div className={css.stepText}>

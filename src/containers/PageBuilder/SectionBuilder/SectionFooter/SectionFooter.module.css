@@ -1,9 +1,12 @@
 @import '../../../../styles/customMediaQueries.css';
 
-/* Navy footer band (Main and HomeDesktop mockups) */
+/* Ink footer band with cream text (sticker design, HomeSticker.html) */
 .root {
-  color: var(--colorBackground);
-  background-color: var(--colorText);
+  color: var(--colorCream);
+  background-color: var(--colorInk);
+
+  /* Electric Blue is too dark on ink, so focus rings here are marigold */
+  --focusRing: 0 0 0 3px var(--colorMarigold);
 }
 
 /* Brand on the left, links on the right from tablet up; stacked on phones */
@@ -36,14 +39,15 @@
 
 .brandName {
   align-self: flex-start;
-  font-size: 20px;
+  font-size: 22px;
   line-height: 1.2;
-  font-weight: var(--fontWeightBold);
-  color: var(--colorBackground);
+  font-weight: var(--fontWeightHeavy);
+  letter-spacing: -0.02em;
+  color: var(--colorCream);
   border-radius: var(--borderRadius);
 
   &:hover {
-    color: var(--colorBackground);
+    color: var(--colorCream);
     text-decoration: none;
   }
 
@@ -58,7 +62,7 @@
   padding: 0;
   font-size: 15px;
   line-height: 1.5;
-  color: var(--colorBorder);
+  color: var(--colorCreamMuted);
 }
 
 .icons {
@@ -113,20 +117,24 @@
     padding: 0;
     font-size: 13px;
     line-height: 1.4;
-    font-weight: var(--fontWeightSemiBold);
-    color: var(--colorBorder);
+    font-weight: var(--fontWeightBold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--colorCreamMuted);
   }
 
   & a {
     font-size: 16px;
     line-height: 1.5;
-    color: var(--colorBackground);
+    color: var(--colorCream);
     text-decoration: underline;
+    text-decoration-color: var(--colorCreamMuted);
     text-underline-offset: 3px;
     border-radius: var(--borderRadius);
 
     &:hover {
-      color: var(--colorWhite);
+      color: var(--colorMarigold);
+      text-decoration-color: var(--colorMarigold);
     }
 
     &:focus-visible {
@@ -157,7 +165,7 @@
   font-family: var(--fontFamily);
   font-size: 13px;
   font-weight: var(--fontWeightSemiBold);
-  color: var(--colorBorder);
+  color: var(--colorCreamMuted);
   text-decoration: underline;
   text-underline-offset: 3px;
 
@@ -167,7 +175,7 @@
   cursor: pointer;
 
   &:hover {
-    color: var(--colorWhite);
+    color: var(--colorMarigold);
   }
 
   &:focus {
@@ -184,5 +192,5 @@
   padding: 0;
   font-size: 13px;
   line-height: 1.4;
-  color: var(--colorBorder);
+  color: var(--colorCreamMuted);
 }

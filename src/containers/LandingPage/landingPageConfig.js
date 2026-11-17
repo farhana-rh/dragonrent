@@ -14,15 +14,45 @@
 // Placeholder tones map to --colorPlaceholder* tokens in marketplaceDefaults.css
 export const TONES = ['sage', 'sand', 'blush', 'slate', 'stone'];
 
-// Hero image mosaic: one tall tile and two short ones. Each tile has a short caption.
-export const heroMosaic = [
-  { id: 'outdoors', tone: 'sage', image: null },
-  { id: 'camping', tone: 'sand', image: null },
-  { id: 'events', tone: 'slate', image: null },
+// Accent colours of the sticker design, in the order repeated elements use them
+// (category tiles, step numbers, hero cards). Each maps to a --color* token.
+export const STICKER_ACCENTS = ['coral', 'marigold', 'mint', 'electric'];
+
+// Hero: a fanned stack of three decorative category cards (not listings). The caption is
+// LandingPage.hero.tile.<id>; `icon` is a CategoryIcon name.
+export const heroStack = [
+  { id: 'camping', icon: 'camping', accent: 'mint' },
+  { id: 'events', icon: 'event', accent: 'coral' },
+  { id: 'outdoors', icon: 'bike', accent: 'marigold' },
 ];
 
-// Section ids that other sections link to
+// Number of rotating search prompts (LandingPage.hero.prompt.1 … .N)
+export const HERO_PROMPT_COUNT = 5;
+
+// Section ids that other sections and the top bar link to
 export const HOW_IT_WORKS_SECTION_ID = 'how-dragonrent-works';
+export const TRUST_SECTION_ID = 'trust-and-safety';
+
+/**
+ * "How paying works" facts in the payments dialog (LandingPage.trustStrip.fact.<id>).
+ * Every one describes how the marketplace works today: Stripe holds the amount on request,
+ * charges on accept and releases it on decline or expiry; the 24-hour cancellation rule
+ * (decided 7 Nov) is applied by DragonRent; lenders are verified by Stripe.
+ */
+export const trustFacts = ['request', 'accept', 'decline', 'cancel', 'stripe', 'lenders'];
+
+/**
+ * "What if something breaks?" points for lenders (LandingPage.lenderPath.<id>.title/.text).
+ * Only real behaviour: the lender accepts or declines, Stripe pays out, the address is private
+ * until acceptance, and disputes go to DragonRent under the damage policy. No insurance,
+ * deposits, ID checks or payout-time promises (concept-only in the mockup).
+ */
+export const lenderPoints = [
+  { id: 'choose', icon: 'userCheck' },
+  { id: 'paid', icon: 'card' },
+  { id: 'address', icon: 'pin' },
+  { id: 'breaks', icon: 'lifebuoy' },
+];
 
 /**
  * Visuals for top-level categories, keyed by category id (Console → Listings → Categories).

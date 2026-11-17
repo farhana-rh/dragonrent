@@ -7,7 +7,8 @@ import css from './FilterKeyword.module.css';
 
 const FilterKeyword = props => {
   const intl = useIntl();
-  const { className, rootClassName } = props;
+  // DragonRent: the homepage hero passes rotating example searches as the placeholder
+  const { className, rootClassName, placeholder } = props;
   const rootClass = rootClassName || css.root;
   const classes = classNames(rootClass, className);
 
@@ -18,9 +19,12 @@ const FilterKeyword = props => {
         inputRootClass={css.input}
         name={'keywords'}
         type="text"
-        placeholder={intl.formatMessage({
-          id: 'PageBuilder.SearchCTA.keywordFilterPlaceholder',
-        })}
+        placeholder={
+          placeholder ||
+          intl.formatMessage({
+            id: 'PageBuilder.SearchCTA.keywordFilterPlaceholder',
+          })
+        }
         aria-label={intl.formatMessage({
           id: 'PageBuilder.SearchCTA.keywordFilterPlaceholder',
         })}

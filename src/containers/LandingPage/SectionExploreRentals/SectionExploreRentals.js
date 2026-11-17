@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 
 import { useConfiguration } from '../../../context/configurationContext';
 import { FormattedMessage } from '../../../util/reactIntl';
@@ -7,9 +8,16 @@ import { categorySearchTo } from '../../../util/search';
 import { NamedLink } from '../../../components';
 
 import CategoryIcon from '../CategoryIcon/CategoryIcon';
-import { categoryVisuals, MAX_CATEGORY_TILES } from '../landingPageConfig';
+import { categoryVisuals, MAX_CATEGORY_TILES, STICKER_ACCENTS } from '../landingPageConfig';
 
 import css from './SectionExploreRentals.module.css';
+
+const ACCENT_CLASSES = {
+  coral: css.accentCoral,
+  marigold: css.accentMarigold,
+  mint: css.accentMint,
+  electric: css.accentElectric,
+};
 
 const ArrowIcon = () => (
   <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
@@ -25,7 +33,8 @@ const ArrowIcon = () => (
 );
 
 /**
- * "Or pick a category" tiles, as in the Main and HomeDesktop mockups. Categories come from
+ * "Or pick a category" tiles as sticker tiles: icon squares cycle through the accent colours
+ * (HomeSticker.html). Categories come from
  * Console (Listings → Categories); the section is not rendered when there are none.
  *
  * @component
@@ -51,9 +60,14 @@ const SectionExploreRentals = props => {
     <section id={sectionId} className={css.root} aria-labelledby={titleId}>
       <div className={css.content}>
         <div className={css.header}>
-          <h2 id={titleId} className={css.title}>
-            <FormattedMessage id="LandingPage.categories.titleV2" />
-          </h2>
+          <div>
+            <span className={css.eyebrow}>
+              <FormattedMessage id="LandingPage.categories.eyebrow" />
+            </span>
+            <h2 id={titleId} className={css.title}>
+              <FormattedMessage id="LandingPage.categories.titleV2" />
+            </h2>
+          </div>
           <NamedLink className={css.link} name="SearchPage">
             <FormattedMessage id="LandingPage.categories.seeAll" />
             <ArrowIcon />
@@ -61,10 +75,15 @@ const SectionExploreRentals = props => {
         </div>
 
         <ul className={css.list}>
-          {categories.map(category => (
+          {categories.map((category, i) => (
             <li key={category.id} className={css.item}>
               <NamedLink className={css.tile} name="SearchPage" to={categorySearchTo(category.id)}>
-                <span className={css.iconWrapper}>
+                <span
+                  className={classNames(
+                    css.iconWrapper,
+                    ACCENT_CLASSES[STICKER_ACCENTS[i % STICKER_ACCENTS.length]]
+                  )}
+                >
                   <CategoryIcon className={css.icon} name={categoryVisuals[category.id]?.icon} />
                 </span>
                 <span className={css.name}>{category.name}</span>

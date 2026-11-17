@@ -81,6 +81,31 @@
   /* Focus ring for keyboard navigation */
   --focusRing: 0 0 0 3px #2457c5; /* 3px Cobalt ring */
 
+  /* ================ Sticker design (confirmed 17 Nov) ================ */
+  /* "Playful in the product, professional in the promise". Reference:
+     dragonrent-design/docs/design/mockups/HomeSticker.html. Rebuilt pages use these; pages not
+     rebuilt yet keep the Arctic Blue tokens above. Playful zones: cream paper, 2px ink borders,
+     hard shadows. Trust zones (money, safety): white, 1px ink lines, no stickers. */
+  --colorCream: #faf8f5; /* paper: background of rebuilt pages */
+  --colorInk: #111111; /* text, thick borders, hard shadows */
+  --colorInkSecondary: #4a4743; /* secondary text on cream or white (8.8:1 on cream) */
+  --colorInkLine: rgba(17, 17, 17, 0.12); /* calm 1px lines in trust zones */
+  --colorInkLineStrong: rgba(17, 17, 17, 0.25); /* outline of calm buttons in trust zones */
+  --colorInkBackdrop: rgba(17, 17, 17, 0.5); /* behind dialogs */
+  --shadowDialog: 0 24px 60px rgba(17, 17, 17, 0.25);
+  --colorCoral: #ff5733; /* accent; Ink text on it, never white */
+  --colorCoralText: #c2361a; /* Coral darkened for small text: 5.1:1 on cream */
+  --colorMarigold: #ffc300; /* accent; Ink text on it */
+  --colorMint: #00c896; /* accent; Ink text on it */
+  --colorElectric: #2457c5; /* Electric Blue = Cobalt; white text on it */
+  --colorCreamMuted: rgba(250, 248, 245, 0.75); /* secondary text on Ink (11:1) */
+  --borderInk: 2px solid var(--colorInk);
+  --shadowHard: 4px 4px 0 var(--colorInk);
+  --shadowHardSmall: 2px 2px 0 var(--colorInk);
+  --shadowHardLarge: 6px 6px 0 var(--colorInk);
+  --borderRadiusSticker: 16px; /* hero cards, item cards, search card */
+  --borderRadiusStickerSmall: 12px; /* buttons, tiles */
+
   /**
   * Marketplace color comes by default from src/config/brandingConfig.js
   * It overwrites these CSS Properties.
@@ -114,7 +139,7 @@
   --colorStatusFinalState: var(--colorGrey600);
 
   /* ================ Font ================ */
-  --fontFamily: 'Geist', system-ui, sans-serif,
+  --fontFamily: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif,
     'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 
   --fontWeightRegular: 400;

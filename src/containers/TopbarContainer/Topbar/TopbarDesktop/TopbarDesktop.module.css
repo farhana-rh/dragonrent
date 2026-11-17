@@ -15,9 +15,9 @@
   /* Align with the 1240px content column of the mockups (1192px + 24px padding each side) */
   padding: 0 max(24px, calc((100% - 1192px) / 2));
 
-  /* fill */
-  background-color: var(--colorWhite);
-  border-bottom: 1px solid var(--colorBorder);
+  /* fill: cream paper with a 2px ink rule (sticker design, HomeSticker.html) */
+  background-color: var(--colorCream);
+  border-bottom: var(--borderInk);
 }
 
 /* logo */
@@ -101,7 +101,8 @@
 
     & .buttonFilled,
     & .buttonOutline {
-      box-shadow: var(--focusRing);
+      outline: 3px solid var(--colorElectric);
+      outline-offset: 3px;
     }
   }
 }
@@ -110,10 +111,10 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  height: 52px;
-  padding: 0 22px;
+  height: 48px;
+  padding: 0 20px;
 
-  font-weight: var(--fontWeightSemiBold);
+  font-weight: var(--fontWeightBold);
   font-size: 16px;
   line-height: 24px;
   white-space: nowrap;
@@ -138,15 +139,27 @@
   }
 }
 
-/* Secondary button: white, 1.5px Navy border, Navy text */
+/* "Lend an item": Electric Blue sticker button with a hard shadow */
 .buttonOutline {
   composes: buttonBase;
-  color: var(--colorText);
-  background-color: var(--colorWhite);
-  border: 1.5px solid var(--colorBorderStrong);
+  color: var(--colorWhite);
+  background-color: var(--colorElectric);
+  border: var(--borderInk);
+  border-radius: var(--borderRadiusStickerSmall);
+  box-shadow: var(--shadowHard);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
 
   &:hover {
-    background-color: var(--colorBackground);
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadowHardLarge);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
   }
 }
 
@@ -163,15 +176,17 @@
   font-size: 16px;
   line-height: 24px;
   letter-spacing: 0;
-  color: var(--colorText);
+  color: var(--colorInk);
 
   height: 100%;
   padding: 0 0 0 18px;
   margin: 0;
 
   &:hover {
-    color: var(--marketplaceColor);
-    text-decoration: none;
+    color: var(--colorInk);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
   }
 
   &:focus-visible {
@@ -279,10 +294,10 @@
   min-width: 276px;
   padding-top: 12px;
   margin-top: -4px;
-  background-color: var(--colorSurface);
-  border: 1px solid var(--colorBorder);
-  border-radius: var(--borderRadiusLarge);
-  box-shadow: var(--boxShadowCard);
+  background-color: var(--colorWhite);
+  border: var(--borderInk);
+  border-radius: var(--borderRadiusSticker);
+  box-shadow: var(--shadowHard);
   overflow: hidden;
 }
 
