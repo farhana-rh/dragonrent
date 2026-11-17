@@ -266,3 +266,73 @@
     display: none;
   }
 }
+
+/* Brand panel and form side by side on desktop (sticker design) */
+.contentContainer {
+  @media (--viewportLarge) {
+    gap: 64px;
+    padding: 0 32px;
+  }
+}
+
+/* The form card starts 5vh down on this page, so the panel follows it */
+.brandPanel {
+  @media (--viewportLarge) {
+    margin-top: calc(5vh + 40px);
+  }
+}
+
+/* "Sign up | Log in" as a sticker switch: the current page is ink with cream text */
+.tabs {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background-color: var(--colorCream);
+  border: var(--borderInk);
+  border-radius: 999px;
+
+  & > div {
+    flex: 1 1 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  & a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0 12px;
+    border-bottom: none;
+    border-radius: 999px;
+    color: var(--colorInk);
+    text-decoration: none;
+  }
+
+  & a:hover {
+    background-color: var(--colorWhite);
+    text-decoration: none;
+  }
+
+  & :global(.NamedLink_active),
+  & :global(.NamedLink_active):hover {
+    color: var(--colorCream);
+    background-color: var(--colorInk);
+  }
+
+  & :global(.NamedLink_active) .tab {
+    color: var(--colorCream);
+  }
+}
+
+.tabs .tab {
+  font-size: 18px;
+  line-height: 1.2;
+  font-weight: var(--fontWeightHeavy);
+  letter-spacing: -0.01em;
+  color: inherit;
+
+  @media (--viewportMedium) {
+    font-size: 20px;
+  }
+}

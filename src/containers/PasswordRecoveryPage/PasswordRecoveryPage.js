@@ -28,6 +28,7 @@ import {
   retypePasswordRecoveryEmail,
   clearPasswordRecoveryError,
 } from './PasswordRecoveryPage.duck';
+import AuthBrandPanel from '../AuthenticationPage/AuthBrandPanel/AuthBrandPanel';
 import css from './PasswordRecoveryPage.module.css';
 
 const PasswordRecovery = props => {
@@ -188,6 +189,7 @@ export const PasswordRecoveryPageComponent = props => {
           sizes="100%"
           useOverlay
         >
+          <AuthBrandPanel variant="recovery" />
           {isPasswordRecoveryEmailNotFoundError(recoveryError) ? (
             showPasswordRecoveryForm
           ) : recoveryError ? (

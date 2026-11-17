@@ -55,6 +55,7 @@ import SocialLoginButtons from './SocialLoginButtons/SocialLoginButtons';
 
 import { TOS_ASSET_NAME, PRIVACY_POLICY_ASSET_NAME } from './AuthenticationPage.duck';
 
+import AuthBrandPanel from './AuthBrandPanel/AuthBrandPanel';
 import css from './AuthenticationPage.module.css';
 
 const getTabHeading = ({ messageId, isSelected }) => {
@@ -354,6 +355,9 @@ export const AuthenticationPageComponent = props => {
           sizes="100%"
           useOverlay
         >
+          {showAuthenticationForm ? (
+            <AuthBrandPanel className={css.brandPanel} variant={isLogin ? 'login' : 'signup'} />
+          ) : null}
           {showAuthenticationForm ? (
             <div className={css.content}>
               <LinkTabNavHorizontal

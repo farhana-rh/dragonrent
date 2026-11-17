@@ -1,0 +1,85 @@
+@import '../../../styles/customMediaQueries.css';
+
+/* Desktop only: the form comes first on phones and tablets */
+.root {
+  display: none;
+
+  @media (--viewportLarge) {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    flex: 0 1 400px;
+    min-width: 0;
+    margin-top: calc(12.5vh + 24px);
+  }
+}
+
+.mark {
+  display: block;
+  filter: drop-shadow(4px 4px 0 var(--colorInk));
+}
+
+.areaSticker {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 12px;
+
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: var(--fontWeightBold);
+  color: var(--colorInk);
+  background-color: var(--colorMint);
+  border: var(--borderInk);
+  border-radius: 999px;
+  box-shadow: var(--shadowHardSmall);
+  transform: rotate(-2deg);
+}
+
+.title {
+  margin: 4px 0 0 0;
+  padding: 0;
+  font-size: 44px;
+  line-height: 1.05;
+  font-weight: var(--fontWeightHeavy);
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+  color: var(--colorInk);
+}
+
+.text {
+  margin: 0;
+  padding: 0;
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--colorInkSecondary);
+}
+
+/* Trust points: a calm white panel (trust zone) */
+.points {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  margin: 8px 0 0 0;
+  padding: 18px 20px;
+  list-style: none;
+  background-color: var(--colorWhite);
+  border: 1px solid var(--colorInkLine);
+  border-radius: var(--borderRadiusSticker);
+}
+
+.point {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--colorInk);
+}
+
+.checkIcon {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--colorSuccess);
+}
