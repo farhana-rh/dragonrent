@@ -262,7 +262,7 @@ const hasValidListingFieldsInExtendedData = (publicData, privateData, config) =>
  *
  * @return true if tab / step is completed.
  */
-const tabCompleted = (tab, listing, config, options = {}) => {
+export const tabCompleted = (tab, listing, config, options = {}) => {
   const {
     availabilityPlan,
     description,
@@ -314,7 +314,15 @@ const tabCompleted = (tab, listing, config, options = {}) => {
     case FILES:
       return filesRequired && hasAttachedFiles;
     case LOCATION:
-      return !!(geolocation && publicData?.location?.address);
+      // DragonRent (address privacy, 15 Nov): the exact address is in privateData.pickup and the
+      // public location has only the area, so a saved location is any of the three. Listings
+      // saved before the change still have the public address.
+      return !!(
+        geolocation &&
+        (privateData?.pickup?.address ||
+          publicData?.location?.area ||
+          publicData?.location?.address)
+      );
     case AVAILABILITY:
       return !!availabilityPlan;
     case PHOTOS:
@@ -741,8 +749,7 @@ class EditListingWizard extends Component {
 
     // New daily rentals go step by step: a step header, and Back and Next in a bottom bar.
     // Other processes keep the template's tabs (DragonRent only uses the booking process).
-    const isStepFlow =
-      isNewListingFlow && processName === BOOKING_PROCESS_NAME && tabs.length > 1;
+    const isStepFlow = isNewListingFlow && processName === BOOKING_PROCESS_NAME && tabs.length > 1;
     const stepIndex = tabs.indexOf(selectedTab);
     const stepClasses = isStepFlow
       ? classNames(stepFrameCss.flow, { [stepFrameCss.flowFirstStep]: stepIndex === 0 })

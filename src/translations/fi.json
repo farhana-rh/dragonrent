@@ -1796,6 +1796,7 @@
   "UserNav.screenreader.userNav": "Käyttäjäprofiilin navigaatio",
   "UserNav.yourListings": "Omat ilmoitukset",
   "EditListingAvailabilityPlanForm.screenreader.deleteEntry": "{hasTimeRange, select, yes {Poista aikaväli {startTime}–{endTime} päivän {dayOfWeek} saatavuudesta} other {Poista päivän {dayOfWeek} saatavuusmerkintä}}",
+  "EditListingLocationForm.pickFromList": "Valitse osoite kentän alla olevasta listasta jatkaaksesi.",
   "EditListingPhotosForm.coverImageBadge": "Kansikuva",
   "FileAttachments.downloadFile": "Lataa tiedosto {fileName}",
   "FileAttachments.downloadFileFallback": "Jos lataus ei alkanut, {link}.",

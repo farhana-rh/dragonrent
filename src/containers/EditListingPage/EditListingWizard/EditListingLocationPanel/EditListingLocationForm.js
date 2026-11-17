@@ -99,6 +99,14 @@ export const EditListingLocationForm = props => (
             </p>
           ) : null}
 
+          {/* DragonRent: Next stays off until a suggestion is picked; say so above the field
+              (the suggestion list covers what's below it) */}
+          {values.location?.search && !values.location?.selectedPlace ? (
+            <p className={css.pickHint} role="status">
+              <FormattedMessage id="EditListingLocationForm.pickFromList" />
+            </p>
+          ) : null}
+
           <FieldLocationAutocompleteInput
             rootClassName={css.locationAddress}
             inputClassName={css.locationAutocompleteInput}

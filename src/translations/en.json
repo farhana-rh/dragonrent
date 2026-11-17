@@ -373,6 +373,7 @@
   "EditListingLocationForm.building": "Apt, suite, building # {optionalText}",
   "EditListingLocationForm.buildingPlaceholder": "A 42",
   "EditListingLocationForm.optionalText": "• optional",
+  "EditListingLocationForm.pickFromList": "Pick your address from the list below the field to continue.",
   "EditListingLocationForm.showListingFailed": "Fetching listing data failed.",
   "EditListingLocationForm.updateFailed": "Failed to update listing. Please try again.",
   "EditListingLocationPanel.createListingTitle": "Location",
