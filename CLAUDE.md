@@ -27,6 +27,12 @@ If either is missing for the page you're about to change, stop and ask the user 
 from older material. The new mockups replace the earlier `Rental App/` ("dhar") exports and
 "DragonRent Mockups.pdf", which are kept only for reference.
 
+**New visual direction (user, 17 Nov):** "Playful in the product, professional in the promise",
+neo-brutalist sticker styling; reference `dragonrent-design/docs/design/mockups/HomeSticker.html`,
+summary at the top of DESIGN.md. It replaces Arctic Blue page by page, in phases the user approves.
+Its concept-only features (guarantee, deposits, ID checks, handoff photos, 48-hour payouts, ratings
+on cards, map/swipe views, newsletter) don't exist and must not appear in the app.
+
 ## Commands
 
 ```shell
