@@ -11,6 +11,9 @@ import { getListingsById } from '../../ducks/marketplaceData.duck';
 import { getFeaturedListingsProps } from '../../util/data';
 
 import NotFoundPage from '../../containers/NotFoundPage/NotFoundPage';
+
+import { getLegalPageOptions } from './LegalPage';
+
 const PageBuilder = loadable(() =>
   import(/* webpackChunkName: "PageBuilder" */ '../PageBuilder/PageBuilder')
 );
@@ -29,6 +32,7 @@ export const CMSPageComponent = props => {
       inProgress={inProgress}
       schemaType="Article"
       featuredListings={getFeaturedListingsProps(pageId, props)}
+      options={getLegalPageOptions(pageId)}
     />
   );
 };

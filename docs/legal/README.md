@@ -4,13 +4,26 @@
 DragonRent actually works in the code and in the Sharetribe booking process as of 22 Oct 2026, so
 the lawyer can check the facts as well as the wording. Text in [square brackets] must be filled in.
 
-| File | Console page id (Console → Content → Pages) | Link in |
-| --- | --- | --- |
-| `terms-of-service.md` | `terms-of-service` | Footer, sign-up, checkout |
-| `privacy-policy.md` | `privacy-policy` | Footer, sign-up, cookie banner |
-| `cancellation-policy.md` | `cancellation-policy` | Footer, checkout |
-| `damage-policy.md` | `damage-policy` | Footer |
-| `faq.md` | `faq` | Footer |
+| File | Console page id (Console → Content → Pages) | Title on the site | Link in |
+| --- | --- | --- | --- |
+| `terms-of-service.md` | `terms-of-service` | Terms and conditions | Footer, sign-up, checkout |
+| `privacy-policy.md` | `privacy-policy` | Privacy policy | Footer, sign-up |
+| `cancellation-policy.md` | `cancellation-policy` | Cancellation and refund policy | Footer, checkout |
+| `console/cookie-policy.md` | `cookie-policy` (**new page, create it**) | Cookie policy | Footer, cookie banner |
+| `damage-policy.md` | `damage-policy` | Damage policy | Footer |
+| `faq.md` | `faq` | FAQ | Footer |
+
+**Ready to paste (17 Nov):** `console/` holds the public text of Terms, Privacy, Cancellation and
+refund, and Cookie policy, without the notes for the lawyer. Each file says which Console fields
+to fill (Title, Description, one Markdown text block). Send the lawyer the drafts in this folder
+(with the notes); paste the `console/` versions into Console.
+
+**Layout (17 Nov):** these pages and FAQ use one layout built in code
+(`src/containers/CMSPage/LegalPage/`): a "Legal" label (FAQ: "Help"), the title, the text's first
+line when it starts with "Last updated", a "Draft, needs legal review" tag, an "On this page" list
+made from the `##` headings (when there are three or more), and links to the other policies. The
+draft tag comes from `underReview` in `legalPages.js`: set it to `false` for a page once the
+lawyer has approved it. The site doesn't render Markdown tables: use lists.
 
 How to use them:
 
@@ -18,8 +31,9 @@ How to use them:
    service does and doesn't do).
 2. Paste the reviewed text into each Console page, keeping the page ids above: the site links to
    those exact ids.
-3. Keep the line "Draft, needs legal review" at the top of each page until the lawyer has approved
-   it.
+3. The "Draft, needs legal review" tag is shown by the code (`underReview` in
+   `src/containers/CMSPage/LegalPage/legalPages.js`) until the lawyer has approved a page; the
+   Console text doesn't need that line.
 4. Console pages hold one language. Ask the lawyer whether the Finnish versions must be on the site
    at launch; if so, they need their own pages (for example `kayttoehdot`) and links.
 

@@ -37,28 +37,58 @@ import {
 import css from './ManageListingsPage.module.css';
 import DiscardDraftModal from './DiscardDraftModal/DiscardDraftModal';
 
+const LendAnItemLink = () => (
+  <NamedLink className={css.lendAnItemLink} name="NewListingPage">
+    <svg
+      className={css.plusIcon}
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.4"
+      strokeLinecap="round"
+      aria-hidden="true"
+    >
+      <path d="M12 5v14M5 12h14" />
+    </svg>
+    <FormattedMessage id="ManageListingsPage.lendAnItem" />
+  </NamedLink>
+);
+
+/**
+ * "Your items" heading with the item count and the page's one main button, "Lend an item".
+ * With no items, an empty-state card with the same button.
+ */
 const Heading = props => {
-  const { listingsAreLoaded, pagination } = props;
+  const { listingsAreLoaded, pagination, showCreateListingLink } = props;
   const hasResults = listingsAreLoaded && pagination.totalItems > 0;
   const hasNoResults = listingsAreLoaded && pagination.totalItems === 0;
 
   return hasResults ? (
-    <H3 as="h1" className={css.heading}>
-      <FormattedMessage
-        id="ManageListingsPage.youHaveListings"
-        values={{ count: pagination.totalItems }}
-      />
-    </H3>
+    <header className={css.header}>
+      <div className={css.headerText}>
+        <H3 as="h1" className={css.heading}>
+          <FormattedMessage id="ManageListingsPage.heading" />
+        </H3>
+        <p className={css.itemCount}>
+          <FormattedMessage
+            id="ManageListingsPage.itemCount"
+            values={{ count: pagination.totalItems }}
+          />
+        </p>
+      </div>
+      {showCreateListingLink ? <LendAnItemLink /> : null}
+    </header>
   ) : hasNoResults ? (
     <div className={css.noResultsContainer}>
-      <H3 as="h1" className={css.headingNoListings}>
-        <FormattedMessage id="ManageListingsPage.noResults" />
+      <H3 as="h1" className={css.heading}>
+        <FormattedMessage id="ManageListingsPage.heading" />
       </H3>
-      <p className={css.createListingParagraph}>
-        <NamedLink className={css.createListingLink} name="NewListingPage">
-          <FormattedMessage id="ManageListingsPage.createListing" />
-        </NamedLink>
+      <p className={css.noResultsText}>
+        <FormattedMessage id="ManageListingsPage.emptyText" />
       </p>
+      {showCreateListingLink ? <LendAnItemLink /> : null}
     </div>
   ) : null;
 };
@@ -103,7 +133,6 @@ const PaginationLinksMaybe = props => {
  * @returns {JSX.Element} manage listings page component
  */
 export const ManageListingsPageComponent = props => {
-  const [listingMenuOpen, setListingMenuOpen] = useState(null);
   const [discardDraftModalOpen, setDiscardDraftModalOpen] = useState(null);
   const [discardDraftModalId, setDiscardDraftModalId] = useState(null);
   const history = useHistory();
@@ -139,10 +168,6 @@ export const ManageListingsPageComponent = props => {
       history.push(noAccessPagePath);
     }
   }, [openingListingError]);
-
-  const onToggleMenu = listing => {
-    setListingMenuOpen(listing);
-  };
 
   const handleOpenListing = listingId => {
     const hasPostingRights = hasPermissionToPostListings(currentUser);
@@ -191,13 +216,8 @@ export const ManageListingsPageComponent = props => {
   const openingErrorListingId = !!openingListingError && openingListingError.listingId;
   const discardingErrorListingId = !!discardingDraftError && discardingDraft.listingId;
 
-  const panelWidth = 62.5;
-  // Render hints for responsive image
-  const renderSizes = [
-    `(max-width: 767px) 100vw`,
-    `(max-width: 1920px) ${panelWidth / 2}vw`,
-    `${panelWidth / 3}vw`,
-  ].join(', ');
+  // Render hints for responsive image: one column on phones, two from 550px, three from 1024px
+  const renderSizes = [`(max-width: 549px) 100vw`, `(max-width: 1023px) 50vw`, `400px`].join(', ');
 
   const showManageListingsLink = showCreateListingLinkForUser(config, currentUser);
 
@@ -222,16 +242,18 @@ export const ManageListingsPageComponent = props => {
         {queryListingsError ? queryError : null}
 
         <div className={css.listingPanel}>
-          <Heading listingsAreLoaded={listingsAreLoaded} pagination={pagination} />
+          <Heading
+            listingsAreLoaded={listingsAreLoaded}
+            pagination={pagination}
+            showCreateListingLink={showManageListingsLink}
+          />
 
           <ul className={css.listingCards}>
             {listings.map(l => (
               <li key={l.id.uuid} className={css.listingCard}>
                 <ManageListingCard
                   listing={l}
-                  isMenuOpen={!!listingMenuOpen && listingMenuOpen.id.uuid === l.id.uuid}
                   actionsInProgressListingId={openingListing || closingListing || discardingDraft}
-                  onToggleMenu={onToggleMenu}
                   onCloseListing={onCloseListing}
                   onOpenListing={handleOpenListing}
                   onDiscardDraft={openDiscardDraftModal}

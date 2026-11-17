@@ -1,186 +1,217 @@
 @import '../../../styles/customMediaQueries.css';
 
+/*
+ * DragonRent sticker card for "Your items" (approved mockup, 17 Nov): white card, 2px ink border,
+ * 16px corners, hard shadow; status sticker over the photo's bottom edge; actions as visible
+ * secondary buttons (no "…" menu).
+ */
 .root {
-  /* Layout */
   display: flex;
   flex-direction: column;
   position: relative;
-
-  /* Remove link's hover effect */
-  &:hover {
-    text-decoration: none;
-  }
+  height: 100%;
+  background-color: var(--colorWhite);
+  border: var(--borderInk);
+  border-radius: var(--borderRadiusSticker);
+  box-shadow: var(--shadowHard);
+  overflow: hidden;
 }
 
 .thumbnailContainer {
-  /* Layout */
-  display: block;
-  width: 100%;
   position: relative;
-  transition: var(--transitionStyleButton);
-
-  &:hover {
-    transform: scale(1.02);
-    box-shadow: var(--boxShadowListingCard);
-  }
-}
-
-.clickWrapperClickable {
-  cursor: pointer;
+  width: 100%;
 }
 
 .info {
-  /* Layout */
+  position: relative;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  padding: 8px 0 2px 0;
-
-  @media (--viewportMedium) {
-    padding: 14px 0 2px 0;
-  }
+  gap: 12px;
+  padding: 24px 16px 18px 16px;
 }
 
-.price {
-  composes: textSmall from global;
+/* ================ Status sticker ================ */
 
-  /* Layout */
+.statusSticker {
+  position: absolute;
+  top: -18px;
+  left: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 12px;
+  font-size: 13px;
+  line-height: 1;
+  font-weight: var(--fontWeightHeavy);
+  color: var(--colorInk);
+  border: var(--borderInk);
+  border-radius: 999px;
+  box-shadow: var(--shadowHardSmall);
+  transform: rotate(-2deg);
+}
+
+.statusIcon {
+  width: 12px;
+  height: 12px;
   flex-shrink: 0;
-  margin-bottom: 4px;
-  color: var(--colorGrey700);
 }
 
-.priceValue {
-  /* Font */
-  font-weight: var(--fontWeightSemiBold);
-  color: var(--marketplaceColor);
-
-  /* Remove default margins from font */
-  margin-top: 0;
-  margin-bottom: 0;
-
-  @media (--viewportMedium) {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
+.statusLive {
+  background-color: var(--colorMint);
 }
 
-.perUnit {
-  /* Font */
-  font-weight: var(--fontWeightSemiBold);
-  color: var(--marketplaceColor);
-
-  /* Remove default margins from font */
-  margin-top: 0;
-  margin-bottom: 0;
-
-  @media (--viewportMedium) {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
+.statusDraft {
+  background-color: var(--colorMarigold);
 }
 
-.noPrice {
-  composes: perUnit;
-  padding: 5px 0 3px 0;
+.statusPending {
+  background-color: var(--colorAccentSubtle);
 }
+
+.statusClosed {
+  background-color: var(--colorCream);
+}
+
+/* ================ Title, price, note ================ */
 
 .mainInfo {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
-}
-
-.titleWrapper {
-  line-height: 24px;
+  gap: 6px;
 }
 
 .title {
-  composes: p from global;
-
-  /* Position and dimensions */
-  display: inline;
-
-  /* Borders */
-  border: none;
-
-  /* Text size should be inherited */
+  font-size: 18px;
+  line-height: 1.3;
+  font-weight: var(--fontWeightBold);
+  color: var(--colorInk);
   text-decoration: none;
 
-  /* Font */
-  font-weight: var(--fontWeightSemiBold);
-  line-height: 24px;
+  &:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
 
-  color: var(--colorGrey700);
-  text-align: left;
+.price {
+  font-size: 15px;
+  line-height: 1.4;
+  font-weight: var(--fontWeightRegular);
+  color: var(--colorInkSecondary);
+}
 
-  padding: 3px 0;
+.priceValue {
+  font-weight: var(--fontWeightBold);
+  color: var(--colorInk);
+}
 
-  /* Remove default margins from font */
+.perUnit {
+  color: var(--colorInkSecondary);
+}
+
+.noPrice {
+  composes: price;
+}
+
+.note {
   margin: 0;
-
-  &:hover {
-    text-decoration: underline;
-    cursor: pointer;
-  }
-
-  @media (--viewportMedium) {
-    padding: 0;
-    margin: 0;
-  }
+  padding: 0;
+  font-size: 13px;
+  line-height: 1.4;
+  font-weight: var(--fontWeightRegular);
+  color: var(--colorInkSecondary);
 }
 
-.edit {
+/* ================ Actions ================ */
+
+.actions {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.actionRow {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+/* Secondary sticker button (also used for links); 44px tap target */
+.actionButton {
   composes: buttonSecondary from global;
-
-  /* TODO: Odd font-size */
-  font-size: 14px;
-
-  /* Reset min-height from button styles */
-  min-height: 0;
-
-  /* Reserve space for button */
-  flex-shrink: 0;
-  width: auto;
-  height: 41px;
-  padding: 7px 14px 7px 35px;
-
-  /* Add edit icon as a background image */
-  background-image: url('data:image/svg+xml;utf8,<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><g stroke="%234A4A4A" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"><path d="M5.307 11.155L1 13l1.846-4.308L10.54 1 13 3.46zM11 5L9 3M5 11L3 9"/></g></svg>');
-  background-repeat: no-repeat;
-  background-position: 15px center;
-}
-
-.manageLinks {
-  composes: marketplaceTinyFontStyles from global;
-  line-height: 18px;
-  padding-top: 2px;
-  padding-bottom: 4px;
-
-  /* Remove default margins from font */
-  margin-top: 0;
-  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 8px;
+  font-size: 15px;
+  line-height: 1.2;
+  font-weight: var(--fontWeightBold);
+  text-align: center;
 
   @media (--viewportMedium) {
-    line-height: 24px;
-    padding-top: 0;
-    padding-bottom: 0;
-
-    margin-top: 0;
-    margin-bottom: 0;
+    padding: 0 8px;
   }
 }
 
+.actionButtonWide {
+  composes: actionButton;
+  width: 100%;
+}
+
+/* "Manage availability" with its icon */
 .manageLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  min-height: 44px;
+  font-size: 15px;
+  font-weight: var(--fontWeightBold);
+  color: var(--colorInk);
   text-decoration: underline;
-  color: var(--colorGrey700);
-  white-space: pre;
+  text-underline-offset: 3px;
 
   &:hover {
+    color: var(--colorElectric);
     text-decoration: underline;
-    color: var(--colorBlack);
   }
 }
 
-.manageLinksSeparator {
-  margin: 0 3px 0 3px;
+.linkIcon {
+  flex-shrink: 0;
+}
+
+/* "Discard draft" */
+.textButton {
+  composes: buttonDefault from global;
+  align-self: flex-start;
+  width: auto;
+  min-height: 44px;
+  padding: 0;
+  font-size: 15px;
+  font-weight: var(--fontWeightBold);
+  color: var(--colorInk);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  background: none;
+  border: none;
+  box-shadow: none;
+
+  &:hover,
+  &:focus {
+    color: var(--colorElectric);
+    background: none;
+    text-decoration: underline;
+    box-shadow: none;
+  }
+
+  &:disabled {
+    color: var(--colorInkSecondary);
+    background: none;
+    cursor: not-allowed;
+  }
 }

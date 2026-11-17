@@ -1,91 +1,114 @@
 @import '../../styles/customMediaQueries.css';
 
-.error {
-  margin-top: 5px;
+/*
+ * Profile page (DragonRent sticker design, approved mockup 17 Nov): a sticker header card,
+ * the user's items as sticker listing cards, and reviews in calm white cards.
+ */
+
+.content {
+  width: 100%;
+  max-width: calc(var(--contentMaxWidth) + 72px);
+  margin: 0 auto;
+  padding: 36px 24px 72px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
 
   @media (--viewportMedium) {
-    margin-top: 4px;
+    padding: 48px 32px 96px 32px;
+    gap: 56px;
   }
+
   @media (--viewportLarge) {
-    margin-top: 3px;
+    padding: 56px 36px 96px 36px;
+  }
+
+  @media (--viewportXLarge) {
+    max-width: var(--contentMaxWidth);
   }
 }
 
 .error {
+  margin: 0;
   color: var(--colorFail);
 }
 
-.aside {
-  box-shadow: none;
-}
+/* ================ Header card ================ */
 
-.asideContent {
-  width: 100%;
+.header {
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
-  border-bottom: 1px solid var(--colorGrey100);
+  align-items: flex-start;
+  gap: 24px;
+  padding: 24px;
+  background-color: var(--colorWhite);
+  border: var(--borderInk);
+  border-radius: var(--borderRadiusSticker);
+  box-shadow: var(--shadowHard);
 
-  @media (--viewportLarge) {
-    flex-direction: column;
-    border-bottom: none;
+  @media (--viewportMedium) {
+    gap: 32px;
+    padding: 32px;
   }
 }
 
 .avatar {
-  margin: 30px 26px 29px 0;
   flex-shrink: 0;
-
-  @media (--viewportLarge) {
-    margin: 0 96px 48px 0;
-  }
-}
-.avatarPlaceholder {
-  composes: avatar;
-  width: 96px;
+  border: var(--borderInk);
+  box-shadow: 3px 3px 0 var(--colorInk);
 }
 
-.mobileHeading {
-  flex-shrink: 0;
-  margin: 60px 0 0 0;
+.headerText {
+  flex: 999 1 300px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.heading {
+  margin: 0;
+  padding: 0;
+  font-size: 32px;
+  line-height: 1.1;
+  font-weight: var(--fontWeightHeavy);
+  letter-spacing: -0.02em;
 
   @media (--viewportMedium) {
-    margin: 49px 0 0 0;
-  }
-  @media (--viewportLarge) {
-    display: none;
+    font-size: 40px;
   }
 }
 
-.editLinkMobile {
-  margin-top: 17px;
-
-  /* Pull the link to the end of the container */
-  margin-left: auto;
-
-  @media (--viewportMedium) {
-    margin-top: 20px;
-  }
-  @media (--viewportLarge) {
-    display: none;
-  }
+.rating {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  font-size: 15px;
+  line-height: 1.4;
 }
 
-.editLinkDesktop {
-  display: none;
-
-  @media (--viewportLarge) {
-    display: inline;
-    padding: 6px 0 2px 0;
-  }
+.ratingStar {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
 }
 
-.desktopHeading {
-  display: none;
+.ratingValue {
+  font-size: 18px;
+  font-weight: var(--fontWeightHeavy);
+}
 
-  @media (--viewportLarge) {
-    display: block;
-    margin: 0 0 24px 0;
+.ratingLink {
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorInkSecondary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
+  &:hover {
+    color: var(--colorElectric);
   }
 }
 
@@ -97,134 +120,174 @@
 .bio {
   /* Preserve newlines, but collapse other whitespace */
   white-space: pre-line;
-  margin: 5px 0 24px 0;
-
-  @media (--viewportMedium) {
-    margin: 4px 0 51px 0;
-  }
-  @media (--viewportLarge) {
-    margin: 0 0 56px 0;
-    max-width: 600px;
-  }
-}
-
-.listingsContainer {
-  composes: clearfix from global;
-  border-top: 1px solid var(--colorGrey100);
-  padding-bottom: 23px;
-
-  @media (--viewportMedium) {
-    padding-bottom: 22px;
-  }
-}
-
-.listingsTitle {
-  color: var(--colorGrey700);
-  margin-bottom: 0;
-
-  @media (--viewportMedium) {
-    margin-top: 48px;
-    margin-bottom: 8px;
-  }
-  @media (--viewportLarge) {
-    margin-top: 56px;
-    margin-bottom: 8px;
-  }
-}
-
-.withBioMissingAbove {
-  /* Avoid extra borders in mobile when bio is missing */
-  border-top: none;
-
-  @media (--viewportLarge) {
-    border-top: 1px solid var(--colorGrey100);
-  }
-}
-
-.listings {
+  max-width: 640px;
   margin: 0;
+  padding: 0;
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.headerActions {
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: flex-start;
+
+  @media (--viewportMedium) {
+    justify-content: flex-end;
+  }
+}
+
+/* "Edit profile": secondary sticker button */
+.editLink {
+  composes: buttonSecondary from global;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: auto;
+  min-height: 48px;
+  padding: 0 20px;
+  font-size: 15px;
+  font-weight: var(--fontWeightBold);
+
+  @media (--viewportMedium) {
+    padding: 0 20px;
+  }
+}
+
+.editIcon {
+  flex-shrink: 0;
+}
+
+/* ================ Sections ================ */
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sectionTitleRow {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.sectionTitle {
+  margin: 0;
+  padding: 0;
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: var(--fontWeightHeavy);
+  letter-spacing: -0.01em;
+
+  @media (--viewportMedium) {
+    font-size: 28px;
+  }
+}
+
+.countBadge {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 12px;
+  font-size: 14px;
+  font-weight: var(--fontWeightHeavy);
+  background-color: var(--colorAccentSubtle);
+  border: var(--borderInk);
+  border-radius: 999px;
+  box-shadow: var(--shadowHardSmall);
+}
+
+/* Items: one column on phones, two from 550px, three from 1024px */
+.listings {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 24px;
+
+  @media (min-width: 550px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (--viewportLarge) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px;
+  }
 }
 
 .listing {
-  width: 100%;
-
-  /* Single column in mobile */
-  margin-top: 34px;
-  &:first-of-type {
-    margin-top: 18px;
-  }
-
-  @media (--viewportMedium) {
-    /* Two columns in desktop */
-    width: calc(50% - 12px);
-    margin-bottom: 36px;
-
-    /* Horizontal space */
-    &:nth-of-type(odd) {
-      margin-right: 12px;
-    }
-    &:nth-of-type(even) {
-      margin-left: 12px;
-    }
-
-    /* Vertical space */
-    margin-top: 0;
-    &:nth-of-type(1),
-    &:nth-of-type(2) {
-      margin-top: 20px;
-    }
-  }
+  display: flex;
+  flex-direction: column;
 }
 
-.mobileReviewsTitle {
-  margin: 24px 0 26px 0;
+/* ================ Reviews ================ */
+
+.reviewTabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
-.mobileReviews {
-  border-top: 1px solid var(--colorGrey100);
-  margin-bottom: 36px;
-}
+.reviewTab {
+  min-height: 44px;
+  padding: 0 18px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: var(--fontWeightBold);
+  color: var(--colorInk);
+  background-color: var(--colorWhite);
+  border: var(--borderInk);
+  border-radius: 999px;
+  box-shadow: var(--shadowHardSmall);
+  cursor: pointer;
 
-.desktopReviews {
-  border-top: 1px solid var(--colorGrey100);
-
-  @media (--viewportMedium) {
-    margin-bottom: 48px;
+  &:hover {
+    background-color: var(--colorCream);
   }
 
-  @media (--viewportLarge) {
-    margin-bottom: 0;
+  &:focus-visible {
+    outline: 3px solid var(--colorElectric);
+    outline-offset: 3px;
   }
 }
 
-.desktopReviewsWrapper {
-  max-width: 600px;
-  margin-top: 28px;
+.reviewTabSelected,
+.reviewTabSelected:hover {
+  color: var(--colorCream);
+  background-color: var(--colorInk);
+  box-shadow: 2px 2px 0 var(--colorCoral);
 }
 
-.desktopReviewsTitle {
-  composes: textLarge from global;
-  margin-bottom: 0;
+.noReviews {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  color: var(--colorInkSecondary);
 }
 
-.desktopReviewsTabNav {
-  margin-bottom: 32px;
-}
+/* Reviews sit in calm cards (trust zone): white, 1px line, no stickers */
+.reviewsList {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  max-width: 760px;
+  margin: 0;
 
-.sectionText {
-  padding: 0 24px;
-  margin-bottom: 30px;
-
-  @media (--viewportMedium) {
-    padding: 0;
-    margin-bottom: 40px;
+  & > li {
+    margin: 0;
+    padding: 20px;
+    background-color: var(--colorWhite);
+    border: 1px solid var(--colorInkLine);
+    border-radius: var(--borderRadiusSticker);
   }
 }
 
-/* 
- * Custom field component classes 
+/*
+ * Custom field component classes
  */
 
 .sectionHeading {

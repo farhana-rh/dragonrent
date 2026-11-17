@@ -57,6 +57,8 @@ DragonRent. Contact for privacy questions: [email].
 - **Analytics:** only after you choose "Allow analytics". You can change your choice under
   "Cookie settings".
 
+The full list is in the Cookie policy (`console/cookie-policy.md`, page id `cookie-policy`).
+
 ## 6. How long we keep data
 
 - Account data: as long as you have an account, then [period] after you close it.

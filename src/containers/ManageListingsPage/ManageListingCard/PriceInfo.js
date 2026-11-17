@@ -4,6 +4,7 @@ import { FormattedMessage, useIntl } from '../../../util/reactIntl';
 import { displayPrice, isPriceVariationsEnabled } from '../../../util/configHelpers';
 import { useConfiguration } from '../../../context/configurationContext';
 import { formatMoney } from '../../../util/currency';
+import { getLowestDailyPrice } from '../../../util/durationPricing';
 
 import css from './ManageListingCard.module.css';
 
@@ -54,8 +55,14 @@ const PriceInfo = props => {
     return null;
   }
 
+  // DragonRent: a daily listing with cheaper 3- or 7-day prices shows "From €X per day", the
+  // lowest price per day, like the listing cards in search (src/util/durationPricing.js).
+  const lowestDailyPrice = isBookable ? getLowestDailyPrice(price, publicData) : price;
+  const hasCheaperDurationPrice =
+    !!price && !!lowestDailyPrice && lowestDailyPrice.amount < price.amount;
+
   const marketplaceCurrency = config.currency;
-  const { formattedPrice } = priceData(price, marketplaceCurrency, intl);
+  const { formattedPrice } = priceData(lowestDailyPrice, marketplaceCurrency, intl);
   if (!formattedPrice) {
     return (
       <div className={css.noPrice}>
@@ -77,7 +84,7 @@ const PriceInfo = props => {
 
   return (
     <div className={css.price}>
-      {hasMultiplePriceVariants ? (
+      {hasMultiplePriceVariants || hasCheaperDurationPrice ? (
         <FormattedMessage
           id="ManageListingCard.priceStartingFrom"
           values={{ priceValue, pricePerUnit }}

@@ -13,6 +13,7 @@ import { fetchFeaturedListings } from '../../ducks/featuredListings.duck';
 import { getListingsById } from '../../ducks/marketplaceData.duck';
 
 import { H1 } from '../PageBuilder/Primitives/Heading';
+import { getLegalPageOptions } from '../CMSPage/LegalPage';
 import FallbackPage, { fallbackSections } from './FallbackPage';
 import { ASSET_NAME } from './PrivacyPolicyPage.duck';
 
@@ -70,6 +71,7 @@ const PrivacyPolicyPageComponent = props => {
       inProgress={inProgress}
       error={error}
       fallbackPage={<FallbackPage />}
+      options={getLegalPageOptions(ASSET_NAME)}
       featuredListings={getFeaturedListingsProps(camelize(ASSET_NAME), props)}
     />
   );

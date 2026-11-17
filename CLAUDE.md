@@ -173,6 +173,25 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
   uploaded in Dev Console (Build → Branding, 36px). Live journey check passes. The old free service
   dragonrent.onrender.com is obsolete. Still open: Console categories (52, incl. junk), drill
   re-save + availability, more listings, Dev Console Marketplace URL, process push, legal review.
+- **Profile and "Your items" pages (17 Nov, sticker design, committed locally, not pushed):** built from the
+  approved canvas https://claude.ai/artifact/P3jEiALqo4qG7tniTnEsq7 (no mockup in
+  `dragonrent-design/`). Profile: single column, sticker header card (avatar, "Hi, I'm {name}",
+  average of all loaded reviews via `src/util/reviews.js`, bio, "Edit profile"), items grid,
+  review pills "From renters" / "As a renter" (same on every screen size). "Your items"
+  (`ManageListingsPage`): the "…" menu is gone (`CardMenu`/`MenuIcon` deleted); each card shows a
+  status sticker (Live/Draft/Closed/Waiting for approval/Out of stock), a one-line note and
+  visible buttons (Edit/Close, Finish/Discard, Open/Edit, Preview/Edit), price "From €X per day"
+  via `getLowestDailyPrice`. The heading's "Lend an item" hides from 1024px (top bar has one).
+- **Legal pages (17 Nov, committed locally, not pushed):** one calm layout for Terms, Privacy, Cancellation and
+  refund, Cookie policy, Damage policy (label "Legal", draft tag) and FAQ ("Help", no tag), from
+  the approved canvas https://claude.ai/artifact/TRK7GZAbYFvejs18tpFmJp. Code in
+  `src/containers/CMSPage/LegalPage/` (custom "article" section via PageBuilder
+  `sectionComponents`; also on `/terms-of-service` and `/privacy-policy`). Text stays in Console;
+  "Last updated" = the text's first line; "On this page" from `##` headings; draft tag from
+  `underReview` in `legalPages.js`. Markdown tables don't render (no remark-gfm): use lists.
+  Page names (user, 17 Nov): "Terms and conditions", "Cancellation and refund policy" (page ids
+  unchanged). Cookie policy is new: footer and cookie banner link `/p/cookie-policy`, which 404s
+  until the user creates that Console page. Paste-ready texts: `docs/legal/console/`.
 - **Footer (17 Nov):** built in code from the HomeSticker.html footer (`SectionFooter`): brand +
   slogan + "The neighbourhood digest", then Explore / Lend / Help columns, bottom row with Cookie
   settings. Console footer content is no longer shown. The digest form is disabled and labelled

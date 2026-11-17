@@ -28,20 +28,19 @@ import {
   isUserAuthorized,
 } from '../../util/userHelpers';
 import { richText } from '../../util/richText';
+import { getReviewsSummary } from '../../util/reviews';
 
 import { isScrollingDisabled } from '../../ducks/ui.duck';
 import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import {
-  Heading,
   H2,
-  H4,
   Page,
   AvatarLarge,
   NamedLink,
   ListingCard,
   Reviews,
-  ButtonTabNavHorizontal,
-  LayoutSideNavigation,
+  IconReviewStar,
+  LayoutSingleColumn,
   NamedRedirect,
   CustomExtendedDataSection,
 } from '../../components';
@@ -52,30 +51,91 @@ import NotFoundPage from '../../containers/NotFoundPage/NotFoundPage';
 
 import css from './ProfilePage.module.css';
 
-const MAX_MOBILE_SCREEN_WIDTH = 768;
 const MIN_LENGTH_FOR_LONG_WORDS = 20;
 
-export const AsideContent = props => {
-  const { user, displayName, showLinkToProfileSettingsPage } = props;
+const IconEditPencil = () => (
+  <svg
+    className={css.editIcon}
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M12 20h9" />
+    <path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z" />
+  </svg>
+);
+
+/**
+ * Sticker card at the top of the profile: avatar, "Hi, I'm {name}", the average rating of the
+ * reviews the page has loaded (linked to the reviews), the bio and, on your own profile,
+ * "Edit profile".
+ *
+ * @component
+ * @param {Object} props
+ * @param {propTypes.user|propTypes.currentUser} props.user - The profile's user
+ * @param {string} props.displayName - The user's display name
+ * @param {string} [props.bio] - The user's bio
+ * @param {Array<propTypes.review>} props.reviews - Reviews of the user
+ * @param {boolean} props.hideReviews - Whether reviews are hidden (no viewing rights)
+ * @param {boolean} props.showLinkToProfileSettingsPage - Whether to show "Edit profile"
+ * @returns {JSX.Element} profile header
+ */
+export const ProfileHeader = props => {
+  const intl = useIntl();
+  const { user, displayName, bio, reviews, hideReviews, showLinkToProfileSettingsPage } = props;
+  const summary = hideReviews ? null : getReviewsSummary(reviews);
+
+  const bioWithLinks = bio
+    ? richText(bio, {
+        linkify: true,
+        longWordMinLength: MIN_LENGTH_FOR_LONG_WORDS,
+        longWordClass: css.longWord,
+      })
+    : null;
+
   return (
-    <div className={css.asideContent}>
+    <section className={css.header}>
       <AvatarLarge className={css.avatar} user={user} disableProfileLink />
-      <H2 as="h1" className={css.mobileHeading}>
-        {displayName ? (
-          <FormattedMessage id="ProfilePage.mobileHeading" values={{ name: displayName }} />
+      <div className={css.headerText}>
+        <H2 as="h1" className={css.heading}>
+          {displayName ? (
+            <FormattedMessage id="ProfilePage.greeting" values={{ name: displayName }} />
+          ) : null}
+        </H2>
+        {summary ? (
+          <p className={css.rating}>
+            <IconReviewStar className={css.ratingStar} isFilled />
+            <span
+              className={css.ratingValue}
+              aria-label={intl.formatMessage(
+                { id: 'ProfilePage.ratingLabel' },
+                { rating: intl.formatNumber(summary.average) }
+              )}
+            >
+              {intl.formatNumber(summary.average)}
+            </span>
+            <a className={css.ratingLink} href="#reviews">
+              <FormattedMessage id="ProfilePage.reviewCount" values={{ count: summary.count }} />
+            </a>
+          </p>
         ) : null}
-      </H2>
+        {bioWithLinks ? <p className={css.bio}>{bioWithLinks}</p> : null}
+      </div>
       {showLinkToProfileSettingsPage ? (
-        <>
-          <NamedLink className={css.editLinkMobile} name="ProfileSettingsPage">
-            <FormattedMessage id="ProfilePage.editProfileLinkMobile" />
-          </NamedLink>
-          <NamedLink className={css.editLinkDesktop} name="ProfileSettingsPage">
+        <div className={css.headerActions}>
+          <NamedLink className={css.editLink} name="ProfileSettingsPage">
+            <IconEditPencil />
             <FormattedMessage id="ProfilePage.editProfileLinkDesktop" />
           </NamedLink>
-        </>
+        </div>
       ) : null}
-    </div>
+    </section>
   );
 };
 
@@ -88,34 +148,19 @@ export const ReviewsErrorMaybe = props => {
   ) : null;
 };
 
-export const MobileReviews = props => {
-  const { reviews, queryReviewsError } = props;
-  const reviewsOfProvider = reviews.filter(r => r.attributes.type === REVIEW_TYPE_OF_PROVIDER);
-  const reviewsOfCustomer = reviews.filter(r => r.attributes.type === REVIEW_TYPE_OF_CUSTOMER);
-  return (
-    <div className={css.mobileReviews}>
-      <H4 as="h2" className={css.mobileReviewsTitle}>
-        <FormattedMessage
-          id="ProfilePage.reviewsFromMyCustomersTitle"
-          values={{ count: reviewsOfProvider.length }}
-        />
-      </H4>
-      <ReviewsErrorMaybe queryReviewsError={queryReviewsError} />
-      <Reviews reviews={reviewsOfProvider} />
-      <H4 as="h2" className={css.mobileReviewsTitle}>
-        <FormattedMessage
-          id="ProfilePage.reviewsAsACustomerTitle"
-          values={{ count: reviewsOfCustomer.length }}
-        />
-      </H4>
-      <ReviewsErrorMaybe queryReviewsError={queryReviewsError} />
-      <Reviews reviews={reviewsOfCustomer} />
-    </div>
-  );
-};
-
-export const DesktopReviews = props => {
-  const { reviews, queryReviewsError, userTypeRoles, intl } = props;
+/**
+ * Reviews section: "From renters" (reviews of the user as an owner) and "As a renter"
+ * (reviews of the user as a renter) as pill buttons, the same on every screen size.
+ *
+ * @component
+ * @param {Object} props
+ * @param {Array<propTypes.review>} props.reviews - The reviews
+ * @param {propTypes.error} props.queryReviewsError - The query reviews error
+ * @param {Object} props.userTypeRoles - { customer, provider } roles of the profile's user
+ * @returns {JSX.Element} reviews section
+ */
+export const ProfileReviews = props => {
+  const { reviews, queryReviewsError, userTypeRoles } = props;
   const { customer: isCustomerUserType, provider: isProviderUserType } = userTypeRoles;
 
   const initialReviewState = !isProviderUserType
@@ -125,61 +170,64 @@ export const DesktopReviews = props => {
 
   const reviewsOfProvider = reviews.filter(r => r.attributes.type === REVIEW_TYPE_OF_PROVIDER);
   const reviewsOfCustomer = reviews.filter(r => r.attributes.type === REVIEW_TYPE_OF_CUSTOMER);
-  const isReviewTypeProviderSelected = showReviewsType === REVIEW_TYPE_OF_PROVIDER;
-  const isReviewTypeCustomerSelected = showReviewsType === REVIEW_TYPE_OF_CUSTOMER;
-  const providerReviewsMaybe = isProviderUserType
-    ? [
-        {
-          text: (
-            <Heading as="h3" rootClassName={css.desktopReviewsTitle}>
-              <FormattedMessage
-                id="ProfilePage.reviewsFromMyCustomersTitle"
-                values={{ count: reviewsOfProvider.length }}
-              />
-            </Heading>
-          ),
-          selected: isReviewTypeProviderSelected,
-          onClick: () => setShowReviewsType(REVIEW_TYPE_OF_PROVIDER),
-        },
-      ]
-    : [];
 
-  const customerReviewsMaybe = isCustomerUserType
-    ? [
-        {
-          text: (
-            <Heading as="h3" rootClassName={css.desktopReviewsTitle}>
-              <FormattedMessage
-                id="ProfilePage.reviewsAsACustomerTitle"
-                values={{ count: reviewsOfCustomer.length }}
-              />
-            </Heading>
-          ),
-          selected: isReviewTypeCustomerSelected,
-          onClick: () => setShowReviewsType(REVIEW_TYPE_OF_CUSTOMER),
-        },
-      ]
-    : [];
-  const desktopReviewTabs = [...providerReviewsMaybe, ...customerReviewsMaybe];
+  const tabs = [
+    ...(isProviderUserType
+      ? [
+          {
+            type: REVIEW_TYPE_OF_PROVIDER,
+            labelId: 'ProfilePage.reviewsFromRenters',
+            count: reviewsOfProvider.length,
+          },
+        ]
+      : []),
+    ...(isCustomerUserType
+      ? [
+          {
+            type: REVIEW_TYPE_OF_CUSTOMER,
+            labelId: 'ProfilePage.reviewsAsRenter',
+            count: reviewsOfCustomer.length,
+          },
+        ]
+      : []),
+  ];
+
+  const shownReviews =
+    showReviewsType === REVIEW_TYPE_OF_PROVIDER ? reviewsOfProvider : reviewsOfCustomer;
 
   return (
-    <div className={css.desktopReviews}>
-      <div className={css.desktopReviewsWrapper}>
-        <ButtonTabNavHorizontal
-          className={css.desktopReviewsTabNav}
-          tabs={desktopReviewTabs}
-          ariaLabel={intl.formatMessage({ id: 'ProfilePage.screenreader.reviewsNav' })}
-        />
+    <section id="reviews" className={css.section}>
+      <H2 as="h2" className={css.sectionTitle}>
+        <FormattedMessage id="ProfilePage.reviewsHeading" />
+      </H2>
+      {tabs.length > 1 ? (
+        <div className={css.reviewTabs}>
+          {tabs.map(tab => {
+            const isSelected = tab.type === showReviewsType;
+            return (
+              <button
+                key={tab.type}
+                type="button"
+                className={classNames(css.reviewTab, { [css.reviewTabSelected]: isSelected })}
+                aria-pressed={isSelected}
+                onClick={() => setShowReviewsType(tab.type)}
+              >
+                <FormattedMessage id={tab.labelId} values={{ count: tab.count }} />
+              </button>
+            );
+          })}
+        </div>
+      ) : null}
 
-        <ReviewsErrorMaybe queryReviewsError={queryReviewsError} />
+      <ReviewsErrorMaybe queryReviewsError={queryReviewsError} />
 
-        {isReviewTypeProviderSelected ? (
-          <Reviews reviews={reviewsOfProvider} />
-        ) : (
-          <Reviews reviews={reviewsOfCustomer} />
-        )}
-      </div>
-    </div>
+      {!queryReviewsError && shownReviews.length === 0 ? (
+        <p className={css.noReviews}>
+          <FormattedMessage id="ProfilePage.noReviews" />
+        </p>
+      ) : null}
+      <Reviews className={css.reviewsList} reviews={shownReviews} />
+    </section>
   );
 };
 
@@ -241,13 +289,12 @@ export const CustomUserFields = props => {
   );
 };
 
+/**
+ * Profile content: header card, Console user fields, the user's items and reviews.
+ */
 export const MainContent = props => {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   const {
+    user,
     userShowError,
     bio,
     displayName,
@@ -261,39 +308,30 @@ export const MainContent = props => {
     intl,
     hideReviews,
     userTypeRoles,
+    showLinkToProfileSettingsPage,
   } = props;
 
   const hasListings = listings.length > 0;
-  const hasMatchMedia = typeof window !== 'undefined' && window?.matchMedia;
-  const isMobileLayout =
-    mounted && hasMatchMedia
-      ? window.matchMedia(`(max-width: ${MAX_MOBILE_SCREEN_WIDTH}px)`)?.matches
-      : true;
-
-  const hasBio = !!bio;
-  const bioWithLinks = richText(bio, {
-    linkify: true,
-    longWordMinLength: MIN_LENGTH_FOR_LONG_WORDS,
-    longWordClass: css.longWord,
-  });
-
-  const listingsContainerClasses = classNames(css.listingsContainer, {
-    [css.withBioMissingAbove]: !hasBio,
-  });
 
   if (userShowError || queryListingsError) {
     return (
-      <p className={css.error}>
-        <FormattedMessage id="ProfilePage.loadingDataFailed" />
-      </p>
+      <div className={css.content}>
+        <p className={css.error}>
+          <FormattedMessage id="ProfilePage.loadingDataFailed" />
+        </p>
+      </div>
     );
   }
   return (
-    <div>
-      <H2 as="h1" className={css.desktopHeading}>
-        <FormattedMessage id="ProfilePage.desktopHeading" values={{ name: displayName }} />
-      </H2>
-      {hasBio ? <p className={css.bio}>{bioWithLinks}</p> : null}
+    <div className={css.content}>
+      <ProfileHeader
+        user={user}
+        displayName={displayName}
+        bio={bio}
+        reviews={reviews}
+        hideReviews={hideReviews}
+        showLinkToProfileSettingsPage={showLinkToProfileSettingsPage}
+      />
 
       {displayName ? (
         <CustomUserFields
@@ -305,10 +343,13 @@ export const MainContent = props => {
       ) : null}
 
       {hasListings ? (
-        <div className={listingsContainerClasses}>
-          <H4 as="h2" className={css.listingsTitle}>
-            <FormattedMessage id="ProfilePage.listingsTitle" values={{ count: listings.length }} />
-          </H4>
+        <section className={css.section}>
+          <div className={css.sectionTitleRow}>
+            <H2 as="h2" className={css.sectionTitle}>
+              <FormattedMessage id="ProfilePage.itemsTitle" values={{ name: displayName }} />
+            </H2>
+            <span className={css.countBadge}>{listings.length}</span>
+          </div>
           <ul className={css.listings}>
             {listings.map(l => (
               <li className={css.listing} key={l.id.uuid}>
@@ -316,20 +357,14 @@ export const MainContent = props => {
               </li>
             ))}
           </ul>
-        </div>
+        </section>
       ) : null}
-      {hideReviews ? null : isMobileLayout ? (
-        <MobileReviews
+
+      {hideReviews ? null : (
+        <ProfileReviews
           reviews={reviews}
           queryReviewsError={queryReviewsError}
           userTypeRoles={userTypeRoles}
-        />
-      ) : (
-        <DesktopReviews
-          reviews={reviews}
-          queryReviewsError={queryReviewsError}
-          userTypeRoles={userTypeRoles}
-          intl={intl}
         />
       )}
     </div>
@@ -464,19 +499,9 @@ export const ProfilePageComponent = props => {
         name: schemaTitle,
       }}
     >
-      <LayoutSideNavigation
-        sideNavClassName={css.aside}
-        topbar={<TopbarContainer />}
-        sideNav={
-          <AsideContent
-            user={profileUser}
-            showLinkToProfileSettingsPage={mounted && isCurrentUser}
-            displayName={displayName}
-          />
-        }
-        footer={<FooterContainer />}
-      >
+      <LayoutSingleColumn topbar={<TopbarContainer />} footer={<FooterContainer />}>
         <MainContent
+          user={profileUser}
           bio={bio}
           displayName={displayName}
           userShowError={userShowError}
@@ -486,9 +511,10 @@ export const ProfilePageComponent = props => {
           hideReviews={hasNoViewingRightsOnPrivateMarketplace}
           intl={intl}
           userTypeRoles={userTypeRoles}
+          showLinkToProfileSettingsPage={mounted && isCurrentUser}
           {...rest}
         />
-      </LayoutSideNavigation>
+      </LayoutSingleColumn>
     </Page>
   );
 };

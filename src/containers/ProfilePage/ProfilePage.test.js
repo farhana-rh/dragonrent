@@ -126,7 +126,7 @@ describe('ProfilePage', () => {
         config,
       });
     });
-    expect(screen.getByText('ProfilePage.desktopHeading')).toBeInTheDocument();
+    expect(screen.getByText('ProfilePage.greeting')).toBeInTheDocument();
     expect(screen.getByText('I am a great cook!')).toBeInTheDocument();
   });
 
@@ -164,7 +164,7 @@ describe('ProfilePage', () => {
       });
     });
 
-    expect(screen.getByText('ProfilePage.listingsTitle')).toBeInTheDocument();
+    expect(screen.getByText('ProfilePage.itemsTitle')).toBeInTheDocument();
     expect(screen.getByText('l1 title')).toBeInTheDocument();
     expect(screen.getByText('ListingCard.price')).toBeInTheDocument();
   });
@@ -179,14 +179,61 @@ describe('ProfilePage', () => {
     });
     const { getByRole } = rendered;
 
-    expect(
-      getByRole('heading', { name: 'ProfilePage.reviewsFromMyCustomersTitle' })
-    ).toBeInTheDocument();
+    expect(getByRole('heading', { name: 'ProfilePage.reviewsHeading' })).toBeInTheDocument();
+    // Both review types are buttons; "From renters" (reviews as an owner) is selected first
+    expect(getByRole('button', { name: 'ProfilePage.reviewsFromRenters' })).toHaveAttribute(
+      'aria-pressed',
+      'true'
+    );
+    expect(getByRole('button', { name: 'ProfilePage.reviewsAsRenter' })).toHaveAttribute(
+      'aria-pressed',
+      'false'
+    );
 
     expect(screen.getByText('Awesome!')).toBeInTheDocument();
     expect(screen.getByText('reviewerA display name')).toBeInTheDocument();
     expect(screen.getByText('March 2024')).toBeInTheDocument();
     expect(screen.getAllByTitle('3/5')).toHaveLength(2);
+  });
+
+  it('Shows the average rating of the loaded reviews in the header', async () => {
+    let rendered = {};
+    await act(async () => {
+      rendered = render(<ProfilePage {...props} />, {
+        initialState: getInitialState(),
+        config,
+      });
+    });
+    const { getByRole } = rendered;
+
+    // One review, rated 3 (createReview's default)
+    expect(screen.getByLabelText('ProfilePage.ratingLabel')).toHaveTextContent('3');
+    expect(getByRole('link', { name: 'ProfilePage.reviewCount' })).toHaveAttribute(
+      'href',
+      '#reviews'
+    );
+  });
+
+  it('Switches to reviews as a renter', async () => {
+    let rendered = {};
+    await act(async () => {
+      rendered = render(<ProfilePage {...props} />, {
+        initialState: getInitialState(),
+        config,
+      });
+    });
+    const { getByRole } = rendered;
+
+    await act(async () => {
+      getByRole('button', { name: 'ProfilePage.reviewsAsRenter' }).click();
+    });
+    expect(getByRole('button', { name: 'ProfilePage.reviewsAsRenter' })).toHaveAttribute(
+      'aria-pressed',
+      'true'
+    );
+    // The test review is of the user as an owner, so this list is empty
+    expect(screen.getByText('ProfilePage.noReviews')).toBeInTheDocument();
+    expect(screen.queryByText('Awesome!')).not.toBeInTheDocument();
   });
 });
 

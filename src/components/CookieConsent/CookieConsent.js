@@ -58,7 +58,7 @@ const CookieConsent = () => {
           </h2>
           <p className={css.description}>
             <FormattedMessage id="CookieConsent.text" values={{ marketplaceName }} />{' '}
-            <NamedLink className={css.link} name="CMSPage" params={{ pageId: 'privacy-policy' }}>
+            <NamedLink className={css.link} name="CMSPage" params={{ pageId: 'cookie-policy' }}>
               <FormattedMessage id="CookieConsent.readMore" />
             </NamedLink>
           </p>

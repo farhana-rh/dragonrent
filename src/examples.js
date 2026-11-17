@@ -134,6 +134,7 @@ import * as Typography from './containers/StyleguidePage/Typography.example';
 import * as CMSSections from './containers/PageBuilder/SectionBuilder/SectionBuilder.example';
 import * as Markdown from './containers/PageBuilder/Markdown.example';
 import * as PageBuilder from './containers/PageBuilder/PageBuilder.example';
+import * as SectionLegalArticle from './containers/CMSPage/LegalPage/SectionLegalArticle.example';
 import * as LandingPage from './containers/LandingPage/LandingPage.example';
 import * as DashboardPage from './containers/DashboardPage/DashboardPage.example';
 
@@ -231,6 +232,7 @@ export {
   OrderPanel,
   OutsideClickHandler,
   PageBuilder,
+  SectionLegalArticle,
   PaginationLinks,
   PanelHeading,
   PasswordRecoveryForm,

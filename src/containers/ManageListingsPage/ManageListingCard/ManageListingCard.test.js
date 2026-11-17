@@ -65,10 +65,8 @@ describe('ManageListingCard', () => {
         history={{ push: noop }}
         listing={listing}
         intl={fakeIntl}
-        isMenuOpen={false}
         onCloseListing={noop}
         onOpenListing={noop}
-        onToggleMenu={noop}
         hasClosingError={false}
         hasOpeningError={false}
         availabilityEnabled={true}
@@ -124,10 +122,8 @@ describe('ManageListingCard', () => {
         history={{ push: noop }}
         listing={listing}
         intl={fakeIntl}
-        isMenuOpen={false}
         onCloseListing={noop}
         onOpenListing={noop}
-        onToggleMenu={noop}
         hasClosingError={false}
         hasOpeningError={false}
         availabilityEnabled={true}
@@ -181,10 +177,8 @@ describe('ManageListingCard', () => {
         history={{ push: noop }}
         listing={listing}
         intl={fakeIntl}
-        isMenuOpen={false}
         onCloseListing={noop}
         onOpenListing={noop}
-        onToggleMenu={noop}
         hasClosingError={false}
         hasOpeningError={false}
         availabilityEnabled={true}
@@ -196,6 +190,39 @@ describe('ManageListingCard', () => {
     expect(tree.getByText(/the Listing/i)).toBeInTheDocument();
     expect(tree.getByText('ManageListingCard.editListing')).toBeInTheDocument();
     expect(tree.getByText('ManageListingCard.manageAvailability')).toBeInTheDocument();
+    expect(tree.getByText('ManageListingCard.statusLive')).toBeInTheDocument();
+    expect(tree.getByText('ManageListingCard.noteLive')).toBeInTheDocument();
+  });
+
+  it('Booking (day): cheaper 3-day price shows "From" and Close calls onCloseListing', () => {
+    const listing = createOwnListing('listing-day', {
+      title: 'the listing',
+      price: new Money(1000, 'USD'),
+      publicData: {
+        listingType: 'rent-bicycles-daily',
+        transactionProcessAlias: 'default-booking/release-1',
+        unitType: 'day',
+        price3DaysInSubunits: 2400,
+      },
+    });
+    const onCloseListing = jest.fn();
+
+    const tree = render(
+      <ManageListingCard
+        listing={listing}
+        intl={fakeIntl}
+        onCloseListing={onCloseListing}
+        onOpenListing={noop}
+        onDiscardDraft={noop}
+        hasClosingError={false}
+        hasOpeningError={false}
+      />
+    );
+    expect(tree.getByText('ManageListingCard.priceStartingFrom')).toBeInTheDocument();
+    expect(tree.queryByText('ManageListingCard.price')).not.toBeInTheDocument();
+
+    tree.getByText('ManageListingCard.closeListing').click();
+    expect(onCloseListing).toHaveBeenCalledWith(listing.id);
   });
 
   it('Booking (day): closed', () => {
@@ -235,10 +262,8 @@ describe('ManageListingCard', () => {
         history={{ push: noop }}
         listing={listing}
         intl={fakeIntl}
-        isMenuOpen={false}
         onCloseListing={noop}
         onOpenListing={noop}
-        onToggleMenu={noop}
         hasClosingError={false}
         hasOpeningError={false}
         availabilityEnabled={true}
@@ -251,7 +276,8 @@ describe('ManageListingCard', () => {
     expect(tree.getByText('ManageListingCard.editListing')).toBeInTheDocument();
     expect(tree.getByText('ManageListingCard.manageAvailability')).toBeInTheDocument();
 
-    expect(tree.getByText('ManageListingCard.closedListing')).toBeInTheDocument();
+    expect(tree.getByText('ManageListingCard.statusClosed')).toBeInTheDocument();
+    expect(tree.getByText('ManageListingCard.noteClosed')).toBeInTheDocument();
     expect(tree.getByText('ManageListingCard.openListing')).toBeInTheDocument();
   });
 
@@ -292,10 +318,8 @@ describe('ManageListingCard', () => {
         history={{ push: noop }}
         listing={listing}
         intl={fakeIntl}
-        isMenuOpen={false}
         onCloseListing={noop}
         onOpenListing={noop}
-        onToggleMenu={noop}
         hasClosingError={false}
         hasOpeningError={false}
         availabilityEnabled={true}
@@ -308,7 +332,9 @@ describe('ManageListingCard', () => {
     expect(tree.getByText('ManageListingCard.editListing')).toBeInTheDocument();
     expect(tree.getByText('ManageListingCard.manageAvailability')).toBeInTheDocument();
 
-    expect(tree.getByText('ManageListingCard.pendingApproval')).toBeInTheDocument();
+    expect(tree.getByText('ManageListingCard.statusPendingApproval')).toBeInTheDocument();
+    expect(tree.getByText('ManageListingCard.notePendingApproval')).toBeInTheDocument();
+    expect(tree.getByText('ManageListingCard.previewListingLink')).toBeInTheDocument();
   });
 
   it('Booking (day): draft', () => {
@@ -348,10 +374,8 @@ describe('ManageListingCard', () => {
         history={{ push: noop }}
         listing={listing}
         intl={fakeIntl}
-        isMenuOpen={false}
         onCloseListing={noop}
         onOpenListing={noop}
-        onToggleMenu={noop}
         hasClosingError={false}
         hasOpeningError={false}
         availabilityEnabled={true}
@@ -362,10 +386,12 @@ describe('ManageListingCard', () => {
     expect(tree.queryByText('ManageListingCard.closeListing')).not.toBeInTheDocument();
     expect(tree.getByText('ManageListingCard.price')).toBeInTheDocument();
     expect(tree.getByText(/the Listing/i)).toBeInTheDocument();
-    expect(tree.getByText('ManageListingCard.editListing')).toBeInTheDocument();
-    expect(tree.getByText('ManageListingCard.manageAvailability')).toBeInTheDocument();
+    expect(tree.queryByText('ManageListingCard.editListing')).not.toBeInTheDocument();
+    expect(tree.queryByText('ManageListingCard.manageAvailability')).not.toBeInTheDocument();
 
-    expect(tree.getByText('ManageListingCard.draftOverlayText')).toBeInTheDocument();
+    expect(tree.getByText('ManageListingCard.statusDraft')).toBeInTheDocument();
+    expect(tree.getByText('ManageListingCard.noteDraft')).toBeInTheDocument();
+    expect(tree.getByText('ManageListingCard.discardDraftLinkText')).toBeInTheDocument();
     expect(tree.getByText('ManageListingCard.finishListingDraft')).toBeInTheDocument();
   });
 
@@ -405,10 +431,8 @@ describe('ManageListingCard', () => {
         history={{ push: noop }}
         listing={listing}
         intl={fakeIntl}
-        isMenuOpen={false}
         onCloseListing={noop}
         onOpenListing={noop}
-        onToggleMenu={noop}
         hasClosingError={false}
         hasOpeningError={false}
         availabilityEnabled={true}
@@ -464,10 +488,8 @@ describe('ManageListingCard', () => {
         history={{ push: noop }}
         listing={listing}
         intl={fakeIntl}
-        isMenuOpen={false}
         onCloseListing={noop}
         onOpenListing={noop}
-        onToggleMenu={noop}
         hasClosingError={false}
         hasOpeningError={false}
         availabilityEnabled={true}
@@ -526,10 +548,8 @@ describe('ManageListingCard', () => {
         history={{ push: noop }}
         listing={listing}
         intl={fakeIntl}
-        isMenuOpen={false}
         onCloseListing={noop}
         onOpenListing={noop}
-        onToggleMenu={noop}
         hasClosingError={false}
         hasOpeningError={false}
         availabilityEnabled={true}
@@ -538,16 +558,15 @@ describe('ManageListingCard', () => {
     );
 
     expect(tree.getByText('ResponsiveImage.noImage')).toBeInTheDocument();
-    expect(tree.queryByText('ManageListingCard.closeListing')).not.toBeInTheDocument();
+    expect(tree.getByText('ManageListingCard.closeListing')).toBeInTheDocument();
     expect(tree.getByText('ManageListingCard.price')).toBeInTheDocument(); //fakeIntl
     expect(tree.getByText(/the Listing/i)).toBeInTheDocument();
     expect(tree.getByText('ManageListingCard.editListing')).toBeInTheDocument();
     expect(tree.getByText('ManageListingCard.manageStock')).toBeInTheDocument();
 
     // Out of stock
-    expect(tree.getByText('ManageListingCard.outOfStockOverlayText')).toBeInTheDocument();
-    expect(tree.getByText('ManageListingCard.setPriceAndStock')).toBeInTheDocument();
-    expect(tree.getByText('ManageListingCard.closeListingTextOr')).toBeInTheDocument();
+    expect(tree.getByText('ManageListingCard.statusOutOfStock')).toBeInTheDocument();
+    expect(tree.getByText('ManageListingCard.noteOutOfStock')).toBeInTheDocument();
   });
 
   it('Purchase (item): normal', () => {
@@ -593,10 +612,8 @@ describe('ManageListingCard', () => {
         history={{ push: noop }}
         listing={listing}
         intl={fakeIntl}
-        isMenuOpen={false}
         onCloseListing={noop}
         onOpenListing={noop}
-        onToggleMenu={noop}
         hasClosingError={false}
         hasOpeningError={false}
         availabilityEnabled={true}
@@ -608,10 +625,10 @@ describe('ManageListingCard', () => {
     expect(tree.queryByText('ManageListingCard.closeListing')).not.toBeInTheDocument();
     expect(tree.getByText('ManageListingCard.price')).toBeInTheDocument(); //fakeIntl
     expect(tree.getByText(/the Listing/i)).toBeInTheDocument();
-    expect(tree.getByText('ManageListingCard.editListing')).toBeInTheDocument();
-    expect(tree.getByText('ManageListingCard.manageStock')).toBeInTheDocument();
+    expect(tree.queryByText('ManageListingCard.editListing')).not.toBeInTheDocument();
+    expect(tree.queryByText('ManageListingCard.manageStock')).not.toBeInTheDocument();
 
-    expect(tree.getByText('ManageListingCard.draftOverlayText')).toBeInTheDocument();
+    expect(tree.getByText('ManageListingCard.noteDraft')).toBeInTheDocument();
     expect(tree.getByText('ManageListingCard.finishListingDraft')).toBeInTheDocument();
   });
 
@@ -657,10 +674,8 @@ describe('ManageListingCard', () => {
         history={{ push: noop }}
         listing={listing}
         intl={fakeIntl}
-        isMenuOpen={false}
         onCloseListing={noop}
         onOpenListing={noop}
-        onToggleMenu={noop}
         hasClosingError={false}
         hasOpeningError={false}
         availabilityEnabled={true}
@@ -712,10 +727,8 @@ describe('ManageListingCard', () => {
         history={{ push: noop }}
         listing={listing}
         intl={fakeIntl}
-        isMenuOpen={false}
         onCloseListing={noop}
         onOpenListing={noop}
-        onToggleMenu={noop}
         hasClosingError={false}
         hasOpeningError={false}
         availabilityEnabled={true}
@@ -767,10 +780,8 @@ describe('ManageListingCard', () => {
         history={{ push: noop }}
         listing={listing}
         intl={fakeIntl}
-        isMenuOpen={false}
         onCloseListing={noop}
         onOpenListing={noop}
-        onToggleMenu={noop}
         hasClosingError={false}
         hasOpeningError={false}
         availabilityEnabled={true}
@@ -809,10 +820,8 @@ describe('ManageListingCard', () => {
           },
         })}
         intl={fakeIntl}
-        isMenuOpen={false}
         onCloseListing={noop}
         onOpenListing={noop}
-        onToggleMenu={noop}
         hasClosingError={false}
         hasOpeningError={false}
         availabilityEnabled={true}

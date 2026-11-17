@@ -39,6 +39,7 @@ const COLUMNS = [
       { id: 'damagePolicy', pageId: 'damage-policy' },
       { id: 'terms', pageId: 'terms-of-service' },
       { id: 'privacy', pageId: 'privacy-policy' },
+      { id: 'cookiePolicy', pageId: 'cookie-policy' },
     ],
   },
 ];
