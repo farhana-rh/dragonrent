@@ -10,37 +10,40 @@ const { screen } = testingLibrary;
 describe('SectionFooter', () => {
   const props = { sectionId: 'footer', sectionType: 'footer' };
 
-  it('shows the lend call to action, four link columns and the trust line', () => {
+  it('has the brand, the digest and the Explore, Lend and Help columns', () => {
     render(<SectionFooter {...props} />);
 
-    expect(screen.getByText('SectionFooter.cta.title')).toBeInTheDocument();
-    expect(screen.getByText('SectionFooter.cta.button').closest('a')).toHaveAttribute(
-      'href',
-      '/l/new'
-    );
+    expect(screen.getByText('SectionFooter.slogan')).toBeInTheDocument();
+    expect(screen.getByText('SectionFooter.digest.title')).toBeInTheDocument();
 
     const nav = screen.getByRole('navigation', { name: 'SectionFooter.linksLabel' });
-    ['explore', 'lend', 'help', 'legal'].forEach(column =>
+    ['explore', 'lend', 'help'].forEach(column =>
       expect(nav).toHaveTextContent(`SectionFooter.column.${column}`)
     );
-    expect(screen.getByText('SectionFooter.link.browse').closest('a')).toHaveAttribute(
+    expect(screen.getByText('SectionFooter.link.tools').closest('a')).toHaveAttribute(
       'href',
-      '/s'
+      '/s?pub_categoryLevel1=Tools'
+    );
+    expect(screen.getByText('SectionFooter.link.lendAnItem').closest('a')).toHaveAttribute(
+      'href',
+      '/l/new'
     );
     expect(screen.getByText('SectionFooter.link.damagePolicy').closest('a')).toHaveAttribute(
       'href',
       '/p/damage-policy'
     );
-    expect(screen.getByText('SectionFooter.link.trustAndSafety').closest('a')).toHaveAttribute(
-      'href',
-      '/#trust-and-safety'
-    );
-    ['stripePayments', 'stripeVerified', 'euros'].forEach(item =>
-      expect(screen.getByText(`SectionFooter.trust.${item}`)).toBeInTheDocument()
-    );
+    expect(screen.getByText('SectionFooter.paymentsNote')).toBeInTheDocument();
   });
 
-  it('ignores the Console footer placeholders and keeps one Cookie settings button', () => {
+  it('keeps the digest switched off until a newsletter service is connected', () => {
+    render(<SectionFooter {...props} />);
+
+    expect(screen.getByText('SectionFooter.digest.soon')).toBeInTheDocument();
+    expect(screen.getByLabelText('SectionFooter.digest.emailLabel')).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'SectionFooter.digest.button' })).toBeDisabled();
+  });
+
+  it('ignores the Console footer placeholders and keeps Cookie settings', () => {
     render(
       <SectionFooter
         {...props}
@@ -51,9 +54,8 @@ describe('SectionFooter', () => {
 
     expect(screen.queryByText('In Console, go to Content → Footer')).not.toBeInTheDocument();
     expect(screen.queryByText('© 2026 Your marketplace')).not.toBeInTheDocument();
-    expect(screen.getAllByRole('button')).toHaveLength(1);
     expect(
-      screen.getByRole('button', { name: 'SectionFooter.link.cookieSettings' })
+      screen.getByRole('button', { name: 'SectionFooter.cookieSettings' })
     ).toBeInTheDocument();
   });
 });

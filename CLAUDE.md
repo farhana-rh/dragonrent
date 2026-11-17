@@ -169,6 +169,11 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
   uploaded in Dev Console (Build → Branding, 36px). Live journey check passes. The old free service
   dragonrent.onrender.com is obsolete. Still open: Console categories (52, incl. junk), drill
   re-save + availability, more listings, Dev Console Marketplace URL, process push, legal review.
+- **Footer (17 Nov):** built in code from the HomeSticker.html footer (`SectionFooter`): brand +
+  slogan + "The neighbourhood digest", then Explore / Lend / Help columns, bottom row with Cookie
+  settings. Console footer content is no longer shown. The digest form is disabled and labelled
+  "Coming soon" until a newsletter tool (Mailchimp, Brevo, MailerLite…) is chosen; never make it
+  look like it subscribes people before then.
 - **Remaining work** (estimate 9 Nov): about 7–11 h of code and testing, 9–12 h of Console, Live
   and hosting setup by the user, plus waiting for the lawyer, the Finnish review and DNS.
 - **Days 0–9 code done**, all on `feature/redesign`, pushed to GitHub 23 Oct (not merged to `main`;

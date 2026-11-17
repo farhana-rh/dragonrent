@@ -1,6 +1,6 @@
 @import '../../../../styles/customMediaQueries.css';
 
-/* Ink footer band with cream text (sticker design). Fun on top, professional below. */
+/* Ink footer band with cream text, as in the HomeSticker.html mockup */
 .root {
   color: var(--colorCream);
   background-color: var(--colorInk);
@@ -12,135 +12,25 @@
 /* Negative margins cancel SectionContainer's vertical padding (32px / 64px) so the footer
    controls its own spacing */
 .inner {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
   max-width: 1240px;
   margin: -32px auto;
-  padding: 36px 18px 32px 18px;
+  padding: 48px 18px 28px 18px;
 
   @media (--viewportMedium) {
-    gap: 40px;
     margin: -64px auto;
-    padding: 56px 24px 36px 24px;
+    padding: 48px 24px 28px 24px;
   }
 }
 
-/* ===== Playful: "lend your things" sticker card ===== */
-.cta {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  align-items: center;
-  gap: 14px 18px;
-  padding: 20px;
-  color: var(--colorInk);
-  background-color: var(--colorMarigold);
-  border: 2px solid var(--colorCream);
-  border-radius: var(--borderRadiusSticker);
-  box-shadow: 6px 6px 0 var(--colorCoral);
-  transform: rotate(-0.6deg);
-
-  @media (--viewportMedium) {
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    gap: 24px;
-    padding: 24px 28px;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    transform: none;
-  }
-}
-
-/* The mark sits on marigold here, so it needs its ink outline back */
-.ctaMark {
-  width: 54px;
-  height: 47px;
-
-  & path:not(:last-child),
-  & circle:first-of-type {
-    stroke: var(--colorInk);
-  }
-}
-
-.ctaText {
-  min-width: 0;
-}
-
-.ctaTitle {
-  margin: 0;
-  padding: 0;
-  font-size: 22px;
-  line-height: 1.2;
-  font-weight: var(--fontWeightHeavy);
-  letter-spacing: -0.02em;
-  color: var(--colorInk);
-
-  @media (--viewportMedium) {
-    font-size: 26px;
-  }
-}
-
-.ctaBody {
-  margin: 4px 0 0 0;
-  padding: 0;
-  font-size: 15px;
-  line-height: 1.5;
-  color: var(--colorInk);
-}
-
-.ctaButton {
-  grid-column: 1 / -1;
-  justify-self: start;
-  display: inline-flex;
-  align-items: center;
-  min-height: 48px;
-  padding: 0 22px;
-
-  font-size: 16px;
-  font-weight: var(--fontWeightBold);
-  color: var(--colorWhite);
-  text-decoration: none;
-  white-space: nowrap;
-  background-color: var(--colorElectric);
-  border: var(--borderInk);
-  border-radius: var(--borderRadiusStickerSmall);
-  box-shadow: var(--shadowHard);
-  transition: transform 0.12s ease, box-shadow 0.12s ease;
-
-  &:hover {
-    color: var(--colorWhite);
-    text-decoration: none;
-    transform: translate(-2px, -2px);
-    box-shadow: var(--shadowHardLarge);
-  }
-
-  &:focus-visible {
-    outline: 3px solid var(--colorInk);
-    outline-offset: 3px;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    transition: none;
-
-    &:hover {
-      transform: none;
-    }
-  }
-
-  @media (--viewportMedium) {
-    grid-column: auto;
-  }
-}
-
-/* ===== Professional: brand and link columns ===== */
-.main {
+/* Brand + digest, then the link columns (mockup: 1.3fr 1fr 1fr 1fr) */
+.grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 32px;
+  gap: 40px;
+  padding-bottom: 32px;
 
-  @media (--viewportLarge) {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 2.2fr);
-    gap: 48px;
+  @media (--viewportMedium) {
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 3fr);
   }
 }
 
@@ -148,8 +38,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 12px;
-  max-width: 340px;
+  min-width: 0;
 }
 
 .brandLink {
@@ -173,48 +62,145 @@
 }
 
 .brandName {
-  font-size: 26px;
-  line-height: 1;
+  font-size: 20px;
+  line-height: 1.2;
   font-weight: var(--fontWeightHeavy);
-  letter-spacing: -0.035em;
+  letter-spacing: -0.02em;
   color: var(--colorCream);
 }
 
-.brandNameAccent {
-  color: var(--colorMarigold);
-}
-
-.tagline {
-  margin: 0;
+.slogan {
+  max-width: 320px;
+  margin: 8px 0 0 0;
   padding: 0;
   font-size: 15px;
-  line-height: 1.55;
+  line-height: 1.5;
   color: var(--colorCreamMuted);
 }
 
-.areaSticker {
+/* ===== The neighbourhood digest ===== */
+.digest {
+  width: 100%;
+  margin-top: 24px;
+}
+
+.digestTitle {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: var(--fontWeightBold);
+  color: var(--colorCream);
+}
+
+.soonSticker {
   display: inline-flex;
   align-items: center;
-  padding: 3px 12px;
-
+  padding: 1px 10px;
   font-size: 13px;
   line-height: 20px;
   font-weight: var(--fontWeightBold);
   color: var(--colorInk);
   background-color: var(--colorMint);
-  border: 2px solid var(--colorCream);
   border-radius: 999px;
   transform: rotate(-2deg);
 }
 
-/* Four columns on desktop, two on phones */
+.digestText {
+  margin: 2px 0 0 0;
+  padding: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--colorCreamMuted);
+}
+
+.digestRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  max-width: 380px;
+  margin-top: 12px;
+}
+
+.digestInput,
+.digestSelect {
+  min-width: 0;
+  height: 44px;
+  padding: 0 12px;
+  margin: 0;
+
+  font-family: var(--fontFamily);
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--colorCream);
+  background-color: var(--colorInk);
+  border: 2px solid var(--colorCreamLine);
+  border-radius: var(--borderRadiusStickerSmall);
+
+  &::placeholder {
+    color: var(--colorCreamMuted);
+  }
+
+  &:disabled,
+  &:hover:disabled {
+    cursor: not-allowed;
+    color: var(--colorCreamMuted);
+    border-color: var(--colorCreamLine);
+  }
+}
+
+.digestInput {
+  grid-column: 1 / -1;
+}
+
+.digestSelect {
+  /* No chevron while the field is switched off */
+  background-image: none;
+}
+
+.digestButton {
+  height: 44px;
+  padding: 0 16px;
+  margin: 0;
+
+  font-family: var(--fontFamily);
+  font-size: 15px;
+  font-weight: var(--fontWeightBold);
+  color: var(--colorInk);
+  background-color: var(--colorMarigold);
+  border: 2px solid var(--colorMarigold);
+  border-radius: var(--borderRadiusStickerSmall);
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.75;
+  }
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ===== Link columns ===== */
 .columns {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 28px 20px;
 
   @media (--viewportMedium) {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 24px;
   }
 }
@@ -224,7 +210,7 @@
 }
 
 .columnTitle {
-  margin: 0 0 10px 0;
+  margin: 0 0 8px 0;
   padding: 0;
   font-size: 13px;
   line-height: 1.4;
@@ -247,30 +233,77 @@
   }
 }
 
-.link,
-.linkButton {
+.link {
   display: inline-flex;
   align-items: center;
-  min-height: 40px;
+  min-height: 36px;
+
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--colorCream);
+  text-decoration: none;
+  border-radius: var(--borderRadius);
+
+  &:hover {
+    color: var(--colorCream);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--focusRing);
+  }
+}
+
+/* ===== Bottom row ===== */
+.bottomRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--colorCreamLine);
+}
+
+.bottomRight {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 20px;
+}
+
+.bottomText {
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--colorCreamMuted);
+}
+
+/* Reopens the cookie banner, so visitors can change their choice */
+.cookieSettings {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   padding: 0;
   margin: 0;
 
   font-family: var(--fontFamily);
-  font-size: 15px;
-  line-height: 1.4;
-  font-weight: var(--fontWeightMedium);
-  color: var(--colorCream);
-  text-align: left;
-  text-decoration: none;
+  font-size: 13px;
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--colorCreamMuted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
   background: none;
   border: none;
   border-radius: var(--borderRadius);
   cursor: pointer;
 
   &:hover {
-    color: var(--colorMarigold);
-    text-decoration: underline;
-    text-underline-offset: 4px;
+    color: var(--colorCream);
   }
 
   &:focus {
@@ -280,46 +313,4 @@
   &:focus-visible {
     box-shadow: var(--focusRing);
   }
-}
-
-/* ===== Trust line and copyright ===== */
-.trustRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px 28px;
-  margin: 0;
-  padding: 18px 0 0 0;
-  list-style: none;
-  border-top: 1px solid var(--colorCreamLine);
-}
-
-.trustItem {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  line-height: 1.4;
-  color: var(--colorCreamMuted);
-}
-
-.trustIcon {
-  flex-shrink: 0;
-  color: var(--colorMint);
-}
-
-.bottomRow {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px 24px;
-}
-
-.copyright,
-.madeFor {
-  margin: 0;
-  padding: 0;
-  font-size: 13px;
-  line-height: 1.4;
-  color: var(--colorCreamMuted);
 }

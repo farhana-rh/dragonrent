@@ -2,6 +2,7 @@ import React from 'react';
 
 import { FormattedMessage, useIntl } from '../../../../util/reactIntl';
 import { openCookieSettings } from '../../../../util/cookieConsent';
+import { categorySearchTo } from '../../../../util/search';
 import { pickFieldOptions } from '../../PageBuilder.helpers';
 
 import { NamedLink } from '../../../../components';
@@ -9,23 +10,25 @@ import { NamedLink } from '../../../../components';
 import SectionContainer from '../SectionContainer';
 import css from './SectionFooter.module.css';
 
-// Link columns. Pages with a pageId are Console pages (/p/<pageId>); the rest are app routes.
-// "Trust & Safety" is the lender section on the homepage (LandingPage TRUST_SECTION_ID).
+// Link columns, as in the HomeSticker.html footer. Explore links go to a category search
+// (Console category ids); Help pages are Console pages (/p/<pageId>).
+// "Lender protection" is the lender section on the homepage (LandingPage TRUST_SECTION_ID).
 const COLUMNS = [
   {
     id: 'explore',
     links: [
-      { id: 'browse', route: 'SearchPage' },
-      { id: 'howItWorks', pageId: 'how-it-works' },
-      { id: 'trustAndSafety', href: '/#trust-and-safety' },
+      { id: 'tools', categoryId: 'Tools' },
+      { id: 'partyEvents', categoryId: 'Party-Event' },
+      { id: 'sports', categoryId: 'Sports' },
+      { id: 'cameras', categoryId: 'Cameras' },
     ],
   },
   {
     id: 'lend',
     links: [
       { id: 'lendAnItem', route: 'NewListingPage' },
-      { id: 'yourListings', route: 'ManageListingsPage' },
-      { id: 'dashboard', route: 'DashboardPage' },
+      { id: 'lenderProtection', href: '/#trust-and-safety' },
+      { id: 'howItWorks', pageId: 'how-it-works' },
     ],
   },
   {
@@ -34,60 +37,21 @@ const COLUMNS = [
       { id: 'faq', pageId: 'faq' },
       { id: 'cancellationPolicy', pageId: 'cancellation-policy' },
       { id: 'damagePolicy', pageId: 'damage-policy' },
-    ],
-  },
-  {
-    id: 'legal',
-    links: [
       { id: 'terms', pageId: 'terms-of-service' },
       { id: 'privacy', pageId: 'privacy-policy' },
-      { id: 'cookieSettings', isCookieSettings: true },
     ],
   },
 ];
-
-// Plain facts about how payments work today, shown as the footer's calm trust line
-const TRUST_ITEMS = [
-  { id: 'stripePayments', icon: 'lock' },
-  { id: 'stripeVerified', icon: 'shield' },
-  { id: 'euros', icon: 'tag' },
-];
-
-const TRUST_ICON_PATHS = {
-  lock: 'M5 11h14v10H5zM8 11V7a4 4 0 0 1 8 0v4',
-  shield: 'M12 3l7 3v6c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6zM9 12l2 2 4-4',
-  tag: 'M3 12V4h8l10 10-8 8zM7.5 8.5h.01',
-};
-
-const TrustIcon = props => (
-  <svg
-    className={css.trustIcon}
-    width="18"
-    height="18"
-    viewBox="0 0 24 24"
-    aria-hidden="true"
-    focusable="false"
-  >
-    <path
-      d={TRUST_ICON_PATHS[props.name]}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
 
 /**
  * DragonRent logo mark (dragon eye with a keyhole pupil), cream outlines for the ink footer.
  * Same drawing as dragonrent-design/brand/dragonrent-logo-on-ink.png.
  */
-const LogoMarkOnInk = props => (
+const LogoMarkOnInk = () => (
   <svg
-    className={props.className}
-    width="46"
-    height="40"
+    className={css.brandMark}
+    width="40"
+    height="35"
     viewBox="0 1 64 55"
     aria-hidden="true"
     focusable="false"
@@ -123,12 +87,11 @@ const FooterLink = props => {
   const { link } = props;
   const label = <FormattedMessage id={`SectionFooter.link.${link.id}`} />;
 
-  if (link.isCookieSettings) {
-    // Reopens the cookie banner, so visitors can change their choice
+  if (link.categoryId) {
     return (
-      <button type="button" className={css.linkButton} onClick={openCookieSettings}>
+      <NamedLink className={css.link} name="SearchPage" to={categorySearchTo(link.categoryId)}>
         {label}
-      </button>
+      </NamedLink>
     );
   }
   if (link.pageId) {
@@ -153,11 +116,60 @@ const FooterLink = props => {
 };
 
 /**
- * DragonRent footer, sticker design (17 Nov): a playful "lend your things" sticker card on top,
- * then a calm ink band with the logo, four link columns, a trust line with how payments work,
- * and the copyright. Copy lives in translations (SectionFooter.*) and links in COLUMNS, so the
- * footer no longer shows the Console footer content (slogan, blocks, social links, copyright),
- * which still held the template's placeholders.
+ * "The neighbourhood digest" sign-up from the mockup. DragonRent has no newsletter service yet,
+ * so the form is shown but switched off and labelled "Coming soon": it never collects an address
+ * it can't use. To turn it on, connect an email tool (e.g. Mailchimp, Brevo) and submit there.
+ */
+const NeighbourhoodDigest = () => {
+  const intl = useIntl();
+  return (
+    <form
+      className={css.digest}
+      aria-describedby="footer-digest-note"
+      onSubmit={e => e.preventDefault()}
+    >
+      <p className={css.digestTitle}>
+        <FormattedMessage id="SectionFooter.digest.title" />
+        <span className={css.soonSticker}>
+          <FormattedMessage id="SectionFooter.digest.soon" />
+        </span>
+      </p>
+      <p id="footer-digest-note" className={css.digestText}>
+        <FormattedMessage id="SectionFooter.digest.text" />
+      </p>
+      <div className={css.digestRow}>
+        <label htmlFor="footer-digest-email" className={css.visuallyHidden}>
+          <FormattedMessage id="SectionFooter.digest.emailLabel" />
+        </label>
+        <input
+          id="footer-digest-email"
+          className={css.digestInput}
+          type="email"
+          placeholder={intl.formatMessage({ id: 'SectionFooter.digest.emailPlaceholder' })}
+          disabled
+        />
+        <label htmlFor="footer-digest-area" className={css.visuallyHidden}>
+          <FormattedMessage id="SectionFooter.digest.areaLabel" />
+        </label>
+        <select id="footer-digest-area" className={css.digestSelect} disabled defaultValue="">
+          <option value="">
+            {intl.formatMessage({ id: 'SectionFooter.digest.areaPlaceholder' })}
+          </option>
+        </select>
+        <button type="submit" className={css.digestButton} disabled>
+          <FormattedMessage id="SectionFooter.digest.button" />
+        </button>
+      </div>
+    </form>
+  );
+};
+
+/**
+ * DragonRent footer, built from the HomeSticker.html mockup: an ink band with the brand,
+ * slogan and neighbourhood digest in the first column, then Explore, Lend and Help link
+ * columns, and a bottom row with the copyright, Stripe note and Cookie settings. Copy lives in
+ * translations (SectionFooter.*) and links in COLUMNS, so the Console footer content (template
+ * placeholders) is not shown.
  *
  * @component
  * @param {Object} props
@@ -186,35 +198,16 @@ const SectionFooter = props => {
       options={fieldOptions}
     >
       <div className={css.inner}>
-        <div className={css.cta}>
-          <LogoMarkOnInk className={css.ctaMark} />
-          <div className={css.ctaText}>
-            <p className={css.ctaTitle}>
-              <FormattedMessage id="SectionFooter.cta.title" />
-            </p>
-            <p className={css.ctaBody}>
-              <FormattedMessage id="SectionFooter.cta.text" />
-            </p>
-          </div>
-          <NamedLink name="NewListingPage" className={css.ctaButton}>
-            <FormattedMessage id="SectionFooter.cta.button" />
-          </NamedLink>
-        </div>
-
-        <div className={css.main}>
+        <div className={css.grid}>
           <div className={css.brand}>
             <NamedLink name="LandingPage" className={css.brandLink}>
-              <LogoMarkOnInk className={css.brandMark} />
-              <span className={css.brandName}>
-                Dragon<span className={css.brandNameAccent}>Rent</span>
-              </span>
+              <LogoMarkOnInk />
+              <span className={css.brandName}>DragonRent</span>
             </NamedLink>
-            <p className={css.tagline}>
-              <FormattedMessage id="SectionFooter.tagline" />
+            <p className={css.slogan}>
+              <FormattedMessage id="SectionFooter.slogan" />
             </p>
-            <span className={css.areaSticker}>
-              <FormattedMessage id="SectionFooter.area" />
-            </span>
+            <NeighbourhoodDigest />
           </div>
 
           <nav
@@ -238,22 +231,19 @@ const SectionFooter = props => {
           </nav>
         </div>
 
-        <ul className={css.trustRow}>
-          {TRUST_ITEMS.map(item => (
-            <li key={item.id} className={css.trustItem}>
-              <TrustIcon name={item.icon} />
-              <FormattedMessage id={`SectionFooter.trust.${item.id}`} />
-            </li>
-          ))}
-        </ul>
-
         <div className={css.bottomRow}>
-          <p className={css.copyright}>
+          <p className={css.bottomText}>
             <FormattedMessage id="SectionFooter.copyright" values={{ year }} />
           </p>
-          <p className={css.madeFor}>
-            <FormattedMessage id="SectionFooter.madeFor" />
-          </p>
+          <div className={css.bottomRight}>
+            <p className={css.bottomText}>
+              <FormattedMessage id="SectionFooter.paymentsNote" />
+            </p>
+            {/* Reopens the cookie banner, so visitors can change their choice */}
+            <button type="button" className={css.cookieSettings} onClick={openCookieSettings}>
+              <FormattedMessage id="SectionFooter.cookieSettings" />
+            </button>
+          </div>
         </div>
       </div>
     </SectionContainer>
