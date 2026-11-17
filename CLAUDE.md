@@ -126,8 +126,14 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
 - **Production host: Railway (user, 17 Nov),** not Render; staging stays on Render. Steps in
   `docs/LAUNCH.md` sections 4–5. The build command must install dev dependencies
   (`yarn install --frozen-lockfile --production=false && yarn build`): webpack and Babel are dev
-  dependencies. GoDaddy DNS can't hold a root CNAME, so the site goes on `www` or DNS moves to
-  Cloudflare.
+  dependencies. Health check path `/healthz` (17 Nov, `server/index.js`): it answers before the
+  HTTPS redirect and basic auth, which would otherwise fail Railway's plain-HTTP probe.
+- **Domain (checked 17 Nov):** `dragonrent.com`, registered at GoDaddy, DNS on **Cloudflare**.
+  `www.dragonrent.com` already serves another site ("Dragonrent - Rent Anything", Next.js on AWS
+  CloudFront); pointing the domain at Railway replaces it, so that needs the user's decision. The
+  tester preview goes on the Railway address or `preview.dragonrent.com` (`docs/LAUNCH.md`, last
+  section). Dev Console holds 178 listing categories (court rooms, patents, "Erotic"…), all
+  shown in the Lend-an-item step and the search filter: a Console decision for the user.
 - **Remaining work** (estimate 9 Nov): about 7–11 h of code and testing, 9–12 h of Console, Live
   and hosting setup by the user, plus waiting for the lawyer, the Finnish review and DNS.
 - **Days 0–9 code done**, all on `feature/redesign`, pushed to GitHub 23 Oct (not merged to `main`;

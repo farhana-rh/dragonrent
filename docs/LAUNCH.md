@@ -114,7 +114,10 @@ The app needs no code change for Railway: it listens on the `PORT` Railway gives
      clone with `NODE_ENV=production`: install and build pass, the server answers on the given
      port).
    - **Deploy → Custom start command:** `yarn start`.
-   - **Deploy → Healthcheck path:** `/robots.txt` (cheap, and only answers once the server is up).
+   - **Deploy → Healthcheck path:** `/healthz`. Railway probes it over plain HTTP from
+     `healthcheck.railway.app` and needs a 200. Other paths answer that probe with a 301 to HTTPS
+     (`REACT_APP_SHARETRIBE_USING_SSL=true` turns the redirect on) or a 401 behind basic auth, so
+     the deploy would fail. `/healthz` answers before both (added 17 Nov, `server/index.js`).
    - **Deploy → Region:** EU West (Amsterdam), the closest to Finland.
    - **Serverless / app sleeping:** off. A sleeping site loses the first visitor's request.
 4. Service → Variables: add the table below, then deploy. Don't add `PORT`; Railway sets it.
@@ -148,31 +151,28 @@ after cookie consent either way.
 `REACT_APP_*` values are built into the site when it builds, so after changing one, deploy again
 (Railway offers "Deploy" after a variable change; otherwise Deployments → ⋮ → Redeploy).
 
-**Try it first (optional, recommended):** in the same Railway project add an environment
-`staging` (top bar → Environments → New), point its service at `feature/redesign` and give it the
-**Dev** values from `.env` (Dev client ID and secret, Stripe test key `pk_test_…`,
-`REACT_APP_SENTRY_ENVIRONMENT=staging`). It proves the Railway build before any Live key exists,
-and unlike Render's free instance it doesn't sleep. Use the Dev values only there.
+The tester preview (section "Tester preview on Railway" at the end) runs in its own Railway
+environment with the Dev values; production gets this section's Live values.
 
 ## 5. Domain and email (1 h + DNS waiting)
 
-GoDaddy can't point the bare domain (`dragonrent.fi`, no `www`) at Railway: Railway needs a CNAME
-on the root, and GoDaddy's DNS doesn't allow one there. Pick one:
-
-- **A. Keep GoDaddy DNS, use `www` (simplest).** The site lives at `https://www.dragonrent.fi`;
-  GoDaddy forwards the bare domain to it.
-- **B. Move DNS to Cloudflare (free).** The bare domain works too. You keep the domain at
-  GoDaddy and only change its nameservers to the two Cloudflare gives you.
+**What dragonrent.com points at (checked 17 Nov):** the domain is registered at GoDaddy, but its
+DNS is on **Cloudflare** (nameservers `clayton.ns.cloudflare.com`, `vivienne.ns.cloudflare.com`),
+so records are added in Cloudflare, not in GoDaddy. `www.dragonrent.com` already serves another
+site, "Dragonrent - Rent Anything" (Next.js on AWS CloudFront), and `dragonrent.com` redirects to
+it. **Pointing the domain at Railway replaces that site.** Decide that first, and find out who has
+the Cloudflare login. Cloudflare can point the bare domain at Railway (CNAME flattening), so both
+`dragonrent.com` and `www` work.
 
 1. **You:** Railway → production service → Settings → Networking → **Custom Domain**: add
-   `www.dragonrent.fi` (B: also `dragonrent.fi`). Railway shows a **CNAME** and a **TXT**
-   (`_railway-verify…`) record for each. Add both where your DNS is (A: GoDaddy → Domain → DNS;
-   B: Cloudflare, records set to "DNS only", grey cloud). Without the TXT record Railway answers
-   404 even when the CNAME works. HTTPS is set up by Railway once the records are seen.
-2. A only: GoDaddy → Domain → Forwarding: forward `dragonrent.fi` to `https://www.dragonrent.fi`,
-   permanent (301).
-3. Set `REACT_APP_MARKETPLACE_ROOT_URL` to the address the site lives at (A:
-   `https://www.dragonrent.fi`), deploy again, and put the same address in Sharetribe Live
+   `dragonrent.com` and `www.dragonrent.com`. Railway shows a **CNAME** and a **TXT**
+   (`_railway-verify…`) record for each. Copy the exact values from Railway.
+2. **You:** Cloudflare → dragonrent.com → DNS → Records: replace the current `www` CNAME (and the
+   root record) with Railway's CNAMEs, and add the TXT records. Set the CNAMEs to **DNS only**
+   (grey cloud) so Railway can issue the HTTPS certificate. Without the TXT record Railway answers
+   404 even when the CNAME works.
+3. Set `REACT_APP_MARKETPLACE_ROOT_URL` to `https://www.dragonrent.com` (or the bare domain if you
+   prefer it as the main address), deploy again, and put the same address in Sharetribe Live
    Console → Marketplace URL. The three must match, or email links and sign-in break.
 4. When the domain works, check `https://<domain>/robots.txt` lists
    `Sitemap: https://<domain>/sitemap-index.xml`.
@@ -210,3 +210,54 @@ Use real cards and small amounts.
   means a wrong client ID or secret.
 - A deploy broke the site: Railway → Deployments → an earlier deploy → ⋮ → Rollback.
 - Payments failing: Stripe dashboard → Developers → Logs (live mode).
+
+## Tester preview on Railway (Dev marketplace, test payments)
+
+For the client and invited testers before Live (added 17 Nov). It uses the Sharetribe **Dev**
+marketplace and Stripe **test** mode, so nobody can pay real money: Stripe refuses real cards in
+test mode. It doesn't touch `www.dragonrent.com`, Live, or `main`.
+
+1. **You:** Railway (Hobby plan, section 4 step 1) → New Project → Deploy from GitHub repo →
+   `farhana-rh/dragonrent`. Rename the service `preview`.
+2. Service → Settings:
+   - **Branch:** `feature/redesign`.
+   - **Custom build command:** `yarn install --frozen-lockfile --production=false && yarn build`
+   - **Custom start command:** `yarn start`
+   - **Healthcheck path:** `/healthz`, once the commit that adds it is on GitHub. Before that,
+     leave it empty (the deploy then goes live as soon as the server starts).
+   - **Region:** EU West. **App sleeping:** off.
+3. Service → Variables (Raw Editor). The Dev values are the ones in your local `.env`; copy them
+   from there, never into chat or Git:
+
+   | Name | Value | Notes |
+   | --- | --- | --- |
+   | `RAILPACK_NODE_VERSION` | `24` | |
+   | `NODE_ENV` | `production` | |
+   | `REACT_APP_ENV` | `production` | `development` would switch off basic auth |
+   | `REACT_APP_SHARETRIBE_SDK_CLIENT_ID` | Dev client ID | public, built into the site |
+   | `SHARETRIBE_SDK_CLIENT_SECRET` | Dev client secret | **secret**, server only |
+   | `REACT_APP_STRIPE_PUBLISHABLE_KEY` | `pk_test_…` | public; must start with `pk_test_` |
+   | `REACT_APP_MAPBOX_ACCESS_TOKEN` | Mapbox token | public |
+   | `REACT_APP_MARKETPLACE_ROOT_URL` | `https://<preview address>` | no trailing slash |
+   | `REACT_APP_MARKETPLACE_NAME` | `DragonRent` | |
+   | `REACT_APP_SHARETRIBE_USING_SSL` | `true` | |
+   | `SERVER_SHARETRIBE_TRUST_PROXY` | `true` | |
+   | `REACT_APP_CSP` | `block` | checked 17 Nov: no blocked content on any tester page |
+   | `BASIC_AUTH_USERNAME`, `BASIC_AUTH_PASSWORD` | a shared tester login | recommended: keeps search engines and strangers off the test data |
+   | `REACT_APP_SENTRY_DSN`, `REACT_APP_SENTRY_ENVIRONMENT` | optional, environment `preview` | |
+
+   Every `REACT_APP_*` value is public once built into the site. The only secrets are the client
+   secret and the basic-auth password. No volume, database or other service is needed.
+4. Service → Settings → Networking → **Generate Domain** gives `https://<name>.up.railway.app`.
+   Put that address in `REACT_APP_MARKETPLACE_ROOT_URL` and deploy again. To use
+   `preview.dragonrent.com` instead: Networking → Custom Domain → `preview.dragonrent.com`, then
+   add Railway's CNAME and TXT records in **Cloudflare** (DNS only), set the root URL to it and
+   deploy again. That adds one record and leaves `www` alone.
+5. **You:** Sharetribe **Dev** Console → Marketplace URL (Build → Advanced): the preview address,
+   so verification and password-reset emails link to it instead of the old address.
+6. Check: `https://<preview address>/healthz` shows `{"status":"ok"}`; the homepage, sign-up, log
+   in, search, an item page and checkout open.
+
+**For testers:** card `4242 4242 4242 4242`, any future expiry date, any CVC. Owners who publish
+must connect payouts in Stripe's test mode: use Stripe's test values
+(https://docs.stripe.com/connect/testing), never real ID or bank details.
