@@ -221,7 +221,7 @@
 /* dark inline code */
 .darkTheme code {
   background-color: var(--colorGrey700);
-  color: var(--colorGrey100);
+  color: var(--colorCream);
 }
 
 /* dark code block */

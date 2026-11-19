@@ -166,7 +166,9 @@
   justify-content: space-between;
   flex-direction: column;
   width: 100%;
-  color: var(--colorGrey100);
+  /* Cream, not --colorGrey100: the sticker palette remaps that grey to a faint ink line, which
+     made "This is your listing" invisible on the ink bar */
+  color: var(--colorCream);
   background-color: var(--colorGrey700);
   z-index: 1; /* bring on top of mobile image */
   padding: 0 24px;
@@ -310,7 +312,7 @@
 .editListingLink {
   composes: h5 from global;
   margin: 23px 24px 11px 0px;
-  color: var(--colorGrey100);
+  color: var(--colorCream);
 
   transition: var(--transitionStyleButton);
 
