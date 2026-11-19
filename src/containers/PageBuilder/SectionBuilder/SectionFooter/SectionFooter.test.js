@@ -35,6 +35,18 @@ describe('SectionFooter', () => {
     expect(screen.getByText('SectionFooter.paymentsNote')).toBeInTheDocument();
   });
 
+  it('shows the support email under Help as a mail link', () => {
+    render(<SectionFooter {...props} />, {
+      messages: { 'SectionFooter.contact': 'Questions or cancellations: {email}' },
+    });
+
+    const link = screen.getByRole('link', { name: 'support@dragonrent.com' });
+    expect(link).toHaveAttribute('href', 'mailto:support@dragonrent.com');
+    expect(link.closest('p')).toHaveTextContent(
+      'Questions or cancellations: support@dragonrent.com'
+    );
+  });
+
   it('keeps the digest switched off until a newsletter service is connected', () => {
     render(<SectionFooter {...props} />);
 

@@ -6,7 +6,7 @@ import { formatMoney } from '../../../util/currency';
 import { getBookingTimeRange } from '../../../util/bookingTimeRange';
 import { createSlug } from '../../../util/urlHelpers';
 
-import { NamedLink } from '../../../components';
+import { NamedLink, SupportEmailLink } from '../../../components';
 
 import css from './RequestSent.module.css';
 
@@ -122,6 +122,11 @@ const RequestSent = props => {
 
       <p className={css.noCharge}>
         <FormattedMessage id="RequestSent.noCharge" values={{ name: providerName }} />
+      </p>
+
+      {/* How to use the free 24-hour cancellation (users can't cancel in the app) */}
+      <p className={css.cancelNote}>
+        <FormattedMessage id="RequestSent.cancelNote" values={{ email: <SupportEmailLink /> }} />
       </p>
 
       <div className={css.actions}>

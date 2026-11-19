@@ -52,6 +52,21 @@ describe('RequestSent', () => {
     expect(screen.getByRole('link', { name: 'RequestSent.backToHome' })).toBeInTheDocument();
   });
 
+  it('tells the renter how to cancel for free, with the support email', () => {
+    render(
+      <RequestSent
+        transaction={transaction}
+        listing={createListing('listing1')}
+        providerName="Anna"
+        timeZone="Europe/Helsinki"
+      />,
+      { messages: { 'RequestSent.cancelNote': 'Changed your mind? Email {email}.' } }
+    );
+    const link = screen.getByRole('link', { name: 'support@dragonrent.com' });
+    expect(link).toHaveAttribute('href', 'mailto:support@dragonrent.com');
+    expect(link.closest('p')).toHaveTextContent('Changed your mind? Email support@dragonrent.com.');
+  });
+
   it('leaves out "Message" when messaging is not possible', () => {
     render(
       <RequestSent

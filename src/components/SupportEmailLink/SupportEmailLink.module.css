@@ -1,0 +1,13 @@
+.root {
+  color: inherit;
+  font-weight: var(--fontWeightSemiBold);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  /* Long address must wrap on narrow phones instead of overflowing */
+  overflow-wrap: anywhere;
+  user-select: text;
+
+  &:hover {
+    text-decoration: none;
+  }
+}

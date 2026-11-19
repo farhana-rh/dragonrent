@@ -25,6 +25,7 @@ import {
   NamedLink,
   SavedCardDetails,
   StripePaymentAddress,
+  SupportEmailLink,
   CustomExtendedDataField,
 } from '../../../components';
 
@@ -760,7 +761,11 @@ class StripePaymentForm extends Component {
               </p>
               {/* Cancellation rule (decided 7 Nov): shown before the renter sends the request */}
               <p className={css.cancellationInfo}>
-                <FormattedMessage id="StripePaymentForm.cancellationRule" />
+                <FormattedMessage id="StripePaymentForm.cancellationRule" />{' '}
+                <FormattedMessage
+                  id="StripePaymentForm.cancellationHowTo"
+                  values={{ email: <SupportEmailLink /> }}
+                />
               </p>
               {/* No checkbox: sending the request is the agreement (docs/SCOPE.md, 17 Oct) */}
               <p className={css.termsInfo}>

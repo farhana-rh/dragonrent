@@ -5,7 +5,7 @@ import { openCookieSettings } from '../../../../util/cookieConsent';
 import { categorySearchTo } from '../../../../util/search';
 import { pickFieldOptions } from '../../PageBuilder.helpers';
 
-import { NamedLink } from '../../../../components';
+import { NamedLink, SupportEmailLink } from '../../../../components';
 
 import SectionContainer from '../SectionContainer';
 import css from './SectionFooter.module.css';
@@ -227,6 +227,15 @@ const SectionFooter = props => {
                     </li>
                   ))}
                 </ul>
+                {/* Support address under Help: needed for the 24-hour cancellation rule */}
+                {column.id === 'help' ? (
+                  <p className={css.contact}>
+                    <FormattedMessage
+                      id="SectionFooter.contact"
+                      values={{ email: <SupportEmailLink className={css.contactLink} /> }}
+                    />
+                  </p>
+                ) : null}
               </div>
             ))}
           </nav>

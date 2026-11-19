@@ -256,6 +256,31 @@
   }
 }
 
+/* Support address under the Help links */
+.contact {
+  margin: 12px 0 0 0;
+  padding: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--colorCream);
+}
+
+.contactLink {
+  display: inline-block;
+  padding: 6px 0;
+  color: var(--colorCream);
+
+  &:hover {
+    color: var(--colorCream);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--focusRing);
+    border-radius: var(--borderRadius);
+  }
+}
+
 /* ===== Bottom row ===== */
 .bottomRow {
   display: flex;

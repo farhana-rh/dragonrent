@@ -200,7 +200,9 @@ describe('CheckoutPage', () => {
         total: new Money(2500, 'USD'),
       }),
     };
-    render(<CheckoutPageWithPayment {...props} />);
+    render(<CheckoutPageWithPayment {...props} />, {
+      messages: { 'StripePaymentForm.cancellationHowTo': 'To cancel, email {email}.' },
+    });
 
     const bookingTitle = 'CheckoutPage.checkAndSend';
     expect(screen.getByRole('heading', { name: bookingTitle })).toBeInTheDocument();
@@ -233,6 +235,11 @@ describe('CheckoutPage', () => {
     ).toBeInTheDocument();
     // The 24-hour cancellation rule is shown before sending
     expect(screen.getByText('StripePaymentForm.cancellationRule')).toBeInTheDocument();
+    // ... with the support address to email for a cancellation
+    expect(screen.getByRole('link', { name: 'support@dragonrent.com' })).toHaveAttribute(
+      'href',
+      'mailto:support@dragonrent.com'
+    );
     // Sending the request means agreeing to the terms and the cancellation policy
     expect(screen.getByText('StripePaymentForm.agreeToTerms')).toBeInTheDocument();
   });

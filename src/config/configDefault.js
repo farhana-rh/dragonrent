@@ -35,6 +35,11 @@ const defaultConfig = {
   // Marketplace name is needed for microcopy (aka marketplace texts) and in meta tags (bots and social media sharing reads those)
   marketplaceName: process.env.REACT_APP_MARKETPLACE_NAME || '[Marketplace Name]',
 
+  // DragonRent: the one monitored customer support address (cancellations within 24 hours,
+  // damage disputes, reports). Shown by components/SupportEmailLink in the footer, at checkout and
+  // on "Request sent!". The legal texts in Console use the same address.
+  supportEmail: 'support@dragonrent.com',
+
   // Modify Stripe configuration in configStripe.js
   // - picks REACT_APP_STRIPE_PUBLISHABLE_KEY from environment variables
   // - dayCountAvailableForBooking: Stripe can hold payments only limited time on Connect Account
