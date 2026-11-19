@@ -108,9 +108,6 @@ export const categoryVisuals = {
   party: { icon: 'party', tone: 'blush', image: null },
 };
 
-// Category tiles shown in "Explore rentals" before "Show all categories" opens the rest
-export const MAX_CATEGORY_TILES = 8;
-
 /**
  * "Browse by use case" tiles. The search page filters by one category at a time,
  * so each use case links to its primary category. A tile is hidden if its category
