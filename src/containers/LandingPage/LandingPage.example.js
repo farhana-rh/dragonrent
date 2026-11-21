@@ -4,8 +4,8 @@ import { createListing, createUser } from '../../util/testData';
 
 import SectionHomeHero from './SectionHomeHero/SectionHomeHero';
 import SectionTrustStrip from './SectionTrustStrip/SectionTrustStrip';
-import SectionExploreRentals from './SectionExploreRentals/SectionExploreRentals';
 import SectionPopularRentals from './SectionPopularRentals/SectionPopularRentals';
+import SectionAllCategories from './SectionAllCategories/SectionAllCategories';
 import SectionUseCases from './SectionUseCases/SectionUseCases';
 import SectionHowItWorks from './SectionHowItWorks/SectionHowItWorks';
 import SectionHostCta from './SectionHostCta/SectionHostCta';
@@ -64,14 +64,14 @@ const popularRentalsSection = (sectionData, listings = []) => {
 const HomePageSections = () => (
   <>
     <SectionHomeHero sectionId="hero" categories={categories} />
-    <SectionTrustStrip sectionId="how-paying-works" />
-    <SectionExploreRentals sectionId="explore-rentals" categories={categories} />
     <SectionPopularRentals
       {...popularRentalsSection(
         { fetched: true, listingIds: sampleListings.map(l => l.id) },
         sampleListings
       )}
     />
+    <SectionAllCategories sectionId="all-categories" categories={categories} />
+    <SectionTrustStrip sectionId="how-paying-works" />
     <SectionUseCases sectionId="use-cases" categories={categories} />
     <SectionHowItWorks sectionId="how-dragonrent-works" />
     <SectionHostCta sectionId="trust-and-safety" />

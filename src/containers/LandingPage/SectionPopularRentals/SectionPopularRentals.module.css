@@ -8,43 +8,137 @@
   composes: sectionContent from '../LandingPage.module.css';
 }
 
+/* Title on the left; "See all rentals" and the arrows on the right */
 .header {
   composes: sectionHeader from '../LandingPage.module.css';
-}
+  margin-bottom: 12px;
 
-.eyebrow {
-  composes: eyebrowCoral from '../LandingPage.module.css';
+  @media (--viewportMedium) {
+    margin-bottom: 20px;
+  }
 }
 
 .title {
   composes: sectionTitle from '../LandingPage.module.css';
 }
 
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* "See all rentals": shown on every screen size, the carousel has no button under it */
 .link {
-  composes: sectionLink from '../LandingPage.module.css';
-}
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  font-size: 15px;
+  font-weight: var(--fontWeightBold);
+  color: var(--colorInk);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
 
-.buttonMobile {
-  composes: sectionButtonMobile from '../LandingPage.module.css';
-}
+  &:hover {
+    color: var(--colorElectric);
+  }
 
-/* 2 columns on phones, 4 from tablet up; extra gap leaves room for the hard shadows */
-.list {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px 14px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-
-  @media (--viewportMedium) {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 24px;
+  &:focus-visible {
+    outline: 3px solid var(--colorElectric);
+    outline-offset: 3px;
   }
 }
 
-/* The ListingCard is itself a sticker card (Phase 2), so the item only lays it out */
+/* Arrow buttons from tablet up; phones swipe */
+.arrows {
+  display: none;
+
+  @media (--viewportMedium) {
+    display: flex;
+    gap: 10px;
+  }
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  color: var(--colorInk);
+  background-color: var(--colorWhite);
+  border: var(--borderInk);
+  border-radius: 999px;
+  box-shadow: var(--shadowHardSmall);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+  &:hover:not(:disabled) {
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 var(--colorInk);
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--colorElectric);
+    outline-offset: 3px;
+  }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &:hover:not(:disabled) {
+      transform: none;
+    }
+  }
+}
+
+/*
+ * One sideways-scrolling row. On phones it runs to the screen edges so the next card peeks in;
+ * the padding leaves room for the cards' hard shadows and hover lift. Snaps card by card.
+ */
+.list {
+  display: flex;
+  gap: 14px;
+  margin: 0 -18px;
+  padding: 8px 18px 14px;
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: 18px;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media (--viewportMedium) {
+    gap: 20px;
+    margin: 0 -24px;
+    padding: 8px 24px 16px;
+    scroll-padding-left: 24px;
+  }
+}
+
 .item {
   display: flex;
+  flex: 0 0 220px;
   min-width: 0;
+  scroll-snap-align: start;
+
+  @media (--viewportMedium) {
+    flex-basis: 272px;
+  }
 }

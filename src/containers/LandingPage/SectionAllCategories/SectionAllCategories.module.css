@@ -1,0 +1,37 @@
+@import '../../../styles/customMediaQueries.css';
+
+/*
+ * Sits right under the carousel, so less space above it than a normal section. The payments
+ * band below starts straight after, so this section adds the space under the button.
+ */
+.root {
+  composes: sectionRoot from '../LandingPage.module.css';
+  padding: 24px 0 42px 0;
+
+  @media (--viewportMedium) {
+    padding: 40px 0 64px 0;
+  }
+}
+
+.content {
+  composes: sectionContent from '../LandingPage.module.css';
+  display: flex;
+  justify-content: center;
+}
+
+/* Big primary sticker button: full width on phones, centred from tablet up */
+.button {
+  composes: stickerButtonPrimary from '../LandingPage.module.css';
+  gap: 10px;
+  width: 100%;
+  min-height: 56px;
+  font-size: 17px;
+  font-weight: var(--fontWeightHeavy);
+
+  @media (--viewportMedium) {
+    width: auto;
+    min-height: 60px;
+    padding: 0 32px;
+    font-size: 18px;
+  }
+}

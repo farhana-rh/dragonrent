@@ -95,6 +95,8 @@ const ListingCardImage = props => {
  * @param {Function?} props.setActiveListing
  * @param {boolean?} props.showAuthorInfo
  * @param {LatLng?} props.distanceOrigin searched place; when given, the card shows the distance
+ * @param {boolean?} props.compact smaller title (14px) and price tag (11px), for the homepage
+ *   carousel (user, 21 Nov)
  * @returns {JSX.Element} listing card to be used in search result panel etc.
  */
 export const ListingCard = props => {
@@ -112,6 +114,7 @@ export const ListingCard = props => {
     showAuthorInfo = true,
     lazyLoadImage = true,
     distanceOrigin,
+    compact = false,
   } = props;
 
   const translations = getListingCardTranslations(listing, config, intl);
@@ -127,7 +130,7 @@ export const ListingCard = props => {
   const distanceText = distanceOrigin ? getDistanceText(listing, distanceOrigin, intl) : null;
   const isNew = isNewListing(listing);
 
-  const classes = classNames(rootClassName || css.root, className);
+  const classes = classNames(rootClassName || css.root, { [css.compact]: compact }, className);
 
   const id = listing?.id?.uuid;
   const { title = '', publicData } = listing?.attributes || {};

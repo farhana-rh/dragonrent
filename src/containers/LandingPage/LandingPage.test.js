@@ -10,13 +10,14 @@ import {
 
 import { LandingPageComponent, buildLandingPageData } from './LandingPage';
 import { getAvailableSearchFields } from './HeroSearchForm/HeroSearchForm';
-import SectionExploreRentals from './SectionExploreRentals/SectionExploreRentals';
+import SectionAllCategories from './SectionAllCategories/SectionAllCategories';
 import SectionHostCta from './SectionHostCta/SectionHostCta';
 import SectionHowItWorks from './SectionHowItWorks/SectionHowItWorks';
 import SectionTrustStrip from './SectionTrustStrip/SectionTrustStrip';
 import HeroSearchForm from './HeroSearchForm/HeroSearchForm';
 import SectionPopularRentals, {
   MIN_LISTINGS_TO_SHOW,
+  getScrollEdges,
 } from './SectionPopularRentals/SectionPopularRentals';
 import SectionUseCases, { getAvailableUseCases } from './SectionUseCases/SectionUseCases';
 
@@ -49,8 +50,10 @@ describe('LandingPage', () => {
     expect(document.getElementById('trust-and-safety')).toBeInTheDocument();
     // "Browse by use case" is not on the page
     expect(screen.queryByText('LandingPage.useCases.title')).not.toBeInTheDocument();
-    // The listings section is not on the page
+    // No featured listings section in Console: no listings carousel
     expect(screen.queryAllByText('LandingPage.popularRentals.seeAllRentals')).toHaveLength(0);
+    // The default test configuration has no categories, so no "All categories" button
+    expect(screen.queryByText('LandingPage.allCategories.button')).not.toBeInTheDocument();
   });
 
   it('renders the page even if the hosted landing page failed to load', async () => {
@@ -70,34 +73,48 @@ describe('LandingPage', () => {
 describe('buildLandingPageData', () => {
   const formatMessage = fakeIntl.formatMessage;
 
-  const sectionOrder = [
-    'homeHero',
-    'homeExploreRentals',
-    'homeTrustStrip',
-    'homeHowItWorks',
-    'homeHostCta',
-  ];
-
-  it('uses fallback meta without hosted data', () => {
+  it('uses fallback meta and omits the listings carousel without hosted data', () => {
     const { sections, meta } = buildLandingPageData(undefined, formatMessage);
 
-    // The payments trust strip comes right after the category tiles
-    expect(sections.map(s => s.sectionType)).toEqual(sectionOrder);
+    expect(sections.map(s => s.sectionType)).toEqual([
+      'homeHero',
+      'homeAllCategories',
+      'homeTrustStrip',
+      'homeHowItWorks',
+      'homeHostCta',
+    ]);
     expect(meta.pageTitle.content).toEqual('LandingPage.metaTitle');
   });
 
-  it('uses hosted meta and leaves out the listings section even when Console has one', () => {
+  it('uses hosted meta and the first hosted featured listings section for the carousel', () => {
     const hosted = {
       meta: { pageTitle: { fieldType: 'metaTitle', content: 'Hosted title' } },
       sections: [
         { sectionType: 'hero', sectionId: 'intro' },
         { sectionType: 'listings', listingSelection: 'queryString', listingSearchQuery: { a: 1 } },
+        { sectionType: 'listings', listingSelection: 'newest' },
       ],
     };
     const { sections, meta } = buildLandingPageData(hosted, formatMessage);
 
     expect(meta.pageTitle.content).toEqual('Hosted title');
-    expect(sections.map(s => s.sectionType)).toEqual(sectionOrder);
+    expect(sections.filter(s => s.sectionType === 'listings')).toEqual([
+      {
+        sectionType: 'listings',
+        sectionId: 'popular-rentals',
+        listingSelection: 'queryString',
+        listingSearchQuery: { a: 1 },
+      },
+    ]);
+    // Carousel right under the hero, then the "All categories" button, then the payments card
+    expect(sections.map(s => s.sectionType)).toEqual([
+      'homeHero',
+      'listings',
+      'homeAllCategories',
+      'homeTrustStrip',
+      'homeHowItWorks',
+      'homeHostCta',
+    ]);
   });
 });
 
@@ -138,51 +155,23 @@ describe('Category-driven sections', () => {
     ]);
   });
 
-  it('renders category tiles linking to category searches', () => {
-    render(<SectionExploreRentals sectionId="explore" categories={categories} />);
-
-    expect(screen.getByText('LandingPage.categories.titleV2')).toBeInTheDocument();
-    expect(screen.getByText('Bikes').closest('a')).toHaveAttribute(
-      'href',
-      '/s?pub_categoryLevel1=bikes'
-    );
-    // A text link next to the title (desktop) and a full-width button (phones)
-    const seeAll = screen.getAllByText('LandingPage.categories.seeAll');
-    expect(seeAll).toHaveLength(2);
-    seeAll.forEach(el => expect(el.closest('a')).toHaveAttribute('href', '/s'));
-  });
-
-  it('shows every category at once, with no "Show all" button', () => {
-    const many = [...Array(52).keys()].map(i => ({ id: `cat${i}`, name: `Category ${i}` }));
-    render(<SectionExploreRentals sectionId="explore" categories={many} />);
-
-    expect(screen.getAllByRole('listitem')).toHaveLength(52);
-    expect(screen.getByText('Category 0').closest('li')).toBeVisible();
-    expect(screen.getByText('Category 51').closest('li')).toBeVisible();
-    expect(screen.queryByRole('button')).not.toBeInTheDocument();
-  });
-
-  it('renders a category with no configured icon', () => {
-    render(
-      <SectionExploreRentals sectionId="explore" categories={[{ id: 'misc', name: 'Misc' }]} />
-    );
-
-    expect(
-      screen
-        .getByText('Misc')
-        .closest('a')
-        .querySelector('svg')
-    ).toBeInTheDocument();
-  });
-
   it('renders nothing when there are no categories', () => {
     const { container } = render(
       <>
-        <SectionExploreRentals sectionId="explore" categories={[]} />
+        <SectionAllCategories sectionId="all-categories" categories={[]} />
         <SectionUseCases sectionId="use-cases" categories={[]} />
       </>
     );
     expect(container).toBeEmptyDOMElement();
+  });
+
+  it('links the "All categories" button to the categories page', () => {
+    render(<SectionAllCategories sectionId="all-categories" categories={categories} />);
+
+    expect(screen.getByText('LandingPage.allCategories.button').closest('a')).toHaveAttribute(
+      'href',
+      '/categories'
+    );
   });
 });
 
@@ -294,7 +283,7 @@ describe('SectionPopularRentals', () => {
     expect(container).toBeEmptyDOMElement();
   });
 
-  it('shows the first 4 listings once there are enough', () => {
+  it('shows every fetched listing in one carousel', () => {
     const listings = createListings(10);
     const onFetch = jest.fn();
     render(
@@ -305,8 +294,48 @@ describe('SectionPopularRentals', () => {
 
     expect(onFetch).not.toHaveBeenCalled();
     expect(screen.getByText('LandingPage.popularRentals.titleNewest')).toBeInTheDocument();
-    expect(screen.getByText('Listing 3')).toBeInTheDocument();
-    expect(screen.queryByText('Listing 4')).not.toBeInTheDocument();
+    expect(screen.getAllByRole('listitem')).toHaveLength(10);
+    expect(screen.getByText('Listing 9')).toBeInTheDocument();
+    // No "Explore" label above the title
+    expect(screen.queryByText('LandingPage.popularRentals.eyebrow')).not.toBeInTheDocument();
+    expect(
+      screen.getByText('LandingPage.popularRentals.seeAllRentals').closest('a')
+    ).toHaveAttribute('href', '/s');
+  });
+
+  it('scrolls the row with the arrow buttons', () => {
+    const listings = createListings(10);
+    render(
+      <SectionPopularRentals
+        {...sectionProps({ fetched: true, listingIds: listings.map(l => l.id) }, listings)}
+      />
+    );
+
+    // jsdom has no layout, so every card "fits" and the arrows start hidden
+    const previous = screen.getByRole('button', {
+      name: 'LandingPage.popularRentals.previous',
+      hidden: true,
+    });
+    const next = screen.getByRole('button', {
+      name: 'LandingPage.popularRentals.next',
+      hidden: true,
+    });
+    expect(next.parentElement).toHaveAttribute('hidden');
+
+    // Give the row a width wider than its view, then report a scroll: arrows show, at the start
+    const list = screen.getAllByRole('list')[0];
+    Object.defineProperty(list, 'scrollWidth', { configurable: true, value: 2000 });
+    Object.defineProperty(list, 'clientWidth', { configurable: true, value: 800 });
+    fireEvent.scroll(list);
+    expect(next.parentElement).not.toHaveAttribute('hidden');
+    expect(previous).toBeDisabled();
+    expect(next).toBeEnabled();
+
+    list.scrollBy = jest.fn();
+    fireEvent.click(next);
+    expect(list.scrollBy).toHaveBeenCalledWith(
+      expect.objectContaining({ left: expect.any(Number) })
+    );
   });
 
   it('stays hidden when loading fails', () => {
@@ -316,5 +345,22 @@ describe('SectionPopularRentals', () => {
     );
 
     expect(container).toBeEmptyDOMElement();
+  });
+});
+
+describe('getScrollEdges', () => {
+  const el = (scrollLeft, scrollWidth = 1000, clientWidth = 400) => ({
+    scrollLeft,
+    scrollWidth,
+    clientWidth,
+  });
+
+  it('tells whether the carousel is at its start or end', () => {
+    expect(getScrollEdges(null)).toEqual({ atStart: true, atEnd: false });
+    expect(getScrollEdges(el(0))).toEqual({ atStart: true, atEnd: false });
+    expect(getScrollEdges(el(300))).toEqual({ atStart: false, atEnd: false });
+    expect(getScrollEdges(el(600))).toEqual({ atStart: false, atEnd: true });
+    // Everything fits: both arrows off
+    expect(getScrollEdges(el(0, 400, 400))).toEqual({ atStart: true, atEnd: true });
   });
 });

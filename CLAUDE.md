@@ -197,13 +197,20 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
   settings. Console footer content is no longer shown. The digest form is disabled and labelled
   "Coming soon" until a newsletter tool (Mailchimp, Brevo, MailerLite…) is chosen; never make it
   look like it subscribes people before then.
-- **Homepage changes (user, 21 Nov, not committed):** open worldwide, so there's no "Helsinki and
+- **Homepage changes (user, 21 Nov, pushed to `feature/redesign` as `0fb846a61`):** open worldwide, so there's no "Helsinki and
   Uusimaa" sticker (hero, sign-in panel), the footer slogan names no cities, and `countryLimit` is
-  `null` (address search in every country). "Spin the block" removed. The listings section
-  ("Explore / New on DragonRent") is off the page (component kept, re-add steps in
-  `buildLandingPageData`). Order: hero → categories → payments trust strip → How it works →
-  "What if something breaks?". Still Finland-specific: EUR only, new schedules default to
-  Europe/Helsinki, legal drafts.
+  `null` (address search in every country). "Spin the block" removed. Still Finland-specific: EUR
+  only, new schedules default to Europe/Helsinki, legal drafts.
+- **Homepage carousel + All categories page (user, 21 Nov, canvas
+  https://claude.ai/artifact/Eeb8jCPQa5ho5R8aJMwT7J):** order hero → one listings carousel
+  (`SectionPopularRentals`, every category mixed, Console "Featured listings" selection, max 10
+  from the featuredListings duck, no "Explore" eyebrow, arrows from 768px and hidden when all
+  cards fit) → "All categories" button (`SectionAllCategories`) → payments trust strip → How it
+  works → "What if something breaks?". Carousel cards use `ListingCard compact` (title 14px,
+  price tag 11px, user's choice although DESIGN.md says text ≥13px; other cards unchanged).
+  `/categories` (`CategoriesPage`, in the sitemap): every Console category as a tile, "Find a
+  category" filter (Final Form), no counts. The old "Or pick a category" grid
+  (`SectionExploreRentals`) was removed from the homepage.
 - **Remaining work** (estimate 9 Nov): about 7–11 h of code and testing, 9–12 h of Console, Live
   and hosting setup by the user, plus waiting for the lawyer, the Finnish review and DNS.
 - **Days 0–9 code done**, all on `feature/redesign`, pushed to GitHub 23 Oct (not merged to `main`;

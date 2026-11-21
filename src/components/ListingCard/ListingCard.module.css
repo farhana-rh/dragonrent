@@ -181,6 +181,25 @@
   stroke-width: 2px;
 }
 
+/*
+ * Compact card (homepage carousel, user 21 Nov): 14px title and an 11px price tag. Two classes,
+ * so these win over the base rules and their tablet sizes.
+ */
+.compact .title {
+  font-size: 14px;
+}
+
+.compact .price {
+  margin-top: 2px;
+  padding: 2px 8px;
+  font-size: 11px;
+}
+
+.compact .priceValue,
+.compact .perUnit {
+  font-size: 11px;
+}
+
 .longWord {
   /* fallback option */
   word-break: break-all;
