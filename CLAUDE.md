@@ -197,6 +197,13 @@ Where the mockups promise data or behaviour DragonRent doesn't have:
   settings. Console footer content is no longer shown. The digest form is disabled and labelled
   "Coming soon" until a newsletter tool (Mailchimp, Brevo, MailerLite…) is chosen; never make it
   look like it subscribes people before then.
+- **Homepage changes (user, 21 Nov, not committed):** open worldwide, so there's no "Helsinki and
+  Uusimaa" sticker (hero, sign-in panel), the footer slogan names no cities, and `countryLimit` is
+  `null` (address search in every country). "Spin the block" removed. The listings section
+  ("Explore / New on DragonRent") is off the page (component kept, re-add steps in
+  `buildLandingPageData`). Order: hero → categories → payments trust strip → How it works →
+  "What if something breaks?". Still Finland-specific: EUR only, new schedules default to
+  Europe/Helsinki, legal drafts.
 - **Remaining work** (estimate 9 Nov): about 7–11 h of code and testing, 9–12 h of Console, Live
   and hosting setup by the user, plus waiting for the lawyer, the Finnish review and DNS.
 - **Days 0–9 code done**, all on `feature/redesign`, pushed to GitHub 23 Oct (not merged to `main`;

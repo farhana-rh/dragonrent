@@ -17,7 +17,6 @@ import { getFeaturedListingsProps } from '../../util/data';
 import SectionHomeHero from './SectionHomeHero/SectionHomeHero';
 import SectionTrustStrip from './SectionTrustStrip/SectionTrustStrip';
 import SectionExploreRentals from './SectionExploreRentals/SectionExploreRentals';
-import SectionPopularRentals from './SectionPopularRentals/SectionPopularRentals';
 import SectionHowItWorks from './SectionHowItWorks/SectionHowItWorks';
 import SectionHostCta from './SectionHostCta/SectionHostCta';
 import { HOW_IT_WORKS_SECTION_ID, TRUST_SECTION_ID } from './landingPageConfig';
@@ -33,47 +32,30 @@ const sectionComponents = {
   homeHero: { component: SectionHomeHero },
   homeTrustStrip: { component: SectionTrustStrip },
   homeExploreRentals: { component: SectionExploreRentals },
-  // Keeps the 'listings' section type: the featuredListings duck identifies listing sections
-  // by this type when it stores fetched listings.
-  listings: { component: SectionPopularRentals },
   homeHowItWorks: { component: SectionHowItWorks },
   homeHostCta: { component: SectionHostCta },
 };
 
-const POPULAR_RENTALS_SECTION_ID = 'popular-rentals';
-
 /**
- * Build the landing page sections. Content comes from code, except:
- * - SEO metadata (Console → Content → Pages → landing-page → Meta)
- * - the listing selection for the listings section, which uses the first
- *   "Featured listings" section of the Console landing page. Without one, that section is omitted.
+ * Build the landing page sections. Content comes from code, except the SEO metadata
+ * (Console → Content → Pages → landing-page → Meta).
+ *
+ * The listings section ("New on DragonRent", SectionPopularRentals) is not on the page (user,
+ * 21 Nov). To bring it back, add `listings: { component: SectionPopularRentals }` to
+ * sectionComponents (the featuredListings duck identifies listing sections by that type) and a
+ * section built from the first "Featured listings" section of the Console landing page:
+ * { sectionType: 'listings', sectionId: 'popular-rentals', listingSelection, listingSearchQuery }
  *
  * @param {Object} hostedPageData landing-page asset data from Console (may be undefined)
  * @param {Function} formatMessage intl.formatMessage
  * @returns {Object} page data in page asset format: { sections, meta }
  */
 export const buildLandingPageData = (hostedPageData, formatMessage) => {
-  const hostedSections = hostedPageData?.sections || [];
-  const featuredListingsSection = hostedSections.find(s => s.sectionType === 'listings');
-
-  const popularRentalsMaybe = featuredListingsSection
-    ? [
-        {
-          sectionType: 'listings',
-          sectionId: POPULAR_RENTALS_SECTION_ID,
-          listingSelection: featuredListingsSection.listingSelection,
-          listingSearchQuery: featuredListingsSection.listingSearchQuery,
-        },
-      ]
-    : [];
-
   const sections = [
-    // Order follows the sticker mockup (dragonrent-design/docs/design/mockups/HomeSticker.html):
-    // hero, then the payments trust strip right under it
     { sectionType: 'homeHero', sectionId: 'hero' },
-    { sectionType: 'homeTrustStrip', sectionId: 'how-paying-works' },
-    ...popularRentalsMaybe,
     { sectionType: 'homeExploreRentals', sectionId: 'explore-rentals' },
+    // The payments trust strip sits under the categories (user, 21 Nov)
+    { sectionType: 'homeTrustStrip', sectionId: 'how-paying-works' },
     // "Browse by use case" (SectionUseCases) is not on the page at the moment. To bring it back,
     // add it to sectionComponents and here: { sectionType: 'homeUseCases', sectionId: 'use-cases' }
     // How it works also shows the trust points ("Safe and simple")

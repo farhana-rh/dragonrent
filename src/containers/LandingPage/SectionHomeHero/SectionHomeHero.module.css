@@ -35,24 +35,6 @@
   }
 }
 
-/* Mint sticker with the market area, slightly tilted */
-.areaSticker {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 12px;
-
-  font-size: 13px;
-  line-height: 20px;
-  font-weight: var(--fontWeightBold);
-  color: var(--colorInk);
-  background-color: var(--colorMint);
-  border: var(--borderInk);
-  border-radius: 999px;
-  box-shadow: var(--shadowHardSmall);
-  transform: rotate(-2deg);
-}
-
 /* Hero heading: 40px on phones, up to 68px on desktop, display weight */
 .title {
   margin: 0;
@@ -100,61 +82,6 @@
 
 .search {
   margin-top: 6px;
-}
-
-/* "Spin the block" */
-.spin {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 14px;
-}
-
-.spinButton {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 44px;
-  padding: 0 16px;
-
-  font-family: var(--fontFamily);
-  font-size: 15px;
-  font-weight: var(--fontWeightBold);
-  color: var(--colorInk);
-  background-color: var(--colorMarigold);
-  border: var(--borderInk);
-  border-radius: 999px;
-  box-shadow: var(--shadowHardSmall);
-  cursor: pointer;
-  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
-
-  &:hover {
-    transform: rotate(-3deg);
-  }
-
-  &:active {
-    transform: translate(2px, 2px);
-    box-shadow: none;
-  }
-
-  &:focus-visible {
-    outline: 3px solid var(--colorElectric);
-    outline-offset: 3px;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    transition: none;
-
-    &:hover {
-      transform: none;
-    }
-  }
-}
-
-.spinHint {
-  font-size: 14px;
-  line-height: 1.4;
-  color: var(--colorInkSecondary);
 }
 
 /* Fanned stack of decorative category cards: tablet and desktop only */

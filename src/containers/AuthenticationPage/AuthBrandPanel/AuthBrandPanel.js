@@ -89,9 +89,6 @@ const AuthBrandPanel = props => {
   return (
     <aside className={classNames(css.root, className)}>
       <LogoMark />
-      <span className={css.areaSticker}>
-        <FormattedMessage id="AuthenticationPage.brandPanel.area" />
-      </span>
       <p className={css.title}>
         <FormattedMessage id={`AuthenticationPage.brandPanel.${key}.title`} />
       </p>

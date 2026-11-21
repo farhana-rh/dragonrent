@@ -20,22 +20,6 @@
   filter: drop-shadow(4px 4px 0 var(--colorInk));
 }
 
-.areaSticker {
-  display: inline-flex;
-  align-items: center;
-  padding: 3px 12px;
-
-  font-size: 13px;
-  line-height: 20px;
-  font-weight: var(--fontWeightBold);
-  color: var(--colorInk);
-  background-color: var(--colorMint);
-  border: var(--borderInk);
-  border-radius: 999px;
-  box-shadow: var(--shadowHardSmall);
-  transform: rotate(-2deg);
-}
-
 .title {
   margin: 4px 0 0 0;
   padding: 0;

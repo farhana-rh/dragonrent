@@ -46,8 +46,9 @@ export const search = {
 
   // Limit location autocomplete to a one or more countries
   // using ISO 3166 alpha 2 country codes separated by commas.
-  // DragonRent operates in Finland only, so suggestions outside Finland are hidden.
-  countryLimit: ['FI'],
+  // DragonRent is open worldwide (user, 21 Nov): no country limit, so the search bar and the
+  // Lend-an-item location step suggest places in every country. Was ['FI'].
+  countryLimit: null,
 };
 
 // When fuzzy locations are enabled, coordinates on maps are

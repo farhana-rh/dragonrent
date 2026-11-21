@@ -14,7 +14,6 @@ import SectionExploreRentals from './SectionExploreRentals/SectionExploreRentals
 import SectionHostCta from './SectionHostCta/SectionHostCta';
 import SectionHowItWorks from './SectionHowItWorks/SectionHowItWorks';
 import SectionTrustStrip from './SectionTrustStrip/SectionTrustStrip';
-import { SpinTheBlock, getLoadedListings } from './SectionHomeHero/SectionHomeHero';
 import HeroSearchForm from './HeroSearchForm/HeroSearchForm';
 import SectionPopularRentals, {
   MIN_LISTINGS_TO_SHOW,
@@ -48,11 +47,9 @@ describe('LandingPage', () => {
     expect(screen.getByText('LandingPage.lenderPath.title')).toBeInTheDocument();
     // "Trust & Safety" in the top bar links to the lender section
     expect(document.getElementById('trust-and-safety')).toBeInTheDocument();
-    // No listings loaded: no "Spin the block"
-    expect(screen.queryByText('LandingPage.hero.spin')).not.toBeInTheDocument();
     // "Browse by use case" is not on the page
     expect(screen.queryByText('LandingPage.useCases.title')).not.toBeInTheDocument();
-    // No featured listings section in Console: no listings section
+    // The listings section is not on the page
     expect(screen.queryAllByText('LandingPage.popularRentals.seeAllRentals')).toHaveLength(0);
   });
 
@@ -73,49 +70,34 @@ describe('LandingPage', () => {
 describe('buildLandingPageData', () => {
   const formatMessage = fakeIntl.formatMessage;
 
-  it('uses fallback meta and omits the listings section without hosted data', () => {
+  const sectionOrder = [
+    'homeHero',
+    'homeExploreRentals',
+    'homeTrustStrip',
+    'homeHowItWorks',
+    'homeHostCta',
+  ];
+
+  it('uses fallback meta without hosted data', () => {
     const { sections, meta } = buildLandingPageData(undefined, formatMessage);
 
-    expect(sections.map(s => s.sectionType)).toEqual([
-      'homeHero',
-      'homeTrustStrip',
-      'homeExploreRentals',
-      'homeHowItWorks',
-      'homeHostCta',
-    ]);
+    // The payments trust strip comes right after the category tiles
+    expect(sections.map(s => s.sectionType)).toEqual(sectionOrder);
     expect(meta.pageTitle.content).toEqual('LandingPage.metaTitle');
   });
 
-  it('uses hosted meta and the first hosted featured listings section', () => {
+  it('uses hosted meta and leaves out the listings section even when Console has one', () => {
     const hosted = {
       meta: { pageTitle: { fieldType: 'metaTitle', content: 'Hosted title' } },
       sections: [
         { sectionType: 'hero', sectionId: 'intro' },
         { sectionType: 'listings', listingSelection: 'queryString', listingSearchQuery: { a: 1 } },
-        { sectionType: 'listings', listingSelection: 'newest' },
       ],
     };
     const { sections, meta } = buildLandingPageData(hosted, formatMessage);
-    const listingsSections = sections.filter(s => s.sectionType === 'listings');
 
     expect(meta.pageTitle.content).toEqual('Hosted title');
-    expect(listingsSections).toEqual([
-      {
-        sectionType: 'listings',
-        sectionId: 'popular-rentals',
-        listingSelection: 'queryString',
-        listingSearchQuery: { a: 1 },
-      },
-    ]);
-    // Listings come after the hero and its trust strip, before the category tiles
-    expect(sections.map(s => s.sectionType)).toEqual([
-      'homeHero',
-      'homeTrustStrip',
-      'listings',
-      'homeExploreRentals',
-      'homeHowItWorks',
-      'homeHostCta',
-    ]);
+    expect(sections.map(s => s.sectionType)).toEqual(sectionOrder);
   });
 });
 
@@ -248,30 +230,6 @@ describe('HeroSearchForm', () => {
     render(<HeroSearchForm />);
 
     expect(screen.getByPlaceholderText('LandingPage.hero.prompt.1')).toBeInTheDocument();
-  });
-});
-
-describe('SpinTheBlock', () => {
-  const listing = createListing('drill', { title: 'Cordless drill' }, { author: createUser('u1') });
-  const featuredListings = listings => ({
-    featuredListingData: { 'popular-rentals': { listingIds: listings.map(l => l.id) } },
-    getListingEntitiesById: () => listings,
-  });
-
-  it('reads the listings the page already loaded', () => {
-    expect(getLoadedListings(undefined)).toEqual([]);
-    expect(getLoadedListings({ featuredListingData: {} })).toEqual([]);
-    expect(getLoadedListings(featuredListings([listing]))).toEqual([listing]);
-  });
-
-  it('is hidden without loaded listings and shown with them', () => {
-    const { container, rerender } = render(
-      <SpinTheBlock featuredListings={featuredListings([])} />
-    );
-    expect(container).toBeEmptyDOMElement();
-
-    rerender(<SpinTheBlock featuredListings={featuredListings([listing])} random={() => 0} />);
-    expect(screen.getByText('LandingPage.hero.spin')).toBeInTheDocument();
   });
 });
 
